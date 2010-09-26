@@ -1,0 +1,27 @@
+<h1>Listing product_lines</h1>
+
+<table>
+  <tr>
+	<td>Name</td>
+	<td>Vendor</td>
+	<td>No. of products</td>
+	<td></td>
+	<td></td>
+	<td></td>
+  </tr>
+
+<% @product_lines.each do |product_line| %>
+  <tr>
+	<td><%= product_line.name %></td>
+	<td><%= product_line.vendor.name %></td>
+	<td><%= product_line.products.size %></td>
+    <td><%= link_to 'Show', product_line %></td>
+    <td><%= link_to 'Edit', edit_product_line_path(product_line) %></td>
+    <td><%= link_to 'Destroy', product_line, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New product_line', new_product_line_path %>

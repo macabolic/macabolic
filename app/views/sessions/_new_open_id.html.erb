@@ -1,0 +1,9 @@
+<h3>Sign in with OpenID (What is OpenID?)</h3>
+
+<%= error_messages_for :user %>
+<% form_for :user, :url => users_path do |f| -%>
+<p><%= label_tag 'OpenID URL' %><br/>
+<%= f.text_field :login %></p>
+
+<p><%= submit_tag 'Sign up' %></p>
+<% end -%>

@@ -1,0 +1,33 @@
+<% form_tag session_path do -%>
+<div class="unit">
+	<div class="column">
+		<table cellpadding="5">
+			<tr>
+				<td align="right"><%= label_tag 'login' %>: </td>
+				<td><%= text_field_tag 'login', @login %></td>
+			</tr>
+			<tr><td>&nbsp;</td><td></td></tr>
+			<tr>
+				<td align="right"><%= label_tag 'password' %>: </td>
+				<td><%= password_field_tag 'password', nil %></td>
+			</tr>
+			<tr><td>&nbsp;</td><td></td></tr>
+			<tr>
+				<td align="right" colspan="2"><p><%= submit_tag 'Log in' %></p></td>
+			</tr>
+		</table>
+		<!-- Uncomment this if you want this functionality
+		<p><%= label_tag 'remember_me', 'Remember me' %>
+		<%= check_box_tag 'remember_me', '1', @remember_me %></p>
+		-->
+	</div>
+<!--	
+	<div class="column"><p>...or use...</p></div>
+	<div class="column">
+		<p><%= label_tag 'openid_url', 'OpenID URL' %><br />
+		<%= text_field_tag 'openid_url' %></p>
+	</div>
+-->
+
+</div>
+<% end -%>

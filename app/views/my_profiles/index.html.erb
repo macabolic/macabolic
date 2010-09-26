@@ -1,0 +1,20 @@
+<h1>My Profile</h1>
+
+<table>
+	<thead><tr><td><p style="color: green"><%= notice %></p></td></tr></thead>
+  	<tbody>
+		<tr></tr>
+
+<% @my_profiles.each do |my_profile| %>
+  <tr>
+    <td><%= link_to 'Show', my_profile %></td>
+    <td><%= link_to 'Edit', edit_my_profile_path(my_profile) %></td>
+    <td><%= link_to 'Destroy', my_profile, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+	</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New my_profile', new_my_profile_path %>

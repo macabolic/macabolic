@@ -1,0 +1,14 @@
+<h1>Show product_line</h1>
+
+<p>
+	<%= label_tag 'name' %>: <%= label_tag @product_line.name %>
+</p>
+<p>
+	<%= label_tag 'vendor' %>: <%= label_tag @product_line.vendor.name %>
+</p>
+
+<%= render 'products/index' %>
+
+
+<%= link_to 'Edit', edit_product_line_path(@product_line) %> |
+<%= link_to 'Back', product_lines_path %>

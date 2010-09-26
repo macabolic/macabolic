@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>Macabolic: <%= controller %></title>
+	<%= stylesheet_link_tag 'scaffold' %>
+	<%= stylesheet_link_tag 'base' %>
+	<%= stylesheet_link_tag 'class' %>
+	<%= stylesheet_link_tag 'fonts' %>
+	<%= stylesheet_link_tag 'grid' %>
+	<%= stylesheet_link_tag 'print' %>
+	<%= stylesheet_link_tag 'reset' %>
+	<%= stylesheet_link_tag 'macabolic' %>
+	<%= javascript_include_tag 'jquery.ui' %>
+	<%= javascript_include_tag 'elastic' %>
+	<%= javascript_include_tag 'prototype' %>
+	<%= javascript_include_tag 'effects' %>
+</head>
+<body style="background: #EEEEEE;">
+	<div id="page">
+		<div id="header">
+			<div class="unit on-2 columns">
+				<div id="logo" class="column">
+					<h1>macabolic</h1>
+				</div>
+				<div id="navigation-bar" class="column">
+					<%= render :partial => "users/user_bar" %>
+				</div>
+			</div>
+		</div>			
+		<div id="flashboard">
+			<div class="unit">
+				<div class="column">
+					<% flash.each do |key, msg| %>
+					  <%= content_tag :div, msg, :class => "flash", :id => key %>
+					  <% content_tag :script, :type => "text/javascript" do %>
+					    $('<%= key %>').style.display = 'none';
+					    new Effect.Appear('<%= key %>', {duration: 3});
+					  <% end %>
+
+					  <% content_tag :script, :type => "text/javascript" do %>
+					    setTimeout("new Effect.Fade('<%= key %>');", 10000);
+					  <% end %>
+					<% end %>
+					<br/>
+				</div>
+			</div>
+		</div>
+		<div id="content">
+			<%= yield %>
+		</div>
+		<div id="space"></div>
+		<div id="trademark">&copy 2011 macabolic &#8482;</div>
+		<div id="footer"></div>		
+	</div>	
+</body>
+</html>

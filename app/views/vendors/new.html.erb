@@ -1,0 +1,14 @@
+<h1>New vendor</h1>
+
+<% form_for(@vendor) do |f| %>
+  <%= f.error_messages %>
+	<p>
+		<%= label_tag 'name' %><br/>
+		<%= f.text_field :name %>
+	</p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', vendors_path %>
