@@ -16,12 +16,8 @@ class HomeController < ApplicationController
   def show
     @my_collection = MyCollection.find(:first, :conditions => ["user_id = ?", params[:id]])    
     @my_collection_details = MyCollectionDetail.find(:all, :conditions => ["my_collection_id = ?", @my_collection.id]) if !@my_collection.nil?
-    #logger.info "There are a total of #{@my_collection_details.size} my_collection_detail(s) to list out."          
     @post = Post.new
-    
-    @my_posts = Post.related_to_me(current_user)
-    # Sort in descending order.
-    
+    @my_posts = current_user.feeds    
   end
       
 end
