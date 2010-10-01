@@ -2,7 +2,7 @@ class MyFriendsController < ApplicationController
   # GET /my_friends
   # GET /my_friends.xml
   def index
-    @my_friends = current_user.my_friends
+    @my_friends = current_user.friends
 #    @my_friends = MyFriend.find_all_by_user_id(current_user.id)
 
     respond_to do |format|
