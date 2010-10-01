@@ -30,25 +30,25 @@
 				</div>
 			</div>
 		</div>			
-		<div id="flashboard">
-			<div class="unit">
-				<div class="column">
-					<% flash.each do |key, msg| %>
-					  <%= content_tag :div, msg, :class => "flash", :id => key %>
-					  <% content_tag :script, :type => "text/javascript" do %>
-					    $('<%= key %>').style.display = 'none';
-					    new Effect.Appear('<%= key %>', {duration: 3});
-					  <% end %>
+		<div id="content">
+			<div id="flashboard">
+				<div class="unit">
+					<div class="column">
+						<% flash.each do |key, msg| %>
+						  <%= content_tag :div, msg, :class => "flash", :id => key %>
+						  <% content_tag :script, :type => "text/javascript" do %>
+						    $('<%= key %>').style.display = 'none';
+						    new Effect.Appear('<%= key %>', {duration: 3});
+						  <% end %>
 
-					  <% content_tag :script, :type => "text/javascript" do %>
-					    setTimeout("new Effect.Fade('<%= key %>');", 10000);
-					  <% end %>
-					<% end %>
-					<br/>
+						  <% content_tag :script, :type => "text/javascript" do %>
+						    setTimeout("new Effect.Fade('<%= key %>');", 10000);
+						  <% end %>
+						<% end %>
+						<br/>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div id="content">
 			<%= yield %>
 		</div>
 		<div id="space"></div>
