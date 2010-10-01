@@ -78,6 +78,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def feeds
+    Post.related_to_me(self)
+  end
+  
     protected
       def make_activation_code
             self.activation_code = self.class.make_token
