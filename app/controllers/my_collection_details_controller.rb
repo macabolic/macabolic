@@ -21,6 +21,7 @@ class MyCollectionDetailsController < ApplicationController
   # GET /my_collection_details/1.xml
   def show
     @my_collection_detail = MyCollectionDetail.find(params[:id])
+    @products = Product.find(:all)
 
     respond_to do |format|
       format.html # show.html.erb

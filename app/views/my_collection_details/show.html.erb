@@ -1,3 +1,143 @@
-
-<%= link_to 'Edit', edit_my_collection_detail_path(@my_collection_detail) %> |
-<%= link_to 'Back', my_collection_details_path %>
+<div class="unit on-2 columns">
+	<div class="column" id="my_collection_detail" style="width:200px">
+		<img src="<%= @my_collection_detail.product.photo.url(:small) %>" />
+	</div>
+	<div class="column">
+		<h1><b><%= @my_collection_detail.product.name %></b></h1>
+		<div id="my_collection_detail_background">
+			<table width="100%">
+				<tr>
+					<td align="right">
+						<p id="review_link"><a href="#">Post a tip</a> | <a href="#">Sell it</a></p>
+					</td>
+				</tr>
+				<tr>
+					<td><p>Purchased in: 1999</p></td>
+				</tr>
+				<tr>
+					<td><p>Purpose: Web surfing</p></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<p>You have 12 other friends using the same or similar machine(s).</p>
+			<br/>
+		</div>
+	</div>
+</div>
+<hr/><br/>
+<div class="unit on-2 columns">
+	<div class="column" id="my_collection_detail" style="width:280px;">
+		<div id="related_products">
+			<p class="header">Related Products</p>
+			<br/>
+			<% @count = 0 %>
+			<table>
+			<% @products.each do |product| %>
+			<% if @count % 3 == 0 %>
+				<tr>
+			<% end %>
+					<td align="center">
+						<img src="<%= product.photo.url(:thumb) %>"><br/>
+						<p class="product_name"><%= product.name %></p><br/>
+					</td>
+			<% if @count % 3 == 2 %>
+				</tr>
+			<% end %>
+			<% @count += 1 %>	
+			<% end %>
+			</table>
+		</div>
+		<div id="related_friends">
+			<p class="header">1 Friend own this</p>
+			<br/>
+			<table>
+			<tbody>
+				<% current_user.my_friends.each do |friend| %>
+				<tr>
+					<td><img src="<%= friend.friend.my_profile.photo.url(:small) %>"></td>
+					<td><div id="post_user"><%= friend.friend.display_name %></div></td>
+				</tr>
+				<% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="column" id="product_comment">
+		<p class="header">Reviews</p>
+		<div id="review">
+			<table>
+				<thead>
+					<tr>
+						<td></td>
+						<td></td>
+						<td align="right"><%= link_to "Write a Review", new_review_path, :class => "review_button round" %></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="3" valign="top">
+							<img src="<%= current_user.my_profile.photo.url(:small) %>" width="50" height="50">
+						</td>
+						<td>
+							<div id="post_user">Title: xxxxxxxxx xxx!</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="timestamps">10 days ago by Billy Cheng</div>
+						</td>
+						<td>
+							<%= image_tag("star_blue.png") %>
+							<%= image_tag("star_blue.png") %>
+							<%= image_tag("star_blue.png") %>
+							<%= image_tag("star_blue.png") %>
+							<%= image_tag("star_white.png") %>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div id="post_content">
+								xxxxxxxxxxx xxxxxxxxx xxxxx xxx xxx<br/>
+								xxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxx xxxxxxxxxxx<br/>
+								xxxxxxxxxxxx xxxxx xxxxxxx xxxx xxxxxxxxxxxxxx xxx<br/>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td align="right"><p class="vote">12 out of 15 found this useful</p></td>
+						<td align="right">
+							<%= link_to "like", '#', :class => "vote_button round" %>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<hr/><br/>
+		<p class="header">Questions and Answers</p>
+		<br/>
+		<div>
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<p id="q_and_a_question">Q: When is the new iPad coming out?</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p id="q_and_a_answer">
+								A: xxxxxxxxxxx xxxxxxxxx xxxxx xxx xxx<br/>
+								xxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxx xxxxxxxxxxx<br/>
+								xxxxxxxxxxxx xxxxx xxxxxxx xxxx xxxxxxxxxxxxxx xxx<br/>
+							</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>			
+		</div>
+	</div>		
+</div>

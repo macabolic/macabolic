@@ -17,7 +17,9 @@ function setProduct(productName, productId) {
 	<% if @count % 4 == 0 %>
 	  <tr>
 	<% end %>
-		<td align="center"><img src="/images/apple/<%= my_collection_detail.product.name %> (small).png"></td>
+		<td align="center">
+			<img src="<%= my_collection_detail.product.photo.url(:small) %>">
+		</td>
 	    <td><%= my_collection_detail.product.name %><br/>
 			<%= link_to 'Show', my_collection_detail %><br/>
 	    	<%= link_to 'Edit', edit_my_collection_detail_path(my_collection_detail) %><br/>

@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 20100923171647
+#
+# Table name: product_lines
+#
+#  id         :integer         not null, primary key
+#  name       :string(255)     not null
+#  vendor_id  :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 # This model initially had no columns defined.  If you add columns to the

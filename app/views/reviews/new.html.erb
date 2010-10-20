@@ -1,0 +1,54 @@
+<p class="header">Write a Review</p>
+<% form_for(@review) do |f| %>
+<%= f.error_messages %>
+<table>
+	<thead>
+		<tr class="review_header round">
+			<td class="review_header round">
+				<p class="review_header round">MacBook Pro</p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<div class="unit on-2 columns">
+					<div class="column">
+						<!-- image -->
+					</div>
+					<div class="column">
+						<%= image_tag("star_white.png") %>
+						<%= image_tag("star_white.png") %>
+						<%= image_tag("star_white.png") %>
+						<%= image_tag("star_white.png") %>
+						<%= image_tag("star_white.png") %>				
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<p><%= label_tag 'title' %></p>
+					<%= f.text_field :title %>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<p><%= label_tag 'review' %></p>
+					<%= f.text_area :content %>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td><%= f.submit 'Submit' %></td>
+		</tr>
+	</tfoot>
+</table>
+<% end %>
+
+<%= link_to 'Back', reviews_path %>

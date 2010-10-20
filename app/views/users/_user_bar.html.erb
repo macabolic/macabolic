@@ -10,9 +10,18 @@
 -->
 
 <% if logged_in? -%>
-	<div id="user-bar-greeting">Welcome, <%= current_user.display_name %></div> 
-	<div id="user-bar-action"><%= link_to "home", home_path(current_user) %> | <%= link_to "profile", :controller => "my_profiles", :action => "show", :id => current_user.my_profile %> | <%= link_to "log out", logout_path, { :title => "log out" } %></div>
-	
+	<div class="greeting">
+		<ul class="greeting">
+			<li>Welcome, <%= current_user.display_name %></li>
+		</ul>
+	</div>
+	<div class="navigation-bar">
+		<ul class="navigation">
+			<li><%= link_to "home", home_path(current_user) %></li>
+			<li><%= link_to "profile", :controller => "my_profiles", :action => "show", :id => current_user.my_profile %></li>
+			<li><%= link_to "log out", logout_path, { :title => "log out" } %></li>
+		</ul>
+	</div>
 <% else -%>
 	<div id="user-bar-action"><%= link_to "log in",  login_path,  { :title => "Log in" } %> /
                               <%= link_to "sign up", signup_path, { :title => "Create an account" } %></div>

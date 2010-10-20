@@ -33,7 +33,7 @@
 		<div id="content">
 			<div id="flashboard">
 				<div class="unit">
-					<div class="column">
+					<div class="fixed column" style="width: 700px">
 						<% flash.each do |key, msg| %>
 						  <%= content_tag :div, msg, :class => "flash", :id => key %>
 						  <% content_tag :script, :type => "text/javascript" do %>

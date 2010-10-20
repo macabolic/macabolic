@@ -20,7 +20,7 @@
 					<img src="<%= my_collection_detail.product.photo.url(:thumb) %>" />
 				</td>
 			    <td valign="top">
-			    	<%= link_to my_collection_detail.product.name, edit_my_collection_detail_path(my_collection_detail) %><br/>
+			    	<%= link_to my_collection_detail.product.name, my_collection_detail_path(my_collection_detail) %><br/>
 					<p id="review_link"><a href="#">Write a review</a> | <a href="#">Ask a question</a></p>
 					<p id="friends_link">
 						<%  @count = number_of_friends_own_this_product(my_collection_detail.product) %>
@@ -88,16 +88,13 @@
 				<% @my_posts.each do |post| %>
 					<tr>
 						<td rowspan="2" valign="top"><img src="<%= post.user.my_profile.photo.url(:small) %>" width="50" height="50" /></td>
-						<td><div id="post_user"><%= post.user.display_name %></div> <div id="post_content"><%= post.content %></div></td>
+						<td><div id="post_content"><%= post.content %></div></td>
 					</tr>
 					<tr>
-						<td><div id="timestamps"><%= calculate_lapse_time(post.created_at) %></div></td>
+						<td>
+							<div id="timestamps"><%= calculate_lapse_time(post.created_at) %> by <%= post.user.display_name %></div>
+						</td>
 					</tr>
-<!--
-					<tr>
-						<td><div id="timestamps"><%= post.created_at %><br/><%= Time.now %></div></td>
-					</tr>
--->
 				<% end %>				
 			</tbody>
 			</table>

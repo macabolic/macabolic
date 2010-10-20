@@ -1,5 +1,18 @@
+# == Schema Information
+# Schema version: 20100923171647
+#
+# Table name: posts
+#
+#  id         :integer         not null, primary key
+#  user_id    :integer
+#  title      :string(255)
+#  content    :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Post < ActiveRecord::Base
-  belongs_to :user
+  belongs_to  :user
   
   # Get my posts together with my friends' posts, and sort in descending order by created_at
   def self.related_to_me(user)

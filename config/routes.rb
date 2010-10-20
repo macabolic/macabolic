@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :reviews
+
   map.resources :posts
 
   map.resources :my_friends
@@ -23,6 +25,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resource :session
 
+  map.resources :my_connection_details do
+    map.resources :reviews
+  end
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
