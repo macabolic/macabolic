@@ -4,23 +4,15 @@
 	</div>
 	<div class="column">
 		<h1><b><%= @my_collection_detail.product.name %></b></h1>
+		<br/>
 		<div id="my_collection_detail_background">
-			<table width="100%">
-				<tr>
-					<td align="right">
-						<p id="review_link"><a href="#">Post a tip</a> | <a href="#">Sell it</a></p>
-					</td>
-				</tr>
-				<tr>
-					<td><p>Purchased in: 1999</p></td>
-				</tr>
-				<tr>
-					<td><p>Purpose: Web surfing</p></td>
-				</tr>
-			</table>
+			<p>
+				<%= @my_collection_detail.product.review_summary.avg_ratings %> based on <%= @my_collection_detail.product.review_summary.number_of_reviews %> reviews.
+			</p>
+			<br/>
 		</div>
 		<div>
-			<p>You have 12 other friends using the same or similar machine(s).</p>
+			<p>You have <%= pluralize(@my_collection_detail.number_of_friends_own_this, 'friend') %> own this.</p>
 			<br/>
 		</div>
 	</div>
@@ -65,57 +57,53 @@
 	</div>
 	<div class="column" id="product_comment">
 		<p class="header">Reviews</p>
-		<div id="review">
-			<table>
-				<thead>
-					<tr>
-						<td></td>
-						<td></td>
-						<td align="right"><%= link_to "Write a Review", new_review_path, :class => "review_button round" %></td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td rowspan="3" valign="top">
-							<img src="<%= current_user.my_profile.photo.url(:small) %>" width="50" height="50">
-						</td>
-						<td>
-							<div id="post_user">Title: xxxxxxxxx xxx!</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="timestamps">10 days ago by Billy Cheng</div>
-						</td>
-						<td>
-							<%= image_tag("star_blue.png") %>
-							<%= image_tag("star_blue.png") %>
-							<%= image_tag("star_blue.png") %>
-							<%= image_tag("star_blue.png") %>
-							<%= image_tag("star_white.png") %>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<div id="post_content">
-								xxxxxxxxxxx xxxxxxxxx xxxxx xxx xxx<br/>
-								xxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxx xxxxxxxxxxx<br/>
-								xxxxxxxxxxxx xxxxx xxxxxxx xxxx xxxxxxxxxxxxxx xxx<br/>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td></td>
-						<td align="right"><p class="vote">12 out of 15 found this useful</p></td>
-						<td align="right">
-							<%= link_to "like", '#', :class => "vote_button round" %>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
+		<p align="right"><%= link_to "Write a Review", new_product_review_path(@my_collection_detail.product), :class => "review_button round" %></p><br/>
+		<% 
+			@reviews = @my_collection_detail.product.reviews
+			@reviews.each do |review| 
+		%>
+		<div id="review_entry">
+			<div class="unit on-3 columns">
+				<div class="fixed column" style="width: 70px">
+					<img src="<%= review.user.my_profile.photo.url(:small) %>" width="50" height="50">			
+				</div>
+				<div class="column">
+					<p>
+						<% 
+							number_of_blue_star = review.rating
+							number_of_white_star = 5 - review.rating 
+
+							number_of_blue_star.times {
+						%>
+								<%= image_tag("star_blue.png") %>				
+						<%
+							}
+
+							number_of_white_star.times {
+						%>
+								<%= image_tag("star_white.png") %>
+						<%		
+							}
+						%>				
+					</p>
+					<p><b><%= review.title %></b></p>
+					<p style="font-size: 10px">Written by <%= review.user.display_name %></p>
+					<p style="font-size: 10px"><%= review.created_at %></p>
+				</div>
+				<div class="column">
+					<p><%= review.content %></p>
+				</div>
+			</div>
 		</div>
+		<% end %>
+		<% if @reviews.size == 0 %>
+			Be the first one to write a review for this product.
+		<% end %>
+		<p align="right"> 
+			<% if !@my_collection_detail.product.reviews.nil? && @my_collection_detail.product.reviews.size > 0 %>
+				<%= link_to 'See all reviews', product_reviews_path(@my_collection_detail.product, :my_collection_detail_id => @my_collection_detail.id) %>
+			<% end %>
+		</p>
 		<hr/><br/>
 		<p class="header">Questions and Answers</p>
 		<br/>

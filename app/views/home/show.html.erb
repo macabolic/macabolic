@@ -1,107 +1,162 @@
 <div class="unit on-3 columns">
 	<div class="fixed column" style="width:280px;">
 		<div id="my_collections">
-			<table>
-			<thead>
-			  <tr>
-				<td><b>My Collections</b></td>
-				<td align="right">
-					<% if !@my_collection_details.nil? && @my_collection_details.size > 0 %>
-						<%= link_to 'See All', my_collections_path %>
-					<% end %>
-				</td>
-			  </tr>
-			</thead>
-			<tbody id="my_collections_body">	
+			<p class="header">My Collections</p>
+			<p class="action" align="right">
+				<% if !@my_collection_details.nil? && @my_collection_details.size > 0 %>
+					<%= link_to 'See All', my_collections_path %>
+				<% end %>	
+			</p>
+			<br/>
 			<% if !@my_collection_details.nil? && @my_collection_details.size > 0 %>
 			<% @my_collection_details.each do |my_collection_detail| %>	
-			  <tr>
-				<td align="center">
-					<img src="<%= my_collection_detail.product.photo.url(:thumb) %>" />
-				</td>
-			    <td valign="top">
-			    	<%= link_to my_collection_detail.product.name, my_collection_detail_path(my_collection_detail) %><br/>
-					<p id="review_link"><a href="#">Write a review</a> | <a href="#">Ask a question</a></p>
-					<p id="friends_link">
-						<%  @count = number_of_friends_own_this_product(my_collection_detail.product) %>
-						<% if @count > 1 %>
-							<u><%= count %> friends</u> own this.
-						<% elsif @count == 0 %>
-							No friend own this.
-						<% else %>
-							<u><%= @count %> friend</u> own this.
-						<% end %>
-					</p>
-				</td>
-			  </tr>
+			<div id="my_collection_entry">
+				<div class="unit on-2 columns">
+					<div class="fixed column" style="width: 80px">
+						<p><img src="<%= my_collection_detail.product.photo.url(:thumb) %>" /></p>
+					</div>
+					<div class="column">
+						<%= link_to my_collection_detail.product.name, my_collection_detail_path(my_collection_detail) %><br/>
+						<p id="review_link"><%= link_to "Write a Review", new_product_review_path(my_collection_detail.product) %> | <a href="#">Ask a question</a></p>
+						<p id="friends_link">
+							<%  @count = my_collection_detail.number_of_friends_own_this %>
+							<% if @count == 0 %>
+								No friend own this.
+							<% else %>
+								<u><%= pluralize(@count, 'friend') %></u> own this.
+							<% end %>
+						</p>
+					</div>
+					<div>
+					
+					</div>
+				</div>
+			</div>
 			<% end %>
 			<% else %>
-			  <tr>
-				<td colspan="2" align="center">You do not have any collection yet.</td>			
-			  </tr>				
+			  <p>You do not have any collection yet.</p>			
 			<% end %>
-			</tbody>
-			</table>
+			<br/>
+			<p class="action" align="right">
+				<%= link_to 'add', my_collections_path %>
+			</p>
 			<!-- %= render :partial => "my_collection_details/index", :collection => @my_collection_details % -->
 		</div>
 		<div id="my_wishlist"> == My Wishlist here == 
 			<table>
 			<thead>
 				<tr>
-					<td>My Friends here</td>
+					<td>My Wishlist here</td>
 				</tr>
 			</thead>
 			<tbody>
-				<% current_user.my_friends.each do |friend| %>
-				<tr>
-					<td><img src="<%= friend.friend.my_profile.photo.url(:small) %>"></td>
-					<td><div id="post_user"><%= friend.friend.display_name %></div></td>
-				</tr>
-				<% end %>
 			</tbody>
 			</table>
 		</div>		
+		<div id="my_friends">
+			<p class="header">My Friends</p><br/>
+			<% form_for(@invite) do |f| %>
+			<div id="invite_friend">
+				<%= f.error_messages %>
+				<%= f.text_field :recipient_email, :size => 50 %>
+				<%= f.submit 'Invite' %>
+			</div>
+			<% end %>
+			<br/>
+			<% current_user.my_friends.each do |friend| %>
+			<div id="my_friend_entry">
+				<div class="unit on-2 columns">
+					<div class="fixed column" style="width:100px;">
+						<!-- TODO: Is it the right condition to handle? -->
+						<% if friend.friend.my_profile %>
+							<img src="<%= friend.friend.my_profile.photo.url(:small) %>">
+						<% else %>
+							<%= image_tag("icon_no_photo_60x60.png", :size => "60x60") %>
+						<% end %>
+					</div>
+					<div class="column">
+						<p id="post_user"><%= friend.friend.display_name %></p>
+					</div>
+				</div>
+			</div>
+			<% end %>
+		</div>		
 	</div>
-	<div class="fixed column" style="width:420px;">
-		<div id="share_my_mind">
-			<table>
-			<thead>
-				<tr>
-					<td colspan="2"><b>Share your thoughts</b></td>
-				</tr>
-				<% form_for(@post) do |f| %>
-				<tr>
-					<td colspan="2">
-					  	<%= f.error_messages %>
-						<%= f.text_field :content %><br/>
-						<%= f.hidden_field :user_id, :value => current_user.id %>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" colspan="2">
-						<%= f.submit 'Share' %>
-					</td>
-				</tr>
-				<% end %>
-			</thead>
-			<tbody>
-				<% @my_posts.each do |post| %>
-					<tr>
-						<td rowspan="2" valign="top"><img src="<%= post.user.my_profile.photo.url(:small) %>" width="50" height="50" /></td>
-						<td><div id="post_content"><%= post.content %></div></td>
-					</tr>
-					<tr>
-						<td>
-							<div id="timestamps"><%= calculate_lapse_time(post.created_at) %> by <%= post.user.display_name %></div>
-						</td>
-					</tr>
-				<% end %>				
-			</tbody>
-			</table>
+	<!-- Second Column -->
+	<div class="fixed column" style="width:350px">
+		<div id="my_dashboard">
+			<p class="header">My Dashboard</p><br/>
+				<div>
+					<div class="unit on-3 columns" style="border-bottom: 1px solid #aaa; padding-top: 5px;  padding-bottom: 5px;">
+						<div class="fixed column" style="width:80px; padding-left: 15px;">
+							<p id="dashboard_title">reviews</p>
+							<p id="dashboard_count">10</p>
+						</div>						
+						<div class="fixed column" style="width:80px; border-left: 1px solid #aaa; padding-left: 5px;">
+							<p id="dashboard_title">tips</p>
+							<p id="dashboard_count">5</p>
+						</div>
+						<div class="fixed column" style="width:80px; border-left: 1px solid #aaa; padding-left: 5px;">
+							<p id="dashboard_title">collections</p>
+							<p id="dashboard_count">0</p>
+						</div>
+					</div>
+					<div class="unit on-3 columns" style="border-bottom: 1px solid #aaa; padding-top: 5px; padding-bottom: 5px;">
+						<div class="fixed column" style="width:80px; padding-left: 15px;">
+							<p id="dashboard_title">reviews</p>
+							<p id="dashboard_count">10</p>
+						</div>						
+						<div class="fixed column" style="width:80px; border-left: 1px solid #aaa; padding-left: 5px;">
+							<p id="dashboard_title">tips</p>
+							<p id="dashboard_count">5</p>
+						</div>
+						<div class="fixed column" style="width:80px; border-left: 1px solid #aaa; padding-left: 5px;">
+							<p id="dashboard_title">collections</p>
+							<p id="dashboard_count">0</p>
+						</div>
+					</div>
+				</div>
 		</div>
+		<br/>
 	</div>
-	<div class="fixed column" style="width:15	0px;">
-		<div id="my_dashboard"> == My Dashboard == </div>
-		<div id="advertisement"> == Advertisement == </div>
+	<div id="right_column" class="fixed column" style="width:270px;">
+		<div id="share_my_mind">
+			<p class="header">
+				Share your thoughts
+			</p>
+			<br/>
+			<% form_for(@post) do |f| %>
+			<div id="share_entry">
+				<!-- div class="unit on-2 columns" -->
+					<!-- div class="column" -->
+					  	<%= f.error_messages %>
+						<%= f.text_field :content, :size => 1000 %>
+						<%= f.hidden_field :user_id, :value => current_user.id %>
+						<%= f.submit 'Share' %>
+					<!-- /div -->
+				<!--/div -->
+			</div>
+			<% end %>
+			<% @my_posts.each do |post| %>
+			<div id="post_entry">
+				<div class="unit on-3 columns">
+					<div class="fixed column" style="width: 60px">
+						<p><img src="<%= post.user.my_profile.photo.url(:small) %>" width="50" height="50" /></p>
+					</div>
+					<div class="fixed column" style="width: 200px">
+						<p id="post_content"><%= post.content %></p>
+						<p id="timestamps"><%= calculate_lapse_time(post.created_at) %> by <%= post.user.display_name %></p>
+					</div>
+				</div>
+			</div>
+			<% end %>
+		</div>
+		<br/>		
+		<div id="things_you_may_be_interested">
+			<p class="header">Thing you may be interested</p><br/>
+		</div>
+		<div id="advertisement">
+			<p class="header">Advertisement</p><br/>
+		</div>
 	</div>
 </div>

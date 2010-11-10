@@ -129,7 +129,7 @@ ul.navigation {
   padding-left: 0px;
   padding-right: 30px;
   // background-image: url("images/rails.png");
-  / /background-repeat: no-repeat;
+  // background-repeat: no-repeat;
   // background-position: top left;
   height: 64px;
 }
@@ -153,7 +153,7 @@ ul.navigation {
 	color: #C52F24;
 }
 
-#post_content {
+.post_content {
 	font-size: 12px;	
 }
 
@@ -163,14 +163,30 @@ ul.navigation {
   color: #AAAAAA;	
 }
 
-#my_collections_body {
-  	padding-left: 30px;
-  	padding-right: 30px;
-  	padding-top: 30px;
-  	padding-bottom: 30px;
+#my_collection_entry {
+	padding-left: 10px;
+  	padding-right: 10px;
+  	padding-top: 10px;
+  	padding-bottom: 10px;
+}
+
+#right_column {
+	padding-left: 10px;
+	border-left: 1px solid #aaa;	
+	border-bottom: 1px solid #aaa;		
+}
+
+#my_dashboard {
+	padding-left: 20px;
+  	padding-right: 20px;
+  	padding-bottom: 20px;
+  	
+	//border-bottom: 1px solid #aaa;	
+	padding-bottom: 20px;
 }
 
 #my_collections {
+	border-right: 1px solid #aaa;	
 	border-bottom: 1px solid #aaa;	
 }
 
@@ -179,14 +195,33 @@ ul.navigation {
   	padding-right: 20px;
   	padding-top: 20px;
   	padding-bottom: 20px;	
+	border-right: 1px solid #aaa;	
+	border-bottom: 1px solid #aaa;	
+}
+
+#my_friends {
+  	// padding-left: 20px;
+  	// padding-right: 20px;
+  	padding-top: 20px;
+  	padding-bottom: 20px;	
+	border-right: 1px solid #aaa;	
+	border-bottom: 1px solid #aaa;	
 }
 
 #share_my_mind {
   	padding-left: 20px;
   	padding-right: 20px;
-  	padding-top: 20px;
   	padding-bottom: 20px;
-	border-left: 1px solid #aaa;			
+}
+
+#share_entry {
+  	padding-bottom: 20px;
+  	margin-bottom: 10px;	
+	border-bottom: 1px solid #aaa;	
+}
+
+#post_entry {
+  	padding-bottom: 5px;	
 }
 
 #my_collection_detail {
@@ -218,6 +253,24 @@ ul.navigation {
   	padding-top: 20px;
   	padding-bottom: 20px;
 	border-bottom: 1px solid #aaa;						
+}
+
+#review_entry {
+	padding-left: 20px;
+  	padding-right: 20px;
+  	padding-top: 20px;
+  	padding-bottom: 20px;
+	border-left: 1px solid #aaa;						
+	border-right: 1px solid #aaa;						
+	border-top: 1px solid #aaa;						
+	border-bottom: 1px solid #aaa;	
+	-moz-border-radius:    8px;
+	-webkit-border-radius: 8px;
+	border-radius:         8px;						
+	margin-bottom: 2px;
+}
+
+#beta_signup {
 }
 
 .header {
@@ -272,6 +325,11 @@ p.review_header {
   //padding: 20px;	
 }
 
+p.action {
+	margin-right: 	15px;
+	margin-bottom: 	15px;
+}
+
 td.review_header {
   display: block;
   text-align: center;
@@ -287,4 +345,19 @@ td.review_header {
   -moz-border-radius:    8px;
   -webkit-border-radius: 8px;
   border-radius:         8px;
+}
+
+#dashboard_title {
+	font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+  	font-size: 10px;
+  	font-weight: thin;
+	margin-bottom: 5px;
+}
+
+#dashboard_count {
+	font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+  	font-size: 30px;
+  	font-weight: bold;
+	color: #AAAAAA;
+	text-align: center;
 }
