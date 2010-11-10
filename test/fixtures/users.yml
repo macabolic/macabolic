@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100923171647
+# Schema version: 20101103162851
 #
 # Table name: users
 #
@@ -16,6 +16,8 @@
 #  activation_code           :string(40)
 #  activated_at              :datetime
 #  identity_url              :string(255)
+#  invitation_id             :integer
+#  invitation_limit          :integer
 #
 
 

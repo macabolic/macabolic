@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101012184635) do
+ActiveRecord::Schema.define(:version => 20101103162851) do
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "sender_id"
+    t.string   "recipient_email"
+    t.string   "token"
+    t.datetime "sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "my_collection_details", :force => true do |t|
     t.integer  "my_collection_id"
@@ -103,12 +112,25 @@ ActiveRecord::Schema.define(:version => 20101012184635) do
     t.datetime "photo_updated_at"
   end
 
+  create_table "review_summaries", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "number_of_reviews"
+    t.float    "avg_ratings"
+    t.integer  "number_of_rating_one"
+    t.integer  "number_of_rating_two"
+    t.integer  "number_of_rating_three"
+    t.integer  "number_of_rating_four"
+    t.integer  "number_of_rating_five"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "reviews", :force => true do |t|
     t.integer  "user_id"
     t.integer  "product_id"
     t.string   "title"
     t.text     "content"
-    t.float    "avg_rating"
+    t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -126,6 +148,8 @@ ActiveRecord::Schema.define(:version => 20101012184635) do
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
     t.string   "identity_url"
+    t.integer  "invitation_id"
+    t.integer  "invitation_limit"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true

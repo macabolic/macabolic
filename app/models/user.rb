@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100923171647
+# Schema version: 20101103162851
 #
 # Table name: users
 #
@@ -16,6 +16,8 @@
 #  activation_code           :string(40)
 #  activated_at              :datetime
 #  identity_url              :string(255)
+#  invitation_id             :integer
+#  invitation_limit          :integer
 #
 
 require 'digest/sha1'
@@ -30,6 +32,9 @@ class User < ActiveRecord::Base
   has_one   :my_profile
   has_many  :my_friends
   has_many  :posts
+  
+  has_many  :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
+  belongs_to :invitation
       
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -44,12 +49,16 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
+  validates_presence_of     :invitation_id, :message => 'is required'
+  validates_uniqueness_of   :invitation_id
+
   before_create :make_activation_code 
+  before_create :set_invitation_limit
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :name, :password, :password_confirmation, :identity_url
+  attr_accessible :login, :email, :name, :password, :password_confirmation, :identity_url, :invitation_token
 
 
   # Activates the user in the database.
@@ -90,6 +99,14 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
+  def invitation_token
+    invitation.token if invitation
+  end
+  
+  def invitation_token=(token)
+    self.invitation = Invitation.find_by_token(token)
+  end
+  
   def display_name
     if my_profile.nil?
       return login 
@@ -107,4 +124,9 @@ class User < ActiveRecord::Base
             self.activation_code = self.class.make_token
       end
   
+    private
+      def set_invitation_limit
+        self.invitation_limit = 5
+      end
+      
 end

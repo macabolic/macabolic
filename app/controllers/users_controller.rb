@@ -14,14 +14,31 @@ class UsersController < ApplicationController
   
   # render new.rhtml
   def new
-    @user = User.new
+    @user = User.new(:invitation_token => params[:invitation_token])
+    @user.email = @user.invitation.recipient_email if @user.invitation
   end
  
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
     success = @user && @user.save
+    
+    # TODO: also create the profile here to avoid unnecessary error.
+    # TODO: the screen flow will need to be adjusted to include the 'My Profile' attributes in the registration page.
+    
     if success && @user.errors.empty?
+      if @user.invitation
+        @my_friend = MyFriend.new
+        @my_friend.user = @user
+        @my_friend.friend = @user.invitation.sender
+        @my_friend.save
+        
+        # On the other hand, need to add me to the one invites me.
+        @your_friend = MyFriend.new
+        @your_friend.user = @user.invitation.sender
+        @your_friend.friend = @user
+        @your_friend.save
+      end
       redirect_back_or_default('/')
       flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
     else

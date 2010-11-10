@@ -1,33 +1,30 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :reviews
+  map.resources :invitations
 
+#  map.resources :reviews
   map.resources :posts
-
   map.resources :my_friends
-
   map.resources :home
   map.resources :my_profiles
   map.resources :my_collection_details
   map.resources :vendors
   map.resources :product_lines
   map.resources :product_categories
-  map.resources :products
+  #map.resources :products
+  map.resources :products, :has_many => :reviews, :shallow => true
   map.resources :my_collections
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
-  map.signup '/signup', :controller => 'users', :action => 'new'
+#  map.signup '/signup', :controller => 'users', :action => 'new'
+  map.signup '/signup/:invitation_token', :controller => 'users', :action => 'new'
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
   
   map.open_id_complete 'session', :controller => 'sessions', :action => 'create', :requirements => { :method => :get }
   
   map.resources :users
   map.resource :session
-
-  map.resources :my_connection_details do
-    map.resources :reviews
-  end
   
   # The priority is based upon order of creation: first created -> highest priority.
 

@@ -1,0 +1,29 @@
+# == Schema Information
+# Schema version: 20101025170952
+#
+# Table name: review_summaries
+#
+#  id                     :integer         not null, primary key
+#  product_id             :integer
+#  number_of_reviews      :integer
+#  avg_ratings            :float
+#  number_of_rating_one   :integer
+#  number_of_rating_two   :integer
+#  number_of_rating_three :integer
+#  number_of_rating_four  :integer
+#  number_of_rating_five  :integer
+#  created_at             :datetime
+#  updated_at             :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+#  column: value

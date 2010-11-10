@@ -18,6 +18,7 @@ class HomeController < ApplicationController
     @my_collection_details = MyCollectionDetail.find(:all, :conditions => ["my_collection_id = ?", @my_collection.id]) if !@my_collection.nil?
     @post = Post.new
     @my_posts = current_user.feeds    
+    @invite = Invitation.new
   end
       
 end
