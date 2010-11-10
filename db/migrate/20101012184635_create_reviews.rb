@@ -5,13 +5,13 @@ class CreateReviews < ActiveRecord::Migration
       t.integer   :product_id
       t.string    :title
       t.text      :content
-      t.float     :avg_rating
+      t.integer   :rating
       
       t.timestamps
-    end
+    end    
   end
 
   def self.down
-    drop_table :reviews
+    drop_table  :reviews
   end
 end

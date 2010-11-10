@@ -22,6 +22,7 @@ class Product < ActiveRecord::Base
   belongs_to              :product_line
   belongs_to              :vendor
   has_many                :reviews
+  has_one                 :review_summary
   
   has_attached_file :photo, :styles => { :small => "150x150>", :thumb => "75x75>" },
                     :url => "/assets/products/:id/:attachment/:style/:basename.:extension",

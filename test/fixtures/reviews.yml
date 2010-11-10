@@ -8,7 +8,7 @@
 #  product_id :integer
 #  title      :string(255)
 #  content    :text
-#  avg_rating :float
+#  rating     :integer
 #  created_at :datetime
 #  updated_at :datetime
 #

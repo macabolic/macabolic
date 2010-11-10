@@ -1,7 +1,7 @@
 <p class="header">Write a Review</p>
-<% form_for(@review) do |f| %>
+<% form_for [@product, @review] do |f| %>
 <%= f.error_messages %>
-<table>
+<table border="0" width="100%">
 	<thead>
 		<tr class="review_header round">
 			<td class="review_header round">
@@ -17,11 +17,8 @@
 						<!-- image -->
 					</div>
 					<div class="column">
-						<%= image_tag("star_white.png") %>
-						<%= image_tag("star_white.png") %>
-						<%= image_tag("star_white.png") %>
-						<%= image_tag("star_white.png") %>
-						<%= image_tag("star_white.png") %>				
+						<p><%= label_tag 'rating' %></p>
+						<%= f.text_field :rating %>
 					</div>
 				</div>
 			</td>
@@ -45,10 +42,12 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td><%= f.submit 'Submit' %></td>
+			<td>
+				<%= f.hidden_field :user_id, :value => current_user.id %>
+				<%= f.submit 'Submit' %>
+			</td>
 		</tr>
 	</tfoot>
 </table>
 <% end %>
 
-<%= link_to 'Back', reviews_path %>
