@@ -1,53 +1,40 @@
-<p class="header">Write a Review</p>
+<p class="header">Write a Review on <%= @product.name %></p><br/>
 <% form_for [@product, @review] do |f| %>
 <%= f.error_messages %>
-<table border="0" width="100%">
-	<thead>
-		<tr class="review_header round">
-			<td class="review_header round">
-				<p class="review_header round">MacBook Pro</p>
-			</td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				<div class="unit on-2 columns">
-					<div class="column">
-						<!-- image -->
-					</div>
-					<div class="column">
-						<p><%= label_tag 'rating' %></p>
-						<%= f.text_field :rating %>
-					</div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div>
-					<p><%= label_tag 'title' %></p>
-					<%= f.text_field :title %>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div>
-					<p><%= label_tag 'review' %></p>
-					<%= f.text_area :content %>
-				</div>
-			</td>
-		</tr>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td>
-				<%= f.hidden_field :user_id, :value => current_user.id %>
-				<%= f.submit 'Submit' %>
-			</td>
-		</tr>
-	</tfoot>
-</table>
+<div id="new_review">
+	<div class="unit on-2 columns">
+		<div class="fixed column" id="product_image" style="width: 80px">
+			<p><img src="<%= @product.photo.url(:thumb) %>" /></p>
+		</div>
+		<div class="column">
+			<table border="0">
+				<tbody>
+					<tr>
+						<td class="row_title"><%= label_tag 'rating' %>: </td>
+						<td>
+							<%= f.select :rating, "<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>" %>
+						</td>
+					</tr>
+					<tr>
+						<td class="row_title"><%= label_tag 'title' %>: </td>
+						<td><%= f.text_field :title, :class => 'review_title' %></td>
+					</tr>
+					<tr>
+						<td class="row_title"><%= label_tag 'review' %>: </td>
+						<td><%= f.text_area :content, :class => 'review_content' %></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class="row_title" colspan="2" align="right">
+							<%= f.hidden_field :user_id, :value => current_user.id %>
+							<%= f.submit 'Submit' %>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
 <% end %>
 

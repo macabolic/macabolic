@@ -1,9 +1,9 @@
 <div class="unit on-2 columns" style="border-bottom: 1px solid #aaa;">
 	<div class="column" id="my_collection_detail" style="width:200px">
-		<img src="<%= @my_collection_detail.product.photo.url(:small) %>" />
+		<img src="<%= @product.photo.url(:small) %>" />
 	</div>
 	<div class="column">
-		<h1><b><%= @my_collection_detail.product.name %></b></h1>
+		<h1><b><%= @product.name %></b></h1>
 		<br/>
 		<div id="my_collection_detail_background">
 			<p>
@@ -11,6 +11,7 @@
 			</p>
 			<br/>
 		</div>
+		<% if @my_collection_detail %>
 		<div>
 			<p>You have <%= pluralize(@my_collection_detail.number_of_friends_own_this, 'friend') %> own this.</p>
 			<br/>
@@ -23,10 +24,11 @@
 			</p>
 			<br/>
 		</div>
+		<% end %>
 	</div>
 </div>
 <div style="padding-top: 10px">
-	<p align="right"><%= link_to "Write a Review", new_product_review_path(@my_collection_detail.product), :class => "review_button round" %></p>
+	<p align="right"><%= link_to "Write a Review", new_product_review_path(@product), :class => "review_button round" %></p>
 </div>
 <br/>
 <% @reviews.each do |review| %>

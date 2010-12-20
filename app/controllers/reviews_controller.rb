@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.xml
   def index
-    @my_collection_detail = MyCollectionDetail.find(params[:my_collection_detail_id])
+    @my_collection_detail = MyCollectionDetail.find(params[:my_collection_detail_id]) if params[:my_collection_detail_id]
     @product = Product.find(params[:product_id])
     @reviews = @product.reviews
 
@@ -66,8 +66,9 @@ class ReviewsController < ApplicationController
         end
         
         # Update Review_Summary
+        prev_total_ratings = @review_summary.avg_ratings * @review_summary.number_of_reviews
         @review_summary.number_of_reviews += 1
-        @review_summary.avg_ratings = (@review_summary.avg_ratings + @review.rating) / @review_summary.number_of_reviews
+        @review_summary.avg_ratings = (prev_total_ratings + @review.rating) / @review_summary.number_of_reviews
         if @review.rating == 1
           @review_summary.number_of_rating_one += 1
         elsif @review.rating == 2
@@ -84,7 +85,7 @@ class ReviewsController < ApplicationController
         
         @review_summary.save
         
-        format.html { redirect_to(@review, :notice => 'Review was successfully created.') }        
+        format.html { redirect_to( product_reviews_path(@product), :notice => 'Review was successfully created.') }        
         format.xml  { render :xml => @review, :status => :created, :location => @review }
       else
         format.html { render :action => "new" }

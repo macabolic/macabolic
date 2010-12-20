@@ -330,6 +330,11 @@ p.action {
 	margin-bottom: 	15px;
 }
 
+td.row_title {
+	vertical-align: top;
+	padding: 5px;
+}
+
 td.review_header {
   display: block;
   text-align: center;
@@ -360,4 +365,15 @@ td.review_header {
   	font-weight: bold;
 	color: #AAAAAA;
 	text-align: center;
+}
+
+input[type=text].review_title {
+	width  : 30em;
+	*width : 11.9em;	
+}
+
+textarea.review_content
+{
+	width  : 30.25em;
+	*width : 11.9em;
 }
