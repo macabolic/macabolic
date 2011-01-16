@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+billy_google:
+  first_name: Billy
+  last_name: Cheng
+  email_address: billy.sf.cheng@gmail.com
+
+billy_yahoo:
+  first_name: Billy
+  last_name: Cheng
+  email_address: sfcheng0922@yahoo.com
