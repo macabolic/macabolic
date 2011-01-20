@@ -1,0 +1,26 @@
+#header { 
+	width: 1000px;
+	background-color: #0d0d0d;
+	padding: 0px; 
+	color: #333; 
+}
+
+#footer { 
+	width: 1000px;
+	background-color: #0d0d0d;
+	padding: 0px; 
+	color: #333; 
+}
+
+#macabolic-description {
+	width: 990px;
+	background-color: #f8f7f3;
+#	background-color: #f6f1de;
+	padding: 5px;
+}
+
+#subscription-form {
+	width: 990px;
+	background-color: #f6f1de;
+	padding: 5px;
+}
