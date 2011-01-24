@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Macabolic::Application.config.secret_token = '4e93dc42834feb2e4de098b578ea63e67b82c2c22e00c32def9be473deca4e549bec9d5628403ce9820e176a4481fcc04177253035e26e7a1c67267ebe0b1556'
+Macabolic::Application.config.secret_token = '6f09e41f807c1f5036bd1640b9c6bd98a828bc8519418e4de521d9bffb07f1a4ee0bd6498c48aedc668ecbb1f066b43db79a57144a43e94a29844c98bf5eea46'

@@ -1,4 +1,0 @@
-NOTE
-
-== Start-up server
-rails server --port=3001 --binding=0.0.0.0 --environment=development
