@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Macabolic</title>
+  <%= stylesheet_link_tag :all, :recursive => 'true' %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+	
+<!-- HEADER AREA -->
+<div id="header">
+	<%= image_tag "/images/logo.png" %>
+</div>
+
+<!-- BODY AREA -->
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<div id="body-content" class="unit on-2 columns">
+	<div class="fixed column" style="width:150px;">
+		<%= link_to 'Products', admin_products_path %><br/>
+		<%= link_to 'Product Lines', admin_product_lines_path %><br/>
+		<%= link_to 'Vendors', admin_vendors_path %>
+	</div>
+	<div class="column">
+		<%= yield %>
+	</div>
+</div>
+
+<!-- FOOTER AREA -->
+<div id="footer">
+	<%= image_tag "/images/footer.png" %>
+</div>
+
+</body>
+</html>

@@ -1,2 +1,16 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div id="home-header">
+	<p id="slogan">Macabolic is a social network dedicated to mac lovers.</p>
+	<p id="sub-slogan">Share your product collections and make new friends</p>
+</div>
+<div align="center">
+	<div id="feature">
+		<ul class="home-featurebutton">
+			<li class="home-featurebutton"><a href="http://www.google.com">Feature Tour</a></li>
+		</ul>
+	</div>
+	<div id="sign-up-form">
+		<!-- A form here with First Name, Last Name, Email Address -->
+		<!-- %= render 'registrations/form' % -->
+		<%= link_to 'Sign up', new_user_registration_path %>
+	</div>
+</div>

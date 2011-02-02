@@ -1,0 +1,52 @@
+#header {
+	height: 80px;
+  	padding: 0px 0px 0px 0px;
+	margin-top: -8px;
+	margin-left: 0px;
+	background-color: #121D21; 
+	color: #333;
+}
+
+#body-content {
+	height: 500px;
+}
+
+#footer {
+	background-color: #121D21; 
+}
+
+#home-header {
+	background-color: #ffffff;
+	text-align: center;
+	border-bottom: solid;
+}
+
+#slogan p {
+	text-align: center;
+  	font-weight: bold;
+  	padding: 5px 5px 5px 15px;
+  	font-size: 30px;
+  	margin: -7px;
+  	margin-bottom: 0px;
+}
+
+#sign-up-form {
+	text-align: left;
+	width: 400px;
+	padding: 5px 5px 5px 5px;
+	margin-top: 70px;
+	border: 2px solid;
+	border-color: #E8E8E8;
+}
+
+#account-info {
+	text-align: left;
+	width: 300px;
+}
+
+#my-collections {
+	text-align: left;
+	width: 600px;
+	border: 2px solid;
+	border-color: #E8E8E8;
+}

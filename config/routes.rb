@@ -1,5 +1,19 @@
 Macabolic::Application.routes.draw do
+  devise_for :users, :path_names => { :sign_in => 'login', 
+                                      :sign_out => 'logout', 
+                                      :sign_up => 'register' }
+
+  #resources :product_lines
+  #resources :vendors
+  #resources :products
+  resources :members
+  resources :authentications
+  #resources :registrations
+
   get "home/index"
+  
+  match 'profile/:id' => 'members#show'
+  match '/auth/:provider/callback' => 'authentications#create'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -47,6 +61,11 @@ Macabolic::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  namespace :admin do
+    resources :vendors
+    resources :products
+    resources :product_lines
+  end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

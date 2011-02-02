@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<div id="vendor-container">
+<table>
+  <tr>
+	<td><b>Name</b></td>
+    <td><%= @vendor.name %></td>
+    <td><%= link_to 'Edit', edit_admin_vendor_path(@vendor) %></td>
+    <td><%= link_to 'Destroy', [:admin, @vendor], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+</table>
+</div>
+<%= link_to 'Back', admin_vendors_path %>
+
+<hr/>
+
+<% if @vendor.products.size == 0 %>
+<p id="no_result_found">No product in this vendor.</p>
+<% else %>
+<div id="product-container">
+	<%= render :template => 'admin/products/index' %>
+</div>
+<% end %>
+

@@ -7,6 +7,15 @@ gem 'rails', '3.0.3'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
+# Install Paperclip
+gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
+
+# Install Devise
+gem 'devise'
+
+# Install Omniauth authentication module
+gem 'omniauth'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

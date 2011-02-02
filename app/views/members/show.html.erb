@@ -1,0 +1,32 @@
+<div>
+	<div id="my-collections" align="left">
+		<!-- 
+			You have no collection now.
+			
+			1. Add <== /products/search
+		-->
+		<h3>You have no collections in your profile yet. Add some now.</h3>
+	</div>	
+	<div id="account-info-container" align="right">
+		<div id="account-info">
+		Account Info | <%= link_to 'Edit', edit_user_registration_path(current_user) %>
+		<!-- Default Photo -->
+		<%= image_tag avatar_url(current_user) %>
+		<p>
+		  <b>First name:</b>
+		  <%= current_user.first_name %>
+		</p>
+
+		<p>
+		  <b>Last name:</b>
+		  <%= current_user.last_name %>
+		</p>
+
+		<p>
+		  <b>Email address:</b>
+		  <%= current_user.email %>
+		</p>
+		</div>
+	</div>
+</div>
+<!-- <%= link_to 'Back', members_path %> -->
