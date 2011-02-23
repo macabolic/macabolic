@@ -6,7 +6,7 @@
       <% for authentication in @authentications %>
         <div class="authentication">
           <%= image_tag "auth/#{authentication.provider}_32.png", :size => "32x32" %>
-          <div class="provider"><%= authentication.provider.titleize %></div>
+          <div class="provider"><%= authentication.provider_name %></div>
           <div class="uid"><%= authentication.uid %></div>
           <%= link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
         </div>
@@ -33,7 +33,7 @@
   Google
 </a>
 <a href="/auth/open_id" class="auth_provider">
-  <%= image_tag "auth/openid_64.png", :size => "64x64", :alt => "OpenID" %>
+  <%= image_tag "auth/open_id_64.png", :size => "64x64", :alt => "OpenID" %>
   OpenID
 </a>
 <div class="clear"></div>

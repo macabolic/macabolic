@@ -6,5 +6,14 @@ class Product < ActiveRecord::Base
                           :styles => { :medium => "300x300>", :thumb => "100x100>" },
                           :url => "/assets/products/:attachment/:id/:style/:filename",
                           :path => ":rails_root/public/assets/products/:attachment/:id/:style/:filename"
-                          
+
+  #attr_accessible         :name
+  
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110201093548) do
+ActiveRecord::Schema.define(:version => 20110213181531) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20110201093548) do
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "year_of_birth"
+    t.date     "birthday"
     t.string   "email",                               :default => "", :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
     t.string   "password_salt",                       :default => "", :null => false
@@ -83,6 +83,21 @@ ActiveRecord::Schema.define(:version => 20110201093548) do
 
   create_table "vendors", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wishlist_items", :force => true do |t|
+    t.integer  "wishlist_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wishlists", :force => true do |t|
+    t.string   "name",         :default => "My Wishlist"
+    t.integer  "user_id"
+    t.boolean  "default_list", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

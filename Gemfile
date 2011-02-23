@@ -16,6 +16,12 @@ gem 'devise'
 # Install Omniauth authentication module
 gem 'omniauth'
 
+# Install will_paginate do perform pagination in Admin page
+gem 'will_paginate', '3.0.pre2'
+
+# Include jQuery for doing some AJAX in front end
+gem 'jquery-rails'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

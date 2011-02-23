@@ -1,5 +1,52 @@
-<h1>New registration</h1>
+<div id="home-header">
+	<p id="slogan">Macabolic is a social network dedicated to mac lovers.</p>
+	<p id="sub-slogan">Share your product collections and make new friends</p>
+</div>
+<div align="center">
+	<div id="feature">
+		<ul class="home-featurebutton">
+			<li class="home-featurebutton"><a href="http://www.google.com">Feature Tour</a></li>
+		</ul>
+	</div>
+	<div id="sign-up-form">
+		<h2>Sign up</h2>
 
-<%= render 'form' %>
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+		  	<%= devise_error_messages! %>
+		
+			<div class="field">
+		    	<%= f.label :first_name %><br />
+		    	<%= f.text_field :first_name %>
+		  	</div>
+		  	<div class="field">
+		    	<%= f.label :last_name %><br />
+		    	<%= f.text_field :last_name %>
+		  	</div>
+		  
+			<p><%= f.label :email %><br />
+		  	<%= f.text_field :email %></p>
+		<% if @user.password_required? %>
+		  	<p><%= f.label :password %><br />
+		  	<%= f.password_field :password %></p>
+<!--
+		  	<p><%= f.label :password_confirmation %><br />
+		  	<%= f.password_field :password_confirmation %></p>
+-->
+		<% end %>
+			<p><%= f.label :year_of_birth %><br />
+				<%= f.date_select 	:birthday, 
+									:start_year => Time.now.year - 100, 
+									:end_year => Time.now.year,
+									:discard_day => true,
+									:discard_month => true,
+									:include_blank => true,
+									:prompt => { :year => "Choose a year" },
+									:default => { :year => "Choose a year" }
+				%>
+			</p>
+		  	<p><%= f.submit "Sign up" %></p>
+		<% end %>
 
-<%= link_to 'Back', registrations_path %>
+		<%= render :partial => "devise/shared/links" %>
+	</div>
+</div>

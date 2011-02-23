@@ -14,7 +14,7 @@ class MembersController < ApplicationController
   # GET /members/1.xml
   def show
 #    @member = Member.find(params[:id])
-    @member = Member.where(:email_address => current_user.email)
+#    @member = Member.where(:email_address => current_user.email)
 
     respond_to do |format|
       format.html # show.html.erb

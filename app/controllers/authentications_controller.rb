@@ -13,12 +13,29 @@ class AuthenticationsController < ApplicationController
   # POST /authentications
   # POST /authentications.xml
   def create
-    auth = request.env["omniauth.auth"]
-    current_user.authentications.find_or_create_by_provider_and_uid(auth['provider'], auth['uid'])
-    flash[:notice] = "Authentication successful from #{auth['provider']}"
-    #redirect_to authentications_url
-    @member = Member.where(:email_address => current_user.email)
-    redirect_to member_path(@member.id)
+    omniauth = request.env["omniauth.auth"]
+    authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+    if authentication
+      flash[:notice] = "Signed in successfully."
+      sign_in_and_redirect(:user, authentication.user)
+    elsif current_user  
+      current_user.authentications.create!(omniauth['provider'], omniauth['uid'])
+      flash[:notice] = "Authentication successful from #{auth['provider']}"
+      #redirect_to authentications_url
+      @member = Member.where(:email_address => current_user.email)
+      redirect_to member_path(@member.id)
+    else
+      user = User.new
+      #user.authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+      user.apply_omniauth(omniauth)
+      if user.save
+        flash[:notice] = "Signed in successfully from #{auth['provider']}"
+        sign_in_and_redirect(:user, user)
+      else
+        session[:omniauth] = omniauth.except('extra')
+        redirect_to new_user_registration_url
+      end
+    end
   end
 
   # DELETE /authentications/1

@@ -1,19 +1,26 @@
 Macabolic::Application.routes.draw do
-  devise_for :users, :path_names => { :sign_in => 'login', 
-                                      :sign_out => 'logout', 
-                                      :sign_up => 'register' }
+  devise_for  :users, 
+              :path_names => {  :sign_in => 'login', 
+                                :sign_out => 'logout' },
+                                #:sign_up => 'register' },
+              :controllers => { :registrations => 'registrations' }
 
   #resources :product_lines
   #resources :vendors
-  #resources :products
+  resources :products
   resources :members
   resources :authentications
+  resources :wishlists
+  resources :wishlist_items
   #resources :registrations
 
   get "home/index"
   
   match 'profile/:id' => 'members#show'
   match '/auth/:provider/callback' => 'authentications#create'
+
+# TODO
+#  match '/auth/failure' => 'something to handle this error'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

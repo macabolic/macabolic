@@ -3,7 +3,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     create_table(:users) do |t|
       t.string  :first_name
       t.string  :last_name
-      t.integer :year_of_birth  
+      t.date    :birthday  
       t.database_authenticatable :null => false
       t.recoverable
       t.rememberable

@@ -1,0 +1,51 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if @products.nil? %>
+<table>
+	<tr>
+		<td><b>Sorry but your search didn't return any result.</b></td>
+	</tr>
+</table>
+<% else %>
+
+<% @default_wishlist = show_default_wishlist(current_user) %>
+<% @wishlist_items = @default_wishlist.wishlist_items %>
+
+<table class="sortable">
+	<tr>
+    	<th>Name</th>
+    	<th>Vendor</th>
+    	<th>Product Line</th>
+<!--		<th></th> -->
+		<th></th>
+  	</tr>
+<% @products.each do |product| %>
+  	<tr>
+    	<td><%= product.name %></td>
+    	<td><%= product.vendor.name %></td>
+    	<td><%= product.product_line.name %></td>
+		<td>
+			<% added = false %>
+			<% @wishlist_items.each do |anItem| %>
+			<% 		if product.id == anItem.product_id %>
+			<%			added = true %>
+			<% 		end 			 %>
+			<% end %>
+			<div id="wishlist_link">
+				<div id="add_wishlist_item_link">
+				<% if added %>
+					<b>Added</b>
+				<% else %>
+				<%= link_to 'Add to Wishlist', wishlist_items_path(:wishlist_item => { :wishlist_id => @default_wishlist.id, :product_id => product.id }), :method => 'post', :remote => true %>
+				<% end %>
+				</div>
+			</div>
+		</td>
+  	</tr>
+<% end %>
+</table>
+
+<br />
+<%= will_paginate @products %>
+<% end %>

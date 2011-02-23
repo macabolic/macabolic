@@ -1,4 +1,13 @@
 <div>
+	<div>
+		<%= form_tag products_path, :method => 'get', :id => 'products_search' do %>
+			<p>
+				<%= text_field_tag :search, params[:search] %>
+				<%= submit_tag "Search", :name => nil %>
+			</p>
+			<div id="products"><%= render 'products/products' %></div>
+		<% end %>
+	</div>
 	<div id="my-collections" align="left">
 		<!-- 
 			You have no collection now.
@@ -7,11 +16,27 @@
 		-->
 		<h3>You have no collections in your profile yet. Add some now.</h3>
 	</div>	
+	<div id="my-collections" align="left">
+		<!-- 
+			You have no collection now.
+			
+			1. Add <== /products/search
+		-->
+		<% if current_user.has_default_wishlist? %>
+			<h3>My Default List: </h3>
+		<% else %>
+			<h3>You have no wishlists in your profile yet. Add some now.</h3>
+		<% end %>
+	</div>	
 	<div id="account-info-container" align="right">
 		<div id="account-info">
 		Account Info | <%= link_to 'Edit', edit_user_registration_path(current_user) %>
 		<!-- Default Photo -->
 		<%= image_tag avatar_url(current_user) %>
+		<p>
+		  <b>ID:</b>
+		  <%= current_user.id %>
+		</p>
 		<p>
 		  <b>First name:</b>
 		  <%= current_user.first_name %>
