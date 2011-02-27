@@ -21,7 +21,7 @@ class Wishlist < ActiveRecord::Base
   end
   
   def self.default_wishlist(user)
-#    where("user_id = ? AND default_lst = ?", user.id, true)
+#    where("user_id = ? AND default_list = ?", user.id, true)
     where("user_id = ?", user.id).first
   end
 end

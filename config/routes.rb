@@ -1,4 +1,8 @@
 Macabolic::Application.routes.draw do
+  resources :my_collection_items
+
+  resources :my_collections
+
   devise_for  :users, 
               :path_names => {  :sign_in => 'login', 
                                 :sign_out => 'logout' },

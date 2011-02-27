@@ -1,0 +1,25 @@
+<h1>Listing my_collection_items</h1>
+
+<table>
+  <tr>
+    <th>My collection</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @my_collection_items.each do |my_collection_item| %>
+  <tr>
+    <td><%= my_collection_item.my_collection_id %></td>
+    <td><%= my_collection_item.user_id %></td>
+    <td><%= link_to 'Show', my_collection_item %></td>
+    <td><%= link_to 'Edit', edit_my_collection_item_path(my_collection_item) %></td>
+    <td><%= link_to 'Destroy', my_collection_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New My collection item', new_my_collection_item_path %>

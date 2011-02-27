@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many  :authentications
   has_many  :wishlists, :dependent => :destroy
+  has_one   :my_collection
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable

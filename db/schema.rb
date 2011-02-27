@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110213181531) do
+ActiveRecord::Schema.define(:version => 20110226103147) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -26,6 +26,20 @@ ActiveRecord::Schema.define(:version => 20110213181531) do
     t.string   "email_address"
     t.string   "password"
     t.date     "birthday"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "my_collection_items", :force => true do |t|
+    t.integer  "my_collection_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "my_collections", :force => true do |t|
+    t.string   "name",       :default => "My Collection"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

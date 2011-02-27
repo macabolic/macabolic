@@ -21,9 +21,7 @@
 <!--		<th></th> -->
 		<th></th>
   	</tr>
-<% count = 0 %>
 <% @products.each do |product| %>
-<% count += 1 %>
   	<tr>
     	<td><%= product.name %></td>
     	<td><%= product.vendor.name %></td>
@@ -35,8 +33,8 @@
 			<%			added = true %>
 			<% 		end 			 %>
 			<% end %>
-			<div id="wishlist_link_<%= count %>">
-				<div id="add_wishlist_item_link_<%= count %>">
+			<div id="wishlist_link">
+				<div id="add_wishlist_item_link">
 				<% if added %>
 					<b>Added</b>
 				<% else %>
