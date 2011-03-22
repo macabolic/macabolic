@@ -1,33 +1,33 @@
-<div class="unit columns">
 
-<%= form_for(@registration) do |f| %>
-<div class="fixed column" style="width: 350px;">
-  <div class="field">
-    <%= f.label :first_name %>: <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %>: <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :email_address %>: <%= f.text_field :email_address %>
-  </div>
-  <div class="actions">
-	<%= submit_tag("Register") %>
-  </div>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix();
+        
+        //Input Form placeholder
+        $('input:text').focus(function(){
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+        })
+        .blur(function(){
+            if ($.trim(this.value) === "") {
+                this.value = (this.defaultValue ? this.defaultValue: "")
+            }
+        });
+    }); 
+</script>
+
+<div class="wrapper-homecontent">
+	<%= image_tag "/images/sitewide/home-or.png", :alt => "home-or", :width => "186", :height => "10", :class => "or" %>
+	<div class="home-signup">
+		<div class="home-signup-th">Sign Up Now</div>
+			<%= form_for(@registration, :html => { :class => "home-signupform" }) do |f| %>
+				<%= f.text_field :first_name %>
+				<%= f.text_field :last_name %>
+				<%= f.text_field :email_address %>
+				<span class="home-signupbutton"><%= submit_tag "Register", :class => "home-signupbutton" %></span>                
+			<% end %>
+	</div>
 </div>
-
-<div class="elastic column">
-  <% if @registration.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this registration from being saved:</h2>
-
-      <ul>
-      <% @registration.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-</div>
-
-<% end %>

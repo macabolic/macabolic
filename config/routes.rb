@@ -6,7 +6,7 @@ Macabolic::Application.routes.draw do
   # Not working as expected, cannot route back to /admin/registrations
   # But it is ok for now as it is only an admin function.
   scope "/admin" do
-    resources :registrations, :except => [:create]
+    resources :registrations, :except => [:create], :as => "admin_registrations"
   end
 
 
