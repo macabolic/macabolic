@@ -118,10 +118,54 @@ position: absolute;
 top: -37px;
 left: 153px;
 }
+
+.registration-thankyou {
+	width: 496px;
+	height: 235px;
+	margin: 15px 0px 15px 0px;
+	border: 1px solid #e3d7a9;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	background: url(../images/backgrounds/home-formbgwhite.png) repeat-x white;
+	background-position: top;
+}
+
+.registration-thankyou-th {
+	background-color: #595959;
+	-webkit-border-radius: 8px 8px 0px 0px;
+	-moz-border-radius: 8px 8px 0px 0px;
+	height: 32px;
+	border-bottom: 1px solid #4b4b4b;
+	background: url(../images/sitewide/home-th.png);
+}
+
+
+.home-notify-me {
+width: 496px;
+height: 435px;
+margin: 45px 0px 40px 0px;
+//margin: 85px 0px 40px 0px; -- original 
+border: 1px solid #e3d7a9;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+background: url(../images/backgrounds/home-formbgwhite.png) repeat-x white;
+background-position: top;
+}
+
+.home-notify-me-th {
+background-color: #595959;
+-webkit-border-radius: 8px 8px 0px 0px;
+-moz-border-radius: 8px 8px 0px 0px;
+height: 32px;
+border-bottom: 1px solid #4b4b4b;
+background: url(../images/sitewide/home-th.png);
+}
+
 .home-signup {
 width: 496px;
 height: 435px;
-margin: 85px 0px 40px 0px;
+margin: 45px 0px 40px 0px;
+//margin: 85px 0px 40px 0px; -- original 
 border: 1px solid #e3d7a9;
 -webkit-border-radius: 8px;
 -moz-border-radius: 8px;

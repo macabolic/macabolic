@@ -17,11 +17,11 @@
     <td><%= registration.email_address %></td>
     <td><%= link_to 'Show', admin_registration_path(registration) %></td>
     <td><%= link_to 'Edit', edit_admin_registration_path(registration) %></td>
-    <td><%= link_to 'Destroy', admin_registration_path(registration), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to('Destroy', admin_registration_path(registration), :confirm => 'Are you sure?', :method => :delete) %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Registration', new_admin_registration_path %>
+<%= link_to 'New Registration', root_url %>

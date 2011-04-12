@@ -120,6 +120,7 @@ ul.home-buttons2 {
     position:relative;
     top:55px
 }
+
 .home-featurebutton li {
   	background:url(../images/buttons/home-featuretour.jpg) no-repeat left top;
 	width: 189px;
@@ -254,7 +255,25 @@ text-align: center;
 text-shadow: 0px -1px 0px #1c1c1c;
 padding: 15px 0px 0px 0px;
 }
+
+.home-notify-me-th {
+font-size: 26px;
+//text-transform: uppercase;
+font-weight: bold;
+color: #fff;
+text-align: center;
+text-shadow: 0px -1px 0px #1c1c1c;
+padding: 15px 0px 0px 0px;
+}
    
+.home-notify-me-body p {
+font-size: 16px;
+color: #888888;
+text-align: left;
+padding: 30px 30px 30px 30px;
+}
+
+
 /* Form - Homepage
 ----------------------------------------------------------------------*/
 .home-signupform {
@@ -692,3 +711,5 @@ html ul.tabs2 li.active, html ul.tabs2 li.active a:hover  {
 	border-top: 1px solid #fff;
 }
 input {color:#A3A3A3}
+
+

@@ -3,7 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>macabolic</title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag "layout.css" %>
+  <%= stylesheet_link_tag "macabolic.css" %>
+  <%= stylesheet_link_tag "reset.css" %>
+  <%= stylesheet_link_tag "scaffold.css" %>
+  <%= stylesheet_link_tag "styles.css" %>
   <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
 <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -21,12 +25,15 @@
 			<div class="wrapper-top">
 				<div class="logo-holder"><h1>Macabolic</h1></div>
 				<div class="nav-holder">
+<!--					
 					<ul id="nav">
 						<li><a href="#" title="About" accesskey="1">About</a></li>
 						<li><a href="#" title="Contact" accesskey="2">Contact</a></li>
 						<li><a href="#" title="Login" accesskey="3">Login</a></li>
 					</ul>
+-->
 				</div>
+				
 			</div>
 		</div>
 
@@ -34,14 +41,7 @@
 		
 		<div class="push"></div>
 	</div>    
-	<div class="footer sticky">
-	    <div class="wrapper-top">
-	    	<p class="footerleft">Copyright 2011 Macabolic</p>
-	    	<p class="footerright">Follow Macabolic: &nbsp;
-				<a href="#"><%= image_tag "/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;
-				<a href="#"><%= image_tag "/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %></a>
-	    	</p>
-	    </div>
-	</div>
+	
+	<%= render 'layouts/footer' %>
 </body>
 </html>

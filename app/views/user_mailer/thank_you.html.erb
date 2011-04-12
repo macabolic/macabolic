@@ -1,15 +1,53 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-	</head>
-	<body>
-		<h1>Thank you for joining Macabolic.com, <%= @registered_user.full_name %></h1>
-		<p>
-			While we are working very hard to get the site out, you can help spreading the word to others who are Mac fans. We will notify you once it is ready.
-		</p>
-		<p>
-			The Macabolic Team
-		</p>
-	</body>	
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<%= stylesheet_link_tag "http://10.0.1.108:3001/stylesheets/email-layout.css" %>
+	<%= stylesheet_link_tag "http://10.0.1.108:3001/stylesheets/email-styles.css" %>
+</head>
+<body>		
+<div class="wrapper">
+	<div class="wrapper-top">
+		<div id="black-strip">
+			<div class="logo-holder"><h1>Macabolic</h1></div>
+		</div>
+	</div>
+
+	<div class="wrapper-top">
+		<div id="grey-strip">
+			<p class="footerright">Follow Macabolic: &nbsp;
+				<a href="#"><%= image_tag "http://10.0.1.108:3001/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;
+				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
+					<%= image_tag "http://10.0.1.108:3001/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %></a>
+			</p>
+		</div>
+	</div>
+	
+<!-- Content -->		
+	<div class="wrapper-content">
+		<div class="registration-thankyou">
+			<div class="registration-thankyou-th">Thank you.</div>
+			<div class="registration-thankyou-body">
+				<p>
+					Dear <%= @registered_user.full_name %>,<br/><br/>
+
+					Thank you for your interest!<br/><br/>
+
+					We are working very hard to get the site out, you can help spreading the word to others who are Mac fans. We will notify you once it is ready.<br/><br/>
+
+					The Macabolic Team<br/>
+				</p>
+				<br/>
+			</div>
+		</div>
+	</div>
+	
+	<div class="footer sticky">
+		<div class="wrapper-top">
+			<p class="footerright">© 2011 Macabolic</p>
+		</div>
+	</div>
+	  
+</div>  
+</body>	
 </html>

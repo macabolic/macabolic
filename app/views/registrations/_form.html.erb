@@ -20,14 +20,13 @@
 </script>
 
 <div class="wrapper-homecontent">
-	<%= image_tag "/images/sitewide/home-or.png", :alt => "home-or", :width => "186", :height => "10", :class => "or" %>
-	<div class="home-signup">
-		<div class="home-signup-th">Sign Up Now</div>
+	<div class="home-notify-me">
+		<div class="home-notify-me-th">Notify Me</div>
 			<%= form_for(@registration, :html => { :class => "home-signupform" }) do |f| %>
 				<%= f.text_field :first_name %>
 				<%= f.text_field :last_name %>
 				<%= f.text_field :email_address %>
-				<span class="home-signupbutton"><%= submit_tag "Register", :class => "home-signupbutton" %></span>                
+				<span class="home-signupbutton"><%= submit_tag "Submit", :class => "home-signupbutton" %></span>                
 			<% end %>
 	</div>
 </div>
