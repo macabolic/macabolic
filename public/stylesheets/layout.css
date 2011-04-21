@@ -419,19 +419,34 @@ background-color: #bc4902!important;
 -moz-border-radius: 6px 0px 0px 6px;
 }
 
-
 #home-on {
-background-color: #fff!important;
--webkit-border-radius: 6px 0px 0px 6px;
--moz-border-radius: 6px 0px 0px 6px;
+	background-color: #fff!important;
+	-webkit-border-radius: 6px 0px 0px 6px;
+	-moz-border-radius: 6px 0px 0px 6px;
 }
 #home-on a {
-text-shadow: none!important;
-color: #0f181b!important;
+	text-shadow: none!important;
+	color: #0f181b!important;
 }
+
 #nav-signedin #home-on a:hover {
-background-color: #fff!important;
+	background-color: #fff!important;
 }
+
+#nav-item-on {
+	background-color: #fff!important;
+}
+
+#nav-item-on a {
+	text-shadow: none!important;
+	color: #0f181b!important;
+}
+
+#nav-signedin #nav-item-on a:hover {
+	background-color: #fff!important;
+}
+
+
 .wrapper-top #search-form {
     float:right;
     display:inline;

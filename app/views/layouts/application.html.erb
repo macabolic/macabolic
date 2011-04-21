@@ -2,20 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>macabolic</title>
-  <%= stylesheet_link_tag "layout.css" %>
-  <%= stylesheet_link_tag "macabolic.css" %>
-  <%= stylesheet_link_tag "reset.css" %>
-  <%= stylesheet_link_tag "scaffold.css" %>
-  <%= stylesheet_link_tag "styles.css" %>
-  <%= javascript_include_tag :all %>
-  <%= csrf_meta_tag %>
+	<title>Macabolic - <%= yield(:title) || "The best way to meet the Mac community" %></title>
+  	<%= stylesheet_link_tag "layout.css" %>
+  	<%= stylesheet_link_tag "macabolic.css" %>
+  	<%= stylesheet_link_tag "reset.css" %>
+  	<%= stylesheet_link_tag "scaffold.css" %>
+  	<%= stylesheet_link_tag "styles.css" %>
+  	<%= javascript_include_tag :all %>
+  	<%= csrf_meta_tag %>
 <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 <!--[if IE 6]>
-<link rel="stylesheet" media="screen" type="text/css" href="furniture/css/ie6.css">
+	<%= stylesheet_link_tag "ie6.css" %>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" media="screen" type="text/css" href="furniture/css/ie7.css">
+	<%= stylesheet_link_tag "ie7.css" %>	
 <![endif]-->
 
 </head>

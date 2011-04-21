@@ -1,0 +1,247 @@
+<%= stylesheet_link_tag "nivo-slider-wishlist.css" %>
+
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//Default Action
+	$(".tab_content2").hide(); //Hide all content
+	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content2:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+	//On Click Event
+	$("ul.tabs2 li").click(function() {
+		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content2").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+
+    //Input Form placeholder
+    $('input:text').focus(function(){
+        if(this.value === this.defaultValue) {
+            this.value = "";
+        } else {
+            this.select();
+        }
+    })
+    .blur(function(){
+        if ($.trim(this.value) === "") {
+            this.value = (this.defaultValue ? this.defaultValue: "")
+        }
+    });
+});
+</script>
+
+
+<body class="subpage">
+
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+				<ul id="nav-signedin">
+	     		<li class="homerounded"><%= link_to 'Home', '/demo/members/home' %></li>
+	     		<li><a href="#">Collections</a></li>
+<!--	
+	     		<li><a href="#">Friends</a></li>
+-->
+	     		<li id="nav-item-on"><%= link_to 'Profile', '/demo/members/profile' %></li>
+	        <li id="search-form">
+	        	<form>
+	           	<input type="text" value="Search">
+	           </form>
+	        </li>
+				</ul>
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">	
+			
+			<div class="tabbed-content-area">	
+				<ul class="tabs"> 
+	        <li><a href="#tab1">Recent Questions</a></li> 
+	        <li><a href="#tab2">Recent Answers</a></li> 
+	        <li><a href="#tab3">Recent Tips</a></li> 
+	        <li><a href="#tab4">Friends Recent Collections</a></li> 
+	    	</ul> 
+    
+        <div id="tab1" class="tab_content"> 
+	        <ul class="list-recent-questions">
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+					</ul> 
+        </div> 
+        <div id="tab2" class="tab_content"> 
+        	<ul class="list-recent-questions">
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+					</ul> 
+        </div> 
+        <div id="tab3" class="tab_content"> 
+	        <ul class="list-recent-questions">
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+					</ul> 
+        </div>
+        <div id="tab4" class="tab_content"> 
+	        <ul class="list-recent-questions">
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+						<li><a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a></li>
+					</ul> 
+        </div> 
+    
+				<div class="left"><p>Displaying 1 - 11 of 345</p></div>
+				<div class="right">
+					<div id="pagination">
+						<ul>
+							<li class="current">1</li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><span>of</span></li>
+							<li><a href="#">11</a></li>
+							<li><a href="#">»</a></li>
+						</ul>
+					</div>
+				</div>		
+			</div>		
+		</div>
+		
+		<div class="sidebar">
+	    <div class="sidebar-content account-info">
+	      <div class="sidebar-header">
+	          Account Info
+	          <a href="#" title="Edit">Edit</a>
+	      </div>
+				<div class="sidebar-inner">
+			    <p class="username">
+						<%= image_tag "/images/membershomepage/me.png", :alt => "Me", :width => "55", :height => "55" %>
+		        <strong>Username</strong>
+		        <span>Dave Williamson</span>
+			    </p>
+				  <p>
+		        <strong>Email</strong>
+				  	dave.williamson@macabolic.com
+				  </p>
+					<p>
+				    <strong>Location</strong>
+				    United Kingdom
+					</p>
+			    <p>
+		        <strong>Gender</strong>
+		        Male
+			    </p>
+			    <p><a href="#" title="Delete Account" class="delete-account">Delete Account</a></p>
+				</div>
+			</div>
+        
+			<div class="wishlist">
+				<div id="slider" class="nivoSlider">
+					<%= image_tag "/images/membershomepage/wishlist-image.jpg", :alt => "Wishlist item", :width => "200", :height => "130", :title => "#htmlcaption" %>
+					<%= image_tag "/images/membershomepage/wishlist-image2.jpg", :alt => "Wishlist item 2", :width => "200", :height => "130", :title => "#htmlcaption2" %>
+       	</div>
+            
+				<div id="htmlcaption" class="nivo-html-caption">
+					<h3>Dave's Wishlist 2011</h3>
+					<span>by <a href="#">Dave Williamson</a></span>
+					<p>This is a brief description about my wishlist shown above. It will only be about three lines long...</p>
+				</div>
+            
+				<div id="htmlcaption2" class="nivo-html-caption">
+					<h3>Billy's Wishlist</h3>
+					<span>by <a href="#">BillyCheng</a></span>
+					<p>This is a brief description about my wishlist shown above. It will only be about three lines long...</p>
+				</div>				
+			</div>
+		</div>
+ 	</div>
+
+</body>
+ 
+    <script type="text/javascript">
+$(window).load(function() {
+    $('#slider').nivoSlider({
+        effect:'fade', //Specify sets like: 'fold,fade,sliceDown'
+        slices:15,
+        animSpeed:500, //Slide transition speed
+        pauseTime:15000,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:true, //Next & Prev
+        directionNavHide:false, //Only show on hover
+        controlNav:false, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:true, //Force manual transitions
+        captionOpacity:1.0, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){}, //Triggers after all slides have been shown
+        lastSlide: function(){}, //Triggers when last slide is shown
+        afterLoad: function(){} //Triggers when slider has loaded
+    });
+});
+</script>

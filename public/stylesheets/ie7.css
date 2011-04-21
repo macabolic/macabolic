@@ -1,0 +1,87 @@
+*:first-child+html .group {
+min-height: 1px;
+
+.home-signup {
+width: 496px;
+height: 435px;
+margin: 85px 0px 40px 0px!important;
+border: 1px solid #e3d7a9;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+background: white!important;
+}
+
+.or {
+position: absolute;
+top: 45px!important;
+left: 153px!important;
+}
+
+.home-featurebutton li {
+  	background:url(../images/buttons/home-featuretour.jpg) no-repeat left top;
+	width: 189px;
+	height: 47px;
+	display: block;
+	overflow: hidden;
+	margin: 0px 0px 0px 0px;
+	text-align: center;
+	margin: 0 auto;
+	position: absolute;
+	top: 121px!important;
+	left: 393px;
+}
+.home-featurebutton li:hover {
+  	background:url(../images/buttons/home-featuretour.jpg) no-repeat left top;
+	background-position: 0 -47px;
+}
+.home-featurebutton li a {
+	width: 189px;
+	height: 47px;
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	text-decoration: none;
+	padding-top: 13px;
+	text-shadow: 0px -1px 0px #385c05;
+}
+
+.subpage .home-signup {
+width: 496px;
+height: 435px;
+margin: 40px 0px 40px 0px;
+border: 1px solid #e3d7a9;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+background: white!important;
+}
+
+.subpage .home-signup {
+width: 496px;
+height: 435px;
+margin: 50px 0px 40px 0px!important;
+border: 1px solid #e3d7a9;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+background: white!important;
+}
+
+.featuretour-signupbutton-bottom li {
+  	background:url(../images/buttons/featuretour-bottomcta.jpg) no-repeat left top;
+	width: 155px;
+	height: 53px;
+	display: block;
+	overflow: hidden;
+	margin: -73px 0px 0px 0px!important;
+	text-align: center;
+	float: right;
+}
+
+#grey-strip-signedin li {
+display: inline;
+border-right: 1px solid #984515;
+/*background-color: blue;*/
+height: 49px;
+float: left;
+width: 20px;
+}

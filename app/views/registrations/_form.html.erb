@@ -23,9 +23,9 @@
 	<div class="home-notify-me">
 		<div class="home-notify-me-th">Notify Me</div>
 			<%= form_for(@registration, :html => { :class => "home-signupform" }) do |f| %>
-				<%= f.text_field :first_name %>
-				<%= f.text_field :last_name %>
-				<%= f.text_field :email_address %>
+				<%= f.text_field :first_name %><% if !@registration.errors[:first_name].empty? %><span id="error_explanation"><%= @registration.errors[:first_name] %></span><% end %>
+				<%= f.text_field :last_name %><% if !@registration.errors[:last_name].empty? %><span id="error_explanation"><%= @registration.errors[:last_name] %></span><% end %>
+				<%= f.text_field :email_address %><% if !@registration.errors[:email_address].empty? %><span id="error_explanation"><%= @registration.errors[:email_address] %></span><% end %>
 				<span class="home-signupbutton"><%= submit_tag "Submit", :class => "home-signupbutton" %></span>                
 			<% end %>
 	</div>

@@ -2,9 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>macabolic</title>
+  <title>Macabolic - <%= yield(:title) || "The best way to meet the Mac community" %></title>
   <%= stylesheet_link_tag "layout.css" %>
   <%= stylesheet_link_tag "macabolic.css" %>
+  <%= stylesheet_link_tag "nivo-slider.css" %>
   <%= stylesheet_link_tag "reset.css" %>
   <%= stylesheet_link_tag "scaffold.css" %>
   <%= stylesheet_link_tag "styles.css" %>
@@ -12,10 +13,10 @@
   <%= csrf_meta_tag %>
 <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 <!--[if IE 6]>
-<link rel="stylesheet" media="screen" type="text/css" href="furniture/css/ie6.css">
+  <%= stylesheet_link_tag "ie6.css" %>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" media="screen" type="text/css" href="furniture/css/ie7.css">
+  <%= stylesheet_link_tag "ie7.css" %>
 <![endif]-->
 
 </head>
@@ -23,17 +24,6 @@
 	<div class="wrapper">
 		<%= render 'layouts/header' %>
 		
-		<div id="grey-strip">
-			<div class="wrapper-top">
-				<h2>A new way to share among <span>Mac</span> lovers.</h2>
-				<h3>Share your collections and make recommendations</h3>
-<!--				
-					<ul class="home-featurebutton">
-						<li class="home-featurebutton"><a href="http://www.google.com">Feature Tour</a></li>
-					</ul>
--->
-			</div>
-		</div>
 
 		<%= yield %>
 		

@@ -8,10 +8,13 @@ Macabolic::Application.routes.draw do
   scope "/admin" do
     resources :registrations, :except => [:create], :as => "admin_registrations"
   end
-
-
+  
   get "welcome/index"
-
+  match "feature-tour" => "welcome#show"
+  match "demo/members/home" => "welcome#members_home"
+  match "demo/members/profile" => "welcome#members_profile"
+  match "demo/products/detail" => "welcome#product_detail"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

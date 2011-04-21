@@ -163,7 +163,7 @@ ul.home-buttons2 {
 	text-align: center;
 }
 .home-signupbutton input:hover {
-  	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
+  background:url(../images/buttons/home-signup.jpg) no-repeat left top;
 	background-position: 0 -42px;
 }
 
@@ -277,23 +277,23 @@ padding: 30px 30px 30px 30px;
 /* Form - Homepage
 ----------------------------------------------------------------------*/
 .home-signupform {
-padding: 27px;
+	padding: 27px;
 }
 
 .home-signupform input {
-height: 38px;
-line-height: 38px;
-width: 424px;
-border: 1px solid #b7b7b7;
--webkit-border-radius: 6px;
--moz-border-radius: 6px;
-background: url(../images/backgrounds/home-formbg.png) repeat-x;
-background-position: top;
-margin: 0px 0px 14px 0px;
-font-size: 20px;
-color: #131e22;
-font-family: Arial;
-padding: 0px 8px 0px 8px;
+	height: 38px;
+	line-height: 38px;
+	width: 424px;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	background: url(../images/backgrounds/home-formbg.png) repeat-x;
+	background-position: top;
+	margin: 0px 0px 14px 0px;
+	font-size: 20px;
+	color: #131e22;
+	font-family: Arial;
+	padding: 0px 8px 0px 8px;
 }
 
 .home-signupform input[type="submit"] {
@@ -310,31 +310,16 @@ padding: 0px 8px 0px 8px;
 	text-align: center;
 }
 
-.home-signupform input:hover {
+.home-signupform input[type="submit"]:hover {
 	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
 	background-position: 0 -42px;
 }
 
 .home-signupform input:focus {
--webkit-transition:background-color 0.5s linear;
--moz-transition:background-color 0.5s linear;
-background-color: #fef6d6;
+	-webkit-transition:background-color 0.5s linear;
+	-moz-transition:background-color 0.5s linear;
+	background-color: #fef6d6;
 }
-
-.home-signupform input:hover {
-  	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
-	width: 173px;
-	height: 42px;
-	border: 0px solid #b7b7b7;
-	display: block;
-	font-size: 16px;
-	font-weight: bold;
-	color: #fff;
-	overflow: hidden;
-	margin: 22px 0px 0px 0px;
-	text-align: center;
-}
-
 
 label {
 font-size: 10px;
@@ -390,15 +375,15 @@ line-height: 17px;
 /* Members Homepage Styles
 ----------------------------------------------------------------------*/
 #nav-signedin {
-padding: 0px;
-margin: 15px 0px 0px 0px;
-height: 49px;
-width: 100%;
-background-color: #c94d01;
--webkit-border-radius: 6px;
--moz-border-radius: 6px;
-background: url(../images/backgrounds/mh-navbarbg.jpg) repeat-x;
--webkit-box-shadow: 0px 2px 1px #c8c8c8;
+	padding: 0px;
+	margin: 15px 0px 0px 0px;
+	height: 49px;
+	width: 100%;
+	background-color: #c94d01;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	background: url(../images/backgrounds/mh-navbarbg.jpg) repeat-x;
+	-webkit-box-shadow: 0px 2px 1px #c8c8c8;
 }
 
 .profiledetails ul {

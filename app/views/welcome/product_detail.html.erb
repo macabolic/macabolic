@@ -1,0 +1,280 @@
+<% title 'Product Detail - Apple iPhone 4' %>
+<link rel="stylesheet" href="furniture/js/nivo-slider-wishlist.css" type="text/css" media="screen" />
+
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//Default Action
+	$(".tab_content3").hide(); //Hide all content
+	$("ul.tabs3 li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content3:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+	//On Click Event
+	$("ul.tabs3 li").click(function() {
+		$("ul.tabs3 li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content3").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+    
+    //Input Form placeholder
+    $('input:text').focus(function(){
+        if(this.value === this.defaultValue) {
+            this.value = "";
+        } else {
+            this.select();
+        }
+    })
+    .blur(function(){
+        if ($.trim(this.value) === "") {
+            this.value = (this.defaultValue ? this.defaultValue: "")
+        }
+    });
+    
+});
+</script>
+
+<body class="subpage productpage">
+	
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<ul id="nav-signedin">
+	   		<li class="homerounded" id="home-on"><%= link_to 'Home', '/demo/members/home' %></li>
+	   		<li><a href="#">Collections</a></li>
+	   		<li><a href="#">Friends</a></li>
+	   		<li><%= link_to 'Profile', '/demo/members/profile' %></li>       
+        <li id="search-form">
+            <form>
+                <input type="text" value="Search">
+            </form>
+        </li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">
+			<div class="product-item sidebar-content">
+				<div class="product-image">
+					<%= image_tag "/images/product/iphone.jpg", :alt => "iPhone" %>
+				</div>
+				<div class="product-detail">
+					<h3>Apple iPhone 4</h3>
+					<p>This is a short description about the product in question. It would probably be about this length with room for a few buttons underneath. This is a short description about the product in question. It would probably be about this length with room for a few buttons underneath. This is a short description about.</p>
+					<p>
+					<a class="button-green" id="own-this" href="" title="Own this">I Own This</a>
+					<a class="button-green" id="add-wishlist" href="" title="Add to Wishlist">Add To Wishlist</a>
+					</p>
+				</div>
+				<br class="clear" />
+			</div>
+        
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+        	<li><a href="#tab1">Questions &amp; Answers</a></li> 
+        	<li><a href="#tab2">Reviews</a></li> 
+    		</ul> 
+    
+        <div id="tab1" class="tab_content"> 
+	        <div class="answers-tabs">
+	          <div class="answers-breadcrumb">
+	              <a href="#" title="back">Back to Q &amp; A &gt;</a>
+	              <span>How much is an Iphone 4?</span>                    
+	          </div>
+            <div class="questions-block">
+                <div class="questions-img"><img src="/images/membershomepage/me.png" alt="me" width="64" height="64"></div>
+                <div class="questions-content">
+                    <h3>How much is an iPhone 4? I've heard you can get them on Pay &amp; Go contracts now.Is this true?</h3>
+                    <p>Asked by <a href="#" title="user">Willsmith727</a> - 2 days ago</p>
+                </div>
+                <div class="clear"></div>
+            </div>
+						<ul class="answers-block">
+							<li>
+								<img src="" alt="user" width="64" height="64">
+							  <div class="answers-content">
+									<p><a href="#" title="username">Joebloggs28</a> - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua.</p>
+									<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua.</p>
+									<div class="answers-meta">
+									  Posted 1 day ago
+									  <strong>Was this helpfull?</strong>
+									  <a href="#" title="yes" class="yes">15</a>
+									  <a href="#" title="no" class="no">5</a>
+									</div>
+							   </div>
+							</li>
+							<li>
+						  	<img src="" alt="user" width="64" height="64">
+						   	<div class="answers-content">
+									<p><a href="#" title="username">Joebloggs28</a> - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua.</p>
+									<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua.</p>
+									<div class="answers-meta">
+									    Posted 1 day ago
+									    <strong>Was this helpfull?</strong>
+									    <a href="#" title="yes" class="yes">15</a>
+									    <a href="#" title="no" class="no">5</a>
+									</div>
+						   	</div>
+							</li>
+							<li>
+						  	<img src="" alt="user" width="64" height="64">
+						   	<div class="answers-content">
+									<p><a href="#" title="username">Joebloggs28</a> - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua.</p>
+									<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua.</p>
+									<div class="answers-meta">
+									    Posted 1 day ago
+									    <strong>Was this helpfull?</strong>
+									    <a href="#" title="yes" class="yes">15</a>
+									    <a href="#" title="no" class="no">5</a>
+									</div>
+						   	</div>
+							</li>
+						</ul>
+        	</div> 
+        </div> 
+        <div id="tab2" class="tab_content"> 
+        	<ul class="list-recent-questions product-tabs">
+						<li>
+	            <div>
+								<a href="#">Willsmith727</a> reviewed <a href="#"><strong>an iPad?</strong></a>
+							</div>
+	            <div class="answer-wrapper">
+								<a href="#" title="Answer" class="answer-button">Answer</a> <span>15 answers already posted</span>
+							</div>
+          	</li>
+						<li>
+	            <div>
+								<a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a>
+							</div>
+	            <div class="answer-wrapper">
+								<a href="#" title="Answer" class="answer-button">Answer</a> <span>15 answers already posted</span>
+							</div>
+          	</li>
+						<li>
+	            <div>
+								<a href="#">Willsmith727</a> asked the question: <a href="#"><strong>How much is an iPad?</strong></a>
+							</div>
+	            <div class="answer-wrapper">
+								<a href="#" title="Answer" class="answer-button">Answer</a> <span>15 answers already posted</span>
+							</div>
+          	</li>
+					</ul> 
+        </div>    
+				
+				<div class="left"><p>Displaying 1 - 11 of 345</p></div>
+				<div class="right">
+					<div id="pagination">
+						<ul>
+						<li class="current">1</li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><span>of</span></li>
+						<li><a href="#">11</a></li>
+						<li><a href="#">»</a></li>
+						</ul>
+					</div>
+				</div>				
+			</div>
+		</div>
+		
+		<div class="sidebar">
+    <div class="sidebar-content" id="product-stat">
+	    <div class="sidebar-header">Product Stats</div>
+	    <div class="sidebar-inner">
+	      <p>
+          Friends Who Own This
+          <strong>10</strong>
+	      </p>
+	      <p>
+          Friends Who Wish This
+          <strong>6</strong>
+	      </p>
+	      <p>
+          Reviews
+          <strong>22</strong>
+	      </p>
+        <p style="margin-bottom:1px;">
+	        Rating
+	        <ul class='star-rating'>
+	            <li><a href='#' title='Rate this 1 star out of 5' class='one-star'>1</a></li>
+	            <li><a href='#' title='Rate this 2 stars out of 5' class='two-stars'>2</a></li>
+	            <li><a href='#' title='Rate this 3 stars out of 5' class='three-stars'>3</a></li>
+	            <li><a href='#' title='Rate this 4 stars out of 5' class='four-stars'>4</a></li>
+	            <li><a href='#' title='Rate this 5 stars out of 5' class='five-stars'>5</a></li>
+	        </ul>
+        </p>
+        <p>
+	        Tips
+	        <strong>34</strong>
+        </p>
+			</div>
+		</div>
+		<!-- #product-stat -->
+            
+		<div id="product-tips" class="sidebar-content">
+			<div class="sidebar-header">
+		    Tips
+		    <ul class="tabs3">
+	        <li><a href="#popular" title="Popular">Popular</a></li>
+	        <li><a href="#recent" title="Recent">Recent</a></li>
+		    </ul>
+			</div>
+	    <div class="sidebar-inner">
+	      <ul id="popular" class="tab_content3">
+	        <li>
+	          <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+	          Added by <a href="#" title="username">Willsmith727</a>
+	        </li>
+	        <li>
+	          <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+	          Added by <a href="#" title="username">Willsmith727</a>
+	        </li>
+	        <li>
+	          <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+	          Added by <a href="#" title="username">Willsmith727</a>
+	        </li>
+	      </ul>       
+        <ul id="recent" class="tab_content3">
+	        <li>
+	          <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+	          Added by <a href="#" title="username">Willsmith727</a>
+	        </li>
+	        <li>
+	          <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+	          Added by <a href="#" title="username">Willsmith727</a>
+	        </li>
+	        <li>
+	          <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+	          Added by <a href="#" title="username">Willsmith727</a>
+	        </li>
+        </ul>
+	    </div>
+		</div>	
+	</div>
+	
+</body>
