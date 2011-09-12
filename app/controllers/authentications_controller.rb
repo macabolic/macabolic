@@ -22,8 +22,7 @@ class AuthenticationsController < ApplicationController
       current_user.authentications.create!(omniauth['provider'], omniauth['uid'])
       flash[:notice] = "Authentication successful from #{auth['provider']}"
       #redirect_to authentications_url
-      @member = Member.where(:email_address => current_user.email)
-      redirect_to member_path(@member.id)
+      redirect_to member_path(current_user.id)
     else
       user = User.new
       #user.authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])

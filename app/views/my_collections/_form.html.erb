@@ -1,25 +1,25 @@
-<%= form_for(@my_collection) do |f| %>
-  <% if @my_collection.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@my_collection.errors.count, "error") %> prohibited this my_collection from being saved:</h2>
+<script type="text/javascript">
+function size(t) {
+	a = t.value.split('\n');
+	b=1;
+	for (x=0;x < a.length; x++) {
+ 		if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols);
+ 	}
 
-      <ul>
-      <% @my_collection.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	b+= a.length;
+	if (b > t.rows) t.rows = b;
+};
+</script>
+<% 
+	@my_collection = MyCollection.new
+	@my_collection.user = user
+%>
+<%= form_for MyCollection.new do |f| %>
+	<label for="tiptitle">Name</label><%= f.text_field :name, :class => "text" %>
+    <%= f.label :description %><%= f.text_area :description, :cols => 35, :rows => 5, :class=> "answer_area", :onKeyUp => "size(this);" %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<%= hidden_field :my_collection, :user_id %>
+	<div class="actions">
+		<%= f.submit 'Submit', :class => "submit-tip-button" %>
+	</div>
 <% end %>

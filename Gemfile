@@ -20,13 +20,20 @@ gem 'omniauth'
 gem 'will_paginate', '3.0.pre2'
 
 # Include jQuery for doing some AJAX in front end
-gem 'jquery-rails'
+#gem 'jquery-rails'
+gem 'jquery-rails', '>= 1.0.3'
+
+# Gravatar API
+gem 'gravatar-ultimate'
 
 # Use unicorn as the web server
 # gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
+
+# Use Sunspot for full-text search
+gem 'sunspot_rails'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'

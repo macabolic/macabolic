@@ -6,8 +6,12 @@ class Admin::ProductsController < ApplicationController
   # GET /products
   # GET /products.xml
   def index
-    @products = Product.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 10, :page => params[:page])
-    
+    #@products = Product.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 10, :page => params[:page])
+    @search = Product.search do
+      fulltext params[:search]
+    end
+    @products = @search.results
+    logger.info "Products: #{@products}"
 #    respond_to do |format|
 #      format.html # index.html.erb
 #      format.xml  { render :xml => @products }

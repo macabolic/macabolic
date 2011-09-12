@@ -1,13 +1,11 @@
-<h1>Listing Products</h1>
 
 <%= form_tag admin_products_path, :method => 'get', :id => 'products_search' do %>
 	<p>
-		<%= text_field_tag :search, params[:search] %>
+		<%= text_field_tag :search, params[:search], :autocomplete => 'off' %>
 		<%= submit_tag "Search", :name => nil %>
 	</p>
 	<div id="products"><%= render 'products' %></div>
 <% end %>
-
 
 <!-- product.released_at.strftime("%B %e, %Y") -->
 <%= link_to 'New Product', new_admin_product_path %>

@@ -14,15 +14,27 @@ Macabolic::Application.configure do
   config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+    
+  # Action Mailer Configuration
   config.action_mailer.default_url_options = { :host => 'localhost:3001' }
+  
+  # Don't care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => 'macabolic.com',
+    :user_name            => 'general.support@macabolic.com',
+    :password             => 'nichetec',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+  
 end
 

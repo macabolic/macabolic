@@ -1,12 +1,59 @@
-<h2>Forgot your password?</h2>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix();
+		
+        //Input Form placeholder
+        $('input:text').focus(function(){
+						this.style.color = '#131e22';
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+        })
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+        .blur(function(){
+            if ($.trim(this.value) === "") {
+                this.value = (this.defaultValue ? this.defaultValue: "")
+								this.style.color = '#a3a3a3';
+            }
+        });
 
-  <p><%= f.label :email %><br />
-  <%= f.text_field :email %></p>
+    }); 
+</script>
 
-  <p><%= f.submit "Send me reset password instructions" %></p>
-<% end %>
+<% title 'Forgot your password?' %>
+<% resource.email = 'Email' %>
 
-<%= render :partial => "devise/shared/links" %>
+<div id="grey-strip">
+	<div class="wrapper-top">
+		<%= render 'layouts/tagline' %>
+	</div>
+</div>
+
+<div class="wrapper-homecontent">
+	
+	<% if resource.errors.empty? %>
+	<div class="home-signup">
+	<% else %>
+	<div class="home-signup-with-error">
+	<% end %>
+		<div class="home-signup-th">Forgot your password?</div>
+
+		<div class="form_contents">
+			<h4>Can't remember your password?</h4> 
+			<p>Enter your email address below and we will send you the instruction to reset your password.</p>
+		</div>
+
+		<%= registration_error_messages! %>
+
+		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "home-signupform" }) do |f| %>
+	  		<%= f.text_field :email %>
+			
+			<span class="home-signupbutton">
+				<%= submit_tag "Reset password", :class => "home-signupbutton" %>
+			</span>  
+		<% end %>
+	</div>
+
+</div>

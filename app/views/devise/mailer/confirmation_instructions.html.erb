@@ -1,5 +1,55 @@
-<p>Welcome <%= @resource.email %>!</p>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<%= stylesheet_link_tag "http://beta.macabolic.com/stylesheets/email-layout.css" %>
+	<%= stylesheet_link_tag "http://beta.macabolic.com/stylesheets/email-styles.css" %>
+</head>
+<body>		
+<div class="wrapper">
+	<div class="wrapper-top">
+		<div id="black-strip">
+			<div class="logo-holder">
+				<a href="http://www.macabolic.com"><h1>Macabolic</h1></a>
+			</div>
+		</div>
+	</div>
 
-<p>You can confirm your account through the link below:</p>
+	<div class="wrapper-top">
+		<div id="grey-strip">
+			<p class="footerright">Follow Macabolic: &nbsp;
+				<a href="#"><%= image_tag "http://beta.macabolic.com/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;
+				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
+					<%= image_tag "http://beta.macabolic.com/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %></a>
+			</p>
+		</div>
+	</div>
+	
+<!-- Content -->		
+	<div class="wrapper-content">
+		<div class="registration-thankyou">
+			<div class="registration-thankyou-th">Thank you for joining Macabolic</div>
+			<div class="registration-thankyou-body">
+				<p>
+					Dear <%= @resource.full_name %>,<br/><br/>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+					You can confirm your account through the link below:<br/><br/>
+
+					<%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %><br/><br/>
+					
+					The Macabolic Team<br/>
+				</p>
+				<br/>				
+			</div>
+		</div>
+	</div>
+	
+	<div class="footer sticky">
+		<div class="wrapper-top">
+			<p class="footerright">© 2011 Macabolic</p>
+		</div>
+	</div>
+	  
+</div>  
+</body>	
+</html>

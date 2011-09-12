@@ -1,41 +1,21 @@
 class MembersController < ApplicationController
-  # GET /members
-  # GET /members.xml
-  def index
-    @members = Member.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @members }
-    end
-  end
 
   # GET /members/1
   # GET /members/1.xml
   def show
-#    @member = Member.find(params[:id])
-#    @member = Member.where(:email_address => current_user.email)
-
+    @user = User.find(params[:id])
+    @activities = @user.all_activities
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @member }
     end
   end
 
-  # GET /members/new
-  # GET /members/new.xml
-  def new
-    @member = Member.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @member }
-    end
-  end
-
   # GET /members/1/edit
   def edit
-    @member = Member.find(params[:id])
+    #@member = Member.find(params[:id])
+    @user = User.find(params[:id])
+    @invitation = Invitation.new
   end
 
   # POST /members
@@ -57,15 +37,17 @@ class MembersController < ApplicationController
   # PUT /members/1
   # PUT /members/1.xml
   def update
-    @member = Member.find(params[:id])
+    #@member = Member.find(params[:id])
+    @user = User.find(params[:id])
 
     respond_to do |format|
-      if @member.update_attributes(params[:member])
-        format.html { redirect_to(@member, :notice => 'Member was successfully updated.') }
+      if @user.update_attributes(params[:user])
+#        format.html { redirect_to(@user, :notice => 'Member was successfully updated.') }
+        format.html { redirect_to(edit_member_path(@user), :notice => "Your info was successfully updated.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @member.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -81,4 +63,41 @@ class MembersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def profile
+    @user = User.find(params[:id])
+    @activities = @user.activities
+    
+    respond_to do |format|
+      format.html # profile.html.erb
+      format.xml  { render :xml => @member }
+    end
+  end
+
+  def collections
+    @user = User.find(params[:id])
+    @my_collections = @user.my_collections
+    #.paginate	:page => params[:page], 
+    #                                                        :per_page => 10,
+    #                                                        :order => 'created_at DESC'
+    @my_collection_items = @user.my_collection_items
+    #.paginate	:page => params[:page], 
+    #                                                          :per_page => 10,
+    #                                                          :order => 'created_at DESC'
+
+    respond_to do |format|
+      format.html # collections.html.erb
+      format.xml  { render :xml => @member }
+    end
+  end
+
+#  def profile_picture
+#    @user = User.new
+#    @user.email = current_user.email
+#    respond_to do |format|
+#      format.html # profile_picture.html.erb
+#      format.xml  { render :xml => @member }
+#    end
+#  end
+    
 end

@@ -1,3 +1,4 @@
+/*
 body { background-color: #fff; color: #333; }
 
 body, p, ol, ul, td {
@@ -19,24 +20,32 @@ a:hover { color: #fff; background-color:#000; }
 div.field, div.actions {
   margin-bottom: 10px;
 }
-
+*/
 #notice {
   color: green;
 }
-
+/*
 .field_with_errors {
   padding: 2px;
   background-color: red;
   display: table;
 }
+*/
+div.field_with_errors input {
+	border: 2px solid #c5060b;
+	background-color: #f0f0f0;
+}
 
 #error_explanation {
-  width: 450px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
+  	width: 324px;
+  	border: 2px solid #cc6824;
+	margin: 15px 0px 14px 80px;
+	padding: 8px 8px 8px 8px;	
+  	background-color: #fef6d6;
+	font-weight: bold;
+	font-family: Arial;
+	color: #7d7d7d;
+	float: left;	
 }
 
 #error_explanation h2 {
@@ -51,6 +60,35 @@ div.field, div.actions {
 }
 
 #error_explanation ul li {
-  font-size: 12px;
-  list-style: square;
+  	font-size: 12px;
+  	//list-style: square;
+	list-style: none;
 }
+
+#error_explanation-sidebar {
+	width: 180px;
+	float: left;
+	background-color:#000;
+}
+
+#error_explanation-content {
+	background: white;
+	border: 1px solid #e3d7a9;
+	overflow: hidden;
+	margin-bottom:24px;
+	-webkit-border-radius: 6px;
+	-webkit-box-shadow: 0px 2px 1px #ece8d5;
+	background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(0.01, rgb(248,248,248)),
+    	color-stop(0.05, rgb(255,255,255))
+	);
+	background-image: -moz-linear-gradient(
+    	center bottom,
+    	rgb(248,248,248) 1%,
+    	rgb(255,255,255) 5%
+	);
+}
+

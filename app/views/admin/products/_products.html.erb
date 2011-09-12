@@ -2,6 +2,7 @@
 <%= hidden_field_tag :sort, params[:sort] %>
 
 <table class="sortable">
+<% if @products && @products.size > 0 %>	
   <tr>
     <th><%= sortable "name" %></th>
     <th>Vendor</th>
@@ -20,8 +21,13 @@
     <td><%= link_to 'Edit', edit_admin_product_path(product) %></td>
     <td><%= link_to 'Destroy', [:admin, product], :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
+<% 
+	end 
+else
+%>
+
 <% end %>
 </table>
 
 <br />
-<%= will_paginate @products %>
+<%#= will_paginate @products %>

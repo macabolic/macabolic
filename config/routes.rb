@@ -1,27 +1,83 @@
 Macabolic::Application.routes.draw do
-  resources :my_collection_items
 
-  resources :my_collections
+  resources :friendships
+  resources :activities
+
+  # Questions
+  resources :questions do
+    resources :answers
+  end
+  
+  # Answers
+  resources :answers do
+    member do
+      get 'vote'
+    end
+  end
+  
+  # Invitations
+  resources :invitations do
+    member do
+      get 'accept/:invitation_token' => "invitations#show"
+    end
+  end
+  
+  # Reviews
+  resources :reviews do
+    member do
+      get 'vote'
+    end
+  end
+  
+  # My Collections
+  resources :my_collections do    
+    member do
+      get 'vote'
+    end
+    
+    resources :my_collection_items
+  end
+
+  # My Collection Items
+  resources :my_collection_items do
+    resources :products
+  end
 
   devise_for  :users, 
               :path_names => {  :sign_in => 'login', 
                                 :sign_out => 'logout' },
                                 #:sign_up => 'register' },
-              :controllers => { :registrations => 'registrations' }
+              :controllers => { :registrations => 'registrations' } do
+     get 'users/sign_up/:invitation_token' => "registrations#new"           
+  end
 
-  #resources :product_lines
-  #resources :vendors
-  resources :products
-  resources :members
+  # Products
+  resources :products do
+    collection do
+      get 'product_search'
+    end    
+  end
+  
+  # Members
+  resources :members do
+    member do
+      get 'collections'
+      get 'profile'
+      get 'friends' => 'friendships#show'
+    end
+    
+    resources :my_collections
+  end
+  
   resources :authentications
   resources :wishlists
   resources :wishlist_items
   #resources :registrations
 
   get "home/index"
-  
-  match 'profile/:id' => 'members#show'
+
   match '/auth/:provider/callback' => 'authentications#create'
+  match 'my_collections/add_product/:id' => 'my_collections#add_product'
 
 # TODO
 #  match '/auth/failure' => 'something to handle this error'
