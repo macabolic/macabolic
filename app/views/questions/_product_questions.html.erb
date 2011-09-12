@@ -1,0 +1,75 @@
+<script type="text/javascript"> 
+function size(t) {
+	a = t.value.split('\n');
+	b=1;
+	for (x=0;x < a.length; x++) {
+ 		if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols);
+ 	}
+
+	b+= a.length;
+	if (b > t.rows) t.rows = b;
+}
+function showAnswer(id) {
+	if(document.getElementById("answer-" + id).style.display == 'block') {
+		$("#answer-" + id).fadeOut(); //Hide content
+		document.getElementById("answer-" + id).style.display = 'none'		
+	} else {
+		$("#answer-" + id).fadeIn(); //Show content
+		document.getElementById("answer-" + id).style.display = 'block'
+	}			
+}
+</script>
+<ul class="list-recent-questions product-tabs">
+<% if @questions.nil? || @questions.size == 0 %>	
+	<li>
+		<div>
+			There is no question for this product yet. Be the first one to ask a question.
+		</div>
+	</li>
+<% else %>
+	<% @questions.each do |question| %>
+	<li>
+        <div>
+			<%= link_to question.user.full_name, profile_member_url(question.user) %> asked the question <%= question.lapsed_time %>: <%= link_to question, :remote => true do %><strong><%= question.title %></strong><% end %>
+		</div>
+		<div class="answer-wrapper">
+			<div class="answers-meta">
+				<%= render :partial => 'questions/answers_meta_info', :locals => { :question => question }%>
+				<span>
+					<strong>
+						<a href="javascript:onClick=showAnswer(<%= question.id %>)" title="Answer">Answer</a>
+					</strong>
+				</span>
+				<span>
+					<strong>
+						<a href="javascript:onClick=showRecommend(<%= question.id %>)" title="Recommend">Recommend</a>
+					</strong>
+				</span>
+			</div>
+		</div>
+		<div id="answer-<%= question.id %>" style="display:none">		
+			<%= render :partial => 'questions/answer_a_question', :locals => { :question => question }  %>
+		</div>
+	</li>
+	<% end %>
+<% end %>
+</ul> 
+<div class="left"><p><%= page_entries_info @questions %></p></div>
+<% if @questions.total_pages > 0 %>
+<div class="right">
+		<div id="pagination">
+		<ul>
+		<% for i in (1..@questions.total_pages) %>
+			<% if @questions.current_page == i %>
+			<li class="current"><%= i %></li>
+			<% else %>
+			<li><%= link_to i, product_path(@product, :question_page => i) %></li>
+			<% end %>
+		<% end %>
+			<li><span>of</span></li>
+			<li><%= link_to @questions.total_pages, product_path(@product, :question_page => @questions.total_pages) %></li>
+		</ul>
+	</div>
+</div>
+<% end %>
+

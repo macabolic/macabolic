@@ -1,0 +1,2 @@
+$("#answer-response-<%= @answer_id %>").html("<%= escape_javascript(render("vote_count")) %>");
+$("#answer-response-like-<%= @answer_id %>").html("<%= escape_javascript(render("vote_link")) %>");

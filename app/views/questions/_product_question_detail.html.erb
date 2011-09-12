@@ -1,0 +1,76 @@
+<div class="answers-tabs">
+    <div class="answers-breadcrumb">
+		<%= link_to 'Back to Q & A ', @question.product %>&gt;
+        <span><%= @question.title %></span>                    
+    </div>
+    <div class="questions-block">
+        <div class="questions-img">
+			<%= image_tag avatar_url(current_user, 64), :width => 64, :height => 64 %>
+			<!--img src="furniture/images/membershomepage/me.png" alt="me" width="64" height="64"-->			
+		</div>
+
+        <div class="questions-content">
+            <h3><%= @question.title %></h3>
+            <p>Asked by <%= link_to current_user.full_name, member_path(current_user) %> <%= @question.lapsed_time %></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <ul class="answers-block">
+		<% if @answers.nil? || @answers.size == 0 %>	
+			<li>
+				<div>
+					There is no answer for this question yet. Be the first one to answer this.
+				</div>
+				<div id="answer-<%= @question.id %>" style="display:block">		
+					<%= render :partial => 'questions/answer_a_question', :locals => { :question => @question }  %>
+				</div>
+			</li>
+		<% else %>
+			<% @answers.each do |answer| %>	
+	        <li>
+				<%= image_tag avatar_url(answer.user, 64), :width => 64, :height => 64 %>
+	            <div class="answers-content">
+	                <p><%= link_to answer.user.full_name, member_path(answer.user) %> - <%= answer.content %></p>
+				
+	                <div class="answers-meta">
+	                    Answered <%= answer.lapsed_time %>
+						<span id="answer-response-like-<%= answer.id %>">
+							<strong>
+						<% if answer.responded_by(current_user).vote_useful.exists? %>
+							<%= link_to "Unlike it", vote_answer_path(answer, :vote => "false"), :remote => true %>
+						<% else %>
+							<%= link_to "Like it?", vote_answer_path(answer, :vote => "true"), :remote => true %>
+						<% end %>
+							</strong>
+						</span>			
+						<span id="answer-response-<%= answer.id %>" class="yes">													
+			            	<%= pluralize(answer.answer_responses.vote_useful.size, 'person') %>
+						</span>						
+	                </div>
+	            </div>
+	        </li>
+			<% end %>
+			<div id="answer-<%= @question.id %>" style="display:block">		
+				<%= render :partial => 'questions/answer_a_question', :locals => { :question => @question }  %>
+			</div>			
+		<% end %>
+    </ul>
+</div> 
+<% if (not @answers.nil?) && @answers.size > 0 %>
+<div class="left"><p><%= page_entries_info @answers %></p></div>
+<div class="right">
+		<div id="pagination">
+		<ul>
+		<% for i in (1..@answers.total_pages) %>
+			<% if @answers.current_page == i %>
+			<li class="current"><%= i %></li>
+			<% else %>
+			<li><%= link_to i, product_path(@question.product, :answer_page => i) %></li>
+			<% end %>
+		<% end %>
+			<li><span>of</span></li>
+			<li><%= link_to @answers.total_pages, product_path(@question.product, :answer_page => @answers.total_pages) %></li>
+		</ul>
+	</div>
+</div>
+<% end %>

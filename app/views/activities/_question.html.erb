@@ -1,0 +1,20 @@
+<%
+	user = activity.user
+	question = activity.question
+%>
+
+<li class="recent-question">
+	<div>
+		<%= link_to user.full_name, profile_member_path(user) %> asked a question: <span class="question"><%= link_to question.title, question_path(question) %></span>
+	</div>
+	<div class="answer-wrapper">
+		<div class="meta-info">
+		  	<%#= image_tag "membershomepage/icon-question.jpg" %>
+			<p class="left"><%= activity.lapsed_time %></p>
+			<p>
+				<span><a href="#">Like</a></span>
+				<span><a href="#">Answer</a></span>
+			</p>
+		</div>
+	</div>
+</li>

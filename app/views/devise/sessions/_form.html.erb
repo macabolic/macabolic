@@ -1,0 +1,77 @@
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix();
+		$('#user_password').hide();
+        $('#user_password_clear').show();
+		
+        //Input Form placeholder
+        $('input:text').focus(function(){
+			this.style.color = '#131e22';
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+        })
+        .blur(function(){
+			this.style.color = '#a3a3a3';
+            if ($.trim(this.value) === "") {
+                this.value = (this.defaultValue ? this.defaultValue: "")
+            }
+
+		    $('#user_password_clear').hide();
+		    $('#user_password').show();
+		    $('#user_password').focus();
+        });
+
+        $('input:password').focus(function(){
+			this.style.color = '#131e22';
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+        })		
+		.blur(function() {
+			this.style.color = '#a3a3a3';
+		    if ($.trim(this.value) === "") {
+				$('#user_password').hide();
+		    	$('#user_password_clear').show();
+		    }
+		});
+		
+		$('#user_password_clear').focus(function(){
+		    $('#user_password_clear').hide();
+		    $('#user_password').show();
+		    $('#user_password').focus();
+        });		
+        
+    }); 
+</script>
+
+<%# resource.email = 'Email' %>
+
+<% if resource.errors.empty? %>
+<div class="home-signup">
+<% else %>
+<div class="home-signup-with-error">
+<% end %>
+	<div class="home-signup-th">Login Now</div>
+	<%= registration_error_messages! %>
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "home-signupform" }) do |f| %>
+  		<%= f.text_field :email, :placeholder => 'Email Address' %>
+		<!--input id="user_password_clear" type="text" value="Password" autocomplete="off" /-->
+		<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
+		<%= f.password_field :password %>		  
+		<span class="home-signupbutton">
+			<%= submit_tag "Login", :class => "home-signupbutton" %>
+		</span>                
+	<% end %>
+
+	<div class="shared_links">
+		<%= render "devise/shared/links" %>
+	</div>
+	<div class="auth_providers">
+		<%= render "devise/sessions/other_services" %>	
+	</div>
+</div>

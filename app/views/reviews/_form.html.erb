@@ -1,0 +1,50 @@
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix();
+		
+        //Input Form placeholder
+        $('input:text').focus(function(){
+			this.style.color = '#131e22';
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+        })
+        .blur(function(){
+            if ($.trim(this.value) === "") {
+                this.value = (this.defaultValue ? this.defaultValue: "")
+				this.style.color = '#a3a3a3';
+            }
+        });
+    }); 
+</script>
+
+<div class="home-signup">
+	<div class="home-signup-th">Review</div>
+
+	<%= form_for(@review, :html => { :class => "home-signupform" }) do |f| %>
+		<!-- User -->
+		<%= select_tag "review[user_id]", options_from_collection_for_select(User.all, "id", "email") %>
+		<br class="clear" />
+		<br class="clear" />
+		<!-- Product -->
+		<%= select_tag "review[product_id]", options_from_collection_for_select(Product.all, "id", "name") %>
+		<br class="clear" />
+		<br class="clear" />
+		
+		<!-- Title -->
+  		<%= f.text_field :title, :placeholder => 'Title' %>
+
+		<!-- Content -->
+	    <%= f.text_area :content, :placeholder => 'Write your review...', :rows => 30 %>
+
+		<span class="home-signupbutton">
+			<%= submit_tag "Submit", :class => "home-signupbutton" %>
+		</span>                
+	<% end %>
+	
+	<%= link_to 'Back', reviews_path %>
+	
+</div>
+

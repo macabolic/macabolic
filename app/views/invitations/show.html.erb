@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<%= stylesheet_link_tag "email-layout.css" %>
+	<%= stylesheet_link_tag "email-styles.css" %>
+</head>
+<body>		
+<div class="wrapper">
+	<div class="wrapper-top">
+		<div id="black-strip">
+			<div class="logo-holder"><h1>Macabolic</h1></div>
+		</div>
+	</div>
+
+	<div class="wrapper-top">
+		<div id="grey-strip">
+			<p class="footerright">Follow Macabolic: &nbsp;
+				<!--a href="#"><%#= image_tag "http://beta.macabolic.com/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %>
+				</a>&nbsp; -->
+				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
+					<%= image_tag "http://beta.macabolic.com/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
+				</a>
+			</p>
+		</div>
+	</div>
+	
+<!-- Content -->		
+	<div class="wrapper-content">
+		<div class="registration-thankyou">
+			<div class="registration-thankyou-th"><%= @invitation.sender.full_name %> invited you to join</div>
+			<div class="registration-thankyou-body">
+				<p>
+					<%= @invitation.sender.full_name %> invited you to join Macabolic.com
+					<br/><br/>
+					
+					We are dedicated to serve the Mac community where you share your own product collection, make recommendation and post tips to your friends and others.
+					<br/><br/>
+					
+					<!-- Learn more button/ Accept button -->
+					<%= link_to "Learn more", invitation_url(@invitation), :class => "button-green", :title => "Learn more"  %>
+					<br/><br/>
+					
+					The Macabolic Team<br/>
+				</p>
+				<br/>
+			</div>
+		</div>
+	</div>
+	
+	<div class="footer sticky">
+		<div class="wrapper-top">
+			<p class="footerright">© 2011 Macabolic</p>
+		</div>
+	</div>
+</div>  
+</body>	
+</html>

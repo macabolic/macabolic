@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Macabolic - <%= yield(:title) || "The best way to meet the Mac community" %></title>
+  	<%= stylesheet_link_tag "layout.css" %>
+  	<%= stylesheet_link_tag "macabolic.css" %>
+	<%= stylesheet_link_tag "nivo-slider.css" %>
+	<%= stylesheet_link_tag "nivo-slider-wishlist.css" %>
+  	<%= stylesheet_link_tag "reset.css" %>
+  	<%= stylesheet_link_tag "scaffold.css" %>
+  	<%= stylesheet_link_tag "styles.css" %>
+	
+	<%#= javascript_include_tag "rails.js" %>
+	<%#= javascript_include_tag "prototype.js" %>
+	<%#= javascript_include_tag "effects.js" %>
+	<%#= javascript_include_tag "controls.js" %>
+	<%#= javascript_include_tag "dragdrop.js" %>
+	<%= javascript_include_tag "application.js" %>
+	<%= javascript_include_tag "jquery_ujs.js" %>
+	<%= javascript_include_tag "jquery.min.js" %>
+	<%= javascript_include_tag "jquery.nivo.slider.js" %>
+	<%= javascript_include_tag "jquery.nivo.slider.pack.js" %>
+	<%= javascript_include_tag "jquery.pngFix.js" %>
+	<%= javascript_include_tag "jquery.ui.js" %>
+	
+  	<%= csrf_meta_tag %>
+<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+<!--[if IE 6]>
+	<%= stylesheet_link_tag "ie6.css" %>
+<![endif]-->
+<!--[if IE 7]>
+	<%= stylesheet_link_tag "ie7.css" %>	
+<![endif]-->
+
+</head>
+<body>
+	<div class="wrapper">
+		<%= render 'layouts/header' %>
+
+		<%= yield %>
+		
+		<div class="push"></div>
+	</div>    
+	
+	<%= render 'layouts/footer' %>
+</body>
+</html>

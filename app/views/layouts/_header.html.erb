@@ -1,0 +1,27 @@
+<div id="black-strip">
+	<div class="wrapper-top">
+		<div class="logo-holder">
+			<a href="<%= root_url %>"><h1>Macabolic</h1></div>				
+		<div class="nav-holder">							
+			<ul id="nav">
+				<li><%= link_to 'Home', root_url %></li>
+				<!--li><a href="#" title="About" accesskey="1">About</a></li>
+				<li><a href="#" title="Contact" accesskey="2">Contact</a></li-->
+				<li>
+					<% if user_signed_in? %>
+						<%= link_to 'Logout', destroy_user_session_path %>	
+					<% elsif controller_name != 'registrations' && controller_name != 'home' %>	
+					  	<%= link_to "Sign up", new_registration_path(@user) %>
+					<% else -%>							
+						<%= link_to 'Login', user_session_path %>
+					<% end %>	
+				</li>
+			</ul>
+			<% if user_signed_in? %>
+			<div class="user-loggedin">
+				Welcome back, <%= link_to current_user.full_name, profile_member_path(current_user), :class => "user-name" %>
+               </div>
+			<% end %>
+		</div>
+	</div>
+</div>

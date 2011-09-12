@@ -1,0 +1,212 @@
+<% title 'My Collections' %>
+<script type="text/javascript">  
+$(document).ready(function() {
+    $(document).pngFix(); 
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	$(".tab1_paging").show();
+	
+	//Default Action
+	$(".tab_content2").hide(); //Hide all content
+	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
+	//$(".tab_content2:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		$(".tab_content2").hide(); //Hide all tab content
+		$(".tab1_paging").show();
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+	//On Click Event
+	$("ul.tabs2 li").click(function() {
+		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		$(".tab_content2").hide(); //Hide all tab content
+		$(".tab1_paging").hide();		
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+
+
+	
+});
+</script>
+<script type="text/javascript">
+function size(t) {
+	a = t.value.split('\n');
+	b=1;
+	for (x=0;x < a.length; x++) {
+ 		if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols);
+ 	}
+
+	b+= a.length;
+	if (b > t.rows) t.rows = b;
+};
+</script>
+
+<body class="subpage">
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>			
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">
+			<!--
+			<div class="push" id="add_wishlist">
+            	<a class="button-green" id="add-wishlist" href="" title="Add new collection">Add Collection</a>
+			</div>
+			-->
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+			        <li><a href="#tab1">My Collections</a></li> 
+			        <li><a href="#tab2">My Collection Items</a></li> 
+				</ul> 		
+		<% if @my_collections.empty? %>			
+		        <div id="tab1" class="tab_content product-grid group"> 
+	            	<div id="search-result" class="no-result">
+		                <p>
+		                	You do not have any collection yet. Create one now.
+		                </p>	
+	            	</div>
+				</div>
+		<% else %>
+		        <div id="tab1" class="tab_content product-grid group"> 
+					<ul class="list-my-collections">
+						<% @my_collections.each do |my_collection| %>
+						<li>
+							<%= link_to(my_collection) do %>
+								<span class="right">
+									<%= link_to 'delete', my_collection, :method => 'delete' %>
+								</span>															
+								<div class="center">
+								<span class="productimage">
+									<%= link_to member_my_collection_path(@user, my_collection) do %>
+										<%= image_tag my_collection.thumbnail.url(:medium), :width => "150", :title => "#{my_collection.name}" %>
+									<% end %>
+								</span>								
+								</div>								
+								<span>
+									<%= link_to member_my_collection_path(@user, my_collection) do %>
+										<p><%= simple_format(word_wrap(my_collection.name, :line_width => 50)) %></p>
+									<% end %>				        	
+								</span>
+							<% end %>
+						</li>							
+						<% end %>	
+					</ul>
+					<div>
+						<!--
+						<div id="tab1_paging" class="tab1_paging left">
+							<p><%#= page_entries_info @my_collections %></p>
+						</div> 
+						<div class="right">
+							<div id="pagination">
+								<ul>
+								<%# for i in (1..@my_collections.total_pages) %>
+									<%# if @my_collections.current_page == i %>
+									<li class="current"><%#= i %></li>
+									<%# else %>
+									<li><%#= link_to i, collections_member_path(@user, :page => i) %></li>
+									<%# end %>
+								<%# end %>
+									<li><span>of</span></li>
+									<li><%#= link_to @my_collections.total_pages, collections_member_path(@user, :page => @my_collections.total_pages) %></li>
+								</ul>
+							</div>			
+						</div>
+						-->
+						<!-- #-> Displaying posts 6 - 10 of 26 in total -->
+					</div>
+				</div>			
+		        <div id="tab2" class="tab_content2 product-grid group">
+					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items } %>
+				</div>
+				<!--div class="left"><p>Displaying 1 - 11 of 345</p></div-->
+		<% end %>
+			</div>
+		<!--	
+			<div class="tabbed-content-area">    		
+				<div id="tab1" class="tab_content">
+					<%#= render 'members/collections' %>
+				</div>
+			</div>
+		-->
+		</div>
+		
+		<%#= render 'products/product_search' %>
+		
+		<div class="sidebar">
+			<div>
+				<div class="sidebar-content account-info">
+					<div class="sidebar-header">
+						Add a new collection
+					</div>
+					<div class="sidebar-inner">								
+						<%= render :partial => 'my_collections/form', :locals => { :user => @user } %>
+					</div>
+				</div>
+			</div>			
+		</div>
+<!--
+			<div class="sidebar-content">
+				<ul class="tabs2"> 
+	        		<li><a href="#tab5">Add a new collection</a></li> 
+		    	</ul> 
+				<div id="tab5" class="tab_content2"> 
+        			<div class="padding">
+						<form name="form1" method="post" action="">
+							<label for="tiptitle">Name:</label><input type="text" name="textfield" id="textfield" class="text">
+						  	<label> </label>
+							<span class="submit-tip-button">
+								<input name="Submit" type="button" value="Submit Your Tip" class="submit-tip-button" />
+							</span>			
+						</form>
+					</div>
+				</div>		 
+			</div>
+-->
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+$(window).load(function() {
+	<% @my_collections.each do |my_collection| %>	
+    $('#my-collection-slider-<%= my_collection.id %>').nivoSlider({
+        effect:'fade', //Specify sets like: 'fold,fade,sliceDown'
+        slices:15,
+        animSpeed:500, //Slide transition speed
+        pauseTime:15000,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:true, //Next & Prev
+        directionNavHide:false, //Only show on hover
+        controlNav:false, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:true, //Force manual transitions
+        captionOpacity:1.0, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){}, //Triggers after all slides have been shown
+        lastSlide: function(){}, //Triggers when last slide is shown
+        afterLoad: function(){} //Triggers when slider has loaded
+    });
+	<% end %>
+});
+</script>

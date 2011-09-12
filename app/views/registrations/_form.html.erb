@@ -1,0 +1,80 @@
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix();
+		$('#user_password').hide();
+        $('#user_password_clear').show();
+		
+        //Input Form placeholder
+        $('input:text').focus(function(){
+			this.style.color = '#131e22';
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+				
+			if (this.id === 'user_password_clear') {
+				$('#user_password_clear').hide();
+			    $('#user_password').show();
+			    $('#user_password').focus();
+			} 
+        })
+        .blur(function(){
+            if ($.trim(this.value) === "") {
+                this.value = (this.defaultValue ? this.defaultValue: "")
+				this.style.color = '#a3a3a3';
+            }
+        });
+
+        $('input:password').focus(function(){
+			this.style.color = '#131e22';
+            if(this.value === this.defaultValue) {
+                this.value = "";
+            } else {
+                this.select();
+            }
+        })
+        .blur(function(){
+            if ($.trim(this.value) === "") {
+				$('#user_password').hide();
+		        $('#user_password_clear').show();
+            } 
+        });
+				
+    }); 
+</script>
+
+<%# resource.email = params[:email] if params[:email] %>
+<% resource.email = @invitation.recipient_email if @invitation %>
+
+<% if resource.errors.empty? %>
+<div class="home-signup">
+<% else %>
+<div class="home-signup-with-error">
+<% end %>
+<% if !params[:invitation_token].nil? && !params[:invitation_token].empty? %>
+	<% logger.info "invitation_token: #{params[:invitation_token]}"%>
+	<div class="home-signup-th">Accept Invitation from <%= @invitation.sender.full_name if @invitation.sender %><%#= params[:from] %></div>
+<%else %>
+	<div class="home-signup-th">Sign Up Now</div>
+<% end %>
+	<%= registration_error_messages! %>
+
+	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "home-signupform" }) do |f| %>
+		<%= hidden_field_tag 'invitation_token', params[:invitation_token] %>
+		<%= f.text_field :first_name, :placeholder => 'First Name' %>
+		<%= f.text_field :last_name, :placeholder => 'Last Name' %>
+		<%= f.text_field :email, :placeholder => 'Email Address' %>
+		<% if @user.password_required? %>
+			<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
+			<%= f.password_field :password, :placeholder => 'Password' %>
+		<% end %>
+					
+		<span class="home-signupbutton">
+			<%= submit_tag "Join", :class => "home-signupbutton" %>
+		</span>  
+	<% end %>
+
+</div>
+
+

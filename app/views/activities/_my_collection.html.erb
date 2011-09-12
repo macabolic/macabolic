@@ -1,0 +1,19 @@
+<%
+	user = activity.user
+	my_collection = activity.my_collection
+%>
+
+<li>
+	<div>
+		<%= link_to user.full_name, profile_member_path(user) %></a> added a new collection <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+	</div>
+	<div class="answer-wrapper">
+		<div class="answers-meta">
+			<p class="left"><%= activity.lapsed_time %></p>
+			<p>
+				<span><a href="#" title="Answer">Like</a></span>
+				<span><a href="#" title="Recommend">Recommend</a></span>								
+			</p>
+		</div>
+	</div>							
+</li>

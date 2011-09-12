@@ -1,0 +1,7 @@
+<strong>
+<% if @vote %>
+	<%= link_to "Unlike it", { :controller => "answers", :action => "vote", :id => @answer_id, :vote => false }, :remote => true %>
+<% else %>
+	<%= link_to "Like it?", { :controller => "answers", :action => "vote", :id => @answer_id, :vote => true }, :remote => true %>
+<% end %>
+</strong>

@@ -1,0 +1,29 @@
+<%
+	if item == 'Collections'
+		collection = "home-on"
+	elsif item == 'Friends'
+		friends = "nav-item-on"
+	elsif item == 'Profile'
+		profile = "nav-item-on"
+	else 
+		
+	end
+%>
+<ul id="nav-signedin">
+	<% if user.present? %>
+	<li class="homerounded" id="<%= collection %>">
+		<%= link_to 'Collections', collections_member_path(user) %>
+	</li>
+	<li id="<%= friends %>">
+		<%= link_to 'Friends', friends_member_url(user) %>
+	</li>	
+	<li id="<%= profile %>">
+		<%= link_to "#{user.full_name}'s Profile", profile_member_path(user) %>
+	</li>
+	<% end %>
+    <li id="search-form">
+    	<form>
+			<input type="text" value="Search">
+       </form>
+    </li>
+</ul>

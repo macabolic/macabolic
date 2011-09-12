@@ -1,0 +1,21 @@
+<%
+	user = activity.user
+	my_collection_item = activity.my_collection_item
+	product = my_collection_item.product
+	my_collection = my_collection_item.my_collection
+%>
+
+<li>
+	<div>
+		<%= link_to user.full_name, profile_member_path(user) %></a> added <%= link_to product.name, product_path(product) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+	</div>
+	<div class="answer-wrapper">
+		<div class="answers-meta">
+			<p class="left"><%= activity.lapsed_time %></p>
+			<p>
+				<span><a href="#" title="Answer">Like</a></span>
+				<span><a href="#" title="Recommend">Recommend</a></span>								
+			</p>
+		</div>
+	</div>							
+</li>

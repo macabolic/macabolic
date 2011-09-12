@@ -1,0 +1,109 @@
+<script>
+function showContent(id) {
+	if(document.getElementById("answers-content-" + id).style.display == 'block') {
+		$("#answers-content-" + id).fadeOut(); //Hide content
+		document.getElementById("answers-content-" + id).style.display = 'none'		
+	} else {
+		$("#answers-content-" + id).fadeIn(); //Show content
+		document.getElementById("answers-content-" + id).style.display = 'block'
+	}		
+}
+function showAddReview() {
+	if(document.getElementById("add-review").style.display == 'block') {
+		$("#add-review").fadeOut(); //Hide content
+		document.getElementById("add-review").style.display = 'none'		
+	} else {
+		$("#add-review").fadeIn(); //Show content
+		document.getElementById("add-review").style.display = 'block'
+	}			
+}
+</script>
+<ul class="list-recent-questions product-tabs">
+	<li id="add-review" style="display:none">
+		<div class="add-question">
+			<p align="right"><a href="javascript:onClick=showAddReview()" id="show-add-review" title="close" class="no">close</a></p>
+			<h4>Write your review</h4>
+			<%= form_for(@review = Review.new, :html => { :class => "home-signupform" }) do |f| %>
+				<%= f.text_field :title, :placeholder => 'Title' %>
+				<%= f.text_area :content, :placeholder => 'Write your review...', :rows => 30 %>
+				<span class="home-signupbutton">
+					<%= submit_tag "Submit", :class => "home-signupbutton" %>
+				</span>                
+			<% end %>
+		</div>
+	</li>
+<% if @reviews.nil? || @reviews.size == 0 %>	
+	<li>
+		<div>
+			There is no review for this product yet. Be the first one to <a href="javascript:onClick=showAddReview()" id="show-add-review">write a review</a>.
+		</div>
+	</li>
+<% else %>
+	<p align="right">
+		<a href="javascript:onClick=showAddReview()" id="show-add-review" title="Write a review" class="no">write a review</a>
+	</p>
+	<% @reviews.each do |review| %>
+	<li>		
+		<div>
+			<a href="#"><%= review.user.full_name %></a> wrote a review on <a href="javascript:onClick=showContent(<%= review.id %>)"><strong><%= review.title %></strong></a>.
+		</div>
+	  	<div class="answer-wrapper">			
+			<div id="answers-content-<%= review.id %>" class="answers-content" style="display:none">
+				<p>
+					<%= simple_format h(review.content) %>
+				</p>
+			</div>
+			<div class="answers-meta">				 		
+        		Posted <%= review.lapsed_time %> <!--(<%#= review.created_at.strftime("%d/%m/%y %H:%M") %>) -->
+        		<% if review.is_author?(current_user) %>
+					<span id="review-response-like-<%= review.id %>">
+						<strong>
+							<% if review.responded_by(current_user).vote_like.exists? %>
+								<%= link_to "Unlike it", { :controller => "reviews", :action => "vote", :id => review, :vote => false }, :remote => true %>
+							<% else %>
+								<%= link_to "Like it?", { :controller => "reviews", :action => "vote", :id => review, :vote => true }, :remote => true %>
+							<% end %>
+						</strong>
+					</span>
+					<span id="review-response-<%= review.id %>" class="yes">													
+		            	<%= pluralize(review.review_responses.vote_like.size, 'person') %>
+					</span>
+				<% else %>
+					<span id="review-response-like-<%= review.id %>">
+						<strong>
+							<% if review.responded_by(current_user).vote_like.exists? %>
+								<%= link_to "Unlike it", { :controller => "reviews", :action => "vote", :id => review, :vote => false }, :remote => true %>
+							<% else %>
+								<%= link_to "Like it?", { :controller => "reviews", :action => "vote", :id => review, :vote => true }, :remote => true %>
+							<% end %>
+						</strong>
+					</span>
+					<span id="review-response-<%= review.id %>" class="yes">													
+		            	<%= pluralize(review.review_responses.vote_like.size, 'person') %>
+					</span>
+				<% end %>
+                <!--a href="#" title="Dislike" class="no"><%#= pluralize(5, 'person') %></a-->
+            </div>
+		</div>
+	</li>
+	<% end %>
+<% end %>
+</ul>
+<div class="left"><p><%= page_entries_info @reviews %></p></div>
+<% if @reviews.total_pages > 0 %>
+<div class="right">
+		<div id="pagination">
+		<ul>
+		<% for i in (1..@reviews.total_pages) %>
+			<% if @reviews.current_page == i %>
+			<li class="current"><%= i %></li>
+			<% else %>
+			<li><%= link_to i, product_path(@product, :review_page => i) %></li>
+			<% end %>
+		<% end %>
+			<li><span>of</span></li>
+			<li><%= link_to @reviews.total_pages, product_path(@product, :review_page => @reviews.total_pages) %></li>
+		</ul>
+	</div>
+</div>
+<% end %>

@@ -1,0 +1,2 @@
+$("#answers-meta-info_answer_<%= @question.id %>").html("<%= escape_javascript(render("answer_count")) %>");
+$("#answers-meta-info_lapsed_time_<%= @question.id %>").html("<%= escape_javascript(render("latest_answer_lapsed_time")) %>");

@@ -1,0 +1,18 @@
+<div id="black-strip">
+	<div class="wrapper-top">
+		<div class="logo-holder">
+			<a href="<%= root_url %>"><h1>Macabolic</h1></div>				
+		<div class="nav-holder">							
+			<ul id="nav">
+				<li><%= link_to 'Products', admin_products_path %></li>
+				<li><%= link_to 'Product Lines', admin_product_lines_path %></li>
+				<li><%= link_to 'Vendors', admin_vendors_path %></li>
+			</ul>
+			<% if user_signed_in? %>
+			<div class="user-loggedin">
+				Welcome back <%= link_to current_user.full_name, member_path(current_user) %></a>
+               </div>
+			<% end %>
+		</div>
+	</div>
+</div>

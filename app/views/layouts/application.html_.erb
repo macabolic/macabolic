@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Macabolic</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+	
+<!-- HEADER AREA -->
+<div id="header">
+	<%= image_tag "/images/logo.png" %>
+</div>
+
+<!-- BODY AREA -->
+<div align="right">
+	<div>
+		<% if user_signed_in? %>
+			Welcome back, <%= current_user.email %> 
+		<% end %>
+		<p align="right">
+			<% if user_signed_in? %>
+				<%= link_to 'Logout', destroy_user_session_path(current_user) %>
+			<% else %>
+				<%= link_to 'Login', new_user_session_path %> | <%= link_to 'Sign up', new_user_registration_path %>
+			<% end %>
+	</div>
+</div>	
+
+<div align="center" style="width: 700px; margin: 10px">
+	<% flash.each do |key, msg| %>
+	  <%= content_tag :div, msg, :class => "flash", :id => key %>
+	  <%= content_tag :script, :type => "text/javascript" do %>
+	    $('<%= key %>').style.display = 'none';
+	    new Effect.Appear('<%= key %>', {duration: 3});
+	  <% end %>
+
+	  <%= content_tag :script, :type => "text/javascript" do %>
+	    setTimeout("new Effect.Fade('<%= key %>');", 10000);
+	  <% end %>
+	<% end %>
+	<br/>
+</div>
+	
+<div id="body-content">
+	<%= yield %>
+</div>
+
+<!-- FOOTER AREA -->
+<div id="footer">
+	<%= image_tag "/images/footer.png" %>
+</div>
+
+</body>
+</html>

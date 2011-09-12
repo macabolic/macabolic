@@ -1,0 +1,24 @@
+<ul class="list-my-collections">
+	<% my_collection_items.each do |my_collection_item| %>
+	<li>
+		<%= link_to(my_collection_item) do %>
+			<span class="right">
+				<%= link_to 'delete', my_collection_item, :method => 'delete' %>
+			</span>															
+			<div class="center">
+			<span class="productimage">
+				<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>
+					<%= image_tag my_collection_item.product.thumbnail.url(:medium), :width => "150", :title => "#{my_collection_item.product.name}" %>
+				<% end %>
+			</span>								
+			</div>								
+			<span>
+				<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>
+					<p><%= simple_format(word_wrap(my_collection_item.product.name, :line_width => 50)) %></p>
+				<% end %>				        	
+			</span>
+		<% end %>
+	</li>							
+	<% end %>	
+</ul>
+

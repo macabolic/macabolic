@@ -1,0 +1,13 @@
+<%= form_for [question, @answer = Answer.new], :as => :answer, :remote => true do |f| %>
+	<div class="answer-content-area">
+		<%= f.text_area :content, :cols => 70, :rows => 5, :class=> "answer_area", :onKeyUp => "size(this);" %>
+		<%= hidden_field_tag 'question_id', question.id %>
+		<%= hidden_field_tag 'product_id', question.product.id %>
+	</div>
+	<div class="answer-command">
+		<span>
+			<%= submit_tag "Submit", :class => "answer-button", :onClick => "showAnswer(#{question.id})" %>
+			<%= submit_tag "Close", :class => "answer-button", :onClick => "showAnswer(#{question.id}); return false;" %>
+		</span>                
+	</div>
+<% end %>
