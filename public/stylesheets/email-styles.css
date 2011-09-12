@@ -1,0 +1,42 @@
+/* Headings
+----------------------------------------------------------------------*/
+h1 {
+	text-indent: -5000px;
+	background: url(../images/sitewide/logo.png) no-repeat;
+	width: 215px;
+	height: 38px;
+	margin: 24px 0px 0px 20px!important;
+}
+
+h2 {
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	color: #111a1f;
+	margin-bottom: 2px!important;
+	margin-top: 12px!important;
+	text-align: center;
+}
+
+h2 span {
+	color: #cc6824;
+}
+
+.registration-thankyou-th {
+	font-size: 16px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	text-align: center;
+	text-shadow: 0px -1px 0px #1c1c1c;
+	padding: 15px 0px 0px 0px;
+}
+
+.registration-thankyou-body {
+	font-size: 12px;
+	color: #888888;
+	text-align: left;
+	padding: 15px 10px 0px 15px;
+	margin: 5px 0px 0px 5px!important;
+}
+
