@@ -21,35 +21,34 @@ class WishlistItemsController < ApplicationController
     end
   end
 
-  # GET /wishlist_items/new
-  # GET /wishlist_items/new.xml
-  def new
-    @wishlist_item = WishlistItem.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @wishlist_item }
-    end
-  end
-
-  # GET /wishlist_items/1/edit
-  def edit
-    @wishlist_item = WishlistItem.find(params[:id])
-  end
-
   # POST /wishlist_items
   # POST /wishlist_items.xml
   def create
-    @wishlist_item = WishlistItem.new(params[:wishlist_item])
+    @product = Product.find(params[:product])
+    if Wishlist.defined_default_wishlist?(current_user)
+      @wishlist = Wishlist.default_wishlist(current_user)
+    else
+      @wishlist = Wishlist.new(:name => "My Wishlist", :user_id => current_user.id, :default_list => true)
+    end
+    
+    if WishlistItem.where("product_id = ?", @product.id).exists?
+      @wishlist_item = WishlistItem.find_by_product_id(@product.id)
+    else
+      @wishlist_item = WishlistItem.new
+      @wishlist_item.product = @product
+      @wishlist_item.wishlist = @wishlist
+      @wishlist_item.user = current_user 
+    end
 
     # if no wishlist defined, use the default wishlist
-    if @wishlist_item.wishlist_id.nil?
+    #if @wishlist_item.wishlist_id.nil?
       #@wishlist = current_user.create_default_wishlist_if_not_present
-      @wishlist = Wishlist.create_default_if_not_present(current_user)
-      @wishlist_item.wishlist_id = @wishlist.id
-    end
+      #@wishlist = Wishlist.create_default_if_not_present(current_user)
+      #@wishlist_item.wishlist_id = @wishlist.id
+    #end
  
     @wishlist_item.save
+    @action = "create"
 #    render :nothing => true
 #    respond_to do |format|
 #      if @wishlist_item.save
@@ -81,12 +80,16 @@ class WishlistItemsController < ApplicationController
   # DELETE /wishlist_items/1
   # DELETE /wishlist_items/1.xml
   def destroy
-    @wishlist_item = WishlistItem.find(params[:id])
+    #@wishlist_item = WishlistItem.find(params[:id])
+    @product = Product.find(params[:product])
+    @wishlist_item = WishlistItem.find_by_product_id(params[:product])    
     @wishlist_item.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(wishlist_items_url) }
-      format.xml  { head :ok }
-    end
+    #respond_to do |format|
+    #  format.html { redirect_to(wishlist_items_url) }
+    #  format.xml  { head :ok }
+    #end
+    @action = "destroy"
+    
   end
 end

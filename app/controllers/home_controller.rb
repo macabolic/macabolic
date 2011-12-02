@@ -1,18 +1,25 @@
 class HomeController < ApplicationController
 
   def index
-    #@registration = Registration.new
     if user_signed_in?
-      #@member = Member.where(:email_address => current_user.email).first
+      logger.info "HomeController.index - user_signed_in? True"
       redirect_to member_path(current_user)
-      #render :template => 'members/show'
     else
+      logger.info "HomeController.index - user_signed_in? False"
       @user = User.new
-#      @user.first_name = "First Name"
-#      @user.last_name = "Last Name"
-#      @user.email = "Email Address"   
-#      @user.password = "Password"   
     end
+  end
+
+  def about_us
+    
+  end
+
+  def feature_tour
+    
+  end
+  
+  def faq
+    
   end
 
 end

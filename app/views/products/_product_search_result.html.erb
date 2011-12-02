@@ -22,6 +22,9 @@
 			</div>
         </li>
 	<% end %>
+		<li>
+			Can't find yours? <%= link_to 'Create one now!', new_product_path(:user => current_user, :my_collection => @my_collection) %>
+		</li>
 	<!--
 		<li>
 			<span class="submit-tip-button">

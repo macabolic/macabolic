@@ -1,0 +1,34 @@
+<div class="sidebar-content" id="new-product">				
+	<div class="sidebar-header">Recommend to Your Friends</div>	
+	<div class="sidebar-inner">
+    	<ul>
+  			<li id="product-search-form">
+				<%= form_tag friendships_path, :method => 'get', :id => 'friends_search', :remote => true do %>
+					<%= hidden_field_tag 'user_id', current_user.id %>
+					<%= hidden_field_tag 'product_id', product.id %>
+					<%= text_field_tag :search, params[:search], :placeholder => 'Find your friends', :autocomplete => 'off', :class => 'product_text_search' %>
+				<% end %>
+  			</li>
+		</ul>
+		<br/>
+		<div class="user-grid">
+    		<!--ul id="search-friend-list"-->
+				<!--
+				Click on the image to recommend:
+				<%# @friends = current_user.friends %>
+				<%# @friends.each do |friend| %>
+		        <li>
+					<%#= link_to '#', :id => 'recommend_link'  do %>
+						<%#= image_tag avatar_url(friend, 50), :width => 50, :title => friend.full_name, :class => "noborderimage" %>
+					<%# end %>
+				</li-->				
+				<%# end %>
+				<div id="friends">
+					<%= render :partial => 'friendships/friend_search_result', :locals => { :product => product } %>
+				</div>
+    		<!--/ul-->
+		</div>
+	</div>
+</div><!-- #new-product -->
+
+

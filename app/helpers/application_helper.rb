@@ -67,5 +67,6 @@ module ApplicationHelper
     end
 
     return @time_to_display
-  end    
+  end  
+  
 end

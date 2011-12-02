@@ -80,45 +80,70 @@ $(document).ready(function() {
 
 <div class="wrapper-mh">
 	<div class="maincol"> 
-    	<div class="product-item sidebar-content">
-	        <div class="product-image">
-				<%= image_tag(@product.thumbnail.url(:thumb), :width => "70") %>		  	
-	            <!--img src="furniture/images/product/iphone.jpg" alt="Product Image", :size => "74x135"-->
-				<br/><br/><br/><br/><br/><br/>
-	        </div>
+    	<div class="product-item sidebar-content">	         
+			<div class="product-image">
+				<%= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>		  						
+	        </div>			
 	        <div class="product-detail">
-	            <h3 style="text-align: left;"><%= @product.name %></h3>			
-	<!--
-	            <p>
-					This is a short description about the product in question. It would probably be about this length with room for a few buttons underneath. This is a short description about the product in question. It would probably be about this length with room for a few buttons underneath. This is a short description about.
-				</p>
-	-->
+	            <div>
+					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
+				</div>
+				<!--
+				<p>Description here</p>
+				-->
 	            <p>
 	                <div id="i_own_this">
 						<% 
 							if current_user.own_this_product?(@product) 
-								checked = "checked"
+						%>
+							<a class="button-green checked" id="own-this" href="" title="Own this">I Own This</a>
+						<%
 							else
-								checked = ""
+						%>
+							<a class="button-green" id="own-this" href="" title="Own this">I Own This?</a>
+						<%
 							end
-						%>							
-							<a class="button-green <%= checked %>" id="own-this" href="" title="Own this">I Own This</a>
+						%>														
 					</div>
-					<div id="add_wishlist">
-	                	<a class="button-green" id="add-wishlist" href="" title="Add to Wishlist">Add To Wishlist</a>
+					<div id="wishlist_link">
+						<%
+							if current_user.wish_this_product?(@product)
+						%>
+							<%= link_to 'Wanted!', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
+						<%
+							else
+						%>
+							<%= link_to 'Wish?', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+						<%
+							end
+						%>
 					</div>
-	            </p>
-				<p>&nbsp;</p>
-			
-				<div class="product-stat-details">
-					<ul>
-						<li>Questions<span><%= @product.questions.size %></span></li>
-						<li class="alt">Reviews<span><%= @product.reviews.size %></span></li>
-						<li class="noborder">Tips<span>8</span></li>
-						<li class="noborder alt">Like<span>5</span></li>
-					</ul>
-				</div>
+					<div id="fb-root"></div>
+					<script>
+					(function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) {
+							return;
+						}
+						js = d.createElement(s); js.id = id;
+						js.src = "//connect.facebook.net/en_US/all.js#appId=249685278407440&xfbml=1";
+					  	fjs.parentNode.insertBefore(js, fjs);
+					}	(document, 'script', 'facebook-jssdk'));
+					</script>
+
+					<div class="fb-like" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false" data-font="verdana"></div>
+					
+	            </p>			
 	        </div>
+			<div class="product-stat-details">
+				<ul>
+					<li>Questions<span><%= @product.questions.size %></span></li>
+					<li class="alt">Reviews<span><%= @product.reviews.size %></span></li>
+					<li class="noborder">Tips<span>8</span></li>
+					<!--li class="noborder alt">Like<span>5</span></li>-->
+				</ul>
+			</div>
+	
 	    	<br class="clear" />
 	    </div>
 
@@ -140,7 +165,9 @@ $(document).ready(function() {
 		    </div>    
 		</div>
 	</div>
+	
 	<div class="sidebar">
+		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
 		<!--
         <div class="sidebar-content" id="product-stat">
             <div class="sidebar-header">People in your network</div>
@@ -175,9 +202,20 @@ $(document).ready(function() {
             </div>
         </div>--><!-- #product-stat -->
         
+		<!--
+		<div class="sidebar-content">
+			<div class="sidebar-header">
+				Product Image
+			</div>	
+			<div class="upload-image">
+				<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>		  	
+			</div>
+		</div>
+		-->
+		
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@people_who_owned.size, 'Person') %> who own
+				<%= pluralize(@people_who_owned.size, 'person') %> who own
 			</div>	
 			<div class="user-grid">
 		    	<ul>
@@ -192,6 +230,24 @@ $(document).ready(function() {
 			</div>
 		</div><!-- #see who has similar products in his network -->			
 
+		<div class="sidebar-content">				
+			<div class="sidebar-header">
+				<%= pluralize(@people_who_wished.size, 'person') %> who wish
+			</div>	
+			<div class="user-grid">
+		    	<ul>
+				<% @people_who_wished.each do |person| %>
+		  			<li>
+						<%= link_to profile_member_path(person) do %>
+							<%= image_tag avatar_url(person, 50), :width => 50, :title => person.full_name %>
+						<% end %>
+					</li>
+				<% end %>
+				</ul>
+			</div>
+		</div><!-- #see who has similar products in his network -->			
+		
+		<!--
         <div id="product-tips" class="sidebar-content">
             <div class="sidebar-header">
                 Tips
@@ -216,7 +272,7 @@ $(document).ready(function() {
                 </ul>
             </div>
         </div>
-				
+		-->		
 		
 	</div>
 </div>

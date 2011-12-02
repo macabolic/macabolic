@@ -139,4 +139,10 @@ Devise.setup do |config|
   #   end
   #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
   # end
+  
+  # Omniauth config
+  require 'openid/store/filesystem'
+  #config.omniauth :twitter, 'bG7H8OEtc1XFob5MVODcPw', 'QS3SEHTRTLdv4798dV2imogTJvIXgbsQ2V4Q52ftfA'
+  config.omniauth :facebook, '249685278407440', 'ee1108c10a7b064834152a0959071e06'
+  config.omniauth :open_id, OpenID::Store::Filesystem.new('/tmp'), :name => 'google', :identifier => 'https://www.google.com/accounts/o8/id'
 end

@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   has_many                :questions, :dependent => :destroy  
   has_many                :my_collection_items
   has_many                :users, :through => :my_collection_items
+  has_many                :wishlist_items
   
   has_attached_file       :thumbnail, 
                           :styles => { :medium => "300x300>", :thumb => "100x100>" },
@@ -21,12 +22,19 @@ class Product < ActiveRecord::Base
   end
   
   def people_who_owned
-      @search = MyCollectionItem.search do
-        with(:product_id, self.id)
-      end
-      @people_who_owned = @search.results.map { |i| i.user }
+    @search = MyCollectionItem.search do
+      with(:product_id, self.id)
+    end
+    @people_who_owned = @search.results.map { |i| i.user }
   end
-    
+
+  def people_who_wished 
+    @search = WishliteItem.search do
+      with(:product_id, self.id)      
+    end
+    @people_who_wished = @search.results.map { |i| i.user }
+  end
+  
   #def self.search(search)
   #  if search
   #    where('name LIKE ?', "%#{search}%")

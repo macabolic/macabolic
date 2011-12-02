@@ -69,6 +69,7 @@ color: #111a1f;
 margin-bottom: 0px!important;
 margin-top: 0px!important;
 line-height: 33px;
+text-align: left;
 }
 #slider-wrapper h3 {
 font-size: 16px;
@@ -161,6 +162,7 @@ ul.home-buttons2 {
 	overflow: hidden;
 	margin: 22px 0px 0px 0px;
 	text-align: center;
+	cursor: pointer;	
 }
 .home-signupbutton input:hover {
   	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
@@ -307,7 +309,13 @@ padding: 30px 30px 30px 30px;
 	//overflow: hidden;
 	//margin: 22px 0px 0px 0px;
 	text-align: center;
-    padding: 0px 0px 0px 0px;	
+    padding: 0px 0px 0px 0px;
+	cursor: pointer;
+}
+
+.question-form input[type="submit"]:hover {
+	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
+	background-position: 0 -42px;
 }
 
 /* Form - Homepage
@@ -386,6 +394,20 @@ label {
 	display: block;
 	margin: 10px 0px 0px 0px;
 }
+
+select {
+	width: 106px;
+	height: 38px;
+	border: 1px solid #b7b7b7;
+	margin-right: 25px;
+	-webkit-border-radius: 6px;
+	
+	line-height: 15px;
+	font-family: Arial;
+	font-size: 14px;
+	padding-top: 5px;
+}
+
 .day {
 width: 106px;
 margin-right: 25px;
@@ -432,11 +454,23 @@ textarea {
 	padding: 0px 8px 0px 8px;
 }
 */
-.borderimage {
-border: 1px solid #d7d7d7;
-padding: 3px;
-margin-bottom: 17px;
+.borderedimage {
+	border: 2px solid #dc6119;
+	//padding: 3px;
+	margin-right: 3px;
+	//margin-bottom: 17px;
 }
+
+.noborderimage {
+	border:none!important;	
+}
+
+.borderimage {
+	border: 1px solid #d7d7d7;
+	padding: 3px;
+	margin-bottom: 17px;
+}
+
 .borderimage2 {
 border: 1px solid #d7d7d7;
 padding: 3px;
@@ -484,31 +518,59 @@ padding: 12px 0px 21px 0px;
 }
 
 .product-stat-details ul {
-background-color: #f3f3f3;
-border: 1px solid #d9d9d9;
-width: 100%;
-overflow: hidden;
--webkit-border-radius: 6px;
--moz-border-radius: 6px;
+	background-color: #f3f3f3;
+	border: 1px solid #d9d9d9;
+	width: 100%;
+	overflow: hidden;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
 }
 .product-stat-details li {
-float: left;
-width: 116px;
-text-align: center;
-border-right: 1px solid #dadada;
-text-transform: uppercase;
-font-size: 10px;
-color: #5c5c5c!important;
-padding: 12px 0px 21px 0px;
+	float: left;
+	width: 116px;
+	text-align: center;
+	border-right: 1px solid #dadada;
+	text-transform: uppercase;
+	font-size: 10px;
+	color: #5c5c5c!important;
+	padding: 12px 0px 21px 0px;
+}
+
+.add-product-methods ul {
+	background-color: #f3f3f3;
+	border: 1px solid #d9d9d9;
+	width: 100%;
+	overflow: hidden;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+.add-product-methods li {
+	float: left;
+	width: 116px;
+	text-align: center;
+	border-right: 1px solid #dadada;
+	text-transform: uppercase;
+	font-size: 10px;
+	color: #5c5c5c!important;
+	padding: 12px 0px 21px 0px;
+}
+
+.add-product-methods span {
+	font-size: 35px;
+	font-weight: bold;
+	color: #313131;
+	display: block;
+	padding-top: 8px;
 }
 
 .noborder {
-border:none!important;
--webkit-border-radius: 0px 6px 6px 0px;
--moz-border-radius: 0px 6px 6px 0px;
+	border:none!important;
+	-webkit-border-radius: 0px 6px 6px 0px;
+	-moz-border-radius: 0px 6px 6px 0px;
 }
+
 .alt {
-background-color: #fff;
+	background-color: #fff;
 }
 .profiledetails span {
 font-size: 35px;
@@ -1035,7 +1097,7 @@ input:blur {
 	background-position: top;
 	color: #131e22;
 
-	margin: 14px 0px 14px 0px;
+	margin: 0px 0px 14px 0px;
 	font-size: 14px;
 	line-height: 24px;
 	font-family: Arial;

@@ -50,14 +50,23 @@
 </script>
 
 <%# resource.email = 'Email' %>
-
-<% if resource.errors.empty? %>
-<div class="home-signup">
-<% else %>
+<% if flash.present? %>
 <div class="home-signup-with-error">
+<% else %>
+<div class="home-signup">
 <% end %>
+	<%#= registration_error_messages! %>
 	<div class="home-signup-th">Login Now</div>
-	<%= registration_error_messages! %>
+	<% if flash.present? %>
+	<div id="error_explanation">
+		<ul>
+			<% flash.each do |key, msg| %>
+				<%= content_tag :li, msg, :class => 'error_item', :id => key %>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+	
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "home-signupform" }) do |f| %>
   		<%= f.text_field :email, :placeholder => 'Email Address' %>
 		<!--input id="user_password_clear" type="text" value="Password" autocomplete="off" /-->

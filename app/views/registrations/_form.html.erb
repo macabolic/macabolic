@@ -69,7 +69,12 @@
 			<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
 			<%= f.password_field :password, :placeholder => 'Password' %>
 		<% end %>
-					
+		<label>Birthday</label>
+		<%= date_select "user", :birthday, 
+								:use_short_month => true, 
+								:start_year => Time.now.year - 100,
+								:end_year => Time.now.year, 
+								:order => [:day, :month, :year] %>
 		<span class="home-signupbutton">
 			<%= submit_tag "Join", :class => "home-signupbutton" %>
 		</span>  

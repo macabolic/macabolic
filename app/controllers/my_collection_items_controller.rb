@@ -15,6 +15,7 @@ class MyCollectionItemsController < ApplicationController
   # POST /my_collection_items
   # POST /my_collection_items.xml
   def create
+    logger.info "MyCollectionItemsController => create"
     #@product = Product.find(params[:id])
     @product = Product.find(params[:product])
     @my_collection = MyCollection.find(params[:my_collection_id])

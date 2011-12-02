@@ -18,26 +18,28 @@ $(document).ready(function() {
 	
 	<div class="wrapper-mh">
 		<div class="maincol">
-	    	<div class="product-item sidebar-content">
+	    	<div class="product-item sidebar-content">		
 		        <div class="product-image">		        
-					<%= image_tag @my_collection.thumbnail.url(:thumb), :width => "70" %>
+					<%= image_tag @my_collection.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
 					<!-- img src="/images/product/no-image_60x60.jpg" alt="Product Image" width="60" height="60" -->
-					<br/><br/><br/><br/><br/><br/>
 			    </div>
 		        <div class="product-detail">
-					<h3 style="text-align: left;"><%= @my_collection.name %></h3>			
-					<p><%= @my_collection.description %></p>					
+			        <div>
+						<p class="left"><h3 style="text-align: left;"><%= @my_collection.name %></h3></p>
+					</div>
+					<p><%= @my_collection.description %></p>	
+					<% if @user == current_user %>				
 					<p>
 						<div id="add_wishlist">
 							<%= link_to 'Edit Collection', edit_member_my_collection_path(current_user, @my_collection), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
 						</div>						
 					</p>
+					<% end %>					
 					<div class="product-stat-details">
 						<ul>
 							<li>Collection Items<span><%= @my_collection.my_collection_items.size %></span></li>
-							<li class="alt">Reviews<span>2</span></li>
-							<li class="noborder">Tips<span>8</span></li>
-							<li class="noborder alt">Like<span><%= @my_collection.my_collection_responses.vote_like.size %></span></li>
+							<li class="alt">Recommendations<span>2</span></li>
+							<li class="noborder">Like<span><%= @my_collection.my_collection_responses.vote_like.size %></span></li>
 						</ul>
 					</div>
 		        </div>

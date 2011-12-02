@@ -1,0 +1,136 @@
+<% title "What is Macabolic?" %>
+
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script> 
+
+<div id="grey-strip-signedin">
+	<div class="wrapper-top">
+		<ul id="nav-signedin">
+			<li class="homerounded" id="home-on">
+				<%= link_to 'About Us', about_url %>
+			</li>
+			<li>
+				<%= link_to 'Feature Tour', features_url %>
+			</li>	
+			<li>
+				<%= link_to 'FAQ' %>
+			</li>	
+		</ul>	
+	</div>	
+</div>
+
+<div class="wrapper-featuretour">
+	<div class="featuretour-container">
+		<div id="slider-wrapper">        
+			<div id="slider" class="nivoSlider">
+				<%= image_tag '/images/banners/featuretour-3.jpg', :alt => "featuretour-3", :width => "912", :height => "352", :title => "#htmlcaption" %>
+			</div>
+          
+			<div id="htmlcaption" class="nivo-html-caption">
+				<h2>Macabolic is a platform for the <span>Mac</span> lovers.</h2><br/>
+			</div>            
+	     </div>	
+
+		<div style="margin-bottom: 25px;">
+			<h3 style="text-align:left;">What is Macabolic?</h3><br/>
+			<div>
+				<p style="font-size: 14px; font-family: Verdana;">
+					Macabolic lets you share your collection and look for recommendations and tips from your friends or people in the community. It is where you can browse the collections from others to get inspiration and how to get the most or better your setup.<br/><br/>
+
+					It is fun and is a new way of sharing with people who have the same interest as you do.<br/>
+				</p>
+			</div>
+		</div>
+		
+		<div style="margin-bottom: 15px;">
+			<h3 style="text-align:left;">Who we are</h3><br/>
+			<div>
+				<p style="font-size: 14px; font-family: Verdana;">
+					I am a very enthusiastic Mac user. I am striving to build this platform to gather the Mac community. The reason why I created this is simple. I knew there are great Mac products out there and I wanted to know how people are setting up their Mac at home, but finding the information is just getting harder. So here it is, Macabolic is here and hope this can solve my problem. 
+				</p>
+			</div>
+			<div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(window).load(function() {
+    $('#slider').nivoSlider({
+        effect:'fade', //Specify sets like: 'fold,fade,sliceDown'
+        slices:15,
+        animSpeed:500, //Slide transition speed
+        pauseTime:15000,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:false, //Next & Prev
+        directionNavHide:true, //Only show on hover
+        controlNav:false, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:false, //Force manual transitions
+        captionOpacity:1.0, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){}, //Triggers after all slides have been shown
+        lastSlide: function(){}, //Triggers when last slide is shown
+        afterLoad: function(){} //Triggers when slider has loaded
+    });
+
+    $('#slider1').nivoSlider({
+        effect:'fade', //Specify sets like: 'fold,fade,sliceDown'
+        slices:15,
+        animSpeed:500, //Slide transition speed
+        pauseTime:15000,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:false, //Next & Prev
+        directionNavHide:true, //Only show on hover
+        controlNav:false, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:false, //Force manual transitions
+        captionOpacity:1.0, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){}, //Triggers after all slides have been shown
+        lastSlide: function(){}, //Triggers when last slide is shown
+        afterLoad: function(){} //Triggers when slider has loaded
+    });
+});
+</script>
+
+<!--
+<div class="wrapper-mh">
+	<div class="maincol">
+		<div class="tabbed-content-area">
+			<strong>What is Macabolic?</strong>
+			
+			
+		</div>
+	</div>
+
+	<div class="sidebar">				        
+		<div class="sidebar-content" id="new-product">				
+            <div class="sidebar-inner">
+                <ul>
+					<li><%#= link_to 'What is Macabolic?', admin_products_path %></li>
+					<li><%#= link_to 'Feature Tour', admin_vendors_path %></li>
+					<li><%#= link_to 'FAQ', admin_vendors_path %></li>					
+                </ul>
+            </div>
+        </div>
+	</div>
+</div>
+-->

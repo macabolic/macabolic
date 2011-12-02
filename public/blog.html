@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="csrf-param" content="authenticity_token"/>
+	<meta name="csrf-token" content="XYFdlai8hiBTncnZkFEJh2cWCCRVOCkIMFpmHG/Zl1w="/>
+
+	<style type="text/css">
+		#post-date {
+			text-align: left;
+			color: #DB6019;
+			font-size: 18px;
+	        padding-bottom: 15px;
+	        margin-bottom: 15px;
+		}
+		
+		#tag {
+			line-height: 35px;
+			padding: 5px 5px 5px 5px;
+			border: 1px solid #b7b7b7;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;			
+		}
+	</style>
+	<link href="http://teaser.macabolic.com/stylesheets/layout.css?1315877014" media="screen" rel="stylesheet" type="text/css" />
+	<link href="http://teaser.macabolic.com/stylesheets/macabolic.css?1315877014" media="screen" rel="stylesheet" type="text/css" />
+	<link href="http://teaser.macabolic.com/stylesheets/reset.css?1315877014" media="screen" rel="stylesheet" type="text/css" />
+	<link href="http://teaser.macabolic.com/stylesheets/scaffold.css?1315877014" media="screen" rel="stylesheet" type="text/css" />
+	<link href="http://teaser.macabolic.com/stylesheets/styles.css?1315877014" media="screen" rel="stylesheet" type="text/css" />
+
+	<!--[if IE 6]>
+	<link href="/stylesheets/ie6.css?1315877014" media="screen" rel="stylesheet" type="text/css" />
+	<![endif]-->
+	<!--[if IE 7]>
+	<link href="/stylesheets/ie7.css?1315877014" media="screen" rel="stylesheet" type="text/css" />	
+	<![endif]-->
+
+	<link rel="icon" href="{Favicon}" type="image/x-icon" />		
+	<link rel="alternate" type="application/rss+xml" href="{RSS}" />
+	{block:Description}
+	<meta name="description" content="{MetaDescription}" />
+	{/block:Description}
+	<title>Macabolic Blog - {Title}</title>		
+</head>
+<body>
+	<div class="wrapper">
+		<!-- Header -->
+		<div id="black-strip">
+			<div class="wrapper-top">
+				<!-- Logo -->
+				<div class="logo-holder"><a href="http://www.macabolic.com"><h1>Macabolic</h1></div>				
+				<!-- Navigation -->
+				<div class="nav-holder">							
+					<ul id="nav">
+						<li><a href="/?locale=en"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+			
+		<!-- Body content -->
+		<!--
+		<div id="grey-strip-signedin">
+			<div class="wrapper-top">
+
+				<ul id="nav-signedin">
+					<li class="homerounded" id="">
+						<a href="#">Macabolic Blog</a>
+					</li>
+					
+   				    <li id="search-form">
+   					    <form>
+							<input type="text" value="Search">
+      				     </form>
+   				    </li>
+					
+				</ul>
+			</div>					
+		</div>
+		-->	
+		<div class="wrapper-mh">
+			<div class="maincol">
+				<div class="tabbed-content-area"> 
+	                <div id="tab1" class="tab_content"> 
+						<ul class="combined-list">
+					{block:Posts}
+						
+						    <li>  
+							    <div id="post-date">
+                                    {block:Date}{DayOfWeek} {Month} {DayOfMonth}, {Year}{/block:Date}
+                                </div>
+					<!-- Text Post -->
+					{block:Text}								
+							{block:Title}
+								<p class="left"><h3 style="text-align:left;">{Title}</h3></p>
+							{/block:Title}
+
+								{Body}
+					{/block:Text}
+					<!-- End Text Post -->	
+					<!-- Photo Post -->	
+					{block:Photo}	
+							{LinkOpenTag}<img src="{PhotoURL-500}" alt="{PhotoAlt}"/>{LinkCloseTag}
+							{block:Caption}
+								{Caption}
+							{/block:Caption}
+					{/block:Photo}
+					<!-- End Photo Post -->
+					<!-- Common Section for all posts -->
+								<div class="answer-wrapper">
+									<div class="answers-meta">
+										<p class="left">
+											Posted at {block:Date}{12HourWithZero}:{Minutes} {AmPm}{/block:Date}
+										</p>
+						{block:NoteCount}<span><strong>{NoteCountWithLabel}</strong></span>{block:NoteCount} 
+										<span><strong><a href="{Permalink}">Permalink</a></strong></span>
+									</div>
+								</div>                                        
+								<div class="answer-wrapper">
+									<div class="answers-meta">
+										<p class="left">
+											Tagged in: <br/>
+											{block:HasTags}
+											<div class="answer-wrapper">
+												<div class="answers-meta">
+													{block:Tags}
+													<span><strong><a id="tag" href="{TagURL}">{Tag}</a></strong></span>
+													{/block:Tags}
+												</div>
+											</div>                                        
+											{/block:HasTags}
+										</p>
+									</div>
+								</div>
+					<!-- End Common Section -->
+							</li>
+					{/block:Posts}
+						</ul>
+					</div>
+					<div class="right">
+                       	<div id="pagination">
+                       	{block:Pagination}	
+                       	    <ul>
+                       		{block:PreviousPage}	
+                       			<li><a href="{PreviousPage}">&#171;</a></li>
+                       		{block:PreviousPage}                       		
+                       	{block:JumpPagination length="3"}
+                       		{block:CurrentPage}
+                       			<li class="current">{PageNumber}</li>
+                       		{/block:CurrentPage}
+                       		{block:JumpPage}
+                       			<li><a href="{URL}">{PageNumber}</a></li>
+                       		{/block:JumpPage}
+                       	{/block:JumpPagination}
+								<li><span>of</span></li>
+								<li>{TotalPages}</li>                                
+							{block:NextPage}
+                       			<li><a href="{NextPage}">&#187;</a></li>
+                       		{/block:NextPage}
+                       		</ul>
+                       	{/block:Pagination}
+                       	</div>
+					</div>				                        
+				</div>
+			</div>
+							
+			<!-- Sidebar -->
+			<div class="sidebar">
+		    	<div class="sidebar-content account-info">
+					<div class="sidebar-header">
+				    	Macabolic Blog
+					</div>
+					<div class="sidebar-inner">					
+				    	<p class="username">
+							<img src="http://localhost:3001/images/logo-icon-only.png"/>
+			        		Macabolic lets you share your collection, look for recommendations and post tips among your friends and people in the community.
+				    	</p>
+						<p>
+			        		<strong>Follow us on</strong> 
+							<a href="http://www.facebook.com/macabolic">
+								<img alt="facebook" class="social" height="16" src="http://teaser.macabolic.com/images/sitewide/facebook.png?1315877014" width="16" />
+							</a>&nbsp;
+							<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
+								<img alt="twitter" class="social" height="16" src="http://teaser.macabolic.com/images/sitewide/twitter.png?1315877014" width="16" />
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- twitter integration -->
+		<!--	
+			<div class="sidebar">
+		    	<div class="sidebar-content account-info">
+					<div class="sidebar-header">
+					{block:Twitter}
+						<a href="http://twitter.com/{TwitterUsername}">Latest Tweets</a>
+					{/block:Twitter}
+					</div>
+			
+					<div class="sidebar-inner">					
+					{block:Twitter}
+						<div id="latest_tweets" style="display:none;">
+							<div id="tweets"></div>
+						</div>
+						<script type="text/javascript">
+				        	function recent_tweets(data) {
+				            	for (i=0; i<data.length; i++) {
+				                	document.getElementById("tweets").innerHTML =
+				                    	document.getElementById("tweets").innerHTML +
+				                    	'<a href="http://twitter.com/{TwitterUsername}/status/' +
+				                    	(data[i].id_str ? data[i].id_str : data[i].id) +
+				                    	'"><div class="content">' + data[i].text +
+				                    	'</div></a>';
+				            	}
+				            	document.getElementById("latest_tweets").style.display = 'block';
+				        	}						
+						</script>
+					{/block:Twitter}
+					
+					</div>
+				</div>
+			</div>
+		-->
+			
+			<div class="push"></div>
+		</div>    
+	</div>	
+		
+	<!-- Footer -->
+	<div class="footer sticky">
+  		<div class="wrapper-top">
+  			<p class="footerleft">&copy; 2011 Macabolic</p>
+<!--
+  			<p class="footerright">Follow Macabolic &nbsp;
+				<a href="http://www.facebook.com/macabolic">
+					<img alt="facebook" class="social" height="16" src="http://teaser.macabolic.com/images/sitewide/facebook.png?1315877014" width="16" />
+				</a>&nbsp;
+				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
+					<img alt="twitter" class="social" height="16" src="http://teaser.macabolic.com/images/sitewide/twitter.png?1315877014" width="16" />
+				</a>
+  			</p>
+-->
+		</div>
+	</div>
+
+
+	<!-- Piwik --> 
+	<script type="text/javascript">
+	var pkBaseURL = (("https:" == document.location.protocol) ? "https://eclipse.macabolic.com/" : 
+	"http://eclipse.macabolic.com/");
+	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C
+	/script%3E"));
+	</script><script type="text/javascript">
+	try {
+	var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+	piwikTracker.trackPageView();
+	piwikTracker.enableLinkTracking();
+	} catch( err ) {}
+	</script><noscript><p><img src="http://eclipse.macabolic.com/piwik.php?idsite=1" style="border:
+	0" alt="" /></p></noscript>
+	<!-- End Piwik Tracking Code -->
+	
+	<!-- Put this at the bottom of the page -->
+<!--
+	{block:Twitter}
+	    <script type="text/javascript" src="/tweets.js"></script>
+	{/block:Twitter}	
+-->
+</body>
+</html>
+

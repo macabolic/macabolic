@@ -1,0 +1,33 @@
+<%= javascript_include_tag "application.js" %>
+
+<% if !@friends.nil? && @friends.size > 0 %>
+	Click on the image to recommend:	
+	<ul id="search-friend-list">
+	<% @friends.each do |friend| %>
+        <li>
+			<%= link_to '#', :id => 'recommend_link' do %>
+				<%= image_tag avatar_url(friend.friend, 50), :width => 50, :title => friend.friend.full_name, :class => "noborderimage", :id => friend.friend.id %>
+			<% end %>
+        </li>
+	<% end %>
+	</ul>
+	<br class="clear" />
+	<div class="right">
+		<%
+			@recommendation = Recommendation.new
+		%>
+		<%= form_tag @recommendation, :id => 'make_recommendation', :remote => true do %>
+			<%= hidden_field_tag 'recommendation[from_user_id]', current_user.id %>
+			<%= hidden_field_tag 'recommendation[product_id]', @product_id %>
+			<%= hidden_field_tag 'number_of_recommendation', '0' %>
+			<%= hidden_field_tag 'to_user_id' %>
+			<p>
+				<%= submit_tag 'Recommend', :id => 'recommend_now' %>
+				<%#= link_to '#', :id => 'recommend_now' do %>
+					
+				<%# end %>
+			</p>
+		<% end %>
+	</div>
+	<br class="clear" />
+<% end %>

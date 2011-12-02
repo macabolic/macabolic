@@ -51,10 +51,12 @@
 		<%= f.text_field :last_name, :placeholder => 'Last Name' %>
 		<%= f.text_field :email, :placeholder => 'Email Address' %>
 		<% if @user.password_required? %>
-			<input id="user_password_clear" type="text" value="Password" autocomplete="off" />
+			<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
+			<!-- input id="user_password_clear" type="text" value="Password" autocomplete="off" /-->
 			<%= f.password_field :password, :placeholder => 'Password' %>
 		<% end %>
+				
 		<span class="home-signupbutton">
-		<%= submit_tag "Submit", :class => "home-signupbutton" %></span>                
+		<%= submit_tag "Join", :class => "home-signupbutton" %></span>                
 	<% end %>
 </div>

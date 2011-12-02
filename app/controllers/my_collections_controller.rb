@@ -21,6 +21,27 @@ class MyCollectionsController < ApplicationController
       format.xml  { render :xml => @my_collection }
     end
   end
+  
+  # GET /my_collections/new
+  # GET /my_collections/new.xml
+  def new
+    @search = Product.search do
+      fulltext "apple"
+    end
+    @products = @search.results
+
+    
+    #@my_collection = MyCollection.new
+    #@products.size.times do
+      @my_collection = current_user.my_collections.build
+      @my_collection_item = @my_collection.my_collection_items.build
+    #end    
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @my_collection }
+    end
+  end  
 
   # GET /my_collections/1/edit
   def edit
@@ -120,4 +141,38 @@ class MyCollectionsController < ApplicationController
     @vote = params[:vote]
     @vote_like_count = MyCollectionResponse.where("my_collection_id = ?", params[:id]).vote_like.size
   end  
+  
+  def mass_create
+    @my_collection = MyCollection.new(params[:my_collection])
+    logger.info "MyCollectionsController.mass_create - #{@my_collection}."
+    logger.info "MyCollectionsController.mass_create - #{@my_collection.my_collection_items}."
+    # 1. loop the my_collection_items
+    # 2. for each my_collection_item
+    # 3. create a my_collection
+    # 4. my_collection.name = 'My #{my_collection_item.product.name} Collection'
+    # 5. my_collection.my_collection_items.add my_collection_item
+    # 6. my_collection.save
+    @my_collection_items = @my_collection.my_collection_items
+    @my_collection_items.each do |my_collection_item|
+      @new_my_collection = MyCollection.new
+      @new_my_collection.name = 'My ' + my_collection_item.product.name + ' Collection'
+      @new_my_collection.user_id = current_user.id
+      @new_my_collection.my_collection_items.build(:product_id => my_collection_item.product.id, :user_id => current_user.id)
+      logger.info "#{@new_my_collection.to_yaml}"
+      @new_my_collection.save
+    end    
+
+    respond_to do |format|
+      format.html { redirect_to profile_member_path(current_user) }
+      #format.xml  { render :xml => @invitation, :status => :created, :location => @invitation }
+    end    
+  end
+  
+  def skip
+    respond_to do |format|
+      format.html { redirect_to profile_member_path(current_user) }
+      #format.xml  { render :xml => @invitation, :status => :created, :location => @invitation }
+    end
+  end
+
 end

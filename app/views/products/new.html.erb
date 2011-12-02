@@ -1,0 +1,80 @@
+<% title 'Add new product' %>
+
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+
+	    //Input Form placeholder
+	    $('input:text').focus(function(){
+	        if(this.value === this.defaultValue) {
+	            this.value = "";
+	        } else {
+	            this.select();
+	        }
+	    })
+	    .blur(function(){
+	        if ($.trim(this.value) === "") {
+	            this.value = (this.defaultValue ? this.defaultValue: "")
+	        }
+	    });
+    }); 
+</script>
+
+<div id="grey-strip-signedin">
+	<div class="wrapper-top">
+		<%= render :partial => 'layouts/navigation', :locals => {:user => @user, :item => "Collections"} %>						
+	</div>
+</div>
+
+<%= form_for(@product, :html => {:multipart => true}) do |f| %>
+<div class="wrapper-mh">
+	<div class="add-product-maincol"> 
+    	<div class="add-product-content">
+			<div class="add-product-methods">
+				<ul>
+					<li>
+						Google<span><%= image_tag "auth/google_64.png", :size => "64x64", :alt => "Google" %></span>
+					</li>
+					<li class="alt">
+						Facebook<span><%= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook", :class => "social" %></span>
+					</li>
+					<li class="noborder">
+						Open ID<span><%= image_tag "auth/open_id_64.png", :size => "64x64", :alt => "OpenID" %></span>
+					</li>
+					<li class="noborder alt">Twitter<span><%= image_tag "auth/twitter_64.png", :size => "64x64", :alt => "Twitter", :class => "social" %></span></li>
+				</ul>
+			</div>
+			<div class="add-product-methods">				
+				<h3>Create a new product</h3>
+				<label for="tiptitle">Name</label>
+				<%= f.text_field :name, :class => "text", :placeholder => "e.g. iPad 3" %><br/><br/>
+
+			  	<%= f.label :vendor_id %>
+				<%= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %><br/><br/>
+
+			  	<%= f.label :product_line_id %>
+				<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name) %><br/><br/>
+
+
+				<%= hidden_field_tag :my_collection_id, params[:my_collection] %>
+				<%#= hidden_field :user_id,  %>
+				<div class="actions">
+					<%= f.submit 'Submit', :class => "submit-tip-button" %>
+				</div>				
+			</div>
+	    </div>
+	</div>
+	<div class="upload-image-sidebar">			
+		<div class="sidebar-content">
+			<div class="upload-image">
+				<div>
+			  		<%= f.label 'Upload a image' %>
+					<img src="/images/product/no-image.jpg" alt="Product Image" class="preview-image">
+					<br/><br/>
+					<%= f.file_field :thumbnail %>			
+				</div>		        				
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>

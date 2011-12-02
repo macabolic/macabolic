@@ -1,7 +1,14 @@
 Macabolic::Application.routes.draw do
 
+  resources :recommendations
+
   resources :friendships
+  
   resources :activities
+
+  # Home
+  resources :home do
+  end
 
   # Questions
   resources :questions do
@@ -19,6 +26,7 @@ Macabolic::Application.routes.draw do
   resources :invitations do
     member do
       get 'accept/:invitation_token' => "invitations#show"
+      get 'skip'
     end
   end
   
@@ -33,8 +41,12 @@ Macabolic::Application.routes.draw do
   resources :my_collections do    
     member do
       get 'vote'
+      get 'skip'
     end
     
+    collection do
+      post 'mass_create'      
+    end
     resources :my_collection_items
   end
 
@@ -47,15 +59,17 @@ Macabolic::Application.routes.draw do
               :path_names => {  :sign_in => 'login', 
                                 :sign_out => 'logout' },
                                 #:sign_up => 'register' },
-              :controllers => { :registrations => 'registrations' } do
-     get 'users/sign_up/:invitation_token' => "registrations#new"           
+              :controllers => { :registrations => 'registrations',
+                                :omniauth_callbacks => 'users/omniauth_callbacks' } do
+     get 'users/sign_up/:invitation_token' => "registrations#new" 
+     get 'users/auth/:provider' => 'users/omniauth_callbacks#passthru'          
   end
 
   # Products
   resources :products do
     collection do
       get 'product_search'
-    end    
+    end  
   end
   
   # Members
@@ -72,12 +86,21 @@ Macabolic::Application.routes.draw do
   resources :authentications
   resources :wishlists
   resources :wishlist_items
+
+  # My Collections
+  resources :wishlists do    
+    delete 'wishlist_items/:product' => 'wishlist_items#destroy'
+    resources :wishlist_items
+  end
+
   #resources :registrations
 
   get "home/index"
 
-  match '/auth/:provider/callback' => 'authentications#create'
+  #match '/auth/:provider/callback' => 'authentications#create'
   match 'my_collections/add_product/:id' => 'my_collections#add_product'
+  match 'about' => 'home#about_us'
+  match 'features' => 'home#feature_tour'
 
 # TODO
 #  match '/auth/failure' => 'something to handle this error'

@@ -113,6 +113,7 @@ width: 496px;
 margin: 0 auto;
 position: relative;
 }
+
 .or {
 position: absolute;
 top: -37px;
@@ -234,7 +235,7 @@ ul#signupsteps {
 	
 li.step1 {
 	text-indent: -3000em;
-	//background:url(../images/headings/signup-step1.jpg) no-repeat left top;
+	background:url(../images/headings/signup-step1.jpg) no-repeat left top;
 	width: 217px;
 	height: 51px;
 	display: block;
@@ -502,7 +503,6 @@ background-color: #bc4902;
     width:200px
 }
 
-
 .wrapper-mh {
 width: 978px;
 margin: 0 auto;
@@ -553,11 +553,69 @@ margin-left: 24px;
 }
 
 .product-stat-details {
-float: left;
-width: 467px;
-//width: 350px;
-margin-left: 0px;
-margin-top: 10px;
+	float: left;
+//	width: 467px;
+	width: 350px;
+	margin-left: 0px;
+	margin-top: 10px;
+}
+
+.add-product-content {
+	width: 507px;
+	background: white;
+	border: 1px solid #e3d7a9;
+	overflow: hidden;
+	-webkit-border-radius: 6px;
+	-webkit-box-shadow: 0px 2px 1px #ece8d5;
+	background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(0.01, rgb(248,248,248)),
+    	color-stop(0.05, rgb(255,255,255))
+	);
+	background-image: -moz-linear-gradient(
+    	center bottom,
+    	rgb(248,248,248) 1%,
+    	rgb(255,255,255) 5%
+	);
+	
+	padding:25px, 15px;
+	margin-bottom:24px;
+}
+
+.add-product-methods {
+	float: left;
+	width: 467px;
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.add-product-maincol {
+	width: 500px;
+	float: left;
+	margin-bottom: 32px;
+}
+
+.upload-image-sidebar {
+	width: 300px;
+	float: left;
+	margin: 0px 0px 8px 29px;
+}
+
+.upload-image {
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;	
+}
+
+img.preview-image {
+	display: block;
+	margin-left: auto;
+	margin-right: auto	
 }
 
 .tabbed-content-area {
@@ -848,9 +906,10 @@ padding-bottom: 40px;
 }
 
 .product-image {
+	width: 200px;
     float:left;
     display:inline;
-    padding:10px 30px;
+//    padding:10px 30px;
     margin-right:20px;
     border-right:1px solid #D6D6D6;
 }
@@ -858,7 +917,9 @@ padding-bottom: 40px;
 .product-detail {
     float:left;
     display:inline;
-    width:486px
+//    width:486px;
+	width:400px;
+//	border:1px solid #D6D6D6;
 }
 
 #product-stat { color:#565656;}
@@ -1199,6 +1260,22 @@ padding-bottom: 40px;
     margin-bottom:0
 }
 
+#search-friend-list {
+
+}
+
+#search-friend-list li {
+	width: 58px;
+	float: left;
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
+	margin-top: 3px;
+	margin-bottom: 5px;
+	border: none;
+}
+
+
 /* Star Rating
 ----------------------------------------------------------------------*/
 .productpage .star-rating {margin:0 auto}
@@ -1314,9 +1391,17 @@ padding-bottom: 40px;
 }
 
 .productimage {
-	border: 1px solid #e3d7a9;
+	border: 3px solid #e3d7a9;
 	height: 170px;
 	margin-bottom: 10px;
+}
+
+.shadow {
+	-webkit-box-shadow: 0px 0px 1px 2px #ece8d5;	
+}
+
+.selected {
+	border: 3px solid #6DB132;
 }
 
 .productimage img {
@@ -1410,5 +1495,4 @@ padding-bottom: 40px;
 	padding: 0px;
 	margin: 0px;
 }
-
 

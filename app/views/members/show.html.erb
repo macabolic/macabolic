@@ -126,6 +126,8 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<div class="sidebar">
+			<%= render :partial => 'invitations/form', :locals => { :invitation => Invitation.new } %>
+		<!--		
 			<div class="wishlist">
 				<div id="slider" class="nivoSlider">
 	     			<img src="/images/membershomepage/wishlist-image.jpg" alt="wishlist-image" width="200" height="130" title="#htmlcaption" />
@@ -142,6 +144,7 @@ $(document).ready(function() {
 					<p>This is a brief description about my wishlist shown above. It will only be about three lines long...</p>
 		        </div>
 			</div>
+		-->	
 		<!--	
 			<div class="sidebar-content">
 				<ul class="tabs2"> 

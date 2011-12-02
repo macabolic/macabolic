@@ -42,6 +42,19 @@ class InvitationsController < ApplicationController
   # GET /invitations/new.xml
   def new
     @invitation = Invitation.new
+    
+    # Nov 20, 2011 - Billy
+    # I have no choice but to do another sign_in here.
+    # The sign_in should be done in RegistrationsController.new 
+    # But at some point, it doesn't work there. To fix that, I do another sign_in here.
+    logger.info "InvitationsController.new before - #{user_signed_in?}"
+    if !user_signed_in?
+      @user = User.find_by_email(params[:email])
+      if !@user.nil?
+        sign_in(:user, @user)
+        logger.info "InvitationsController.new after - #{user_signed_in?}"
+      end
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -56,7 +69,7 @@ class InvitationsController < ApplicationController
 
   # POST /invitations
   # POST /invitations.xml
-  def create
+  def create    
     @invitation = Invitation.new(params[:invitation])
     @invitation.sender = current_user
     logger.info "Invitation..."
@@ -68,14 +81,19 @@ class InvitationsController < ApplicationController
     if @existing_invitation
       logger.info "It is a reminder invitation."
       UserMailer.invite(@existing_invitation, true).deliver
+      @success = true
     else
-      @invitation.save
-      # Send a email to recipient_email
-      UserMailer.invite(@invitation).deliver
-      @invitation.update_attribute("sent_at", Time.now)
-    end
-    
-    
+      @existing_user = User.where("email = ?", @invitation.recipient_email)
+      if @existing_user.exists?
+        @success = false
+      else        
+        @invitation.save
+        # Send a email to recipient_email
+        UserMailer.invite(@invitation).deliver
+        @invitation.update_attribute("sent_at", Time.now)
+        @success = true
+      end
+    end    
     #respond_to do |format|
     #  if @invitation.save
         #format.html { redirect_to(:controller => 'members', :action => 'profile', :notice => 'Invitation was successfully created.') }
@@ -115,4 +133,12 @@ class InvitationsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def skip
+    respond_to do |format|
+      format.html { redirect_to(:controller => 'my_collections', :action => 'new') }
+      #format.xml  { render :xml => @invitation, :status => :created, :location => @invitation }
+    end
+  end
+  
 end

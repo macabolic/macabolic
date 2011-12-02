@@ -1,1 +1,5 @@
+<% if @success %>
 <span class="message">An invitation is successfully sent to <%= @recipient_email %></span>
+<% else %>
+<span class="message"><%= @recipient_email %> already registered. Search and find your friend.</span>
+<% end %>

@@ -1,5 +1,5 @@
 class ActivityObserver < ActiveRecord::Observer
-  observe :question, :my_collection_item, :my_collection
+  observe :question, :my_collection_item, :my_collection, :recommendation
 
   def after_create(model)
     log_activity(model)

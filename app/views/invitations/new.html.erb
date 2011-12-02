@@ -1,5 +1,53 @@
-<h1>New invitation</h1>
+<script type="text/javascript"> 
+    $(document).ready(function() { 
+		$("#loading").hide(); //Hide all tab content
+		$('#invite-friend-form').submit(function() {
+			// Show the loading.gif
+			$("#loading").show();
+		});
+    }); 
+</script>
 
-<%= render 'form' %>
+<% title "Step 2 - Invite your friends" %>
+<div id="grey-strip">
+	<div class="wrapper-top">
+		<div class="headings-left">
+			<h2>Sign Up</h2>
+			<h3>It's <span>free</span> and takes 2 minutes!</h3>
+		<!--	
+			<ul class="home-featurebutton">
+				<li class="home-featurebutton"><%= link_to 'Feature Tour', "feature-tour" %></a></li>
+			</ul>
+		-->
+		</div>
+		<div class="headings-right">
+			<ul id="signupsteps">
+        		<li class="step1">Step1</li>
+        		<li class="step2ON">Step2</li>
+        		<li class="step3">Step3</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="wrapper-homecontent">
+	<!-- A form here with First Name, Last Name, Email Address -->	
+	<div class="home-signup">
+		<div class="home-signup-th">Invite your friend</div>		
+		<%= form_for(Invitation.new, :remote => true, :html => { :class => "home-signupform", :id => "invite-friend-form" }) do |f| %>
+			<div>	
+	  			<%= f.text_field :recipient_email, :placeholder => 'Email address here...' %>
+				<span id="loading">
+					<%= image_tag "loading.gif" %>
+				</span>
+			</div>
+			<span id="message" class="message"></span>
+			<div class="action">
+		    	<%= submit_tag "Submit", :class => "invite-friend" %>
+			</div>
+			<div class="action">
+				<%= link_to "Done inviting", skip_invitation_path(1) %>
+			</div>
+		<% end %>
+	</div>
+</div>
 
-<%= link_to 'Back', invitations_path %>

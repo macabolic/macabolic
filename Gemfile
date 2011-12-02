@@ -8,13 +8,13 @@ gem 'rails', '3.0.3'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
 # Install Paperclip
-gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
+gem 'paperclip', '>= 2.4'
 
 # Install Devise
-gem 'devise'
+gem 'devise', '>= 1.2'
 
 # Install Omniauth authentication module
-gem 'omniauth'
+gem 'omniauth', '>= 0.2'
 
 # Install will_paginate do perform pagination in Admin page
 gem 'will_paginate', '3.0.pre2'

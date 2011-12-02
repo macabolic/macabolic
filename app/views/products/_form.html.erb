@@ -1,0 +1,18 @@
+<%= form_for(@product, :html => { :multipart => true }) do |f| %>
+	<label for="tiptitle">Name</label>
+	<%= f.text_field :name, :class => "text" %><br/><br/>
+    
+  	<%= f.label :vendor_id %>
+	<%= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %>
+
+  	<%= f.label :product_line_id %>
+	<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name) %>
+
+  	<%= f.label 'Upload a image' %>
+	<%= f.file_field :thumbnail %>
+
+	<%= hidden_field :my_collection, :user_id %>
+	<div class="actions">
+		<%= f.submit 'Submit', :class => "submit-tip-button" %>
+	</div>
+<% end %>

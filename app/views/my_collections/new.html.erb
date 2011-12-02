@@ -1,0 +1,126 @@
+<style>
+	.active {
+
+	}
+	
+	//.spotlightWrapper ul li span.productimage.selected {
+	//	border: 3px solid #6DB132;
+	//}
+	   
+	.clear { clear:both; } /* to clear the float after the last item */  
+</style>
+<script type="text/javascript">
+
+	//We are using $(window).load here because we want to wait until the images are loaded   
+	$(window).load(function(){   
+		var spotlight = {
+			opacity : 0.2
+		}
+	  		  
+	    //when mouse over the list item...   
+	    $('.spotlightWrapper ul li').hover(function() {   
+	  
+	        //...find the image inside of it and add active class to it and change opacity to 1 (no transparency)   
+	  		$(this).addClass('active').css({'opacity' : 1});   
+	  
+	        //get the other list items and change the opacity of the images inside it to the one we have set in the spotlight array   
+	        //$(this).siblings('li').find('img').css({'opacity' : spotlight.opacity}) ;   
+	  		$(this).siblings('li').css({'opacity' : spotlight.opacity}) ;   
+	  
+	        //when mouse leave...   
+	    }, function() {   		  
+	        //... find the image inside of the list item we just left and remove the active class   
+	        $(this).removeClass('active');   
+	    });   
+	
+	  	$('.spotlightWrapper ul li span.productimage').click(function() {
+	  		$(this).toggleClass('selected'); 
+			if ($(this).hasClass('selected')) {
+				$(this).find('.product_id').attr('value', $(this).find('.product_name').attr("value"))
+			} else {
+				$(this).find('.product_id').attr('value', '')
+			}
+	  	});
+		  
+	    //when mouse leaves the unordered list...   
+	    $('.spotlightWrapper').bind('mouseleave',function(){   
+	        //find the images and change the opacity to 1 (fully visible)   
+	        $(this).find('ul li').css('opacity', 1);   
+	    });			  
+	  			 	  
+	  	//when click on the "Next" button
+	  	$('#next').click(function() {			  		
+	  		$('.spotlightWrapper ul li span.productimage').each(function(index) {
+	  			if ($(this).hasClass('selected')) {
+  					//alert(index + ': ' + $(this).find('a').attr("name"));
+					alert(Index + ": " + $(this).find('.product_id').attr("value"))
+  				}
+			});
+
+	  	});
+	});			
+</script>
+			
+<% title "Step 3 - Set up your collections" %>
+<div id="grey-strip">
+	<div class="wrapper-top">
+		<div class="headings-left">
+			<h2>Sign Up</h2>
+			<h3>It's <span>free</span> and takes 2 minutes!</h3>
+		</div>
+		<div class="headings-right">
+			<ul id="signupsteps">
+        		<li class="step1">Step1</li>
+        		<li class="step2">Step2</li>
+        		<li class="step3ON">Step3</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="wrapper-mh">
+	<div class="tabbed-content-area">  
+		<ul class="tabs"> 
+	        <li><a href="#tab1">Select the Apple products you own</a></li> 
+		</ul> 				  	
+        <div id="tab1" class="tab_content product-grid group spotlightWrapper"> 
+		<%= form_for @my_collection, :url => mass_create_my_collections_path do |f| %>
+			<ul class="list-my-collections">
+				<% @products.each do |product| %>
+				<li>
+					<%= link_to product_path(product) do %>							
+					<span class="right">
+						<%= link_to '' %>
+					</span>							
+					<div class="center">
+						<% f.fields_for :my_collection_items do |builder| %>		
+						<span class="productimage shadow">								
+							<%= hidden_field_tag 'product['+product.name+']', product.id, :class => 'product_name' %>						
+							<%= builder.hidden_field :product_id, :class => 'product_id' %>
+							<%= image_tag product.thumbnail.url(:medium), :width => "150" %>
+						</span>
+						<span>
+							<%= product.name %>
+						</span>
+						<% end %>					
+					</div>
+					<% end %>				
+				</li>
+				<% end %>
+				<div class='clear'></div>  															
+			</ul>
+			<div class="left">
+				<div class="action" style="padding: 22px;">
+				    	<%= submit_tag "Submit", :class => "invite-friend", :id => "next" %>
+				</div>
+				<div class="action" style="padding: 22px;">
+					<%= link_to "Done linking up", skip_my_collection_path(1) %>
+				</div>				
+			</div>
+		<% end %>
+		<div class="action" style="padding: 22px;">
+	    	<%= submit_tag "Next", :class => "invite-friend", :id => "next" %>
+		</div>
+		</div>												
+	</div>																		
+	<div class="push"></div>
+</div>    

@@ -16,12 +16,12 @@ class Wishlist < ActiveRecord::Base
   end
   
   def self.defined_default_wishlist?(user)
-    #Wishlist.where(:user_id => user.id, :default_list => true).exists?
-    where("user_id = ?", user.id).exists?
+    #where(:user_id => user.id, :default_list => true).exists?
+    where("user_id = ? and default_list = ?", user.id, true).exists?
   end
   
   def self.default_wishlist(user)
-#    where("user_id = ? AND default_list = ?", user.id, true)
-    where("user_id = ?", user.id).first
+    where("user_id = ? AND default_list = ?", user.id, true).first
+    #where("user_id = ?", user.id).first
   end
 end

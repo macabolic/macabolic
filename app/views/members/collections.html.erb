@@ -147,7 +147,7 @@ function size(t) {
 		</div>
 		
 		<%#= render 'products/product_search' %>
-		
+		<% if @user == current_user %>
 		<div class="sidebar">
 			<div>
 				<div class="sidebar-content account-info">
@@ -160,6 +160,7 @@ function size(t) {
 				</div>
 			</div>			
 		</div>
+		<% end %>
 <!--
 			<div class="sidebar-content">
 				<ul class="tabs2"> 

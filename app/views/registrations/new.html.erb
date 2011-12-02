@@ -1,21 +1,21 @@
-<% if !params[:invitation_token].nil? && !params[:invitation_token].empty? %>
-<% title "Confirm your invitation" %>
+<% if (!params[:invitation_token].nil? && !params[:invitation_token].empty?) or !@user.confirmed? %>
+<% title "Step 1 - Fill Out Your Details" %>
 <div id="grey-strip">
 	<div class="wrapper-top">
 		<div class="headings-left">
 			<h2>Sign Up</h2>
 			<h3>It's <span>free</span> and takes 2 minutes!</h3>
+		<!--	
 			<ul class="home-featurebutton">
 				<li class="home-featurebutton"><%= link_to 'Feature Tour', "feature-tour" %></a></li>
 			</ul>
+		-->
 		</div>
 		<div class="headings-right">
 			<ul id="signupsteps">
         		<li class="step1ON">Step1</li>
-<!--
         		<li class="step2">Step2</li>
         		<li class="step3">Step3</li>
--->
 			</ul>
 		</div>
 	</div>

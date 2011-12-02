@@ -12,14 +12,25 @@ class RegistrationsController < Devise::RegistrationsController
       logger.info "and the sender is #{@sender.full_name}."
     end      
     # else -> regular registration
-        
-    super
+    
+    #if session['devise.facebook_data'].present?
+    #  logger.info "Session name: #{session['devise.facebook_data']}"
+    #  @user = User.find_by_email(session['devise.facebook_data']['user_info']['email'])
+    #  logger.info "User #{@user}"
+    #end
+
+    super            
+  end
+  
+  def edit
+    
   end
   
   def create
     super
     session[:omniauth] = nil unless @user.new_record?
-    
+
+    @user.update_attributes(params[:user])
     if !params[:invitation_token].nil? && !params[:invitation_token].empty?
       # 1. Update invitation on the accepted date
       @invitation = Invitation.where("token = ?", params[:invitation_token]).first
@@ -31,17 +42,32 @@ class RegistrationsController < Devise::RegistrationsController
       @friendship.save
 
       @inverse_friendship = @invitation.sender.friendships.build(:friend_id => @user.id)
-      @inverse_friendship.save
+      @inverse_friendship.save      
     end
+    
+    # TODO: comment out because of the routing error - 17 Nov 2011.
+    #redirect_to new_invitation_path(@user)
+  end
+  
+  #user.authentications.create!(data['provider'], data['id'])
+  protected
+  
+  def after_sign_up_path_for(resource)
+    new_invitation_path :email => resource.email
+  end
+  
+  def after_inactive_sign_up_path_for(resource)
+    logger.info "Customized after_inactive_sign_up_path_for()."
+    super
   end
   
   private
   
   def build_resource(*args)
     super
-    if session[:omniauth]
-      @user.apply_omniauth(session[:omniauth])
-      @user.valid?
+    if session['devise.facebook_data'].present?
+      logger.info "###****** build resource ********"
+      @user.apply_omniauth(session['devise.facebook_data'])
     end
   end
 end

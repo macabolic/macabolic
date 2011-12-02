@@ -3,6 +3,8 @@ class MyCollection < ActiveRecord::Base
   has_many    :my_collection_items,       :dependent => :destroy
   has_many    :my_collection_responses,   :dependent => :destroy
 
+  accepts_nested_attributes_for :my_collection_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
+  
   has_attached_file       :thumbnail, 
                           :styles => { :medium => "300x300>", :thumb => "100x100>" },
                           :url => "/assets/members/my_collections/:attachment/:id/:style/:filename",

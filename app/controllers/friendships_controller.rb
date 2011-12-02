@@ -1,5 +1,24 @@
 class FriendshipsController < ApplicationController
 
+  # GET /products
+  # GET /products.xml
+  def index
+    if !params[:user_id].nil?
+      if params[:search].length > 2
+        @search = Friendship.search do
+          #any_of do
+          with :user_id, params[:user_id]
+          keywords params[:search]
+        end
+        @friends = @search.results
+        logger.info "Friends search result: #{@friends.size}."
+      end
+    end
+    
+    @product_id = params[:product_id]
+  end
+
+
   # GET /friendships/1
   # GET /friendships/1.xml
   def show

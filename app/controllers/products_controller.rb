@@ -29,17 +29,58 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @reviews = Review.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 2, :page => params[:review_page])
     @questions = Question.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 2, :page => params[:question_page])    
-    @search = MyCollectionItem.search do
+
+    @search_people_who_owned = MyCollectionItem.search do
+      with(:product_id, params[:id])
+    end
+
+    @search_people_who_wished = WishlistItem.search do
       with(:product_id, params[:id])
     end
     
-    @people_who_owned = @search.results.map { |i| i.user }
+    @people_who_owned = @search_people_who_owned.results.map { |i| i.user }
+    @people_who_wished = @search_people_who_wished.results.map { |i| i.user }
     
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @product }
-    end
+    end  
+  end
+  
+  # GET /products/new
+  # GET /productss/new.xml
+  def new
+    @product = Product.new
+    @user = current_user
     
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @product }
+    end
+  end
+  
+  # POST /products
+  # POST /products.xml
+  def create
+    @product = Product.new(params[:product])
+
+    if params[:my_collection_id].present?
+      my_collection_item = MyCollectionItem.new(:my_collection_id => params[:my_collection_id], :user_id => current_user.id)
+      my_collection_item.product = @product
+      my_collection_item.save!
+      @my_collection = MyCollection.find(params[:my_collection_id])
+      redirect_to(my_collection_path(@my_collection)) 
+    else
+      respond_to do |format|
+        if @product.save
+          format.html { redirect_to(product_path(@product), :notice => 'Product was successfully saved.') }
+          format.xml  { render :xml => @product, :status => :created, :location => @product }          
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }      
+        end
+      end
+    end
   end
   
   def product_search

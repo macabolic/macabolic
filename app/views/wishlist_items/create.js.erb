@@ -1,1 +1,1 @@
-$("#wishlist_link").html("<%= link_to 'Remove from Wishlist' %>");
+$("#wishlist_link").html("<%= escape_javascript(render('toggle_wishlist_button')) %>");
