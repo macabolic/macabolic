@@ -1,58 +1,121 @@
 <% title 'Edit Profile' %>
-<script type="text/javascript"> 
-    $(document).ready(function(){ 
-        $(document).pngFix(); 
-    }); 
-</script>
-<script type="text/javascript"> 
- 
-$(document).ready(function() {
- 
-	//Default Action
-	$(".tab_content").hide(); //Hide all content
-	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content:first").show(); //Show first tab content
+<style type="text/css">
+div.other_services {	
+	margin:2px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	width: 75px;
+	height: auto;
+	float:left;
+	text-align:center;
+	display: inline;
+}
+
+div.name {
+	text-align:center;
+	font-weight:normal;
+	margin:2px;
+}
+
+.service {
+	margin-left: auto;
+	margin-right: auto;	
+	text-indent: -5000px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 50px;
+	width: 50px;
+	border: 1px none;
+	-webkit-border-radius: 6px;
+	-webkit-box-shadow: 0px 2px 1px #ece8d5;
 	
-	//Default Action
-	$(".tab_content2").hide(); //Hide all content
-	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content2:first").show(); //Show first tab content
-	
-	//On Click Event
-	$("ul.tabs li").click(function() {
-		$("ul.tabs li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content").hide(); //Hide all tab content
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
+}
+
+.service:hover {
+	cursor: pointer;
+}
+
+.macabolic {	
+	background-image: url('/images/auth/macabolic_64.png');		
+}
+
+#macabolic {
+	display: none;
+	margin-top: 10px;
+	border-top: 1px; 
+}
+
+.facebook {
+	background-image: url('/images/auth/facebook_64.png');	
+}
+
+.gravatar {
+	background-image: url('/images/auth/gravatar_64.png');	
+}
+
+#preview{
+	position:absolute;
+	border:1px solid #ccc;
+	background:#333;
+	padding:5px;
+	display:none;
+	color:#fff;
+}
+</style>
+
+<script type="text/javascript"> 
+$(document).ready(function(){ 
+	$(document).pngFix(); 
+
+	$('.gravatar').click(function() {
+		window.open('http://www.gravatar.com/site/login/');
 	});
 	
-	//On Click Event
-	$("ul.tabs2 li").click(function() {
-		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content2").hide(); //Hide all tab content
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
+	$('.facebook').click(function() {
+		window.open('<%= user_omniauth_authorize_path(:facebook) %>');
+	});	
+	
+	$('.macabolic').click(function() {
+		$('#macabolic').show();
 	});
 
-    //Input Form placeholder
-    $('input:text').focus(function(){
-        if(this.value === this.defaultValue) {
-            this.value = "";
-        } else {
-            this.select();
-        }
-    })
-    .blur(function(){
-        if ($.trim(this.value) === "") {
-            this.value = (this.defaultValue ? this.defaultValue: "")
-        }
-    });
-});
+	/* CONFIG */
+	xOffset = -200;
+	yOffset = -90;
+
+	$(".service").hover(function(e) {
+		if ($(this).hasClass('macabolic')) {
+			imagePath = "http://localhost:3001/images/logo.png";
+		} else if ($(this).hasClass('facebook')) {
+			imagePath = "http://graph.facebook.com/100002983805074/picture?type=large"
+		} else if ($(this).hasClass('gravatar')) {
+			//imagePath = "http://www.gravatar.com/avatar/2adddb30a29aa7cf2d81eb38e1780599.png?s=180&d=mm"
+			imagePath = '<%= avatar_url(current_user, 180) %>';
+		}
+		
+		$("body").append("<p id='preview'><img src='" + imagePath + "' alt='Image preview' /></p>");
+		$("#preview")
+			.css("top", (e.pageY + xOffset) + "px")
+			.css("left", (e.pageX + yOffset) + "px")
+			.fadeIn("fast");
+	},
+	function() {
+		$("#preview").remove();
+	});
+	
+	
+	$(".service").mousemove(function(e) {
+		$("#preview")
+			.css("top", (e.pageY + xOffset) + "px")
+			.css("left", (e.pageX + yOffset) + "px");
+	});
+
+	
+}); 
+	
 </script>
+
+
 <body class="subpage">
 	<div id="grey-strip-signedin">
 		<div class="wrapper-top">
@@ -62,116 +125,52 @@ $(document).ready(function() {
 	
 	<div class="wrapper-mh">
 		<div class="maincol">		
-			<div class="tabbed-content-area">	
-				<ul class="tabs"> 
-			        <li><a href="#tab1">Edit Info</a></li> 
-			        <li><a href="#tab2">Profile Picture</a></li> 
-			        <li><a href="#tab3">Friends</a></li> 
-	    		</ul> 
-<!-- Tab 1 - Edit Info -->
-		        <div id="tab1" class="tab_content"> 
-					<ul class="list">
-						<li>
-							<div class="userdetails group">
-								<%= render 'members/form' %>
-							</div>
-						</li>
-					</ul>
-				</div>				
-<!-- Tab 2 - Profile Picture -->
-		        <div id="tab2" class="tab_content">
-			 		<ul class="list">
-						<li>
-							<div class="userdetails group">
-								<div class="profileimage">
-									<%= image_tag avatar_url(current_user, 128), :width => 128, :height => 128 %>
-								</div>
-								<div class="profiledetails">
-									<!-- border-bottom: 1px dashed #a3a3a3; -->
-									<p align="center" style="padding: 15px 8px 10px 10px;">
-										<%= image_tag 'http://s.gravatar.com/images/logo.png', :width => 180, :height => 36 %><br/><br/>
-										Change your profile picture now!<br/>
-										(It may take some time to take effect after you changed it.)<br/><br/>
-										<input type="button" onClick="window.open('http://www.gravatar.com/site/login/')" value="Log on to Gravatar now &raquo;" class="button" />	
-									</p>
-									<p align="center" style="padding: 10px 8px 15px 10px;">
-										Or <br/><br/>
-										Set up your avatar using Gravatar with one simple click<br/><br/>
-										<input type="button" onClick="window.open('http://www.gravatar.com/site/signup/')" value="Get your Gravatar today &raquo;" class="button" />	
-									</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-<!-- Tab 3 - Friends -->
-		        <div id="tab3" class="tab_content"> 
-			        <ul class="list">
-						<li>
-							<%= render :partial => 'invitations/form', :locals => { :invitation => @invitation } %>
-						</li>
-					</ul>
-				</div>								
-<!-- End of Tab Content -->				
-			</div>
 		</div>
 
 		<div class="sidebar">
-	    	<div class="sidebar-content account-info">
-				<div class="sidebar-header">
-				    Profile <%= link_to 'Edit', edit_member_path(current_user) %>
-				</div>
-				<div class="sidebar-inner">					
-				    <p class="username">
-						<%= image_tag avatar_url(current_user, 55), :width => 55, :height => 55 %>
-			        	<strong>Name</strong>
-			        	<span><%= current_user.full_name %></span>
+	    	<div class="sidebar-content">
+				<div class="sidebar-header">Profile Picture</div>
+				<div class="sidebar-inner">	
+					<%= form_for(current_user, :url => member_path(current_user), :html => { :class => "" }) do |f| %>									
+				    <p class="edit-profileimage">
+						<%= image_tag avatar_url(current_user, 180), :width => 180 %>
 				    </p>
-					<p>
-			        	<strong>Email</strong>
-					  	<%= current_user.email %>
-					</p>
-					<p>
-					    <strong>Birthday</strong>
-					    <%= Time.now.strftime("%B %d") %>
-					</p>
-					<!--
-				    <p>
-			        	<strong>Location</strong>
-			        	Hong Kong
-				    </p>
-					-->
-					<!--
-				    <p>
-			        	<strong>Gender</strong>
-			        	Male
-				    </p>
-					-->
-					<!--
-				    <p>
-						<a href="#" title="Delete Account" class="delete-account">Delete Account</a>
-					</p>
-					-->
+					<div style="height: 120px; border: 1px; margin: 10px 5px; margin-left: auto; margin-right: auto; width: 100%;">
+						<div class="other_services">
+							<div class="service macabolic">Macabolic</div>
+							<div class="name">Macabolic</div>
+							<div class="selection"><%= radio_button_tag 'service', 'macabolic' %></div>
+						</div>
+						<div class="other_services">
+							<div class="service facebook"><a href="#">facebook</a></div>
+							<div class="name">Facebook</div>
+							<div class="selection"><%= radio_button_tag 'service', 'facebook' %></div>
+						</div>
+						<div class="other_services">
+							<div class="service gravatar">gravatar</div>
+							<div class="name">Gravatar</div>
+							<div class="selection"><%= radio_button_tag 'service', 'gravatar' %></div>
+						</div>
+					</div>
+					<div class="action" style="padding-left: 17px; border: 1px solid black; ">
+				    	<%= submit_tag "Save", :class => "button-green" %> 
+					</div>
+					<% end %>
+					<div id="macabolic">
+						<div style="margin-left: auto; margin-right: auto; width: 70%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
+						<%= form_for(current_user, :url => member_path(current_user), :html => { :multipart => true }) do |f| %>
+							<div class="field">
+								<%= f.label 'Upload an image' %><br />
+								<%= f.file_field :thumbnail %>
+								<%= f.submit %>
+							</div>
+							<div class="actions">
+								
+							</div>						
+						<% end %>
+					</div>
 				</div>        
-
-<!--
-				<div class="sidebar-header">
-			    	Invite your friends
-				</div>
-				<div class="sidebar-inner">					
-				    <p class="username">
-						<%= image_tag avatar_url(current_user, 55), :width => 55, :height => 55 %>
-			        	<strong>Name</strong>
-			        	<span><%= current_user.full_name %></span>
-				    </p>
-					<p>
-			        	<strong>Email</strong>
-					  	<%= current_user.email %>
-					</p>
-				</div>    
--->				    
 			</div>
 		</div>
  	</div>
-
 </body>
