@@ -27,8 +27,7 @@ div.name {
 	width: 50px;
 	border: 1px none;
 	-webkit-border-radius: 6px;
-	-webkit-box-shadow: 0px 2px 1px #ece8d5;
-	
+	-webkit-box-shadow: 0px 2px 1px #ece8d5;	
 }
 
 .service:hover {
@@ -36,81 +35,37 @@ div.name {
 }
 
 .macabolic {	
-	background-image: url('/images/auth/macabolic_64.png');		
+	background-image: url('<%= macabolic_profile_image_url(current_user, ProfileImage::MACABOLIC, :thumb) %>');
 }
 
 #macabolic {
 	display: none;
+	padding-top: 50px;
 	margin-top: 10px;
 	border-top: 1px; 
 }
 
 .facebook {
-	background-image: url('/images/auth/facebook_64.png');	
+	background-image: url("<%= facebook_profile_image_url(current_user, ProfileImage::FACEBOOK, 'square') %>");
 }
 
 .gravatar {
-	background-image: url('/images/auth/gravatar_64.png');	
+	background-image: url("<%= gravatar_profile_image_url(current_user, ProfileImage::GRAVATAR, 50) %>");
 }
 
-#preview{
-	position:absolute;
-	border:1px solid #ccc;
-	background:#333;
-	padding:5px;
-	display:none;
-	color:#fff;
+#upload_photo:hover {
+	cursor: pointer;
 }
+
 </style>
 
 <script type="text/javascript"> 
 $(document).ready(function(){ 
 	$(document).pngFix(); 
-
-	$('.gravatar').click(function() {
-		window.open('http://www.gravatar.com/site/login/');
-	});
 	
-	$('.facebook').click(function() {
-		window.open('<%= user_omniauth_authorize_path(:facebook) %>');
-	});	
-	
-	$('.macabolic').click(function() {
+	$('#upload_photo').click(function() {
 		$('#macabolic').show();
-	});
-
-	/* CONFIG */
-	xOffset = -200;
-	yOffset = -90;
-
-	$(".service").hover(function(e) {
-		if ($(this).hasClass('macabolic')) {
-			imagePath = "http://localhost:3001/images/logo.png";
-		} else if ($(this).hasClass('facebook')) {
-			imagePath = "http://graph.facebook.com/100002983805074/picture?type=large"
-		} else if ($(this).hasClass('gravatar')) {
-			//imagePath = "http://www.gravatar.com/avatar/2adddb30a29aa7cf2d81eb38e1780599.png?s=180&d=mm"
-			imagePath = '<%= avatar_url(current_user, 180) %>';
-		}
-		
-		$("body").append("<p id='preview'><img src='" + imagePath + "' alt='Image preview' /></p>");
-		$("#preview")
-			.css("top", (e.pageY + xOffset) + "px")
-			.css("left", (e.pageX + yOffset) + "px")
-			.fadeIn("fast");
-	},
-	function() {
-		$("#preview").remove();
-	});
-	
-	
-	$(".service").mousemove(function(e) {
-		$("#preview")
-			.css("top", (e.pageY + xOffset) + "px")
-			.css("left", (e.pageX + yOffset) + "px");
-	});
-
-	
+	})
 }); 
 	
 </script>
@@ -133,39 +88,48 @@ $(document).ready(function(){
 				<div class="sidebar-inner">	
 					<%= form_for(current_user, :url => member_path(current_user), :html => { :class => "" }) do |f| %>									
 				    <p class="edit-profileimage">
-						<%= image_tag avatar_url(current_user, 180), :width => 180 %>
+						<%= image_tag current_profile_image_url(current_user), :width => 180 %>
 				    </p>
-					<div style="height: 120px; border: 1px; margin: 10px 5px; margin-left: auto; margin-right: auto; width: 100%;">
+					<div style="height: 130px; border: 1px; margin: 10px 5px; margin-left: auto; margin-right: auto; width: 100%;">
 						<div class="other_services">
-							<div class="service macabolic">Macabolic</div>
+							<div class="service macabolic">macabolic</div>
 							<div class="name">Macabolic</div>
-							<div class="selection"><%= radio_button_tag 'service', 'macabolic' %></div>
+							<div class="selection">
+								<%= radio_button 'user', 'profile_image_id', current_user.profile_image(ProfileImage::MACABOLIC).nil? ? nil : current_user.profile_image(ProfileImage::MACABOLIC).id %>								
+							</div>
 						</div>
 						<div class="other_services">
-							<div class="service facebook"><a href="#">facebook</a></div>
+							<div class="service facebook">facebook</div>
 							<div class="name">Facebook</div>
-							<div class="selection"><%= radio_button_tag 'service', 'facebook' %></div>
+							<div class="selection">
+								<%= radio_button 'user', 'profile_image_id', current_user.profile_image(ProfileImage::FACEBOOK).nil? ? nil : current_user.profile_image(ProfileImage::FACEBOOK).id %>
+							</div>
 						</div>
 						<div class="other_services">
 							<div class="service gravatar">gravatar</div>
 							<div class="name">Gravatar</div>
-							<div class="selection"><%= radio_button_tag 'service', 'gravatar' %></div>
+							<div class="selection">
+								<%= radio_button 'user', 'profile_image_id', current_user.profile_image(ProfileImage::GRAVATAR).nil? ? nil : current_user.profile_image(ProfileImage::GRAVATAR).id %>
+							</div>
 						</div>
+						<div style="float: right; border: 1px; padding-bottom: 10px; color: #999999">
+							<span id="upload_photo">+ Click to upload a file</span>
+						</div>	
 					</div>
-					<div class="action" style="padding-left: 17px; border: 1px solid black; ">
+					<div style="padding-left: 17px; padding-bottom: 10px; border: 1px; float: right">
 				    	<%= submit_tag "Save", :class => "button-green" %> 
 					</div>
 					<% end %>
 					<div id="macabolic">
-						<div style="margin-left: auto; margin-right: auto; width: 70%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
+						<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
 						<%= form_for(current_user, :url => member_path(current_user), :html => { :multipart => true }) do |f| %>
 							<div class="field">
 								<%= f.label 'Upload an image' %><br />
-								<%= f.file_field :thumbnail %>
-								<%= f.submit %>
+								<%= f.file_field :avatar %>
+								<span style="color: #999999; font-size: 11px;">(Maximum size of 700k. JPG, GIF, PNG.)</span>
 							</div>
-							<div class="actions">
-								
+							<div style="padding-top: 10px; padding-left: 17px; padding-bottom: 10px; border: 1px; float: right">
+								<%= submit_tag "Upload", :class => "button-green" %>								
 							</div>						
 						<% end %>
 					</div>

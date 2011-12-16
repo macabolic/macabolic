@@ -6,6 +6,69 @@ module ApplicationHelper
     "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=mm"
   end
   
+  def current_profile_image_url(user)
+    default_url = "/images/default_photo.png"
+    
+    if user.profile_image_set?
+      provider = user.current_profile_image.provider
+      if provider == ProfileImage::MACABOLIC
+        return user.avatar.url(:medium)
+      elsif provider == ProfileImage::FACEBOOK
+        return "http://graph.facebook.com/#{user.current_profile_image.uid}/picture?type=large"
+      elsif provider == ProfileImage::GRAVATAR
+        gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+        return "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=180&d=mm"        
+      end
+    end
+    
+    return default_url
+  end
+
+  def macabolic_profile_image_url(user, provider, size) 
+    default_url = "/images/default_photo_50.png"
+    
+    if provider == ProfileImage::MACABOLIC
+      macabolic = user.profile_images.where(:provider => ProfileImage::MACABOLIC)
+      if macabolic.size > 0
+        # thumb, small, medium and large
+        return user.avatar.url(size)
+      end
+    end
+        
+    return default_url    
+  end
+
+  def facebook_profile_image_url(user, provider, size) 
+    default_url = "/images/default_photo_50.png"
+    
+    if provider == ProfileImage::FACEBOOK
+      facebook = user.profile_images.where(:provider => ProfileImage::FACEBOOK)
+      if facebook.size > 0
+        # Type: square (50x50)
+        #       small (50 pixels wide, variable height) 
+        #       normal (100 pixels wide, variable height)
+        #       large (about 200 pixels wide, variable height)
+        return "http://graph.facebook.com/#{facebook[0].uid}/picture?type=#{size}"
+      end
+    end
+        
+    return default_url    
+  end
+
+  def gravatar_profile_image_url(user, provider, size) 
+    default_url = "/images/default_photo_50.png"
+    
+    if provider == ProfileImage::GRAVATAR
+      gravatar = user.profile_images.where(:provider => ProfileImage::GRAVATAR)
+      if gravatar.size > 0
+        gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+        return "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=mm"                
+      end
+    end
+        
+    return default_url    
+  end
+  
   def sortable(column, title = nil)  
     title ||= column.titleize  
     css_class = (column == sort_column) ? "current #{sort_direction}" : nil
@@ -68,5 +131,16 @@ module ApplicationHelper
 
     return @time_to_display
   end  
-  
+
+  def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end  
 end

@@ -20,19 +20,19 @@ class MembersController < ApplicationController
 
   # POST /members
   # POST /members.xml
-  def create
-    @member = Member.new(params[:member])
+  #def create
+  #  @member = Member.new(params[:member])
 
-    respond_to do |format|
-      if @member.save
-        format.html { redirect_to(@member, :notice => 'Member was successfully created.') }
-        format.xml  { render :xml => @member, :status => :created, :location => @member }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @member.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+  #  respond_to do |format|
+  #    if @member.save
+  #      format.html { redirect_to(@member, :notice => 'Member was successfully created.') }
+  #      format.xml  { render :xml => @member, :status => :created, :location => @member }
+  #    else
+  #      format.html { render :action => "new" }
+  #      format.xml  { render :xml => @member.errors, :status => :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   # PUT /members/1
   # PUT /members/1.xml
@@ -52,6 +52,23 @@ class MembersController < ApplicationController
     end
   end
 
+  def update_profile_picture
+    @user = User.find(params[:id])
+
+    # Need to create a new record in "profile_images"
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.html { redirect_to(edit_member_path(@user), :notice => "Your info was successfully updated.") }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
+    end
+    
+  end
+  
   # DELETE /members/1
   # DELETE /members/1.xml
   def destroy

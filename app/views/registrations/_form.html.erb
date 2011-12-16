@@ -59,27 +59,38 @@
 	<div class="home-signup-th">Sign Up Now</div>
 <% end %>
 	<%= registration_error_messages! %>
-
-	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "home-signupform" }) do |f| %>
-		<%= hidden_field_tag 'invitation_token', params[:invitation_token] %>
-		<%= f.text_field :first_name, :placeholder => 'First Name' %>
-		<%= f.text_field :last_name, :placeholder => 'Last Name' %>
-		<%= f.text_field :email, :placeholder => 'Email Address' %>
-		<% if @user.password_required? %>
-			<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
-			<%= f.password_field :password, :placeholder => 'Password' %>
+	<div id="left" class="invite-friends">
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "home-signupform", :id => "invite-friend-form" }) do |f| %>
+		<div>
+			<%= hidden_field_tag 'invitation_token', params[:invitation_token] %>
+			<%= hidden_field_tag 'origin', params[:origin] %>
+			<%= f.text_field :first_name, :placeholder => 'First Name' %>
+			<%= f.text_field :last_name, :placeholder => 'Last Name' %>
+			<%= f.text_field :email, :placeholder => 'Email Address' %>
+			<% if @user.password_required? %>
+				<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
+				<%= f.password_field :password, :placeholder => 'Password' %>
+			<% end %>
+			<!--
+			<label>Birthday</label>
+			-->
+			<%#= date_select "user", :birthday, 
+									:use_short_month => true, 
+									:start_year => Time.now.year - 100,
+									:end_year => Time.now.year, 
+									:order => [:day, :month, :year] %>
+		</div>
+		<div>
+			<span class="home-signupbutton">
+				<%= submit_tag "Join", :class => "home-signupbutton" %>
+			</span>  
+		</div>
 		<% end %>
-		<label>Birthday</label>
-		<%= date_select "user", :birthday, 
-								:use_short_month => true, 
-								:start_year => Time.now.year - 100,
-								:end_year => Time.now.year, 
-								:order => [:day, :month, :year] %>
-		<span class="home-signupbutton">
-			<%= submit_tag "Join", :class => "home-signupbutton" %>
-		</span>  
-	<% end %>
-
+	</div>
+	<div style="margin-top: 30px; float: left; width 1px; height: 250px; border: 1px dotted #d4d4d4;"><div class="push"></div></div>
+	<!--div class="auth_providers"-->
+	<div>
+		<%= render "devise/sessions/other_services" %>	
+	</div>	
 </div>
-
 

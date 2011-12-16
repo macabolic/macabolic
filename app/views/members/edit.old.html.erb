@@ -1,0 +1,175 @@
+<% title 'Edit Profile' %>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//Default Action
+	$(".tab_content2").hide(); //Hide all content
+	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content2:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+	//On Click Event
+	$("ul.tabs2 li").click(function() {
+		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content2").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+
+    //Input Form placeholder
+    $('input:text').focus(function(){
+        if(this.value === this.defaultValue) {
+            this.value = "";
+        } else {
+            this.select();
+        }
+    })
+    .blur(function(){
+        if ($.trim(this.value) === "") {
+            this.value = (this.defaultValue ? this.defaultValue: "")
+        }
+    });
+});
+</script>
+<body class="subpage">
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Profile" } %>						
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">		
+			<div class="tabbed-content-area">	
+				<ul class="tabs"> 
+			        <li><a href="#tab1">Edit Info</a></li> 
+			        <li><a href="#tab2">Profile Picture</a></li> 
+			        <li><a href="#tab3">Friends</a></li> 
+	    		</ul> 
+<!-- Tab 1 - Edit Info -->
+		        <div id="tab1" class="tab_content"> 
+					<ul class="list">
+						<li>
+							<div class="userdetails group">
+								<%= render 'members/form' %>
+							</div>
+						</li>
+					</ul>
+				</div>				
+<!-- Tab 2 - Profile Picture -->
+		        <div id="tab2" class="tab_content">
+			 		<ul class="list">
+						<li>
+							<div class="userdetails group">
+								<div class="profileimage">
+									<%= image_tag avatar_url(current_user, 128), :width => 128, :height => 128 %>
+								</div>
+								<div class="profiledetails">
+									<!-- border-bottom: 1px dashed #a3a3a3; -->
+									<p align="center" style="padding: 15px 8px 10px 10px;">
+										<%= image_tag 'http://s.gravatar.com/images/logo.png', :width => 180, :height => 36 %><br/><br/>
+										Change your profile picture now!<br/>
+										(It may take some time to take effect after you changed it.)<br/><br/>
+										<input type="button" onClick="window.open('http://www.gravatar.com/site/login/')" value="Log on to Gravatar now &raquo;" class="button" />	
+									</p>
+									<p align="center" style="padding: 10px 8px 15px 10px;">
+										Or <br/><br/>
+										Set up your avatar using Gravatar with one simple click<br/><br/>
+										<input type="button" onClick="window.open('http://www.gravatar.com/site/signup/')" value="Get your Gravatar today &raquo;" class="button" />	
+									</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+<!-- Tab 3 - Friends -->
+		        <div id="tab3" class="tab_content"> 
+			        <ul class="list">
+						<li>
+							<%= render :partial => 'invitations/form', :locals => { :invitation => @invitation } %>
+						</li>
+					</ul>
+				</div>								
+<!-- End of Tab Content -->				
+			</div>
+		</div>
+
+		<div class="sidebar">
+	    	<div class="sidebar-content account-info">
+				<div class="sidebar-header">
+				    About me
+				</div>
+				<div class="sidebar-inner">					
+				    <p class="username">
+						<%= image_tag avatar_url(current_user, 55), :width => 55, :height => 55 %>
+			        	<strong>Name</strong>
+			        	<span><%= current_user.full_name %></span>
+				    </p>
+					<p>
+			        	<strong>Email</strong>
+					  	<%= current_user.email %>
+					</p>
+					<p>
+					    <strong>Birthday</strong>
+					    <%= current_user.birthday.strftime("%B %d") %>
+					</p>
+					<!--
+				    <p>
+			        	<strong>Location</strong>
+			        	Hong Kong
+				    </p>
+					-->
+					<!--
+				    <p>
+			        	<strong>Gender</strong>
+			        	Male
+				    </p>
+					-->
+				    <p>
+						<a href="#" title="Delete Account" class="delete-account">Delete Account</a>
+					</p>
+				</div>        
+
+<!--
+				<div class="sidebar-header">
+			    	Invite your friends
+				</div>
+				<div class="sidebar-inner">					
+				    <p class="username">
+						<%= image_tag avatar_url(current_user, 55), :width => 55, :height => 55 %>
+			        	<strong>Name</strong>
+			        	<span><%= current_user.full_name %></span>
+				    </p>
+					<p>
+			        	<strong>Email</strong>
+					  	<%= current_user.email %>
+					</p>
+				</div>    
+-->				    
+			</div>
+		</div>
+ 	</div>
+
+</body>

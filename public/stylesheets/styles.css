@@ -366,7 +366,7 @@ padding: 30px 30px 30px 30px;
 	font-weight: bold;
 	color: #fff;
 	overflow: hidden;
-	margin: 22px 0px 0px 0px;
+	margin: 10px 0px 0px 0px;
 	text-align: center;
 }
 
@@ -725,15 +725,19 @@ ul.list {
 
 ul.list-my-collections {
 	list-style: none;
-	margin-top: -10px;
-	padding: 18px;
+	//margin-top: -10px;
+	//padding: 18px;
+	margin-left: 10px;
 }
+
 .list-my-collections li {
 	width: 190px;
 //	border: 1px solid #e3d7a9;
 	background-position: 0 50%;
-	padding: 10px 5px 5px 5px!important;
-	margin: 10px 5px 12px 5px;
+//	padding: 10px 5px 5px 5px!important;
+	padding: 10px 10px 10px 10px!important;
+//	margin: 10px 5px 12px 5px;
+	margin: 10px 8px 12px 8px;
 	color: #414141;
 }
 
@@ -1006,7 +1010,7 @@ input.big_input {
 }
 
 input[type="submit"] {
-//	height: 31px;
+	height: 31px;
 	border: 0px solid #b7b7b7;
 	font-weight: bold;
 //	margin: 22px 0px 0px 0px;

@@ -1,0 +1,20 @@
+<div id="grey-strip">
+	<div class="wrapper-top">
+		<div class="headings-left">
+			<h2>Sign Up</h2>
+			<h3>It's <span>free</span> and takes 2 minutes!</h3>
+		<% if step1_switch == 'ON' %>	
+			<ul class="home-featurebutton">
+				<li class="home-featurebutton"><%= link_to 'Feature Tour', "feature-tour" %></a></li>
+			</ul>
+		<% end %>
+		</div>
+		<div class="headings-right">
+			<ul id="signupsteps">
+        		<li class="step1<%= step1_switch %>">Step1</li>
+        		<li class="step2<%= step2_switch %>">Step2</li>
+        		<li class="step3<%= step3_switch %>">Step3</li>
+			</ul>
+		</div>
+	</div>
+</div>

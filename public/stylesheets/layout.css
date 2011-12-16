@@ -104,8 +104,9 @@ font-size: 12px;
 text-shadow: 0px -1px 0px #000;
 padding: 13px 0px 0px 0px;
 }
+
 .social {
-margin-bottom: -3px;
+	margin-bottom: -3px;
 }
 
 .wrapper-homecontent {
@@ -203,6 +204,7 @@ background-color: #fffefa;
 border-top: 1px solid #fff;
 border-bottom: 1px solid #d2d2d2;
 }
+
 .subpage .home-signup {
 width: 496px;
 height: 435px;
@@ -302,6 +304,61 @@ li.step3ON {
 	float:left;
 	background-position: 0px -51px; 
 	}
+
+#step2 {
+	background: url(../images/backgrounds/home-formbgwhite.png) repeat-x white;
+	background-position: top;
+}
+
+.invite-friends {
+	float: left;
+}
+
+#left.invite-friends {
+	width: 313px;
+}
+
+#invite-friend-form input {
+
+}
+
+#invite-friend-form input[type="text"] {
+	width: 240px;
+}
+
+#invite-friend-form input[type="password"] {
+	width: 240px;
+}
+
+#invite-friend-form input[type="submit"] {
+  	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
+	width: 173px;
+	height: 42px;
+	border: 0px solid #b7b7b7;
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	margin-top: 10px;
+	padding-top: 0px;
+	text-align: center;
+	cursor: pointer;
+}
+
+#invite-friend-form input[type="submit"]:hover {
+	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
+	background-position: 0 -42px;
+}
+
+#invite-friend-form input:focus {
+	-webkit-transition:background-color 0.5s linear;
+	-moz-transition:background-color 0.5s linear;
+	background-color: #fef6d6;
+}
+
+#invite-friend-form input:blur {
+	color: #a3a3a3;
+}
 
 
 /* Subpage / Feature Tour Structure
@@ -543,13 +600,21 @@ padding: 23px;
 overflow: hidden;
 margin: 0px 0px 24px 0px;
 }
+
 .profileimage {
-float: left;
+	float: left;
 }
+
+.edit-profileimage {
+	margin-left: auto;
+	margin-right: auto;
+	width: 180px;	
+}
+
 .profiledetails {
-float: left;
-width: 467px;
-margin-left: 24px;
+	float: left;
+	width: 467px;
+	margin-left: 24px;
 }
 
 .product-stat-details {
@@ -832,9 +897,10 @@ padding-bottom: 40px;
         rgb(109,173,17) 50%,
         rgb(101,164,11) 90%
     );
+	cursor: pointer;
 }
 
-#own-this, #add-wishlist, .add-wishlist { 
+#own-this, #add-wishlist, .add-wishlist, #invite-my-friend { 
     float:left; 
     display:inline;
     margin-right:15px;
@@ -1391,7 +1457,8 @@ padding-bottom: 40px;
 }
 
 .productimage {
-	border: 3px solid #e3d7a9;
+//	border: 3px solid #e3d7a9;
+	border: 3px solid #eeead9;
 	height: 170px;
 	margin-bottom: 10px;
 }
@@ -1401,7 +1468,11 @@ padding-bottom: 40px;
 }
 
 .selected {
-	border: 3px solid #6DB132;
+	//border: 3px solid #6DB132;
+	border: 3px solid #e3d7a9;
+	opacity: 1;
+	-moz-opacity: 1;
+	filter:alpha(opacity=1);
 }
 
 .productimage img {
@@ -1415,12 +1486,15 @@ padding-bottom: 40px;
 }
 
 .invite-friend {
-    padding:10px 15px;
+	padding:10px 15px;
     width:100px;
 	height: 30px;
     font-size:16px;
     border:none;
-    cursor:pointer
+    cursor:pointer;
+
+    //display: none;
+	overflow: visible;
 }
 
 .invite-friend-form input[type="text"] { 
@@ -1495,4 +1569,3 @@ padding-bottom: 40px;
 	padding: 0px;
 	margin: 0px;
 }
-

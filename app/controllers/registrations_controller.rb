@@ -53,7 +53,7 @@ class RegistrationsController < Devise::RegistrationsController
   protected
   
   def after_sign_up_path_for(resource)
-    new_invitation_path :email => resource.email
+    new_invitation_path :email => resource.email, :origin => params[:origin]
   end
   
   def after_inactive_sign_up_path_for(resource)
@@ -68,6 +68,9 @@ class RegistrationsController < Devise::RegistrationsController
     if session['devise.facebook_data'].present?
       logger.info "###****** build resource ********"
       @user.apply_omniauth(session['devise.facebook_data'])
+    else
+      @user.profile_images.build(:provider => ProfileImage::MACABOLIC, :uid => @user.email);
+      @user.profile_images.build(:provider => ProfileImage::GRAVATAR, :uid => @user.email);      
     end
   end
 end

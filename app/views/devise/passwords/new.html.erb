@@ -4,7 +4,7 @@
 		
         //Input Form placeholder
         $('input:text').focus(function(){
-						this.style.color = '#131e22';
+			this.style.color = '#131e22';
             if(this.value === this.defaultValue) {
                 this.value = "";
             } else {
@@ -13,9 +13,9 @@
         })
 
         .blur(function(){
+			this.style.color = '#a3a3a3';
             if ($.trim(this.value) === "") {
-                this.value = (this.defaultValue ? this.defaultValue: "")
-								this.style.color = '#a3a3a3';
+                this.value = (this.defaultValue ? this.defaultValue: "")				
             }
         });
 
@@ -23,7 +23,6 @@
 </script>
 
 <% title 'Forgot your password?' %>
-<% resource.email = 'Email' %>
 
 <div id="grey-strip">
 	<div class="wrapper-top">
@@ -34,9 +33,9 @@
 <div class="wrapper-homecontent">
 	
 	<% if resource.errors.empty? %>
-	<div class="home-signup">
+	<div class="home-signup" style="margin-top: 35px;">
 	<% else %>
-	<div class="home-signup-with-error">
+	<div class="home-signup-with-error" style="margin-top: 35px;">
 	<% end %>
 		<div class="home-signup-th">Forgot your password?</div>
 
@@ -48,7 +47,7 @@
 		<%= registration_error_messages! %>
 
 		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "home-signupform" }) do |f| %>
-	  		<%= f.text_field :email %>
+	  		<%= f.text_field :email, :placeholder => 'Email Address' %>
 			
 			<span class="home-signupbutton">
 				<%= submit_tag "Reset password", :class => "home-signupbutton" %>

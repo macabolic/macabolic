@@ -26,16 +26,29 @@ class User < ActiveRecord::Base
   #has_many  :inverse_friendships, :class_name => 'Friendship', :foreign_key => 'friend_id'
   #has_many  :inverse_friends, :through => :inverse_friendships, :source => :user
   
-  belongs_to :invitation
+  has_many  :profile_images
   
+  # There is a problem with #{self.profile_image_id}.
+  # The profile_image_id is null initially and running this associations will run into problem.
+  has_one   :current_profile_image, :class_name => 'ProfileImage', :foreign_key => 'user_id', :conditions => 'id = #{self.profile_image_id}'
+
+  belongs_to :invitation
+
+  has_attached_file       :avatar, 
+                          :styles => { :thumb => "50x50>", :small => "180x180>", :medium => "300x300>", :large => "600x600>" },
+                          :url => "/assets/members/:attachment/:id/:style/:filename",
+                          :path => ":rails_root/public/assets/members/:attachment/:id/:style/:filename"
+                            
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable
 
+
+
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me, :birthday, :gravatar, :invitation_token
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me, :birthday, :invitation_token, :avatar, :profile_image_id
   accepts_nested_attributes_for :my_collections, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
   
   validate            :first_name,    :presence => true
@@ -60,13 +73,6 @@ class User < ActiveRecord::Base
     return fn
   end
   
-  def apply_omniauth(omniauth)
-    self.first_name = omniauth['user_info']['first_name'] if first_name.blank?
-    self.last_name = omniauth['user_info']['last_name'] if last_name.blank?
-    self.email = omniauth['user_info']['email'] if email.blank?
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth["extra"]["user_hash"]['id'])
-  end
-
   def password_required?
     (authentications.empty? || !password.blank?) && super
   end
@@ -120,12 +126,68 @@ class User < ActiveRecord::Base
     !(sign_in_count == 0)
   end
   
+  def profile_image_set?
+    !(profile_image_id.nil?)
+  end
+  
+  def profile_image(provider)
+    provider_image = profile_images.where(:provider => provider)
+    if provider_image.size > 0
+      provider_image[0]
+    else
+      nil
+    end
+  end
+  
+  # ==> A sample response from omniauth.auth
+  #Omniauth.auth: 
+  #<OmniAuth::AuthHash 
+  #	credentials=#<Hashie::Mash 
+  #		expires=true 
+  #		expires_at=1323140400 
+  #		token="AAADjFmJTOxABAL53CSoAnWZA9IsUezEuzFqe2LMIgw0ooAOyQ7QGJO9odfHKFTmNfIZCxvukpD0faXPZA2rwM6abTI1mTCgP0rJRMZCRZCAZDZD"> 
+  #	extra=#<Hashie::Mash 
+  #		raw_info=#<Hashie::Mash 
+  #			birthday="09/22/1977" 
+  #			email="billy.sf.cheng@gmail.com" 
+  #			favorite_teams=[#<Hashie::Mash id="7724542745" name="Manchester United">] 
+  #			first_name="Billy" 
+  #			gender="male" 
+  #			id="610814778" 
+  #			last_name="Cheng" 
+  #			link="http://www.facebook.com/profile.php?id=610814778" 
+  #			locale="en_US" 
+  #			name="Billy Cheng" 
+  #			sports=[#<Hashie::Mash id="105942022769573" name="Golf">, #<Hashie::Mash id="105650876136555" name="Tennis">] 
+  #			timezone=8 updated_time="2011-06-18T17:36:23+0000" 
+  #			verified=true>> 
+  #	info=#<OmniAuth::AuthHash::InfoHash 
+  #		email="billy.sf.cheng@gmail.com" 
+  #		first_name="Billy" 
+  #		image="http://graph.facebook.com/610814778/picture?type=square" 
+  #		last_name="Cheng" 
+  #		name="Billy Cheng" 
+  #		urls=#<Hashie::Mash Facebook="http://www.facebook.com/profile.php?id=610814778">> 
+  #	provider="facebook" 
+  #	uid="610814778"
+  #>
+  def apply_omniauth(omniauth)
+    self.first_name = omniauth.info.first_name if first_name.blank?
+    self.last_name = omniauth.info.last_name if last_name.blank?
+    self.email = omniauth.info.email if email.blank?
+    self.birthday = omniauth.extra.raw_info.birthday if birthday.blank?
+    authentications.build(:provider => omniauth.provider, :uid => omniauth.uid, :token => omniauth.credentials.token)
+    profile_images.build(:provider => omniauth.provider, :uid => omniauth.uid)
+    profile_images.build(:provider => ProfileImage::MACABOLIC, :uid => omniauth.info.email);
+    profile_images.build(:provider => ProfileImage::GRAVATAR, :uid => omniauth.info.email);
+  end
+  
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["user_hash"]
-        user.email = data["email"]
-        user.first_name = data["first_name"]
-        user.last_name = data["last_name"]
+      if data = session["devise.facebook_data"]
+        user.email = data.info.email
+        user.first_name = data.info.first_name
+        user.last_name = data.info.last_name
       end
     end
   end
@@ -142,50 +204,83 @@ class User < ActiveRecord::Base
   #       extrauser_hashnameBilly Chengtimezone8gendermaleid100002983805074last_nameChengupdated_time2011-09-20T16:53:17+0000verifiedtruelocaleen_USlinkhttp://www.facebook.com/profile.php?id=100002983805074emailbilly.cheng@macabolic.comfirst_nameBillyproviderfacebook
     
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
-    data = access_token['extra']['user_hash']
-    logger.info "User.find_for_facebook_oauth(:email => #{data['email']})."
-    if user = User.find_by_email(data["email"])
-      logger.info "Found user with email => #{data['email']}."
+    #data = access_token['extra']['user_hash']
+    data = access_token.extra.raw_info
+    logger.info "=============== Facebook login ========================="
+    logger.info ":access_token => #{access_token}"
+    logger.info "========================================================"
+  
+    #Omniauth.auth: 
+    #<OmniAuth::AuthHash 
+    #	credentials=#<Hashie::Mash 
+    #		expires=true 
+    #		expires_at=1323140400 
+    #		token="AAADjFmJTOxABAL53CSoAnWZA9IsUezEuzFqe2LMIgw0ooAOyQ7QGJO9odfHKFTmNfIZCxvukpD0faXPZA2rwM6abTI1mTCgP0rJRMZCRZCAZDZD"> 
+    #	extra=#<Hashie::Mash 
+    #		raw_info=#<Hashie::Mash 
+    #			birthday="09/22/1977" 
+    #			email="billy.sf.cheng@gmail.com" 
+    #			favorite_teams=[#<Hashie::Mash id="7724542745" name="Manchester United">] 
+    #			first_name="Billy" 
+    #			gender="male" 
+    #			id="610814778" 
+    #			last_name="Cheng" 
+    #			link="http://www.facebook.com/profile.php?id=610814778" 
+    #			locale="en_US" 
+    #			name="Billy Cheng" 
+    #			sports=[#<Hashie::Mash id="105942022769573" name="Golf">, #<Hashie::Mash id="105650876136555" name="Tennis">] 
+    #			timezone=8 updated_time="2011-06-18T17:36:23+0000" 
+    #			verified=true>> 
+    #	info=#<OmniAuth::AuthHash::InfoHash 
+    #		email="billy.sf.cheng@gmail.com" 
+    #		first_name="Billy" 
+    #		image="http://graph.facebook.com/610814778/picture?type=square" 
+    #		last_name="Cheng" 
+    #		name="Billy Cheng" 
+    #		urls=#<Hashie::Mash Facebook="http://www.facebook.com/profile.php?id=610814778">> 
+    #	provider="facebook" 
+    #	uid="610814778"
+    #>        
+    if user = User.find_by_email(data.email)
+      logger.info "Found user with email => #{data.email}."
       user
     else # Create a user with a stub password. 
       logger.info "Cound not find a registered user. Go create one now."
-      logger.info "Data => #{data}"
-      logger.info "Extra => #{access_token['extra']}"
-      logger.info "Access token => #{access_token}"
-      logger.info "Provider => #{access_token['provider']}; UID => #{data['id']}"
-      user = User.new(:first_name => data["first_name"], :last_name => data["last_name"], :email => data["email"], :password => Devise.friendly_token[0,20]) 
+      user = User.new(:first_name => data.first_name, :last_name => data.last_name, :email => data.email, :password => Devise.friendly_token[0,20]) 
       #user = User.find_by_email(data["email"])
-      user.authentications.build(:provider => access_token['provider'], :uid => data['id'])
+      user.authentications.build(:provider => access_token.provider, :uid => access_token.uid, :token => access_token.credentials.token)
+      user.profile_images.build(:provider => access_token.provider, :uid => access_token.uid)
       user
       #logger.info "Done create one? #{user.persisted?}"
     end
   end  
   
-  def self.find_for_twitter_oauth(access_token, signed_in_resource=nil)
-    data = access_token['extra']['user_hash']
-    logger.info "twitter authentication..."
-    logger.info "data: #{data}"
-    if user = User.find_by_email(data["email"])
-      logger.info "data email: #{data[:email]}"
-      user
-    else # Create a user with a stub password. 
-      User.create(:email => data["email"], :password => Devise.friendly_token[0,20]) 
-      logger.info "twitter account is created in the database."
-    end
-  end  
+#  def self.find_for_twitter_oauth(access_token, signed_in_resource=nil)
+#    logger.info "==> User.find_for_twitter_oauth..."
+#    data = access_token['extra']['user_hash']
+#    logger.info "twitter authentication..."
+#    logger.info "data: #{data}"
+#    if user = User.find_by_email(data["email"])
+#      logger.info "data email: #{data[:email]}"
+#      user
+#    else # Create a user with a stub password. 
+#      User.create(:email => data["email"], :password => Devise.friendly_token[0,20]) 
+#      logger.info "twitter account is created in the database."
+#    end
+#  end  
 
-  def self.find_for_google_oauth(access_token, signed_in_resource=nil)
-    data = access_token['extra']['user_hash']
-    logger.info "google authentication..."
-    logger.info "data: #{data}"
-    if user = User.find_by_email(data["email"])
-      logger.info "data email: #{data[:email]}"
-      user
-    else # Create a user with a stub password. 
-      User.create(:email => data["email"], :password => Devise.friendly_token[0,20]) 
-      logger.info "google account is created in the database."
-    end
-  end  
+#  def self.find_for_google_oauth(access_token, signed_in_resource=nil)
+#    data = access_token['extra']['user_hash']
+#    logger.info "google authentication..."
+#    logger.info "data: #{data}"
+#    if user = User.find_by_email(data["email"])
+#      logger.info "data email: #{data[:email]}"
+#      user
+#    else # Create a user with a stub password. 
+#      User.create(:email => data["email"], :password => Devise.friendly_token[0,20]) 
+#      logger.info "google account is created in the database."
+#    end
+#  end  
 
   
   private

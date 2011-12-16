@@ -51,9 +51,9 @@
 
 <%# resource.email = 'Email' %>
 <% if flash.present? %>
-<div class="home-signup-with-error">
+<div class="home-signup-with-error" style="margin-top: 35px;">
 <% else %>
-<div class="home-signup">
+<div class="home-signup" style="margin-top: 35px;">
 <% end %>
 	<%#= registration_error_messages! %>
 	<div class="home-signup-th">Login Now</div>
@@ -67,20 +67,35 @@
 	</div>
 	<% end %>
 	
-	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "home-signupform" }) do |f| %>
-  		<%= f.text_field :email, :placeholder => 'Email Address' %>
-		<!--input id="user_password_clear" type="text" value="Password" autocomplete="off" /-->
-		<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
-		<%= f.password_field :password %>		  
-		<span class="home-signupbutton">
-			<%= submit_tag "Login", :class => "home-signupbutton" %>
-		</span>                
-	<% end %>
-
-	<div class="shared_links">
-		<%= render "devise/shared/links" %>
+	<div id="left" class="invite-friends">
+		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "home-signupform", :id => "invite-friend-form" }) do |f| %>
+		<div>
+	  		<%= f.text_field :email, :placeholder => 'Email Address' %>
+			<!--input id="user_password_clear" type="text" value="Password" autocomplete="off" /-->
+			<%= text_field_tag 'user_password_clear', nil, :placeholder => 'Password', :autocomplete => "off" %>
+			<%= f.password_field :password %>		  
+		</div>
+		<div>
+			<span class="home-signupbutton">
+				<%= submit_tag "Login", :class => "home-signupbutton" %>
+			</span>                
+		</div>
+		<% end %>
+		<div class="shared_links">
+			<%= render "devise/shared/links" %>
+		</div>		
 	</div>
-	<div class="auth_providers">
+	<div style="margin-top: 30px; float: left; width 1px; height: 250px; border: 1px dotted #d4d4d4;"><div class="push"></div></div>
+	<!--div class="auth_providers"-->
+	<div>
 		<%= render "devise/sessions/other_services" %>	
 	</div>
 </div>
+
+
+
+
+
+
+
+

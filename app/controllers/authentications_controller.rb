@@ -1,3 +1,5 @@
+# TODO: Should be a deprecated controller now
+# December 6, 2011
 class AuthenticationsController < ApplicationController
   # GET /authentications
   # GET /authentications.xml
