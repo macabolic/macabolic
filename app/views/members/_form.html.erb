@@ -1,29 +1,27 @@
 <script type="text/javascript"> 
     $(document).ready(function(){ 
         $(document).pngFix();
-		
-        //Input Form placeholder
-        $('input:text').focus(function(){
-			this.style.color = '#131e22';
-            if(this.value === this.defaultValue) {
-                this.value = "";
-            } else {
-                this.select();
-            }				
-        })
-        .blur(function(){
-            if ($.trim(this.value) === "") {
-                this.value = (this.defaultValue ? this.defaultValue: "")
-				this.style.color = '#a3a3a3';
-            }
-        });
+
+	    //Input Form placeholder
+	    $('input:text').focus(function(){
+	        if(this.value === this.defaultValue) {
+	            this.value = "";
+	        } else {
+	            this.select();
+	        }
+	    })
+	    .blur(function(){
+	        if ($.trim(this.value) === "") {
+	            this.value = (this.defaultValue ? this.defaultValue: "")
+	        }
+	    });		
     }); 
 </script>
 
-<%= form_for(current_user, :url => member_path(current_user), :html => { :class => "home-signupform" }) do |f| %>
+<%= form_for(current_user, :url => member_path(current_user), :html => { :class => "home-signupform", :id => "member-profileform" }) do |f| %>
 	<% if current_user.errors.any? %>
 		<div id="error_explanation">
-			<h2><%= pluralize(current_user.errors.count, "error") %> prohibited this member from being saved:</h2>
+			<h2><%= pluralize(current_user.errors.count, "error") %> prohibited you from being saved:</h2>
 			<ul>
 				<% current_user.errors.full_messages.each do |msg| %>
 				  <li><%= msg %></li>
@@ -31,24 +29,23 @@
 			</ul>
 		</div>
 	<% end %>
-
-	<%= f.label :first_name %><br />
+<div>
+	<%= f.label :first_name %><br/>
 	<%= f.text_field :first_name, :placeholder => 'First Name' %>
   
     <%= f.label :last_name %><br />
     <%= f.text_field :last_name, :placeholder => 'Last Name' %>
 
     <%= f.label :email %><br />
-    <%= f.text_field :email, :placeholder => 'Email Address' %>
+    <%= f.text_field :email, :placeholder => 'Email Address', :disabled => 'disabled' %>
 
     <%= f.label :birthday %><br />
     <%= f.date_select( :birthday, :order => [:month, :day], :html => { :class => "day" } ) %>
-
-    <%= f.label :invitation_limit %><br />
-    <%= f.text_field :invitation_limit %>
-
-
-	<div class="actions">
-    	<%= submit_tag "Submit" %>
-  	</div>
+	<br/>
+</div>
+<div style="padding-top:15px;">
+	<span class="home-signupbutton">
+   		<%= submit_tag "Submit" %>
+	</span>
+ </div>
 <% end %>

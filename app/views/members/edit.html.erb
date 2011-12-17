@@ -65,7 +65,23 @@ $(document).ready(function(){
 	
 	$('#upload_photo').click(function() {
 		$('#macabolic').show();
-	})
+	});
+	
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+		
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+				
 }); 
 	
 </script>
@@ -80,6 +96,21 @@ $(document).ready(function(){
 	
 	<div class="wrapper-mh">
 		<div class="maincol">		
+			<div class="tabbed-content-area">	
+				<ul class="tabs"> 
+			        <li><a href="#tab1">About myself</a></li> 
+	    		</ul> 
+	<!-- Tab 1 - Edit Info -->
+		        <div id="tab1" class="tab_content"> 
+					<ul class="list" style="padding-bottom: 0px; margin-bottom: 0px;">
+						<li style="border-bottom: 0px;">
+							<div class="userdetails group">
+								<%= render 'members/form' %>
+							</div>
+						</li>
+					</ul>
+				</div>				
+			</div>
 		</div>
 
 		<div class="sidebar">

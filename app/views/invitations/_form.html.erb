@@ -1,3 +1,4 @@
+<script src='http://connect.facebook.net/en_US/all.js'></script>
 <script type="text/javascript"> 
     $(document).ready(function() { 
 		$("#loading").hide(); //Hide all tab content
@@ -5,27 +6,68 @@
 			// Show the loading.gif
 			$("#loading").show();
 		});
+		
+		$('.facebook').click(function() {
+		
+			FB.init({
+		      		appId      : '249685278407440',
+		      		status     : true, 
+		      		cookie     : true,
+		      		xfbml      : true,
+		      		oauth      : true,
+		    	});
+
+	        // calling the API ...
+	        var obj = {
+	          method: 'feed',
+	          link: 'http://www.macabolic.com',
+	          picture: 'http://beta.macabolic.com/images/logo.png',
+	          name: 'Macabolic',
+	          caption: 'Meet the fellow Mac lovers in an all new way.',
+	          description: 'Share your collections, post tips and make recommendations.'
+	        };
+	
+	        FB.ui(obj);	
+		});		
     }); 
 </script>
+<style type="text/css">
+.facebook {	
+	cursor: pointer;
+}
+</style>
+<div id='fb-root'></div>
 <div>
 	<div class="sidebar-content account-info">
 		<div class="sidebar-header">
-			Invite your friend
+			Invite your friends
 		</div>
 		<div class="sidebar-inner">					
-			<%= form_for(invitation, :remote => true, :html => { :class => "invite-friend-form", :id => "invite-friend-form" }) do |f| %>
+			<%= form_for(invitation, :remote => true, :html => { :class => "invite-friend-form" }) do |f| %>
+			<div>
 				<div>
-        			<strong>Email</strong>
-		  			<%= f.text_field :recipient_email, :placeholder => 'Invite your friend here...' %>
+        			<strong style="padding-bottom: 5px;">Email</strong>
+		  			<%= f.text_field :recipient_email, :placeholder => 'billy@macabolic.com, sam@macabolic.com' %>
 					<span id="loading">
 						<%= image_tag "loading.gif" %>
 					</span>
 				</div>
 				<span id="message" class="message"></span>
-				<div class="action">
+				<div style="padding-top: 15px; padding-bottom: 10px;">
 			    	<%= submit_tag "Submit", :class => "invite-friend" %>
 				</div>
+			</div>
 			<% end %>
+			<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
+			<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
+				<span style="font-size: 14px; color: #cccccc;">Post messages via</span>
+				<div style="margin-top: 5px; margin-bottom: 10px;">
+					<ul style="list:none;">
+						<li style="float: left;"><%= image_tag "auth/facebook_32.png", :size => "32x32", :alt => "Facebook", :class => "social facebook" %></li>
+						<li style="float: left;"><%= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,0 +1,23 @@
+<div class="sidebar-content account-info">
+	<div class="sidebar-header">
+    	About myself <%= link_to 'Edit', edit_member_path(@user) %>
+	</div>
+	<div class="sidebar-inner">					
+    	<p class="username">
+			<%= image_tag avatar_url(@user, 55), :width => 55, :height => 55 %>
+    		<strong>Name</strong>
+    		<span><%= @user.full_name %></span>
+    	</p>
+		<p>
+    		<strong>Email</strong>
+	  		<%= @user.email %>
+		</p>
+		<p>
+		    <strong>Birthday</strong>
+		    <%= @user.birthday.strftime("%B %d") %>
+		</p>
+		<!--
+    	<p><a href="#" title="Delete Account" class="delete-account">Delete Account</a></p>
+		-->
+	</div>
+</div>

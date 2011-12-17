@@ -1500,7 +1500,8 @@ padding-bottom: 40px;
 .invite-friend-form input[type="text"] { 
     background:#fff 
 	//url(../images/loading.gif) no-repeat 10px 50%;
-    width:180px
+    width: 225px;
+	height: 25px;
 }
 
 .meta-info {
