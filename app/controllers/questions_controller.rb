@@ -14,7 +14,10 @@ class QuestionsController < ApplicationController
   # GET /questions/1.xml
   def show
     @question = Question.find(params[:id])
+    @user = current_user
     @answers = @question.answers.order("created_at DESC").paginate(:per_page => 999, :page => params[:answer_page])
+    @product = Product.find(params[:product_id])
+    @my_collection_item = MyCollectionItem.find(params[:my_collection_item_id])  if params[:my_collection_item_id].present?
 
   #  respond_to do |format|
   #    format.html # show.html.erb
@@ -54,8 +57,14 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         #format.html { redirect_to(@question, :notice => 'Question was successfully created.') }
-        format.html { redirect_to(:controller => 'products', :action => 'show', :id => params[:product_id], :notice => 'My collection was successfully created.') }
-        format.xml  { render :xml => @question, :status => :created, :location => @question }
+        if params[:page_id] == 'MyCollectionItem'
+          product = Product.find(params[:product_id])
+          my_collection_item = MyCollectionItem.find(params[:my_collection_item_id])
+          format.html { redirect_to(product_my_collection_item_path(product, my_collection_item)) }
+        else
+          format.html { redirect_to(:controller => 'products', :action => 'show', :id => params[:product_id], :notice => 'Questions was successfully created.') }
+          format.xml  { render :xml => @question, :status => :created, :location => @question }
+        end
       #else
       #  format.html { render :action => "new" }
       #  format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
@@ -89,5 +98,11 @@ class QuestionsController < ApplicationController
       format.html { redirect_to(questions_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def back
+    @questions = Question.where(:product_id => params[:product_id]).order("created_at DESC").paginate(:per_page => 10, :page => params[:question_page])
+    @product = Product.find(params[:product_id])
+    @my_collection_item = MyCollectionItem.find(params[:my_collection_item_id]) if params[:my_collection_item_id].present?
   end
 end

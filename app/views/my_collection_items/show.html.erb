@@ -1,0 +1,248 @@
+<% title @product.name %>
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//Default Action
+
+	$(".tab_content2").hide(); //Hide all content
+	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content2:first").show(); //Show first tab content
+
+	//Default Action
+//	$(".tab_content3").hide(); //Hide all content
+//	$("ul.tabs3 li:first").addClass("active").show(); //Activate first tab
+//	$(".tab_content3:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+	//On Click Event
+	$("ul.tabs2 li").click(function() {
+		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content2").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+
+	//On Click Event
+//	$("ul.tabs3 li").click(function() {
+//		$("ul.tabs3 li").removeClass("active"); //Remove any "active" class
+//		$(this).addClass("active"); //Add "active" class to selected tab
+//		$(".tab_content3").hide(); //Hide all tab content
+//		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+//		$(activeTab).fadeIn(); //Fade in the active content
+//		return false;
+//	});
+
+    //Input Form placeholder
+    $('input:text').focus(function(){
+        if(this.value === this.defaultValue) {
+            this.value = "";
+        } else {
+            this.select();
+        }
+    })
+    .blur(function(){
+        if ($.trim(this.value) === "") {
+            this.value = (this.defaultValue ? this.defaultValue: "")
+        }
+    });
+});
+</script>
+
+<div id="grey-strip-signedin">
+	<div class="wrapper-top">
+		<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>						
+	</div>
+</div>
+
+<div class="wrapper-mh">
+	<div class="maincol"> 
+    	<div class="product-item sidebar-content">	         
+			<div class="product-image">
+				<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+				<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
+	        </div>			
+	        <div class="product-detail">
+	            <div>
+					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
+				</div>
+				<!--<p>Used since: <span>2010</span></p>-->
+				<p><%= @product.description %></p>								
+				<% if @user == current_user %>				
+	            <p>
+					<% if current_user.own_this_product?(@product) %>
+	                <div id="i_own_this">
+						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item, :product_id => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
+					</div>
+					<div id="response-product-<%= @product.id %>">
+					<% if @product.like?(current_user) %>					
+						<%= link_to 'Unlike', unlike_product_path(@product, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
+					<% else %>
+						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>
+					<% end %>
+					</div>						
+					<% else %>
+						<% if current_user.wish_this_product?(@product) %>
+					<div id="i_own_this">
+						<!-- TODO: important -->
+						<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
+					</div>
+					<div id="wishlist_link">
+							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
+					</div>
+						<% else %>
+					<div id="i_own_this">
+						<!-- TODO: important -->
+						<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
+					</div>
+					<div id="wishlist_link">
+						<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+					</div>
+						<% end %>														
+					<% end %>
+				</p>
+				<% else %>
+				<p>
+					<div id="wishlist_link">
+						<% if current_user.wish_this_product?(@product) %>
+							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
+						<% else %>
+							<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+						<% end %>
+					</div>
+<!--
+					<div id="fb-root"></div>
+					<script>
+					(function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) {
+							return;
+						}
+						js = d.createElement(s); js.id = id;
+						js.src = "//connect.facebook.net/en_US/all.js#appId=249685278407440&xfbml=1";
+					  	fjs.parentNode.insertBefore(js, fjs);
+					}	(document, 'script', 'facebook-jssdk'));
+					</script>
+
+					<div class="fb-like" data-href="<%#= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false" data-font="verdana"></div>
+-->					
+	            </p>
+				<% end %>
+	        </div>
+	
+	    	<br class="clear" />
+	    </div>
+		<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">
+			<%= render 'products/product_stat' %>
+		</div>
+
+		<div>
+			<%= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "MyCollectionItem", :my_collection_item => @my_collection_item } %>
+		</div>
+
+		<div class="tabbed-content-area">			
+			<ul class="tabs"> 
+		    	<li><a href="#questions">Questions &amp; Answers</a></li> 
+		    	<!--<li><a href="#reviews">Reviews</a></li>-->
+			</ul> 
+
+    		<div id="questions" class="tab_content"> 
+				<%= render :partial => 'questions/product_questions', :locals => { :my_collection_item => @my_collection_item, :product => @product } %>
+		    </div> 
+		<!--
+		    <div id="reviews" class="tab_content"> 
+				<%#= render 'reviews/product_reviews' %>
+		    </div>    
+		-->
+		</div>
+	</div>
+	
+	<div class="sidebar">
+		<!-- Recommend a friend -->
+		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
+		
+		<div class="sidebar-content">				
+			<div class="sidebar-header">
+				<%= pluralize(@friends_who_owned.size, 'friend') %> own
+			</div>	
+			<div class="user-grid">
+		    	<ul>
+				<% @friends_who_owned.each do |person| %>
+		  			<li>
+						<%= link_to profile_member_path(person) do %>
+							<%= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
+						<% end %>
+					</li>
+				<% end %>
+				</ul>
+			</div>
+		</div><!-- #see who has similar products in his network -->			
+
+		<div class="sidebar-content">				
+			<div class="sidebar-header">
+				<%= pluralize(@friends_who_wished.size, 'friend') %> wish
+			</div>	
+			<div class="user-grid">
+		    	<ul>
+				<% @friends_who_wished.each do |person| %>
+		  			<li>
+						<%= link_to profile_member_path(person) do %>
+							<%= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
+						<% end %>
+					</li>
+				<% end %>
+				</ul>
+			</div>
+		</div><!-- #see who has similar products in his network -->			
+		
+		<!--
+        <div id="product-tips" class="sidebar-content">
+            <div class="sidebar-header">
+                Tips
+                <ul class="tabs3">
+                    <li><a href="#popular" title="Popular">Popular</a></li>
+                    <li><a href="#recent" title="Recent">Recent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-inner">
+                <ul id="popular" class="tab_content3">
+                    <li>
+                        <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+                        Added by <a href="#" title="username">Willsmith727</a>
+                    </li>
+                </ul>
+                
+                <ul id="recent" class="tab_content3">
+                    <li>
+                        <a href="#" title="Tip title" class="tip-title">Title of the tips goes here...</a><br/>
+                        Added by <a href="#" title="username">Willsmith727</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		-->		
+		
+	</div>
+	<div class="sidebar" id="comment-display">			
+		<%= render :partial => 'product_comments/show', :locals => { :product => @product } %>
+	</div>
+	
+	
+</div>

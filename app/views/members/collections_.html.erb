@@ -117,7 +117,7 @@ function size(t) {
 									</strong>
 								</span>			
 								<span id="my-collection-response-<%= my_collection.id %>" class="yes">													
-					            	<%= pluralize(my_collection.my_collection_responses.vote_like.size, 'person') %>
+					            	<%= pluralize(my_collection.responses.vote_like.size, 'person') %>
 								</span>														
 							<% else %>
 								<div id="my-collection-slider-<%= my_collection.id %>" class="nivoSlider my-collection-slider">

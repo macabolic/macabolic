@@ -1,31 +1,14 @@
 <% title @product.name %>
-
-<script type="text/javascript"> 
-    $(document).ready(function(){ 
-        $(document).pngFix(); 
-    }); 
-</script>
-
 <script type="text/javascript"> 
  
 $(document).ready(function() {
- 
+ 	$(document).pngFix(); 
+
 	//Default Action
 	$(".tab_content").hide(); //Hide all content
 	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
 	$(".tab_content:first").show(); //Show first tab content
-	
-	//Default Action
-
-	$(".tab_content2").hide(); //Hide all content
-	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content2:first").show(); //Show first tab content
-
-	//Default Action
-	$(".tab_content3").hide(); //Hide all content
-	$("ul.tabs3 li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content3:first").show(); //Show first tab content
-	
+		
 	//On Click Event
 	$("ul.tabs li").click(function() {
 		$("ul.tabs li").removeClass("active"); //Remove any "active" class
@@ -36,26 +19,6 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	//On Click Event
-	$("ul.tabs2 li").click(function() {
-		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content2").hide(); //Hide all tab content
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
-	});
-
-	//On Click Event
-	$("ul.tabs3 li").click(function() {
-		$("ul.tabs3 li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content3").hide(); //Hide all tab content
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
-	});
-
     //Input Form placeholder
     $('input:text').focus(function(){
         if(this.value === this.defaultValue) {
@@ -74,7 +37,7 @@ $(document).ready(function() {
 
 <div id="grey-strip-signedin">
 	<div class="wrapper-top">
-		<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>						
+		<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "" } %>						
 	</div>
 </div>
 
@@ -82,147 +45,99 @@ $(document).ready(function() {
 	<div class="maincol"> 
     	<div class="product-item sidebar-content">	         
 			<div class="product-image">
-				<%= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>		  						
+				<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
 	        </div>			
 	        <div class="product-detail">
 	            <div>
 					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
 				</div>
-				<!--
-				<p>Description here</p>
-				-->
+				<!--<p>Used since: <span>2010</span></p>-->
+				<p><%= @product.description %></p>								
+				<% if @user == current_user %>				
 	            <p>
+					<% if current_user.own_this_product?(@product) %>
 	                <div id="i_own_this">
-						<% 
-							if current_user.own_this_product?(@product) 
-						%>
-							<a class="button-green checked" id="own-this" href="" title="Own this">I Own This</a>
-						<%
-							else
-						%>
-							<a class="button-green" id="own-this" href="" title="Own this">I Own This?</a>
-						<%
-							end
-						%>														
+						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :product_id => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
+					</div>
+					<div id="response-product-<%= @product.id %>">
+					<% if @product.like?(current_user) %>					
+						<%= link_to 'Unlike', unlike_product_path(@product, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
+					<% else %>
+						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>
+					<% end %>
+					</div>						
+					<% else %>
+						<% if current_user.wish_this_product?(@product) %>
+					<div id="i_own_this">
+						<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<%
-							if current_user.wish_this_product?(@product)
-						%>
-							<%= link_to 'Wanted!', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
-						<%
-							else
-						%>
-							<%= link_to 'Wish?', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
-						<%
-							end
-						%>
+							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
 					</div>
-					<div id="fb-root"></div>
-					<script>
-					(function(d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0];
-						if (d.getElementById(id)) {
-							return;
-						}
-						js = d.createElement(s); js.id = id;
-						js.src = "//connect.facebook.net/en_US/all.js#appId=249685278407440&xfbml=1";
-					  	fjs.parentNode.insertBefore(js, fjs);
-					}	(document, 'script', 'facebook-jssdk'));
-					</script>
-
-					<div class="fb-like" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false" data-font="verdana"></div>
-					
-	            </p>			
+						<% else %>
+					<div id="i_own_this">
+						<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
+					</div>
+					<div id="wishlist_link">
+						<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+					</div>
+						<% end %>														
+					<% end %>
+				</p>
+				<% else %>
+				<p>
+					<div id="wishlist_link">
+						<% if current_user.wish_this_product?(@product) %>
+							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
+						<% else %>
+							<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+						<% end %>
+					</div>
+	            </p>
+				<% end %>
 	        </div>
-			<div class="product-stat-details">
-				<ul>
-					<li>Questions<span><%= @product.questions.size %></span></li>
-					<li class="alt">Reviews<span><%= @product.reviews.size %></span></li>
-					<li class="noborder">Tips<span>8</span></li>
-					<!--li class="noborder alt">Like<span>5</span></li>-->
-				</ul>
-			</div>
 	
 	    	<br class="clear" />
 	    </div>
+		<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">
+			<%= render 'products/product_stat' %>
+		</div>
 
 		<div>
-			<%= render :partial => 'questions/ask_a_question', :locals => { :product => @product } %>
+			<%= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "Product", :my_collection_item => nil } %>
 		</div>
 
 		<div class="tabbed-content-area">			
 			<ul class="tabs"> 
 		    	<li><a href="#questions">Questions &amp; Answers</a></li> 
-		    	<li><a href="#reviews">Reviews</a></li> 
+		    	<!--<li><a href="#reviews">Reviews</a></li>-->
 			</ul> 
 
     		<div id="questions" class="tab_content"> 
-				<%= render 'questions/product_questions' %>
+				<%= render :partial => 'questions/product_questions', :locals => { :my_collection_item => nil, :product => @product } %>
 		    </div> 
+		<!--
 		    <div id="reviews" class="tab_content"> 
-				<%= render 'reviews/product_reviews' %>
+				<%#= render 'reviews/product_reviews' %>
 		    </div>    
+		-->
 		</div>
 	</div>
 	
 	<div class="sidebar">
+		<!-- Recommend a friend -->
 		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
-		<!--
-        <div class="sidebar-content" id="product-stat">
-            <div class="sidebar-header">People in your network</div>
-            <div class="sidebar-inner">
-                <p>
-                    Friends Who Own This
-                    <strong>10</strong>
-                </p>
-                <p>
-                    Friends Who Want This
-                    <strong>6</strong>
-                </p>
-                <p>
-                    Reviews
-                    <strong>22</strong>
-                </p>
-                <p>
-                    Tips
-                    <strong>34</strong>
-                </p>
-
-                <p style="margin-bottom:1px;">
-                    Rating
-                    <ul class="star-rating">
-                        <li><a href='#' title='Rate this 1 star out of 5' class='one-star'>1</a></li>
-                        <li><a href='#' title='Rate this 2 stars out of 5' class='two-stars'>2</a></li>
-                        <li><a href='#' title='Rate this 3 stars out of 5' class='three-stars'>3</a></li>
-                        <li><a href='#' title='Rate this 4 stars out of 5' class='four-stars'>4</a></li>
-                        <li><a href='#' title='Rate this 5 stars out of 5' class='five-stars'>5</a></li>
-                    </ul>
-                </p>
-            </div>
-        </div>--><!-- #product-stat -->
-        
-		<!--
-		<div class="sidebar-content">
-			<div class="sidebar-header">
-				Product Image
-			</div>	
-			<div class="upload-image">
-				<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>		  	
-			</div>
-		</div>
-		-->
 		
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@people_who_owned.size, 'person') %> who own
+				<%= pluralize(@friends_who_owned.size, 'friend') %> own
 			</div>	
 			<div class="user-grid">
 		    	<ul>
-				<% @people_who_owned.each do |person| %>
+				<% @friends_who_owned.each do |person| %>
 		  			<li>
 						<%= link_to profile_member_path(person) do %>
-							<%= image_tag avatar_url(person, 50), :width => 50, :title => person.full_name %>
+							<%= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
 						<% end %>
 					</li>
 				<% end %>
@@ -232,14 +147,14 @@ $(document).ready(function() {
 
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@people_who_wished.size, 'person') %> who wish
+				<%= pluralize(@friends_who_wished.size, 'friend') %> wish
 			</div>	
 			<div class="user-grid">
 		    	<ul>
-				<% @people_who_wished.each do |person| %>
+				<% @friends_who_wished.each do |person| %>
 		  			<li>
 						<%= link_to profile_member_path(person) do %>
-							<%= image_tag avatar_url(person, 50), :width => 50, :title => person.full_name %>
+							<%= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
 						<% end %>
 					</li>
 				<% end %>
@@ -275,4 +190,9 @@ $(document).ready(function() {
 		-->		
 		
 	</div>
+	<div class="sidebar" id="comment-display">			
+		<%= render :partial => 'product_comments/show', :locals => { :product => @product } %>
+	</div>
+	
+	
 </div>

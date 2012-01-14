@@ -1,6 +1,13 @@
 <ul class="combined-list">
 <% 
 	# TODO: Need to fine tune here.
+	#observe :question, 
+    #      :my_collection_item, 
+    #      :my_collection, 
+    #      :recommendation, TODO: received_recommendation is not yet DONE.
+    #      :my_collection_comment,
+    #      :my_collection_response
+  
 	activities.each do |activity| 
 		if activity.name == 'Question'
 %>
@@ -13,74 +20,12 @@
 		elsif activity.name == 'MyCollection'
 %>
 			<%= render :partial => 'activities/my_collection', :locals => { :activity => activity } %>
+<%			
+		elsif activity.name == 'Recommendation'
+%>
+			<%= render :partial => 'activities/product_recommendation', :locals => { :activity => activity } %>
 <%
 		end
 %>
-<!--			
-	<li class="recent-question">
-		<div>
-			<a href="#">Dave Williamson</a> asked a question: <span class="question"><a href="#">How much is an iPad?</a></span>
-		</div>
-		<div class="answer-wrapper">
-			<div class="meta-info">
-			  	<%#= image_tag "membershomepage/icon-question.jpg" %>
-				<p class="left">27 minutes ago</p>
-				<p>
-					<span><a href="#">Like</a></span>
-					<span><a href="#">Answer</a></span>
-				</p>
-			</div>
-		</div>
-	</li>
-	<li class="recent-answer">
-		<div>
-			<a href="#">Dave Williamson</a> posted an answer for the question <a href="#">When is the new iPad released?</a>.
-		</div>
-		<div class="answer-wrapper">
-			<%#
-				text = 'According to sources, iPhone 4S which is based on iPhone 4(CDMA) and new iPad will be started produce since 1st week in September and will be shipped in late October.'
-				truncated_text = truncate(text, :length => 600, :separator => ' ', :omission => '... <a href="#">more</a>')
-			%>
-			<div class="quoted_text">
-				<%#= simple_format(word_wrap(truncated_text, :line_width => 200)) %>
-			</div>
-			<div class="meta-info">
-				<p class="left">1 hour ago</p>
-				<p>
-					<span><a href="#">Like</a></span>
-					<span><a href="#">Recommend</a></span>
-				</p>
-			</div>
-		</div>
-	</li>
-	<li>
-		<div>
-			<a href="#">Billy</a> wrote a review on the <a href="#">Mac OS Lion</a>
-		</div>
-		<div class="answer-wrapper">
-			<div class="answers-meta">
-				<p class="left">2 hours ago</p>
-				<p>
-					<span><a href="#" title="Answer">Answer</a></span>
-					<span><a href="#" title="Recommend">Recommend</a></span>								
-				</p>
-			</div>
-		</div>
-	</li>
-	<li>
-		<div>
-			<a href="#">Test One</a> added <a href="#">Time Capsule</a> to the <a href="#">My iMac Collection</a>.
-		</div>
-		<div class="answer-wrapper">
-			<div class="answers-meta">
-				<p class="left">2 hours ago</p>
-				<p>
-					<span><a href="#" title="Answer">Like</a></span>
-					<span><a href="#" title="Recommend">Recommend</a></span>								
-				</p>
-			</div>
-		</div>							
-	</li>
--->
 <% end %>
 </ul>

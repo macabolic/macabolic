@@ -1,0 +1,156 @@
+<%= javascript_include_tag "jquery.carouFredSel-packed.js" %>
+
+<style type="text/css">
+	.spotlight {
+		opacity: 0.5;
+		-moz-opacity: 0.5;
+		filter:alpha(opacity=0.5);
+	}		
+
+	#action_link {
+		text-align: right;
+		border: 0px solid black;
+		display: none;
+	}
+
+	.html_carousel {
+	    padding: 0px 0 0px 0px;
+		position: relative;
+	}
+
+	.html_carousel img {
+		border: 0px solid #ccc;
+		background-color: white;
+		padding: 0px;
+		margin-left: 18px;
+		margin-top: 5px;
+		display: block;
+		float: left;
+	}
+
+	.pagination1 {
+		text-align: center;
+	}
+
+	.pagination1 a {
+		background: url(/images/sitewide/miscellaneous_sprite.png) 0 -300px no-repeat transparent;
+		width: 15px;
+		height: 15px;
+		margin: 0 5px 0 0;
+		display: inline-block;
+		text-decoration: none;
+	}
+
+	.pagination1 a.selected {
+		background-position: -25px -300px;
+		cursor: default;
+		text-decoration: none;
+		border: 0px;
+	}
+
+	.pagination1 a span {
+		display: none;
+	}
+
+	.clearfix {
+	    float: none;
+	    clear: both;
+	}
+
+</style>
+
+<script type="text/javascript">
+//We are using $(window).load here because we want to wait until the images are loaded   
+$(window).load(function(){   
+
+	// Be default, it is dimmed.		
+    //when mouse over the list item...   
+	$('.productimage').hover(function() {   	  
+      //...find the image inside of it and turn on the spotlight
+		//$(this).toggleClass('spotlight', true);			
+	}, function() {   		  
+		// when mouse leave...   
+		// turn off the spotlight
+		//$(this).toggleClass('spotlight');
+	});   
+	  
+});		
+</script>
+
+<ul class="list-my-collections">
+	<% count = 0 %>
+	<% my_collections.each do |my_collection| %>
+	<li>
+		<%#= link_to(my_collection) do %>
+			<%= link_to "edit", member_my_collection_path(@user, my_collection), :id => "action_link", :class => "edit_link" %>
+			<div class="center">
+				<span class="productimage">
+					<%= link_to member_my_collection_path(@user, my_collection) do %>
+					<div class="html_carousel">
+					    <div id="product_preview_gallery-<%= count %>">
+					
+						<%= image_tag my_collection.thumbnail.url(:medium), :width => "150", :title => "#{my_collection.name}" %>
+					<% my_collection_items = my_collection.my_collection_items %>
+					<% my_collection_items.each do |my_collection_item| %>
+						<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "150", :class => "preview-image") %>>
+					<% end %>
+					    </div>
+					    <div class="clearfix"></div>						
+					</div>					
+					<% end %>
+				</span>								
+			</div>	
+			<div class="pagination1" id="product_preview_gallery_pag-<%= count %>"></div>
+			<span>
+				<%= link_to member_my_collection_path(@user, my_collection) do %>
+					<p><%= simple_format(word_wrap(my_collection.name, :line_width => 50)) %></p>
+				<% end %>				        					
+			</span>
+			<span class="right">
+				<span>
+					<%= pluralize(my_collection.responses.size, "like") %> | <%= pluralize(my_collection.followers.size, "follower") %>
+				</span>
+			</span>															
+		<%# end %>
+	</li>	
+	<script type="text/javascript">
+	$(window).load(function() {
+		$("#product_preview_gallery-<%= count %>").carouFredSel({
+			circular: false,
+			infinite: false,
+			items	: {
+				start: 0,
+				visible: 1
+			},
+			auto	: false,
+			scroll	: 1,
+			pagination: "#product_preview_gallery_pag-<%= count %>"
+		});
+	});
+	</script>							
+	<% count = count + 1 %>
+	<% end %>	
+</ul>
+<div>
+	<!--
+	<div id="tab1_paging" class="tab1_paging left">
+		<p><%#= page_entries_info @my_collections %></p>
+	</div> 
+	<div class="right">
+		<div id="pagination">
+			<ul>
+			<%# for i in (1..@my_collections.total_pages) %>
+				<%# if @my_collections.current_page == i %>
+				<li class="current"><%#= i %></li>
+				<%# else %>
+				<li><%#= link_to i, collections_member_path(@user, :page => i) %></li>
+				<%# end %>
+			<%# end %>
+				<li><span>of</span></li>
+				<li><%#= link_to @my_collections.total_pages, collections_member_path(@user, :page => @my_collections.total_pages) %></li>
+			</ul>
+		</div>			
+	</div>
+	-->
+	<!-- #-> Displaying posts 6 - 10 of 26 in total -->
+</div>

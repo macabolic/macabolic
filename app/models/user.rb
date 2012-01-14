@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many  :my_collections, :dependent => :destroy
   has_many  :reviews
   has_many  :questions
+  has_many  :answers
   has_many  :activities
   
   has_many  :sent_invitations,  :class_name => 'Invitation', :foreign_key => 'sender_id'
@@ -17,8 +18,8 @@ class User < ActiveRecord::Base
   has_many  :recommendations, :class_name => 'Recommendation', :foreign_key => 'from_user_id'
   has_many  :recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'from_user_id'
   
-  has_many  :received_reommendations, :class_name => 'Recommendation', :foreign_key => 'to_user_id'
-  has_many  :being_recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'to_user_id'
+#  has_many  :received_reommendations, :class_name => 'Recommendation', :foreign_key => 'to_user_id'
+#  has_many  :being_recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'to_user_id'
   
   has_many  :friendships
   has_many  :friends, :through => :friendships

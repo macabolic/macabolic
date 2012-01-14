@@ -6,15 +6,26 @@
 %>
 
 <li>
-	<div>
-		<%= link_to user.full_name, profile_member_path(user) %></a> added <%= link_to product.name, product_path(product) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+	<div class="questions-block" style="border-bottom: 0px; padding-bottom: 0px">
+		<div class="questions-img">
+			<%= image_tag current_profile_image_thumbnail_url(user), :width => 50, :title => user.full_name %>
+		</div>
+		<div class="questions-content">
+			<%= link_to user.full_name, profile_member_path(user) %></a> added <%= link_to product.name, product_my_collection_item_path(product, my_collection_item) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+		</div>
+		<div class="clear"></div>
 	</div>
 	<div class="answer-wrapper">
 		<div class="answers-meta">
-			<p class="left"><%= activity.lapsed_time %></p>
+			<p class="left"><%= activity.lapsed_time %> with <span id="response-stat-product-<%= product.id %>"><%= product.responses.size %></span> like</p>
 			<p>
-				<span><a href="#" title="Answer">Like</a></span>
-				<span><a href="#" title="Recommend">Recommend</a></span>								
+				<span id="home-response-product-<%= product.id %>">
+					<% if product.like?(current_user) %>					
+						<%= link_to 'Unlike', unlike_product_path(product, :user_id => current_user.id), :title => "Unlike", :remote => true %>
+					<% else %>
+						<%= link_to 'Like', like_product_path(product, :user_id => current_user.id), :title => "Like", :remote => true %>
+					<% end %>
+				</span>
 			</p>
 		</div>
 	</div>							

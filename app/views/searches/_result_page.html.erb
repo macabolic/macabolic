@@ -1,0 +1,112 @@
+<div class="pagination-wrapper top">
+	<div class="left">
+		<p>
+			<strong><span style="text-decoration:underline"><%= pluralize(@found_products.size, 'product') %></span></strong> found based on your search: <strong><%= params[:query] %></strong> <!--Related Products: <a href="#">iPod</a>, <a href="#">iPad</a>-->
+		</p>
+	</div>
+	<% if @found_products.total_pages > 0 %>					
+	<div class="right">
+  		<div id="pagination">
+			<ul>
+			<% if @found_products.current_page == 1 %>
+				<li class="nolink">«</li>
+			<% else %>
+				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page - 1), :remote => true %></li>
+			<% end %>
+		<% for i in (1..@found_products.total_pages) %>
+			<% if @found_products.current_page == i %>
+				<li class="current"><%= i %></li>
+			<% else %>
+				<li><%= link_to i, find_product_searches_path(:query => params[:query], :product_page => i), :remote => true %></li>
+			<% end %>
+		<% end %>
+				<li><span>of</span></li>
+				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :product_page => @found_products.total_pages), :remote => true %></li>
+			<% if @found_products.current_page == @found_products.total_pages %>
+				<li class="nolink">»</li>
+			<% else %>
+				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page + 1), :remote => true %></li>
+			<% end %>																
+      		</ul>
+  		</div>
+	</div>
+<% end %>
+</div><!-- .pagination-wrapper -->
+
+<ul id="search-list">
+<% @found_products.each do |product| %>
+	<li class="search-item">
+  		<div class="product-image-thumb">
+			<%= image_tag(product.thumbnail.url(:medium), :width => "128", :class => "preview-image") %>
+
+  		</div>
+  		<div class="product-detail">
+   			<div>
+				<p class="left">
+					<h3 style="text-align: left;"><%= link_to product.name, product_path(product) %></h3>
+				</p>
+				<p><%= product.description %></p>								
+			</div>
+<!--
+      <p>
+<ul class='star-rating'>
+              <li><a href='#' title='Rate this 1 star out of 5' class='one-star'>1</a></li>
+              <li><a href='#' title='Rate this 2 stars out of 5' class='two-stars'>2</a></li>
+              <li><a href='#' title='Rate this 3 stars out of 5' class='three-stars'>3</a></li>
+              <li><a href='#' title='Rate this 4 stars out of 5' class='four-stars'>4</a></li>
+              <li><a href='#' title='Rate this 5 stars out of 5' class='five-stars'>5</a></li>
+      	</ul>
+</p>
+-->
+      		<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'friend') %></a> also own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
+			<p>
+          		<ul class="friend-ownthis" style="margin-bottom: 10px;">
+				<% product.owners.each do |owner| %>
+					<li>
+						<%= link_to profile_member_path(owner) do %>
+							<%= image_tag current_profile_image_thumbnail_url(owner), :width => 37, :title => owner.full_name %>
+						<% end %>
+					</li>
+				<% end %>
+				</ul>
+			</p>
+			<p>
+				<%#= render :partial => 'searches/product_action', :locals => { :product => product }%>
+			</p>
+		</div>
+		<br class="clear" />
+	</li>
+<% end %>
+</ul>
+
+<div class="pagination-wrapper bottom">
+	<div class="left"><p class="total"><%= page_entries_info @found_products %></p></div>	
+	<!--<div class="left"><p>Displaying 1 - 11 of 345</p></div>-->
+	<% if @found_products.total_pages > 0 %>					
+	<div class="right">
+  		<div id="pagination">
+			<ul>
+			<% if @found_products.current_page == 1 %>
+				<li class="nolink">«</li>
+			<% else %>
+				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page - 1), :remote => true %></li>
+			<% end %>
+		<% for i in (1..@found_products.total_pages) %>
+			<% if @found_products.current_page == i %>
+				<li class="current"><%= i %></li>
+			<% else %>
+				<li><%= link_to i, find_product_searches_path(:query => params[:query], :product_page => i), :remote => true %></li>
+			<% end %>
+		<% end %>
+				<li><span>of</span></li>
+				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :product_page => @found_products.total_pages), :remote => true %></li>
+			<% if @found_products.current_page == @found_products.total_pages %>
+				<li class="nolink">»</li>
+			<% else %>
+				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page + 1), :remote => true %></li>
+			<% end %>																
+      		</ul>
+  		</div>
+	</div>
+	<% end %>
+</div><!-- .pagination-wrapper -->                

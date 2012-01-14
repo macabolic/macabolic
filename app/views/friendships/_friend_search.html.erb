@@ -1,12 +1,23 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#friend_name").keydown(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			$.get($("#recommend-friends-form").attr("action"), $("#recommend-friends-form").serialize(), null, "script");
+			return false;
+		}		
+	});	
+});
+</script>
 <div class="sidebar-content" id="new-product">				
 	<div class="sidebar-header">Recommend to Your Friends</div>	
 	<div class="sidebar-inner">
     	<ul>
   			<li id="product-search-form">
-				<%= form_tag friendships_path, :method => 'get', :id => 'friends_search', :remote => true do %>
+				<%= form_tag search_in_network_friendships_path, :method => 'get', :id => 'recommend-friends-form', :remote => true do %>
 					<%= hidden_field_tag 'user_id', current_user.id %>
 					<%= hidden_field_tag 'product_id', product.id %>
-					<%= text_field_tag :search, params[:search], :placeholder => 'Find your friends', :autocomplete => 'off', :class => 'product_text_search' %>
+					<%= text_field_tag :name, params[:name], :placeholder => 'Find your friends', :autocomplete => 'off', :class => 'product_text_search', :id => 'friend_name' %>
 				<% end %>
   			</li>
 		</ul>
@@ -23,9 +34,9 @@
 					<%# end %>
 				</li-->				
 				<%# end %>
-				<div id="friends">
-					<%= render :partial => 'friendships/friend_search_result', :locals => { :product => product } %>
-				</div>
+			<div id="friends">
+				<%= render :partial => 'friendships/friend_search_result', :locals => { :product => product } %>
+			</div>
     		<!--/ul-->
 		</div>
 	</div>

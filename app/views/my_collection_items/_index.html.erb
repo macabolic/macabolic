@@ -1,19 +1,26 @@
-<ul class="list-my-collections">
+<style type="text/css">
+	#action_link {
+		text-align: right;
+		border: 0px solid black;
+		display: none;
+	}
+</style>
+<ul id="collection-items" class="list-my-collections">
 	<% my_collection_items.each do |my_collection_item| %>
 	<li>
 		<%= link_to(my_collection_item) do %>
 			<span class="right">
-				<%= link_to 'delete', my_collection_item, :method => 'delete' %>
+				<%= link_to 'delete', my_collection_item, :method => 'delete', :id => "action_link", :class => "edit_link" %>
 			</span>															
 			<div class="center">
 			<span class="productimage">
-				<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>
+				<%= link_to product_my_collection_item_path(my_collection_item.product, my_collection_item) do %>
 					<%= image_tag my_collection_item.product.thumbnail.url(:medium), :width => "150", :title => "#{my_collection_item.product.name}" %>
 				<% end %>
 			</span>								
 			</div>								
 			<span>
-				<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>
+				<%= link_to product_my_collection_item_path(my_collection_item.product, my_collection_item) do %>
 					<p><%= simple_format(word_wrap(my_collection_item.product.name, :line_width => 50)) %></p>
 				<% end %>				        	
 			</span>
@@ -21,4 +28,5 @@
 	</li>							
 	<% end %>	
 </ul>
+
 

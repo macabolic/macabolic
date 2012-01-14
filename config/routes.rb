@@ -1,9 +1,25 @@
 Macabolic::Application.routes.draw do
 
+  resources :searches do
+    collection do
+      get 'find_product'
+    end
+  end
+  
+  resources :product_comments
+
+  resources :my_collection_comments
+
   resources :recommendations
 
-  resources :friendships
-  
+  resources :friendships do
+    collection do
+        get 'show_more'
+        get 'search'
+        get 'search_in_network'
+    end
+  end
+
   resources :activities
 
   # Home
@@ -12,6 +28,9 @@ Macabolic::Application.routes.draw do
 
   # Questions
   resources :questions do
+    member do
+      get 'back'
+    end
     resources :answers
   end
   
@@ -31,17 +50,20 @@ Macabolic::Application.routes.draw do
   end
   
   # Reviews
-  resources :reviews do
-    member do
-      get 'vote'
-    end
-  end
+  #resources :reviews do
+  #  member do
+  #    get 'vote'
+  #  end
+  #end
   
   # My Collections
   resources :my_collections do    
     member do
-      get 'vote'
+      get 'like'
+      get 'unlike'
       get 'skip'
+      get 'follow'
+      get 'unfollow'
     end
     
     collection do
@@ -51,9 +73,10 @@ Macabolic::Application.routes.draw do
   end
 
   # My Collection Items
-  resources :my_collection_items do
-    resources :products
-  end
+#  resources :my_collection_items do
+#    resources :products
+#  end
+  resources :my_collection_items
 
   devise_for  :users, 
               :path_names => {  :sign_in => 'login', 
@@ -67,9 +90,16 @@ Macabolic::Application.routes.draw do
 
   # Products
   resources :products do
+    member do
+      get 'like'
+      get 'unlike'
+      get 'recommend'
+    end
+
     collection do
       get 'product_search'
     end  
+    resources :my_collection_items
   end
   
   # Members

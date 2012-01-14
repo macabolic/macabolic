@@ -41,15 +41,14 @@ class AnswersController < ApplicationController
   # POST /answers.xml
   def create
     @answer = Answer.new(params[:answer])
-    @answer.question_id = params[:question_id]
-    @answer.user_id = current_user.id
+    #@answer.question_id = params[:question_id]
+    #@answer.user_id = current_user.id
 
     logger.info "========================================="
     logger.info "Answer [content]: #{@answer.content}"
     logger.info "Answer [question_id]: #{@answer.question_id}"
-    logger.info "Answer [product_id]: #{params[:product_id]}"
+    logger.info "Answer [product_id]: #{@answer.product_id}"
     logger.info "Answer [user_id]: #{@answer.user_id}"
-    logger.info "Answer [current_user]: #{current_user.id}"
     logger.info "========================================="
 
     @answer.save

@@ -1,6 +1,10 @@
 <div class="question-content-area">
-	<%= form_for @question, :as => :question, :url => questions_path, :html => { :class => "question-form" } do |f| %>
+	<%= form_for Question.new, :as => :question, :url => questions_path, :html => { :class => "question-form" } do |f| %>
 		<%= hidden_field_tag 'product_id', product.id %>
+		<%= hidden_field_tag 'page_id', page_id %>
+		<% if !my_collection_item.nil? %>
+		<%= hidden_field_tag 'my_collection_item_id', my_collection_item.id %>
+		<% end %>
 		<%= f.text_field :title, :placeholder => 'Ask a question' %>
 	    <%= submit_tag "Submit" %>
 	<% end %>	

@@ -1,0 +1,101 @@
+<style type="text/css">
+.invite_link {
+	height: 10px;
+	width: 60px;
+	border: 0px solid #b7b7b7;
+	overflow: hidden;
+    text-align: center;
+    text-decoration:none;
+    color: #565656 !important;
+    font-size: 10px;
+	font-weight: bold;
+    font-family: Arial;
+    text-shadow: 0px -1px 0px #385c05;
+	margin-left: auto; 
+	margin-right: auto;
+	padding-bottom: 8px;
+}
+.invite_link:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.invited {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.friend img {
+	margin-left: 25px;
+}
+
+#friend_name {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	color: #313131;
+	display: block;
+	padding-top: 8px;
+}
+
+</style>
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script type="text/javascript"> 
+	function requestCallback(response) {
+		// Handle callback here
+		//alert("Handle callback...");
+	}
+
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+
+		//Default Action
+		$(".invite_link").click(function() {
+			//alert("Clicked invite link");
+			FB.init({
+				appId  : '249685278407440',
+				status : true,
+				cookie : true,
+				oauth: true
+			});
+			
+			var user_id = $(this).attr("id");
+			//alert("Get the user id: " + user_id);
+			FB.ui({	method: 'apprequests',
+					message: 'Meet the fellow Mac lovers in an all new way. Share your collections, post tips and make recommendations.',
+					to: user_id,
+					//to: '610814778',
+				}, requestCallback);
+			$(this).addClass("invited");
+			$(this).html("invited");
+		});
+		
+    }); 
+</script>
+<% if !@facebook_friends.nil? %>
+<% @facebook_friends.each do |facebook_friend| %>								
+	<li class="friend">										
+		<div>
+			<!-- Image -->	
+			<%= image_tag facebook_profile_image(facebook_friend['id'], 'square'), :width => 50, :height => 50 %>
+			<span id="friend_name"><%= link_to facebook_friend['name'], "http://wwww.facebook.com/#{facebook_friend['id']}/" %></span>
+			<span class="invite_link" id="<%= facebook_friend['id'] %>" style="text-align: center;">invite</span>
+		</div>
+	</li>
+<% end %>
+<li class="pagination">
+	<div id="pagination">
+		<div class="left">
+		<% if !@facebook_paging['previous'].nil? %>
+			<p><%= link_to 'previous', 	show_more_friendships_path(:provider => Authentication::FACEBOOK, :url => @facebook_paging['previous']), :remote => true %></p>									
+		<% end %>
+		</div>
+		<div class="right">
+		<% if !@facebook_paging['next'].nil? %>
+			<p><%= link_to 'next', 	show_more_friendships_path(:provider => Authentication::FACEBOOK, :url => @facebook_paging['next']), :remote => true %></p>									
+		<% end %>
+		</div>																									
+	</div>										
+</li>
+<% end %>

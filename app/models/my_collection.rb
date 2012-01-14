@@ -1,12 +1,16 @@
 class MyCollection < ActiveRecord::Base
   belongs_to  :user
   has_many    :my_collection_items,       :dependent => :destroy
-  has_many    :my_collection_responses,   :dependent => :destroy
-
+  has_many    :responses,                 :dependent => :destroy, :class_name => "MyCollectionResponse"
+  has_many    :comments,                  :dependent => :destroy, :class_name => "MyCollectionComment"
+  has_many    :followers,                 :dependent => :destroy, :class_name => "MyCollectionFollower"
+  
   accepts_nested_attributes_for :my_collection_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
   
+  has_permalink           :name
   has_attached_file       :thumbnail, 
-                          :styles => { :medium => "300x300>", :thumb => "100x100>" },
+                          :styles => { :thumb => "50x50>", :small => "180x180>", :medium => "300x300>", :large => "600x600>" },
+                          #:styles => { :medium => "300x300>", :thumb => "100x100>" },
                           :url => "/assets/members/my_collections/:attachment/:id/:style/:filename",
                           :path => ":rails_root/public/assets/members/my_collections/:attachment/:id/:style/:filename",
                           :default_url => "/images/product/no-image_:style.jpg",
@@ -14,6 +18,16 @@ class MyCollection < ActiveRecord::Base
   
   DEFAULT_COLLECTION_NAME = "My Collection"
   
+  scope :featured_collections, limit(3)
+  
+  def like?(user)
+    return MyCollection.like?(self, user)
+  end
+  
+  def following?(user)
+    return MyCollection.following?(self, user)
+  end
+      
   def self.add_product_to_collection(user, product)
     # 1. Create default 'My Collection', if necessary
     my_collection = self.create_default_if_not_present(user)
@@ -43,9 +57,31 @@ class MyCollection < ActiveRecord::Base
   def self.default_collection(user)
     where("user_id = ? AND name = ?", user.id, DEFAULT_COLLECTION_NAME).first
   end
-  
-  def responded_by(user)
-    MyCollectionResponse.where("user_id = ? and my_collection_id = ?", user.id, self.id)
+
+  def self.like?(my_collection, user)
+    @search = MyCollectionResponse.search do
+      with  :my_collection_id, my_collection.id 
+      with  :user_id, user.id
+    end
+    
+    if @search.results.size > 0
+      return true
+    else
+      return false
+    end
+  end
+    
+  def self.following?(my_collection, user)
+    @search = MyCollectionFollower.search do
+      with  :my_collection_id, my_collection.id 
+      with  :follower_id, user.id
+    end
+    
+    if @search.results.size > 0
+      return true
+    else
+      return false
+    end
   end
   
 end

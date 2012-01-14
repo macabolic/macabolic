@@ -10,6 +10,22 @@ $(function() {
 		return false;
 	});
 
+	$("#friends-search-form input:text").keyup(function() {
+		if ($("#friends-search-form input:text").val().length > 2) {
+			$.get($("#friends-search-form").attr("action"), $("#friends-search-form").serialize(), null, "script");
+		}			
+		return false;
+	});
+
+	$("#friends-search-form").submit(function() {
+		if ($("#friends-search-form input:text").val().length > 2) {
+			$.get($("#friends-search-form").attr("action"), $("#friends-search-form").serialize(), null, "script");
+		} else if	($("#friends-search-form input:text").val().length == 0) {
+			$.get($("#friends-search-form").attr("action"), $("#friends-search-form").serialize(), null, "script");			
+		}		
+		return false;
+	});
+
 	$("#recommend_link img").click(function() {
 		if (this.getAttribute('class') == 'noborderimage') {
 			// Selected

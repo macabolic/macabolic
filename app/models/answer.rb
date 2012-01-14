@@ -1,10 +1,11 @@
 class Answer < ActiveRecord::Base
   belongs_to  :question
   belongs_to  :user
-  has_many    :answer_responses, :dependent => :destroy
+  belongs_to  :product
+  has_many    :responses, :dependent => :destroy, :class_name => "AnswerResponse"
   
-  scope :vote_useful, joins(:answer_responses).where('answer_responses.response_for = ?', true)
-  scope :vote_not_useful, joins(:answer_responses).where('answer_responses.response_for = ?', false)
+  scope :vote_useful, joins(:responses).where('answer_responses.response_for = ?', true)
+  scope :vote_not_useful, joins(:responses).where('answer_responses.response_for = ?', false)
   
   def lapsed_time
     @minutes = 60

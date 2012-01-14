@@ -1,5 +1,9 @@
 <div class="sidebar-content" id="new-product">				
+<% if @user == current_user %>			
 	<div class="sidebar-header">Find Your Product</div>	
+<% else %>
+	<div class="sidebar-header">Recommend a product</div>	
+<% end %>
 	<div class="sidebar-inner">
     	<ul>
   			<li id="product-search-form">

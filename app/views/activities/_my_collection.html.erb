@@ -2,17 +2,34 @@
 	user = activity.user
 	my_collection = activity.my_collection
 %>
-
 <li>
-	<div>
-		<%= link_to user.full_name, profile_member_path(user) %></a> added a new collection <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+	<div class="questions-block" style="border-bottom:0px; padding-bottom:0px;">
+	    <div class="questions-img">
+			<%= image_tag current_profile_image_thumbnail_url(user), :width => 50, :title => user.full_name %>
+		</div>
+	    <div class="questions-content">
+			<%= link_to user.full_name, profile_member_path(user) %></a> added a new collection <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+	    </div>
+	    <div class="clear"></div>
 	</div>
 	<div class="answer-wrapper">
 		<div class="answers-meta">
-			<p class="left"><%= activity.lapsed_time %></p>
+			<p class="left"><%= activity.lapsed_time %> with <span id="follower-stat-my-collection-<%= my_collection.id %>"><%= my_collection.followers.size %></span> following and <span id="response-stat-my-collection-<%= my_collection.id %>"><%= my_collection.responses.size %></span> like</p>
 			<p>
-				<span><a href="#" title="Answer">Like</a></span>
-				<span><a href="#" title="Recommend">Recommend</a></span>								
+				<span id="home-follow-my-collection-<%= my_collection.id %>">
+					<% if my_collection.following?(current_user) %>
+						<%= link_to 'Unfollow', unfollow_my_collection_path(my_collection, :follower_id => current_user.id), :title => "Unfollow", :remote => true %>
+					<% else %>					
+						<%= link_to 'Follow', follow_my_collection_path(my_collection, :follower_id => current_user.id), :title => "Follow", :remote => true %>
+					<% end %>
+				</span>
+				<span id="home-response-my-collection-<%= my_collection.id %>">
+					<% if my_collection.like?(current_user) %>					
+						<%= link_to 'Unlike', unlike_my_collection_path(my_collection, :user_id => current_user.id), :title => "Unlike", :remote => true %>
+					<% else %>
+						<%= link_to 'Like', like_my_collection_path(my_collection, :user_id => current_user.id), :title => "Like", :remote => true %>
+					<% end %>					
+				</span>
 			</p>
 		</div>
 	</div>							

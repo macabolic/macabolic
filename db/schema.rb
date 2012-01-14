@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213134405) do
+ActiveRecord::Schema.define(:version => 20120111071055) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20111213134405) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "product_id"
   end
 
   create_table "authentications", :force => true do |t|
@@ -74,6 +75,21 @@ ActiveRecord::Schema.define(:version => 20111213134405) do
     t.datetime "updated_at"
   end
 
+  create_table "my_collection_comments", :force => true do |t|
+    t.integer  "my_collection_id"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "my_collection_followers", :force => true do |t|
+    t.integer  "my_collection_id"
+    t.integer  "follower_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "my_collection_items", :force => true do |t|
     t.integer  "my_collection_id"
     t.integer  "product_id"
@@ -100,11 +116,30 @@ ActiveRecord::Schema.define(:version => 20111213134405) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.string   "permalink"
+  end
+
+  add_index "my_collections", ["permalink"], :name => "index_my_collections_on_permalink"
+
+  create_table "product_comments", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "product_lines", :force => true do |t|
     t.string   "name"
     t.integer  "vendor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_responses", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "user_id"
+    t.boolean  "response_for"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -119,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20111213134405) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.text     "description"
   end
 
   create_table "profile_images", :force => true do |t|
@@ -139,8 +175,14 @@ ActiveRecord::Schema.define(:version => 20111213134405) do
 
   create_table "recommendations", :force => true do |t|
     t.integer  "from_user_id"
-    t.integer  "to_user_id"
     t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "recommended_users", :force => true do |t|
+    t.integer  "recommendation_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

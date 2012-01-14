@@ -4,4 +4,5 @@ class AnswerResponse < ActiveRecord::Base
   
   scope :vote_useful, where('response_for = ?', true)
   scope :vote_not_useful, where('response_for = ?', false)
+    
 end

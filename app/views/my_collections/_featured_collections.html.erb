@@ -1,0 +1,78 @@
+<style type="text/css">
+	.spotlight {
+		opacity: 0.2;
+		-moz-opacity: 0.2;
+		filter:alpha(opacity=0.2);
+	}		
+
+	#action_link {
+		text-align: right;
+		border: 0px solid black;
+		display: none;
+	}
+
+</style>
+
+<script type="text/javascript">
+//We are using $(window).load here because we want to wait until the images are loaded   
+$(window).load(function(){   
+
+	// Be default, it is dimmed.		
+    //when mouse over the list item...   
+	$('.productimage').hover(function() {   	  
+      //...find the image inside of it and turn on the spotlight
+		//$(this).toggleClass('spotlight', true);			
+	}, function() {   		  
+		// when mouse leave...   
+		// turn off the spotlight
+		//$(this).toggleClass('spotlight');
+	});   
+	  
+});		
+</script>
+
+<ul class="list-my-collections">
+	<% my_collections.each do |my_collection| %>
+	<li>
+		<%= link_to(my_collection) do %>
+			<%= link_to "edit", member_my_collection_path(my_collection.user, my_collection), :id => "action_link", :class => "edit_link" %>
+			<div class="center">
+				<span class="productimage">
+					<%= link_to member_my_collection_path(my_collection.user, my_collection) do %>
+						<%= image_tag my_collection.thumbnail.url(:medium), :width => "150", :title => "#{my_collection.name}" %>
+					<% end %>
+				</span>								
+			</div>								
+			<span>
+				<%= link_to member_my_collection_path(my_collection.user, my_collection) do %>
+					<p><%= simple_format(word_wrap(my_collection.name, :line_width => 50)) %></p>
+				<% end %>				        	
+			</span>
+			<span class="right">
+				<span>
+					<%= pluralize(my_collection.responses.size, "like") %> | <%= pluralize(my_collection.followers.size, "follower") %>
+				</span>
+			</span>																		
+		<% end %>
+	</li>							
+	<% end %>	
+</ul>
+<div>
+	<!--
+	<div id="tab1_paging" class="tab1_paging left">
+		<p><%#= page_entries_info @my_collections %></p>
+	</div> 
+	<ul>
+		<li>more</li>
+	</ul>
+	-->
+	<div class="right">
+		<div id="pagination">
+			<%= link_to "http://localhost:3001" do %>
+			<span>view more</span>
+			<% end %>
+		</div>			
+	</div>
+
+	<!-- #-> Displaying posts 6 - 10 of 26 in total -->
+</div>

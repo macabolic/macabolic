@@ -1,0 +1,2 @@
+module MyCollectionCommentsHelper
+end

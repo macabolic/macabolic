@@ -24,49 +24,71 @@ module ApplicationHelper
     return default_url
   end
 
-  def macabolic_profile_image_url(user, provider, size) 
+  def current_profile_image_thumbnail_url(user)
     default_url = "/images/default_photo_50.png"
     
-    if provider == ProfileImage::MACABOLIC
-      macabolic = user.profile_images.where(:provider => ProfileImage::MACABOLIC)
-      if macabolic.size > 0
-        # thumb, small, medium and large
-        return user.avatar.url(size)
+    if user.profile_image_set?
+      provider = user.current_profile_image.provider
+      if provider == ProfileImage::MACABOLIC
+        return user.avatar.url(:thumb)
+      elsif provider == ProfileImage::FACEBOOK
+        return "http://graph.facebook.com/#{user.current_profile_image.uid}/picture?type=square"
+      elsif provider == ProfileImage::GRAVATAR
+        gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+        return "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=50&d=mm"        
       end
     end
-        
-    return default_url    
+    
+    return default_url
+  end
+
+  def macabolic_profile_image_url(user, provider, size) 
+    default_url = "/images/default_photo_50.png"
+    macabolic = user.profile_images.where(:provider => ProfileImage::MACABOLIC)
+    if macabolic.size > 0
+      # thumb, small, medium and large
+      return user.avatar.url(size)
+    else         
+      return default_url    
+    end
   end
 
   def facebook_profile_image_url(user, provider, size) 
     default_url = "/images/default_photo_50.png"
-    
-    if provider == ProfileImage::FACEBOOK
-      facebook = user.profile_images.where(:provider => ProfileImage::FACEBOOK)
-      if facebook.size > 0
-        # Type: square (50x50)
-        #       small (50 pixels wide, variable height) 
-        #       normal (100 pixels wide, variable height)
-        #       large (about 200 pixels wide, variable height)
-        return "http://graph.facebook.com/#{facebook[0].uid}/picture?type=#{size}"
-      end
+    facebook = user.profile_images.where(:provider => ProfileImage::FACEBOOK)
+    if facebook.size > 0
+      # Type: square (50x50)
+      #       small (50 pixels wide, variable height) 
+      #       normal (100 pixels wide, variable height)
+      #       large (about 200 pixels wide, variable height)
+      return "http://graph.facebook.com/#{facebook[0].uid}/picture?type=#{size}"
+    else    
+      return default_url    
     end
-        
-    return default_url    
+  end
+
+  def facebook_profile_image(facebook_id, size) 
+    default_url = "/images/default_photo_50.png"
+    if !facebook_id.nil?
+      # Type: square (50x50)
+      #       small (50 pixels wide, variable height) 
+      #       normal (100 pixels wide, variable height)
+      #       large (about 200 pixels wide, variable height)
+      return "http://graph.facebook.com/#{facebook_id}/picture?type=#{size}"
+    else    
+      return default_url    
+    end
   end
 
   def gravatar_profile_image_url(user, provider, size) 
     default_url = "/images/default_photo_50.png"
-    
-    if provider == ProfileImage::GRAVATAR
-      gravatar = user.profile_images.where(:provider => ProfileImage::GRAVATAR)
-      if gravatar.size > 0
-        gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-        return "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=mm"                
-      end
+    gravatar = user.profile_images.where(:provider => ProfileImage::GRAVATAR)
+    if gravatar.size > 0
+      gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+      return "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=mm"                
+    else
+      return default_url    
     end
-        
-    return default_url    
   end
   
   def sortable(column, title = nil)  

@@ -1,0 +1,14 @@
+<div class="userdetails group">
+	<div class="profileimage">
+		<%= image_tag current_profile_image_url(@user), :width => 128 %>
+	</div>
+	<div class="profiledetails">
+		<h2><%= @user.full_name %></h2>
+		<ul>
+			<li>Collections<span><%= @user.my_collections.size %></span></li>
+			<li class="alt">Collection Items<span><%= @user.my_collection_items.size %></span></li>
+			<li>Questions<span><%= @user.questions.size %></span></li>
+			<li class="noborder alt">Answers<span><%= @user.answers.size %></span></li>
+		</ul>
+	</div>
+</div>

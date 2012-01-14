@@ -64,6 +64,10 @@
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StandardFilterFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
+		<!-- Added to do the wildcard search 
+		<filter class="solr.NGramFilterFactory" minGramSize="2" maxGramSize="14"/> 
+		-->
+		<filter class="solr.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="14"/>		
       </analyzer>
     </fieldType>
     <!-- *** This fieldType is used by Sunspot! *** -->

@@ -1,4 +1,5 @@
-<span id="answers-meta-info_view_<%= question.id %>"><%= pluralize(0, 'view') %></span> and <span id="answers-meta-info_answer_<%= question.id %>"><%= pluralize(question.answers.size, 'answer') %></span>
+<!--<span id="answers-meta-info_view_<%= question.id %>"><%#= pluralize(0, 'view') %></span> and -->
+<span id="answers-meta-info_answer_<%= question.id %>"><%= pluralize(question.answers.size, 'answer') %></span>
 <% if question.answers.size > 0 %>
 	with last answered <span id="answers-meta-info_lapsed_time_<%= question.id %>"><%= question.answers.order("created_at DESC").first.lapsed_time %></span>
 <% end %>

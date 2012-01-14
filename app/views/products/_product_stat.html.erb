@@ -1,0 +1,9 @@
+<ul>
+	<li>Questions<span><%= @product.questions.size %></span></li>
+	<li class="alt">Answers<span><%= @product.answers.size %></span></li>
+	<!--<li>Reviews<span><%= @product.reviews.size %></span></li>-->
+	<li>Like<span id="response-stat-product-<%= @product.id %>"><%= @product.responses.size %></span></li>
+	<li class="alt">Own<span><%= @product.people_who_owned.size %></span></li>
+	<li class="noborder">Wish<span><%= @product.people_who_wished.size %></span></li>
+	<!--<li>Tips<span>8</span></li>-->
+</ul>

@@ -1,11 +1,14 @@
 class Product < ActiveRecord::Base
   belongs_to              :product_line
   belongs_to              :vendor
-  has_many                :reviews, :dependent => :destroy
-  has_many                :questions, :dependent => :destroy  
+  has_many                :reviews,             :dependent => :destroy
+  has_many                :questions,           :dependent => :destroy  
+  has_many                :answers,             :dependent => :destroy
   has_many                :my_collection_items
-  has_many                :users, :through => :my_collection_items
-  has_many                :wishlist_items
+  has_many                :owners,              :source => :user, :through => :my_collection_items
+  has_many                :wishlist_items,      :dependent => :destroy
+  has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
+  has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
   
   has_attached_file       :thumbnail, 
                           :styles => { :medium => "300x300>", :thumb => "100x100>" },
@@ -21,6 +24,14 @@ class Product < ActiveRecord::Base
     end
   end
   
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+  
+  def like?(user)
+    return Product.like?(self, user)
+  end
+  
   def people_who_owned
     @search = MyCollectionItem.search do
       with(:product_id, self.id)
@@ -29,10 +40,23 @@ class Product < ActiveRecord::Base
   end
 
   def people_who_wished 
-    @search = WishliteItem.search do
+    @search = WishlistItem.search do
       with(:product_id, self.id)      
     end
     @people_who_wished = @search.results.map { |i| i.user }
+  end
+  
+  def self.like?(product, user)
+    @search = ProductResponse.search do
+      with  :product_id, product.id 
+      with  :user_id, user.id
+    end
+    
+    if @search.results.size > 0
+      return true
+    else
+      return false
+    end
   end
   
   #def self.search(search)

@@ -11,6 +11,12 @@ class Activity < ActiveRecord::Base
   scope :user_friends_activities, lambda { |user| 
     friends_activities.where('friendships.user_id = ?', user.id) 
   }
+
+  scope :questions, joins('INNER JOIN questions ON activities.type_id = questions.id').where('activities.name = ?', 'Question')
+  scope :my_collection_items, joins('INNER JOIN my_collection_items ON activities.type_id = my_collection_items.id').where('activities.name = ?', 'MyCollectionItem')
+  scope :my_collections, joins('INNER JOIN my_collections ON activities.type_id = my_collections.id').where('activities.name = ?', 'MyCollection')
+  scope :recommendations, joins('INNER JOIN recommendations ON activities.type_id = recommendations.id').where('activities.name = ?', 'Recommendation')
+  scope :my_collection_comments, joins('INNER JOIN my_collection_comments ON activities.type_id = my_collection_comments.id').where('activities.name = ?', 'MyCollectionComment')
   
   def question
     if name == 'Question'
@@ -26,9 +32,21 @@ class Activity < ActiveRecord::Base
   
   def my_collection
     if name == 'MyCollection'
-      MyCollection.find(type_id)
+      MyCollection.find_by_id(type_id) # This change is caused by the use of has_permalink plugin
     end
   end
+  
+  def recommendation
+    if name == 'Recommendation'
+      Recommendation.find(type_id)
+    end
+  end
+  
+  def my_collection_comment
+    if name == 'MyCollectionComment'
+      MyCollectionComment.find(type_id)
+    end
+  end  
   
   def lapsed_time
     @minutes = 60

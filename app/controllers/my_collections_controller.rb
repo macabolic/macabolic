@@ -3,19 +3,21 @@ class MyCollectionsController < ApplicationController
   # GET /my_collections/1
   # GET /my_collections/1.xml
   def show
-    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find(params[:id])
+    @my_collection = MyCollection.find_by_permalink(params[:id])
     @user = @my_collection.user
-
-    ids = @user.friends.map { |i| i.id }
-    ids.insert(0, @user.id)
+    @my_collection_comments = @my_collection.comments.order("created_at DESC")
     
-    @search = MyCollectionItem.search do
-      with(:user_id).any_of ids
-      facet(:product_name)
+#    ids = @user.friends.map { |i| i.id }
+#    ids.insert(0, @user.id)
+    
+#    @search = MyCollectionItem.search do
+#      with(:user_id).any_of ids
+#      facet(:product_name)
 #      with(:my_collection_id, params[:id])
-    end
-    @collection_items = @search.results
-    
+#    end
+#    @collection_items = @search.results
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @my_collection }
@@ -45,7 +47,8 @@ class MyCollectionsController < ApplicationController
 
   # GET /my_collections/1/edit
   def edit
-    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find(params[:id])
+    @my_collection = MyCollection.find_by_permalink(params[:id])
     @user = @my_collection.user
   end
 
@@ -68,7 +71,8 @@ class MyCollectionsController < ApplicationController
   # PUT /my_collections/1
   # PUT /my_collections/1.xml
   def update
-    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find(params[:id])
+    @my_collection = MyCollection.find_by_permalink(params[:id])
 
     respond_to do |format|
       if @my_collection.update_attributes(params[:my_collection])
@@ -84,7 +88,8 @@ class MyCollectionsController < ApplicationController
   # DELETE /my_collections/1
   # DELETE /my_collections/1.xml
   def destroy
-    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find(params[:id])
+    @my_collection = MyCollection.find_by_permalink(params[:id])
     @my_collection.destroy
 
     respond_to do |format|
@@ -111,37 +116,7 @@ class MyCollectionsController < ApplicationController
       end
     end
   end
-  
-  def vote
-    logger.info "vote for the my collection..."
-    logger.info "vote value: #{params[:vote]}"
-    # 1. Check if the current_user has an entry in the answer_response.
-    @my_collection_response = MyCollectionResponse.where("user_id = ? and my_collection_id = ?", current_user.id, params[:id])
-    if @my_collection_response.exists?
-      logger.info "My Collection Response exists: #{@my_collection_response.first}." 
-      if @my_collection_response.first.update_attributes(:response_for => params[:vote])     
-        logger.info "My Collection response updated: #{params[:vote]}"
-      else
-        logger.info "Some problem updating the my collection response: #{@my_collection_response.first.errors}"
-      end
-    else
-      @my_collection_response = MyCollectionResponse.new
-      @my_collection_response.my_collection_id = params[:id]
-      @my_collection_response.response_for = params[:vote]
-      @my_collection_response.user = current_user
-      
-      if @my_collection_response.save
-        logger.info "My Collection Response newly created: #{@my_collection_response}."
-      else
-        logger.info "Sorry, for some reason your vote is not valid!"
-      end
-    end
     
-    @my_collection_id = params[:id]
-    @vote = params[:vote]
-    @vote_like_count = MyCollectionResponse.where("my_collection_id = ?", params[:id]).vote_like.size
-  end  
-  
   def mass_create
     @my_collection = MyCollection.new(params[:my_collection])
     logger.info "MyCollectionsController.mass_create - #{@my_collection}."
@@ -175,4 +150,50 @@ class MyCollectionsController < ApplicationController
     end
   end
 
+  def follow
+    @my_collection = MyCollection.find_by_permalink(params[:id])
+    follower = MyCollectionFollower.new(:my_collection => @my_collection, :follower => current_user)    
+    logger.info "MyCollectionsController.follow."
+    if follower.save
+      logger.info "#{follower.follower.full_name} is following #{follower.my_collection.name}."
+    end
+    
+    @number_of_followers = @my_collection.followers.size
+  end
+
+  def unfollow
+    @my_collection = MyCollection.find_by_permalink(params[:id])
+    follower = MyCollectionFollower.where(:my_collection_id => @my_collection.id, :follower_id => current_user.id)    
+    logger.info "MyCollectionsController.unfollow."
+    if follower.exists?
+      follower.first.destroy #destroy the first one and always expect only one for each user and collection.
+      logger.info "#{follower.first.follower.full_name} is unfollowing #{follower.first.my_collection.name}."
+    end
+    
+    @number_of_followers = @my_collection.followers.size    
+  end
+  
+  def like
+    @my_collection = MyCollection.find_by_permalink(params[:id])
+    response = MyCollectionResponse.new(:my_collection => @my_collection, :user => current_user)    
+    logger.info "MyCollectionsController.like."
+    if response.save
+      logger.info "#{response.user.full_name} likes #{response.my_collection.name}."
+    end
+    
+    @number_of_likes = @my_collection.responses.size
+  end
+  
+  def unlike
+    @my_collection = MyCollection.find_by_permalink(params[:id])
+    response = MyCollectionResponse.where(:my_collection_id => @my_collection.id, :user_id => current_user.id)    
+    logger.info "MyCollectionsController.unlike."
+    if response.exists?
+      response.first.destroy #destroy the first one and always expect only one for each user and collection.
+      logger.info "#{response.first.user.full_name} unlikes #{response.first.my_collection.name}."
+    end
+    
+    @number_of_likes = @my_collection.responses.size
+  end
+  
 end

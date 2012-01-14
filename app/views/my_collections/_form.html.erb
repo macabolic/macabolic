@@ -15,11 +15,16 @@ function size(t) {
 	@my_collection.name = ''
 	@my_collection.user = user
 %>
-<%= form_for @my_collection do |f| %>
+<%= form_for(@my_collection, :html => { :multipart => true }) do |f| %>
 	<label for="tiptitle">Name</label>
 	<%= f.text_field :name, :placeholder => MyCollection::DEFAULT_COLLECTION_NAME, :class => "text" %><br/><br/>
+
+	<label for="tiptitle">Picture</label>
+	<%= f.file_field :thumbnail %>
+	<span style="color: #999999; font-size: 11px;">(Maximum size of 700k. JPG, GIF, PNG.)</span>
     
-	<%= f.label :description %>
+	<%#= f.label :description %>
+	<label for="tiptitle">Description</label>
 	<%= f.text_area :description, :cols => 35, :rows => 5, :class=> "answer_area", :onKeyUp => "size(this);" %>
 
 	<%= hidden_field :my_collection, :user_id %>

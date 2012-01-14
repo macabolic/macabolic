@@ -1,20 +1,42 @@
+<script type="text/javascript"> 
+function showAnswer(id) {
+	if(document.getElementById("answer-" + id).style.display == 'block') {
+		$("#answer-" + id).fadeOut(); //Hide content
+		document.getElementById("answer-" + id).style.display = 'none'		
+	} else {
+		$("#answer-" + id).fadeIn(); //Show content
+		document.getElementById("answer-" + id).style.display = 'block'
+	}			
+}
+</script>
 <%
 	user = activity.user
 	question = activity.question
 %>
-
-<li class="recent-question">
-	<div>
-		<%= link_to user.full_name, profile_member_path(user) %> asked a question: <span class="question"><%= link_to question.title, question_path(question) %></span>
+<li class="recent-question">		
+	<div class="questions-block" style="border-bottom:0px; padding-bottom:0px;">
+	    <div class="questions-img">
+			<%= image_tag current_profile_image_thumbnail_url(question.user), :width => 50, :title => question.user.full_name %>
+		</div>
+	    <div class="questions-content">
+			<%= link_to question.user.full_name, profile_member_url(question.user) %> asked a question on <%= link_to question.product.name, product_path(question.product) %>: <%= link_to question_path(question, :product_id => question.product.id) do %><strong><%= question.title %></strong><% end %><br/>
+			<div class="answers-meta">
+				<span>Asked <%= question.lapsed_time %></span>
+			</div>
+	    </div>
+	    <div class="clear"></div>
 	</div>
 	<div class="answer-wrapper">
-		<div class="meta-info">
-		  	<%#= image_tag "membershomepage/icon-question.jpg" %>
-			<p class="left"><%= activity.lapsed_time %></p>
-			<p>
-				<span><a href="#">Like</a></span>
-				<span><a href="#">Answer</a></span>
-			</p>
+		<div class="answers-meta">
+			<%= render :partial => 'questions/answers_meta_info', :locals => { :question => question }%>
+			<span>
+				<strong>
+					<a href="javascript:onClick=showAnswer(<%= question.id %>)" title="Answer">Answer now</a>
+				</strong>
+			</span>
 		</div>
+	</div>
+	<div id="answer-<%= question.id %>" style="display:none">		
+		<%= render :partial => 'questions/answer_a_question', :locals => { :question => question } %>
 	</div>
 </li>

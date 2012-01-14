@@ -18,12 +18,16 @@
 		<%= link_to 'Friends', friends_member_url(user) %>
 	</li>	
 	<li id="<%= profile %>">
+	<% if user == current_user %>
+		<%= link_to "My Profile", profile_member_path(user) %>	
+	<% else %>
 		<%= link_to "#{user.full_name}'s Profile", profile_member_path(user) %>
+	<% end %>
 	</li>
 	<% end %>
     <li id="search-form">
-    	<form>
-			<input type="text" value="Search">
-       </form>
+		<%= form_tag find_product_searches_path, :method => :get do %>
+			<%= search_field_tag 'query', nil, :placeholder => "Search your product", :autosave => false, :onsearch => true, :results => 1, :size => 100 %>
+		<% end %>
     </li>
 </ul>

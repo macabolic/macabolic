@@ -1,0 +1,30 @@
+<div class="sidebar-content" id="comment-list">
+	<div class="sidebar-header">Comments</div>	
+	<div class="sidebar-inner">
+    	<ul id="search-list">
+			<div id="products">
+			<% if !@product_comments.nil? %>
+				<% @product_comments.each do |comment| %>
+		        <li>
+					<div>
+						<div class="left">
+					  		<%= image_tag(current_profile_image_thumbnail_url(comment.user), :size => "45x45") %>
+							<%= link_to comment.user.full_name, member_path(comment.user) %>
+							<p><%= comment.lapsed_time %></p>
+						</div>
+					</div>
+					<div>
+						<div class="left">										
+							<p><%= simple_format h(comment.content) %></p>
+						</div>
+					</div>
+		        </li>
+				<% end %>
+			<% end %>
+			</div>
+    	</ul>	
+		<div style="margin-top: 10px;">
+			<%= render :partial => 'product_comments/form', :local => { :product => @product } %>
+		</div>
+	</div>
+</div>

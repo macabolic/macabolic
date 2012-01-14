@@ -16,24 +16,16 @@ class RecommendationsController < ApplicationController
     logger.info "To user list: #{params[:to_user_id]}."    
     user_ids = params[:to_user_id]
     user_array = user_ids.split(",")
+    @recommendation = Recommendation.new(params[:recommendation])
+
     user_array.each do |user_id|
-      @recommendation = Recommendation.new(params[:recommendation])
-      @recommendation.to_user_id = user_id
-      logger.info "To user: #{@recommendation.to_user.id}."
-      if !@recommendation.save
-        logger.error "Unable to save the recommendation: #{@recommendation.to_yaml}."
-      end
+      @recommendation.recommended_users.build(:user_id => user_id)
     end
     
-    #respond_to do |format|
-      #if @recommendation.save
-      #  format.html { redirect_to(@recommendation, :notice => 'Recommendation was successfully created.') }
-      #  format.xml  { render :xml => @recommendation, :status => :created, :location => @recommendation }
-      #else
-      #  format.html { render :action => "new" }
-      #  format.xml  { render :xml => @recommendation.errors, :status => :unprocessable_entity }
-      #end
-    #end
+    if !@recommendation.save
+      logger.error "Unable to save the recommendation: #{@recommendation.to_yaml}."
+    end
+    
   end
 
   # DELETE /recommendations/1

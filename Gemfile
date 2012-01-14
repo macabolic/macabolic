@@ -37,6 +37,12 @@ gem 'gravatar-ultimate'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 
+# Handle RESTful API
+gem 'httparty'
+
+# Generate permalink
+gem 'has_permalink'
+
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
 # gem 'ruby-debug19'

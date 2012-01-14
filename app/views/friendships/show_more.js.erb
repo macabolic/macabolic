@@ -1,0 +1,3 @@
+<% if @provider == Authentication::FACEBOOK %>
+	$("#facebook_friends").html("<%= escape_javascript(render("facebook_friends")) %>");
+<% end %>

@@ -1,12 +1,16 @@
 <%= javascript_include_tag "application.js" %>
-
+<style type="text/stylesheet">
+#recommend_now {
+	cursor: pointer;
+}
+</style>
 <% if !@friends.nil? && @friends.size > 0 %>
 	Click on the image to recommend:	
 	<ul id="search-friend-list">
 	<% @friends.each do |friend| %>
         <li>
 			<%= link_to '#', :id => 'recommend_link' do %>
-				<%= image_tag avatar_url(friend.friend, 50), :width => 50, :title => friend.friend.full_name, :class => "noborderimage", :id => friend.friend.id %>
+				<%= image_tag current_profile_image_thumbnail_url(friend.friend), :width => 50, :title => friend.friend.full_name, :class => "noborderimage", :id => friend.friend.id %>
 			<% end %>
         </li>
 	<% end %>

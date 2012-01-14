@@ -28,33 +28,34 @@ function showAnswer(id) {
 	</li>
 <% else %>
 	<% @questions.each do |question| %>
-	<li>
-        <div>
-			<%= link_to question.user.full_name, profile_member_url(question.user) %> asked the question <%= question.lapsed_time %>: <%= link_to question, :remote => true do %><strong><%= question.title %></strong><% end %>
+	<li>		
+		<div class="questions-block" style="border-bottom:0px; padding-bottom:0px;">
+		    <div class="questions-img">
+				<%= image_tag current_profile_image_thumbnail_url(question.user), :width => 50, :title => question.user.full_name %>
+			</div>
+		    <div class="questions-content">
+				<%= link_to question_path(question, :my_collection_item_id => my_collection_item, :product_id => @product), :remote => true do %><strong><%= question.title %></strong><% end %> asked by <%= link_to question.user.full_name, profile_member_url(question.user) %> <%= question.lapsed_time %>
+		    </div>
+		    <div class="clear"></div>
 		</div>
 		<div class="answer-wrapper">
 			<div class="answers-meta">
 				<%= render :partial => 'questions/answers_meta_info', :locals => { :question => question }%>
 				<span>
 					<strong>
-						<a href="javascript:onClick=showAnswer(<%= question.id %>)" title="Answer">Answer</a>
-					</strong>
-				</span>
-				<span>
-					<strong>
-						<a href="javascript:onClick=showRecommend(<%= question.id %>)" title="Recommend">Recommend</a>
+						<a href="javascript:onClick=showAnswer(<%= question.id %>)" title="Answer">Answer now</a>
 					</strong>
 				</span>
 			</div>
 		</div>
 		<div id="answer-<%= question.id %>" style="display:none">		
-			<%= render :partial => 'questions/answer_a_question', :locals => { :question => question }  %>
+			<%= render :partial => 'questions/answer_a_question', :locals => { :question => question } %>
 		</div>
 	</li>
 	<% end %>
 <% end %>
 </ul> 
-<div class="left"><p><%= page_entries_info @questions %></p></div>
+<div class="left"><p class="total"><%= page_entries_info @questions %></p></div>
 <% if @questions.total_pages > 0 %>
 <div class="right">
 		<div id="pagination">

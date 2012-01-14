@@ -1,0 +1,138 @@
+<% title @my_collection.name %>
+<style type="text/css">
+	#action_link {
+		text-align: right;
+		border: 0px solid black;
+		display: none;
+	}
+</style>
+<script type="text/javascript">  
+$(document).ready(function() {
+    $(document).pngFix(); 
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+});
+</script>
+<body class="subpage">
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">
+	    	<div class="product-item sidebar-content">		
+		        <div class="product-image">		        
+					<%= image_tag @my_collection.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
+					<!-- img src="/images/product/no-image_60x60.jpg" alt="Product Image" width="60" height="60" -->
+			    </div>
+		        <div class="product-detail">
+			        <div>
+						<p class="left"><h3 style="text-align: left;"><%= @my_collection.name %></h3></p>
+					</div>
+					<p><%= @my_collection.description %></p>	
+					<% if @user == current_user %>				
+					<p>
+						<div id="add_wishlist">
+							<%= link_to 'Edit Collection', edit_member_my_collection_path(current_user, @my_collection), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
+						</div>	
+					</p>
+					<% else %>
+					<p>					
+						<div id="follow-my-collection">
+						<% if @my_collection.following?(current_user) %>
+							<%= link_to 'Following', unfollow_my_collection_path(@my_collection, :follower_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unfollow", :remote => true %>
+						<% else %>
+							<%= link_to 'Follow', follow_my_collection_path(@my_collection, :follower_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Follow", :remote => true %>
+						<% end %>
+						</div>						
+						<div id="response-my-collection">
+						<% if @my_collection.like?(current_user) %>					
+							<%= link_to 'Unlike', unlike_my_collection_path(@my_collection, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
+						<% else %>
+							<%= link_to 'Like', like_my_collection_path(@my_collection, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>
+						<% end %>
+						</div>						
+					</p>
+					<% end %>					
+					<div id="my-collection-stat-details" class="product-stat-details">
+						<ul>
+							<li>Collection Items<span><%= @my_collection.my_collection_items.size %></span></li>
+							<li id="follower" class="alt">Followers<span id="follower-stat"><%= @my_collection.followers.size %></span></li>
+							<li id="response" class="noborder">Like<span id="response-stat"><%= @my_collection.responses.size %></span></li>
+						</ul>
+					</div>
+		        </div>
+			    <br class="clear" />
+			</div>			
+			
+		<% @my_collection_items = @my_collection.my_collection_items %>
+		<% if @my_collection_items.empty? %>
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+			        <li><a href="#tab1">Collection Items</a></li> 
+				</ul> 		
+		        <div id="tab1" class="tab_content product-grid group"> 
+	            	<div id="search-result" class="no-result">
+		                <p>
+		                	You do not have any items yet. Add one now.
+		                </p>	
+	            	</div>
+				</div>
+			</div>
+		<% else %>	
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+			        <li><a href="#tab1">Collection Items</a></li> 
+				</ul> 		
+		        <div id="tab1" class="tab_content product-grid group"> 
+					<ul class="list-my-collections">
+						<% @my_collection_items.each do |my_collection_item| %>
+						<!--li class="my_collection_item"-->
+						<li>
+							<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>							
+								<%= link_to 'delete', my_collection_my_collection_item_path(@my_collection, my_collection_item), :method => 'delete', :id => 'action_link', :class => "edit_link" %>
+								<div class="center">
+									<span class="productimage">
+										<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>
+											<%= image_tag my_collection_item.product.thumbnail.url(:medium), :width => "150" %>
+										<% end %>
+									</span>
+								</div>									
+								<span>
+									<%= link_to my_collection_item_product_path(my_collection_item, my_collection_item.product) do %>
+										<%= my_collection_item.product.name %>
+									<% end %>
+								</span>
+								<% if @user == current_user %>							
+									<span class="right">
+										<span>80 liked | 100 followers</span>
+									</span>															
+								<% else %>
+									<span class="right">
+										<%= link_to "like", vote_my_collection_path(@my_collection, :vote => "true"), :remote => true %>										
+										<%= link_to "favorite", vote_my_collection_path(@my_collection, :vote => "true"), :remote => true %>
+									</span>																						
+								<% end %>
+							<% end %>
+						</li>
+						<% end %>												
+					</ul>
+				</div>
+			</div>
+		<% end %>		
+		</div>
+		
+		<div class="sidebar">			
+			<%= render :partial => 'products/product_search', :locals => { :my_collection => @my_collection } %>
+		</div>
+		
+		<div class="sidebar" id="comment-display">			
+			<%= render :partial => 'my_collection_comments/show', :locals => { :my_collection => @my_collection } %>
+		</div>
+	</div>
+</body>

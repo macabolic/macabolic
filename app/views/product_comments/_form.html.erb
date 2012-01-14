@@ -1,0 +1,33 @@
+<script type="text/javascript">
+function size(t) {
+	a = t.value.split('\n');
+	b=1;
+	for (x=0;x < a.length; x++) {
+ 		if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols);
+ 	}
+
+	b+= a.length;
+	if (b > t.rows) t.rows = b;
+};
+
+$(document).ready(function() {
+	$("#comment-area").keydown(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			$.post($("#comment-form").attr("action"), $("#comment-form").serialize(), null, "script");
+			return false;
+		}		
+	});
+	
+	$("#comment-form").submit(function() {
+		return $("textarea", this).val().length > 0;
+	});
+});
+</script>
+<%= form_for(ProductComment.new, :remote => true, :html => {:id => "comment-form"}) do |f| %>
+	<%= f.text_area :content, :cols => 35, :rows => 1, :class=> "answer_area", :id => "comment-area", :placeholder => 'Write a comment...', :onKeyUp => "size(this);" %>
+
+	<%#= f.text_field :content, :placeholder => 'Write a comment...', :class => "text" %>
+	<%= hidden_field_tag 'product_comment[product_id]', @product.id %>
+	<%= hidden_field_tag 'product_comment[user_id]', current_user.id %>
+<% end %>

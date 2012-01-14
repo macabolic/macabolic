@@ -1,0 +1,12 @@
+<% if !@friends.nil? %>
+	<% @friends.each do |friend| %>	
+		<li class="friend">
+			<div>
+				<!-- Image -->	
+				<%= image_tag current_profile_image_thumbnail_url(friend), :width => 50, :height => 50 %>
+				<%#= image_tag avatar_url(friend, 100), :width => 100, :height => 100 %>
+				<span id="friend_name"><%= link_to friend.full_name, member_path(friend) %></span>
+			</div>
+		</li>
+	<% end %>
+<% end %>

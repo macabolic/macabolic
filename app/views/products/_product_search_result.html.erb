@@ -1,6 +1,4 @@
-<% if @products.nil? %>
-
-<% else %>
+<% if !@products.nil? %>
 	<% @products.each do |product| %>
         <li>
 			<div>
@@ -8,13 +6,15 @@
 				<div class="left">
 					<p><%= link_to product.name, (product) %></p>
 					<p>Added <%= lapsed_time(product.created_at) %></p>
+					<p>Added <%= lapsed_time(product.created_at) %></p>
+					<p>Added <%= lapsed_time(product.created_at) %></p>
 				</div>
 				<div class="right">
 					<p>&nbsp;&nbsp;</p>
 					<p>
 						<%#= link_to 'add', url_for(current_user.default_collection, product) %>
 						<% if !@my_collection.nil? %>	
-							<%= link_to 'Add', my_collection_my_collection_items_path(@my_collection, MyCollectionItem.new, :product => product.id), :method => 'post' %>
+							<%= link_to 'Add', my_collection_my_collection_items_path(@my_collection.id, MyCollectionItem.new, :product_id => product.id), :method => 'post' %>
 							<%#= link_to 'add', :controller => "my_collections", :action => "add_product", :id => product %>
 						<% end %>
 					</p>
@@ -23,7 +23,7 @@
         </li>
 	<% end %>
 		<li>
-			Can't find yours? <%= link_to 'Create one now!', new_product_path(:user => current_user, :my_collection => @my_collection) %>
+			Can't find yours? <%= link_to 'Create one now!', new_product_path(:user => current_user, :my_collection_id => @my_collection.id) %>
 		</li>
 	<!--
 		<li>

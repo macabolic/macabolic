@@ -1,12 +1,11 @@
 <div class="answers-tabs">
     <div class="answers-breadcrumb">
-		<%= link_to 'Back to Q & A ', @question.product %>&gt;
+		<%= link_to 'Back to Q & A ', back_question_path(@question, :product_id => params[:product_id], :my_collection_item_id => params[:my_collection_item_id]), :remote => true %>&gt;
         <span><%= @question.title %></span>                    
     </div>
     <div class="questions-block">
         <div class="questions-img">
-			<%= image_tag avatar_url(current_user, 64), :width => 64, :height => 64 %>
-			<!--img src="furniture/images/membershomepage/me.png" alt="me" width="64" height="64"-->			
+			<%= image_tag current_profile_image_thumbnail_url(current_user), :width => 50, :height => 50 %>
 		</div>
 
         <div class="questions-content">
@@ -28,7 +27,7 @@
 		<% else %>
 			<% @answers.each do |answer| %>	
 	        <li>
-				<%= image_tag avatar_url(answer.user, 64), :width => 64, :height => 64 %>
+				<%= image_tag current_profile_image_thumbnail_url(answer.user), :width => 50, :height => 50 %>
 	            <div class="answers-content">
 	                <p><%= link_to answer.user.full_name, member_path(answer.user) %> - <%= answer.content %></p>
 				
@@ -37,27 +36,27 @@
 						<span id="answer-response-like-<%= answer.id %>">
 							<strong>
 						<% if answer.responded_by(current_user).vote_useful.exists? %>
-							<%= link_to "Unlike it", vote_answer_path(answer, :vote => "false"), :remote => true %>
+							<%= link_to "Unlike", vote_answer_path(answer, :vote => "false"), :remote => true %>
 						<% else %>
-							<%= link_to "Like it?", vote_answer_path(answer, :vote => "true"), :remote => true %>
+							<%= link_to "Like", vote_answer_path(answer, :vote => "true"), :remote => true %>
 						<% end %>
 							</strong>
 						</span>			
 						<span id="answer-response-<%= answer.id %>" class="yes">													
-			            	<%= pluralize(answer.answer_responses.vote_useful.size, 'person') %>
+			            	<%= pluralize(answer.responses.vote_useful.size, 'person') %>
 						</span>						
 	                </div>
 	            </div>
 	        </li>
 			<% end %>
-			<div id="answer-<%= @question.id %>" style="display:block">		
+			<div id="answer-<%= @question.id %>" style="display:block; padding-top: 10px;">		
 				<%= render :partial => 'questions/answer_a_question', :locals => { :question => @question }  %>
 			</div>			
 		<% end %>
     </ul>
 </div> 
 <% if (not @answers.nil?) && @answers.size > 0 %>
-<div class="left"><p><%= page_entries_info @answers %></p></div>
+<div class="left"><p class="total"><%= page_entries_info @answers %></p></div>
 <div class="right">
 		<div id="pagination">
 		<ul>

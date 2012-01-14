@@ -16,11 +16,6 @@ $(document).ready(function() {
 	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
 	$(".tab_content:first").show(); //Show first tab content
 	
-	//Default Action
-	$(".tab_content2").hide(); //Hide all content
-	$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content2:first").show(); //Show first tab content
-	
 	//On Click Event
 	$("ul.tabs li").click(function() {
 		$("ul.tabs li").removeClass("active"); //Remove any "active" class
@@ -30,17 +25,7 @@ $(document).ready(function() {
 		$(activeTab).fadeIn(); //Fade in the active content
 		return false;
 	});
-	
-	//On Click Event
-	$("ul.tabs2 li").click(function() {
-		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content2").hide(); //Hide all tab content
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
-	});
-    
+	    
     //Input Form placeholder
     $('input:text').focus(function(){
         if(this.value === this.defaultValue) {
@@ -68,61 +53,15 @@ $(document).ready(function() {
 	<!-- ====================================================================================================== -->
 	<div class="wrapper-mh">
 		<div class="maincol">
-			<%= render 'members/profile_stat_summary' %>
+			<%= render 'members/profile_stat' %>
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
         			<li><a href="#tab1">All Updates</a></li> 
-        		<!--
-					<li><a href="#tab2">Recent Answers</a></li> 
-        			<li><a href="#tab3">Recent Tips</a></li> 
-        			<li><a href="#tab4">Friends Recent Collections</a></li> 
-				-->
     			</ul> 
     		
 		        <div id="tab1" class="tab_content"> 
 					<%= render :template => "activities/show", :locals => { :activities => @activities } %>
-		        </div> 
-		<!--
-		        <div id="tab2" class="tab_content"> 
-		        	<ul class="list-recent-questions">
-						<li>
-							<a href="#">Dave Williamson</a> answered the question: <a href="#"><strong>How much is an iPad?</strong></a>
-						</li>
-					</ul> 
-		        </div> 
-		        <div id="tab3" class="tab_content"> 
-		        	<ul class="list-recent-questions">
-						<li>
-							<a href="#">Billy Cheng</a> posted a tip about <a href="#"><strong>iPad?</strong></a>
-						</li>
-					</ul> 
-		        </div>
-		        <div id="tab4" class="tab_content"> 
-		        	<ul class="list-recent-questions">
-						<li>
-							<a href="#">Dave Williamson</a> added <a href="#"><strong>iPad</strong></a> to his collection.
-						</li>
-					</ul> 
-		       	</div> 
-    	-->
-		<!--
-				<div class="left"><p>Displaying 1 - 11 of 345</p></div>
-					<div class="right">
-						<div id="pagination">
-							<ul>
-								<li class="current">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><span>of</span></li>
-								<li><a href="#">11</a></li>
-								<li><a href="#">»</a></li>
-							</ul>
-						</div>
-					</div>				
-				</div>	
-		-->		
+		        </div> 	
 			</div>
 		</div>
 		<div class="sidebar">

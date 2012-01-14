@@ -1,0 +1,131 @@
+<% title "Search" %>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//Default Action
+	$(".tab_content3").hide(); //Hide all content
+	$("ul.tabs3 li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content3:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+	//On Click Event
+	$("ul.tabs3 li").click(function() {
+		$("ul.tabs3 li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content3").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+
+    //Input Form placeholder
+    $('input:text').focus(function(){
+        if(this.value === this.defaultValue) {
+            this.value = "";
+        } else {
+            this.select();
+        }
+    })
+    .blur(function(){
+        if ($.trim(this.value) === "") {
+            this.value = (this.defaultValue ? this.defaultValue: "")
+        }
+    });
+
+});
+</script>
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => current_user, :item => "" } %>
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">
+        
+        <div class="search-box sidebar-content">
+			<%= form_tag find_product_searches_path, :method => :get, :remote => true do %>
+				<%= text_field_tag 'query', nil, :placeholder => "Search for products. e.g. iPhone or MacBook Pro", :class => "ie-input" %>
+                <input type="submit" class="ie-button" value="Search"/>
+			<% end %>
+        </div>
+        
+		<div class="tabbed-content-area">
+			<div id="search-result">
+            	<%= render 'searches/result_page' %>
+			</div>
+		</div>
+        </div><!-- .maincol -->
+        
+<!--
+		<div class="sidebar">
+            <div class="sidebar-content" id="recent-search">
+                <div class="sidebar-header">Recent Searches</div>
+                <div class="sidebar-inner">
+                    <ul>
+                        <li><a href="#" title="">Apple iPad</a></li>
+                        <li><a href="#" title="">Apple iPhone</a></li>
+                        <li><a href="#" title="">Apple TV</a></li>
+                        <li><a href="#" title="">24" Cinema Display</a></li>
+                        <li><a href="#" title="">Something Else</a></li>
+                    </ul>
+                </div>
+            </div><!- #recent-search ->
+
+            <div class="sidebar-content" id="new-product">
+                <div class="sidebar-header">New Product</div>
+                <div class="sidebar-inner">
+                    <ul>
+                        <li>
+                            <img src="" alt="img" width="37" height="37">
+                            <a href="#" title="">Product Name</a>
+                            <strong>Added 20 hours ago</strong>
+                        </li>
+                        <li>
+                            <img src="" alt="img" width="37" height="37">
+                            <a href="#" title="">Product Name</a>
+                            <strong>Added 20 hours ago</strong>
+                        </li>
+                        <li>
+                            <img src="" alt="img" width="37" height="37">
+                            <a href="#" title="">Product Name</a>
+                            <strong>Added 20 hours ago</strong>
+                        </li>
+                        <li>
+                            <img src="" alt="img" width="37" height="37">
+                            <a href="#" title="">Product Name</a>
+                            <strong>Added 20 hours ago</strong>
+                        </li>
+                        <li>
+                            <img src="" alt="img" width="37" height="37">
+                            <a href="#" title="">Product Name</a>
+                            <strong>Added 20 hours ago</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div><!- #new-product ->
+		</div>
+-->			
+ 	</div>
+ 

@@ -1,0 +1,32 @@
+<%
+	user = activity.user
+	recommendation = activity.recommendation
+%>
+<li>		
+	<div class="questions-block" style="border-bottom:0px; padding-bottom:0px;">
+	    <div class="questions-img">
+			<%= image_tag current_profile_image_thumbnail_url(user), :width => 50, :title => user.full_name %>
+		</div>
+	    <div class="questions-content">
+			<%= link_to user.full_name, profile_member_url(user) %> recommends <%= link_to recommendation.product.name, product_path(recommendation.product) %> 
+			<% if recommendation.recommended_users.size > 0 %>
+			to <%= pluralize(recommendation.recommended_users.size, 'friend') %>.<br/>
+			<div style="display: block; margin-top: 5px; margin-bottom: 5px">
+				<% recommendation.recommended_users.each do |recommended_user| %>
+					<span class='recommended_user'>
+						<%= image_tag current_profile_image_thumbnail_url(recommended_user.user), :width => 37, :title => recommended_user.user.full_name %>
+					</span>
+				<% end %>
+			</div>
+			<% else %>
+			.<br/>
+			<% end %>
+	    </div>
+	    <div class="clear"></div>
+	</div>
+	<div class="answer-wrapper">
+		<div class="answers-meta">
+			<p class="left"><%= activity.lapsed_time %></p>
+		</div>
+	</div>							
+</li>

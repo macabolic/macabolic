@@ -527,7 +527,8 @@ padding: 12px 0px 21px 0px;
 }
 .product-stat-details li {
 	float: left;
-	width: 116px;
+//	width: 116px;
+	width: 110px;
 	text-align: center;
 	border-right: 1px solid #dadada;
 	text-transform: uppercase;
@@ -702,7 +703,7 @@ ul.list-recent-questions {
 }
 
 .list-recent-questions li {
-	background: url(../images/membershomepage/icon-question.jpg) no-repeat;
+//	background: url(../images/membershomepage/icon-question.jpg) no-repeat;
     background-position:0 10px !important;
 //	background-position: 0 50%;
 	border-bottom: 1px solid #dddddd;
@@ -770,12 +771,19 @@ ul.list-my-collections {
 //	border: 1px solid #e3d7a9;
 	background-position: 0 50%;
 //	padding: 10px 5px 5px 5px!important;
-	padding: 10px 10px 10px 10px!important;
+	padding: 10px 5px 10px 5px!important;
 //	margin: 10px 5px 12px 5px;
 	margin: 10px 8px 12px 8px;
 	color: #414141;
 }
 
+.list-my-collections div.right {
+	width: 180px;
+	border: 1px solid black;
+	float: right;
+	display: block;
+	text-align: right;
+}
 
 /* ----- Pagination Styling ----- */
 #pagination {
@@ -831,16 +839,18 @@ text-transform: none;
 color: #565656!important;
 padding-bottom: 3px;
 }
+
 .text {
-width: 222px;
-background-color: #fff;
-border: 1px solid #c7d0d4;
-padding: 7px 7px 7px 7px;
-margin-bottom: 12px;
-color: #000;
-font-size: 12px;
-float:left;
+	width: 222px;
+	background-color: #fff;
+	border: 1px solid #c7d0d4;
+	padding: 7px 7px 7px 7px;
+	margin-bottom: 12px;
+	color: #000;
+	font-size: 12px;
+	float:left;
 }
+
 .padding textarea {
 width: 222px;
 background-color: #fff;
@@ -881,10 +891,10 @@ input.submit-tip-button {
 	cursor: pointer;
 }
 
-.left p {
-padding-left: 20px;
-color: #989898;
-font-size: 11px;
+.left p.total {
+	padding-left: 20px;
+	color: #989898;
+	font-size: 11px;
 }
 
 /* jQuery Members Homepage Tabs */
@@ -1031,6 +1041,19 @@ input[type="text"] {
 	padding: 0px 8px 0px 8px;	
 }
 
+input[type="search"] {
+	height: 38px;
+	line-height: 38px;
+	color:#A3A3A3
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	margin: 3px 0px 0px 0px;
+	font-size: 30px;
+	font-family: Arial;
+	padding: 0px 8px 0px 8px;
+}
+
 input.big_input {
 	height: 38px;
 	line-height: 38px;
@@ -1064,7 +1087,7 @@ input[type="submit"] {
         rgb(126,192,32) 90%
     );
     display: inline;
-	overflow: hidden;
+		overflow: hidden;
     text-align: center;
     text-decoration:none;
     color: #fff !important;
@@ -1141,6 +1164,11 @@ input:blur {
 	line-height: 24px;
 	font-family: Arial;
 	padding: 0px 8px 0px 8px;	
+}
+
+#comment-area {
+	line-height: 14px;
+	padding: 5px 8px 5px 8px;
 }
 
 .action {
