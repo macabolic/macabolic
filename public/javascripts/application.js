@@ -60,5 +60,21 @@ $(function() {
 
 		$("#friends").html("");
 		return true;
+	});	
+	
+	$("#product_question_link img").click(function() {
+			// Selected
+			$(this).toggleClass('selected-product', true); 
+			if ($(this).hasClass('selected-product')) {
+				$(this).parents('li').removeClass('not-selected-product');
+				$(this).parents('li').siblings().removeClass('selected-product');
+				$(this).parents('li').siblings().addClass('not-selected-product');
+				$('#question_product_id').attr('value', $(this).attr("id"))
+				$('#my_collection_item_id').attr('value', $(this).parents('li').attr("id"))
+			} else {
+				$(this).parents('li').addClass('not-selected-product');			
+				//$(this).find('.product_id').attr('value', '')
+			}
 	});
+	
 });

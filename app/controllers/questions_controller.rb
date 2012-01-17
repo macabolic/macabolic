@@ -45,24 +45,27 @@ class QuestionsController < ApplicationController
   # POST /questions.xml
   def create
     @question = Question.new(params[:question])
-    @question.product_id = params[:product_id]
+    #@question.product_id = params[:product_id]
     @question.user_id = current_user.id
     
     logger.info "========================================="
     logger.info "Question [title]: #{@question.title}"
     logger.info "Question [product_id]: #{@question.product_id}"
     logger.info "Question [user_id]: #{@question.user_id}"
+    logger.info "My Collecton Item: #{params[:my_collection_item_id]}"
     logger.info "========================================="
     
     respond_to do |format|
       if @question.save
         #format.html { redirect_to(@question, :notice => 'Question was successfully created.') }
         if params[:page_id] == 'MyCollectionItem'
-          product = Product.find(params[:product_id])
+          product = Product.find(@question.product_id)
           my_collection_item = MyCollectionItem.find(params[:my_collection_item_id])
           format.html { redirect_to(product_my_collection_item_path(product, my_collection_item)) }
+        elsif params[:page_id] == 'Home'
+          format.html { redirect_to member_path(current_user) }
         else
-          format.html { redirect_to(:controller => 'products', :action => 'show', :id => params[:product_id], :notice => 'Questions was successfully created.') }
+          format.html { redirect_to(:controller => 'products', :action => 'show', :id => @question.product_id, :notice => 'Questions was successfully created.') }
           format.xml  { render :xml => @question, :status => :created, :location => @question }
         end
       #else

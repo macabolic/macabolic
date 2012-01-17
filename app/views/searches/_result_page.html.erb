@@ -58,7 +58,7 @@
       	</ul>
 </p>
 -->
-      		<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'friend') %></a> also own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
+      		<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'friend') %></a> own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
 			<p>
           		<ul class="friend-ownthis" style="margin-bottom: 10px;">
 				<% product.owners.each do |owner| %>

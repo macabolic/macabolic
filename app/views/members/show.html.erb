@@ -65,6 +65,8 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<div class="sidebar">
+			<%= render :partial => 'my_collection_items/ask_a_question', :locals => { :page_id => "Home" } %>
+
 			<%= render :partial => 'invitations/form', :locals => { :invitation => Invitation.new } %>
 		<!--		
 			<div class="wishlist">

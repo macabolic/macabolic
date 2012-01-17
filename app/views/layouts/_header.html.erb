@@ -3,10 +3,7 @@
 		<div class="logo-holder">
 			<a href="<%= root_url %>"><h1>Macabolic</h1></div>				
 		<div class="nav-holder">							
-			<ul id="nav">
-				<li><%= link_to 'About', about_url %></li>
-				<!--li><a href="#" title="About" accesskey="1">About</a></li>
-				<li><a href="#" title="Contact" accesskey="2">Contact</a></li-->
+			<ul id="nav">				
 				<% if user_signed_in? %>	
 					<li><%= link_to 'Home', root_url %></li>
 				<% end %>

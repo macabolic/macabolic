@@ -12,6 +12,11 @@
 		</div>
 		<div class="questions-content">
 			<%= link_to user.full_name, profile_member_path(user) %></a> added <%= link_to product.name, product_my_collection_item_path(product, my_collection_item) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+			<div style="display: block; margin-top: 5px; margin-bottom: 5px">				
+				<span class='recommended_user'>
+					<%= image_tag(product.thumbnail.url(:thumb), :width => 50, :class => "preview-image") %>
+				</span>
+			</div>			
 		</div>
 		<div class="clear"></div>
 	</div>

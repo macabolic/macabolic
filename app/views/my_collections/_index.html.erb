@@ -89,10 +89,10 @@ $(window).load(function(){
 					<div class="html_carousel">
 					    <div id="product_preview_gallery-<%= count %>">
 					
-						<%= image_tag my_collection.thumbnail.url(:medium), :width => "150", :title => "#{my_collection.name}" %>
+						<%= image_tag my_collection.thumbnail.url(:medium), :width => "150", :height => "150", :title => "#{my_collection.name}" %>
 					<% my_collection_items = my_collection.my_collection_items %>
 					<% my_collection_items.each do |my_collection_item| %>
-						<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "150", :class => "preview-image") %>>
+						<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "150", :height => "150",  :class => "preview-image") %>>
 					<% end %>
 					    </div>
 					    <div class="clearfix"></div>						

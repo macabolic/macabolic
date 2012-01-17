@@ -4,7 +4,7 @@
 	</div>
 	<div class="sidebar-inner">					
     	<p class="username">
-			<%= image_tag avatar_url(@user, 55), :width => 55, :height => 55 %>
+			<%= image_tag current_profile_image_thumbnail_url(@user), :width => 50, :height => 50 %>
     		<strong>Name</strong>
     		<span><%= @user.full_name %></span>
     	</p>

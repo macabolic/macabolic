@@ -1,0 +1,27 @@
+<%
+	if item == 'About Us'
+		about_us = "home-on"
+	elsif item == 'Features Tour'
+		features = "nav-item-on"
+	elsif item == 'FAQ'
+		faq = "nav-item-on"
+	elsif item == 'Contact Us'
+		contact_us = "nav-item-on"
+	else 
+		
+	end
+%>
+<ul id="nav-signedin">
+	<li class="homerounded" id="<%= about_us %>">
+		<%= link_to 'About Us', about_url %>
+	</li>
+	<li id="<%= features %>">
+		<%= link_to 'Feature Tour', features_url %>
+	</li>	
+	<li id="<%= faq %>">
+		<%= link_to 'FAQ', faq_url %>
+	</li>	
+	<li id="<%= contact_us %>">
+		<%= link_to 'Contact Us', contact_url %>
+	</li>	
+</ul>	

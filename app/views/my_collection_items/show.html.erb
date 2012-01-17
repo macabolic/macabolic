@@ -177,6 +177,9 @@ $(document).ready(function() {
 	<div class="sidebar">
 		<!-- Recommend a friend -->
 		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
+
+		<!-- In the same collection -->
+		<%= render :partial => 'my_collection_items/in_the_same_my_collection', :locals => { :current_my_collection_item => @my_collection_item } %>
 		
 		<div class="sidebar-content">				
 			<div class="sidebar-header">

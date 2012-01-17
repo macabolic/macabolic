@@ -1,19 +1,22 @@
 <div class="footer sticky">
-    <div class="wrapper-top">
-    	<p class="footerleft">&copy; 2011 Macabolic</p>
-    	<p class="footerright">Follow Macabolic &nbsp;
-
-			<a href="http://www.facebook.com/macabolic">
-				<%= image_tag "/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %>
-			</a>&nbsp;
-			<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
+    <div class="wrapper-top">	
+    	<p class="footerleft">
+			&copy; 2011 Macabolic
+			<span class="footer-nav-holder">
+				<span class="footer-nav-item"><%= link_to 'About', about_url %></span>
+				<span class="footer-nav-item"><a href="http://blog.macabolic.com">Blog</a></span>				
+				<span class="footer-nav-item"><%= link_to 'Contact Us', contact_url %></span>
+				<span class="footer-nav-item"><a href="mailto:feedback@macabolic.com">Feedback</a></span>
+			</span>
+		</p>
+    	<p class="footerright">
+			Follow Macabolic &nbsp;
+			<a id="facebook" href="http://www.facebook.com/macabolic" target="_blank" alt="Macabolic on Facebook">
+				<%= image_tag "/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>
+			&nbsp;
+			<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="Follow Macabolic on Twitter">
 				<%= image_tag "/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
 			</a>
-<!--
-			<a href="http://www.twitter.com/macabolic"><img src="http://twitter-badges.s3.amazonaws.com/twitter-c.png" alt="Follow macabolic on Twitter"/></a>
-			<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-			<fb:like href="http://www.facebook.com/pages/Macabolic/204074676279765" layout="button_count" show_faces="false" width="90" font="verdana" colorscheme="dark"></fb:like>
--->			
     	</p>
     </div>
 </div>

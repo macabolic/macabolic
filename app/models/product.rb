@@ -22,6 +22,9 @@ class Product < ActiveRecord::Base
     text  :vendor_name do
       vendor.name
     end
+    text  :category_name do
+      product_line.name
+    end
   end
   
   def to_param

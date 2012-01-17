@@ -105,6 +105,26 @@ text-decoration: none;
 color: #7c8386;
 }
 
+/* footer navigation
+----------------------------------------------------------------------*/
+.footer-nav-holder {
+	padding-left: 15px;
+}
+.footer-nav-item a {
+	font-size: 12px;
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+	-webkit-transition-duration:0.33s;
+	-moz-transition-duration:0.33s;
+	margin-left: 5px;
+}
+
+.footer-nav-item a:hover {
+	text-decoration: none;
+	color: #7c8386;
+}
+
 /* Buttons
 ----------------------------------------------------------------------*/
 ul.home-buttons2 {
@@ -294,9 +314,100 @@ padding: 30px 30px 30px 30px;
 	color: #131e22;
 	font-family: Arial;
  	margin: 0px 0px 0px 0px;
-   	padding: 6px 5px 6px 30px;	
+	padding: 6px 5px 6px 30px;	
 }
 
+#sidebar-question-form.question-form {
+	padding: 15px 0px 10px 15px;
+}
+
+#sidebar-question-form.question-form input[type="text"] {
+	width: 210px;
+}
+
+#sidebar-question-form.question-form input[type="submit"] {
+	width: 70px;
+	height: 32px;
+	border: 0px solid #b7b7b7;
+	//display: block;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	//overflow: hidden;
+	margin: 10px 10px 10px 0px;
+	text-align: center;
+	padding: 0px 0px 0px 0px;
+	cursor: pointer;
+	float: right;
+	background:#65A40B;
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.50, rgb(101,164,11)),
+      color-stop(0.9, rgb(126,192,32))
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(101,164,11) 50%,
+      rgb(126,192,32) 90%
+  );  
+  -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+  border-radius:20px;	
+}
+
+#sidebar-question-form.question-form input[type="submit"]:hover {
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.50, rgb(109,173,17)),
+      color-stop(0.9, rgb(101,164,11))
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(109,173,17) 50%,
+      rgb(101,164,11) 90%
+  );
+	
+}
+/*
+input[type="submit"] {
+	height: 31px;
+	border: 0px solid #b7b7b7;
+	font-weight: bold;
+//	margin: 22px 0px 0px 0px;
+    padding:0px 20px;	
+    display: inline;
+		overflow: hidden;
+    text-align: center;
+    text-decoration:none;
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: Arial;
+    text-shadow: 0px -1px 0px #385c05;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border-radius:20px;	
+}
+
+input[type="submit"]:hover {
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.50, rgb(109,173,17)),
+        color-stop(0.9, rgb(101,164,11))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(109,173,17) 50%,
+        rgb(101,164,11) 90%
+    );
+}
+*/
 .question-form input[type="submit"] {
   	background:url(../images/buttons/home-signup.png) no-repeat left top;
 	width: 173px;
@@ -476,6 +587,17 @@ border: 1px solid #d7d7d7;
 padding: 3px;
 margin-bottom: 17px;
 margin-top: 32px;
+}
+
+.not-selected-product {
+	opacity: 0.2;
+	-moz-opacity: 0.2;
+	filter:alpha(opacity=0.2);		
+}
+.selected-product {
+	opacity: 1;
+	-moz-opacity: 1;
+	filter:alpha(opacity=1);	
 }
 
 .featurepanel1 p, .featurepanel2 p, .featurepanel3 p, .featurepanel4 p, .featurepanel5 p, .featurepanel6 p {

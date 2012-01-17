@@ -131,6 +131,8 @@ Macabolic::Application.routes.draw do
   match 'my_collections/add_product/:id' => 'my_collections#add_product'
   match 'about' => 'home#about_us'
   match 'features' => 'home#feature_tour'
+  match 'contact' => 'home#contact_us'
+  match 'faq' => 'home#faq'
 
 # TODO
 #  match '/auth/failure' => 'something to handle this error'

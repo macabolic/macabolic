@@ -44,12 +44,12 @@ class FriendshipsController < ApplicationController
       url = url + '&limit=' + limit
       logger.info "Generated facebook url is #{url}."
       # https://graph.facebook.com/me/friends?access_token=AAAAAAITEghMBAHAek9yKuw1WyEGUmB15ovKZBeTA2fVm395hTlYxxWWuIA8rTKEBvm5HYh9m59yDC3ZBARqTQFVJ7Y94NPoqf31Ar9FAZDZD
-      #response = HTTParty.get(url)
+      response = HTTParty.get(url)
 
       ## The response['data'] is in the format of JSON
-      #@facebook_friends = response['data']
-      #@facebook_paging = response['paging']
-      #logger.info response['data']
+      @facebook_friends = response['data']
+      @facebook_paging = response['paging']
+      logger.info response['data']
     end
     
     respond_to do |format|

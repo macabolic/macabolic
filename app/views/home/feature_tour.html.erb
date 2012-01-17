@@ -1,4 +1,4 @@
-<% title "What is Macabolic?" %>
+<% title "Features" %>
 
 <script type="text/javascript"> 
     $(document).ready(function(){ 
@@ -8,69 +8,68 @@
 
 <div id="grey-strip-signedin">
 	<div class="wrapper-top">
-		<ul id="nav-signedin">
-			<li class="homerounded">
-				<%= link_to 'About Us', about_url %>
-			</li>
-			<li id="nav-item-on">
-				<%= link_to 'Feature Tour', features_url %>
-			</li>	
-			<li>
-				<%= link_to 'FAQ' %>
-			</li>	
-		</ul>	
-	</div>	
+		<%= render :partial => "home/navigation", :locals => { :item => "Features Tour" } %>
+	</div>
 </div>
 
 <div class="wrapper-featuretour">
 	<div class="featuretour-container">
 		<div id="slider-wrapper">        
 			<div id="slider" class="nivoSlider">
-				<%= image_tag '/images/banners/featuretour-1.jpg', :alt => "featuretour-1", :width => "912", :height => "352", :title => "#htmlcaption" %>
+				<%= image_tag '/images/banners/featuretour-5.jpg', :alt => "Feature", :width => "912", :height => "352", :title => "#htmlcaption" %>
 			</div>
           
 			<div id="htmlcaption" class="nivo-html-caption">
-				<h2>A Social Network Dedicated to Mac Lovers.</h2>
-				<h3>Sign up or continue reading to see why you to be a part of Macabolic.</h3>
+				<h2>A place to showcase and share your collections.</h2>
+				<h3>Sign up to be a part of Macabolic.</h3>
 				<ul class="featuretour-signupbutton-top">
-					<li class="featuretour-signupbutton-top"><%= link_to 'Sign Up', new_registration_path(User.new) %></li>
+					<li class="featuretour-signupbutton-top">
+						<%= link_to 'Sign Up', new_registration_path(User.new, :type => "steps")  %>
+					</li>
 				</ul>
 			</div>            
 	     </div>
+		<!-- Feature 1: Invite by email, facebook -->
 		<div class="featurepanel1">
-			<img src="/images/featuretour/image1.png" alt="image1" width="255" height="135" class="borderimage" />
+			<img src="/images/featuretour/invitation.png" alt="Invite your friends" width="255" height="135" class="borderimage" />
 			<h4>Build around your friends</h4>
 			<p>Invite your friends from Facebook or simply invite them by email</p>
 		</div>
+		<!-- Feature 2: Recommend a product -->
 		<div class="featurepanel2">
-			<img src="/images/featuretour/image2.png" alt="image1" width="255" height="135" class="borderimage" />
+			<img src="/images/featuretour/recommend_friends.png" alt="Recommend to your friends" width="255" height="135" class="borderimage" />
 			<h4>Recommend a product</h4>
 			<p>Share your favorite product to your group of friends</p>
 		</div>
+		<!-- Comment on the product -->
 		<div class="featurepanel3">
-			<img src="/images/featuretour/image3.png" alt="image1" width="255" height="135" class="borderimage" />
-			<h4>Post useful tips</h4>
-			<p>Are you a seasoned user? Contribute with just a click in your home page</p>
+			<img src="/images/featuretour/comment.png" alt="Comment on the product" width="255" height="135" class="borderimage" />
+			<h4>Comment on the product</h4>
+			<p>Are you a seasoned user? Contribute with your valuable comment.</p>
 		</div>
-	
+		<!-- Ask a question -->
 		<div class="featurepanel4">
-			<img src="/images/featuretour/image4.png" alt="image1" width="255" height="135" class="borderimage2" />
+			<img src="/images/featuretour/ask_a_question.png" alt="Ask a question" width="255" height="135" class="borderimage2" />
 			<h4>Ask a question</h4>
 			<p>Do you have an question on a product? Ask someone who owns it</p>
 		</div>
+		<!-- Share your collections -->
 		<div class="featurepanel5">
-			<img src="/images/featuretour/image5.png" alt="image1" width="255" height="135" class="borderimage2" />
+			<img src="/images/featuretour/my_collection.png" alt="Share your collections" width="255" height="135" class="borderimage2" />
 			<h4>Share your collections</h4>
 			<p>Share your mac collections with your friends and network with what you have</p>
 		</div>
+		<!-- Powerful search -->
 		<div class="featurepanel6">
-			<img src="/images/featuretour/image6.png" alt="image1" width="255" height="135" class="borderimage2" />
-			<h4>Bookmark</h4>
-			<p>Create your bookmark of tips and answers in Macabolic</p>
+			<img src="/images/featuretour/powerful_search.png" alt="Powerful search" width="255" height="135" class="borderimage2" />
+			<h4>Powerful search</h4>
+			<p>Start building your collections with a simple keyword search.</p>
 		</div>			
 		<div class="cta"></div>
 			<ul class="featuretour-signupbutton-bottom">
-				<li class="featuretour-signupbutton-bottom"><%= link_to 'Sign Up', new_registration_path(User.new, :type => "steps")  %></li>
+				<li class="featuretour-signupbutton-bottom">
+					<%= link_to 'Sign Up', new_registration_path(User.new, :type => "steps")  %>
+				</li>
 			</ul>	
 		</div>
 	</div>

@@ -1,0 +1,38 @@
+<style type="text/stylesheet">
+#ask_now {
+	cursor: pointer;
+}
+</style>
+<script type="text/javascript">
+</script>
+<div class="sidebar-content">				
+	<div class="sidebar-header">
+		Got questions?
+	</div>	
+<% @my_collection_items = current_user.my_collection_items %>
+	<div id="question" class="product-grid" style="margin: 17px; border: 0px;">
+    	<ul>
+		<% @my_collection_items.each do |my_collection_item| %>
+  			<li id="<%= my_collection_item.id %>" class="not-selected-product">	
+				<%= link_to '#', :id => 'product_question_link' do %>	
+					<%= image_tag my_collection_item.product.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection_item.product.id, :title => my_collection_item.product.name %>
+				<% end %>
+			</li>
+		<% end %>
+		</ul>
+	</div>
+
+	<div class="sidebar-question">
+		<%= form_for Question.new, :as => :question, :url => questions_path, :html => { :id => "sidebar-question-form", :class => "question-form" } do |f| %>
+			<%#= f.hidden_field 'product_id', nil %>
+			<%= f.hidden_field :product_id %>
+			<%= hidden_field_tag 'page_id', 'Home' %>
+			<%= hidden_field_tag 'my_collection_item_id', nil %>			
+			<%= f.text_field :title, :placeholder => 'Ask a question now' %>
+			<p>
+				<%= submit_tag 'Ask', :id => 'ask_now' %>
+			</p>			
+		<% end %>	
+	</div>
+	
+</div><!-- #see who has similar products in his network -->			
