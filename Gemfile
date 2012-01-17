@@ -65,5 +65,6 @@ gem 'has_permalink'
 # Use MySQL
 group :test, :production do
 	#gem 'mysql2'
+	gem 'progress_bar'
 	gem 'ruby-mysql'
 end

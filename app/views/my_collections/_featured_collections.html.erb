@@ -32,6 +32,7 @@ $(window).load(function(){
 </script>
 
 <ul class="list-my-collections">
+	<% if !my_collections.nil? %>
 	<% my_collections.each do |my_collection| %>
 	<li>
 		<%= link_to(my_collection) do %>
@@ -55,7 +56,8 @@ $(window).load(function(){
 			</span>																		
 		<% end %>
 	</li>							
-	<% end %>	
+	<% end %>
+	<% end %>
 </ul>
 <div>
 	<!--
