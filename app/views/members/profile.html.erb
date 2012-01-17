@@ -154,11 +154,11 @@ $(document).ready(function() {
 			<%= render :partial => 'account_info' %>
 			
 			<%= render :partial => 'invitations/form', :locals => { :invitation => Invitation.new } %>
-        
+        <!--
 			<div class="wishlist">
 				<div id="slider" class="nivoSlider">
-					<%= image_tag "/images/membershomepage/wishlist-image.jpg", :alt => "Wishlist item", :width => "200", :height => "130", :title => "#htmlcaption" %>
-					<%= image_tag "/images/membershomepage/wishlist-image2.jpg", :alt => "Wishlist item 2", :width => "200", :height => "130", :title => "#htmlcaption2" %>
+					<%#= image_tag "/images/membershomepage/wishlist-image.jpg", :alt => "Wishlist item", :width => "200", :height => "130", :title => "#htmlcaption" %>
+					<%#= image_tag "/images/membershomepage/wishlist-image2.jpg", :alt => "Wishlist item 2", :width => "200", :height => "130", :title => "#htmlcaption2" %>
        			</div>            
 				<div id="htmlcaption" class="nivo-html-caption">
 					<h3>Dave's Wishlist 2011</h3>
@@ -171,11 +171,12 @@ $(document).ready(function() {
 					<p>This is a brief description about my wishlist shown above. It will only be about three lines long...</p>
 				</div>				
 			</div>			
+		-->
 		</div>
  	</div>
 
 </body>
- 
+<!-- 
 <script type="text/javascript">
 $(window).load(function() {
     $('#slider').nivoSlider({
@@ -203,3 +204,4 @@ $(window).load(function() {
     });
 });
 </script>
+-->
