@@ -37,7 +37,7 @@
 					<br/><br/>
 					
 					<!-- Learn more button/ Accept button -->
-					<%= link_to "Accept Invitation", invitation_url(@invitation.id, @invitation.token), :class => "button-green", :title => "Learn more"  %>
+					<%= link_to "Accept Invitation", invitation_url(:host => "macabolic.com", @invitation.id, @invitation.token), :class => "button-green", :title => "Learn more"  %>
 					<br/><br/>
 					
 					The Macabolic Team<br/>
