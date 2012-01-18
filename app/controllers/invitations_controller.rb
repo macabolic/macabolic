@@ -81,6 +81,7 @@ class InvitationsController < ApplicationController
     if @existing_invitation
       logger.info "It is a reminder invitation."
       UserMailer.invite(@existing_invitation, true).deliver
+      @existing_invitation.update_attribute("sent_at", Time.now)
       @success = true
     else
       @existing_user = User.where("email = ?", @invitation.recipient_email)
