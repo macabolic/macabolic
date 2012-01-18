@@ -23,6 +23,7 @@ Macabolic::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
+  config.logger = Logger.new("#{Rails.root}/log/production.log")
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -46,4 +47,17 @@ Macabolic::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  # Send email
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => 'macabolic.com',
+    :user_name            => 'general.support@macabolic.com',
+    :password             => 'nichetec',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+  
 end
