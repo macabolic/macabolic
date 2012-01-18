@@ -36,32 +36,42 @@ div.field_with_errors input {
 	background-color: #f0f0f0;
 }
 
-#error_explanation {
-  	width: 324px;
-  	border: 2px solid #cc6824;
-	margin: 15px 0px 14px 80px;
-	padding: 8px 8px 8px 8px;	
-  	background-color: #fef6d6;
+#errorExplanation {
+  width: 230px;
+  //border: 1px solid #cc6824;
+	margin: 0px;
+	padding: 0px;
+	//margin: 15px 0px 14px 80px;
+	//padding: 8px 8px 8px 8px;	
+  //background-color: #fef6d6;
 	font-weight: bold;
 	font-family: Arial;
 	color: #7d7d7d;
 	float: left;	
 }
 
-#error_explanation h2 {
+#errorExplanation h2 {
   text-align: left;
   font-weight: bold;
   padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: -7px;
+  font-size: 11px;
+  margin: 0px;
   margin-bottom: 0px;
   background-color: #c00;
   color: #fff;
 }
 
-#error_explanation ul li {
-  	font-size: 12px;
-  	//list-style: square;
+#errorExplanation p {
+	float: left;
+}
+
+#errorExplanation ul li:last-child {
+	margin-bottom: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 10px;
+	color: #c00;
 	list-style: none;
 }
 

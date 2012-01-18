@@ -81,7 +81,10 @@ $(document).ready(function(){
 		$(activeTab).fadeIn(); //Fade in the active content
 		return false;
 	});
-				
+	
+<% if @user.errors.size > 0 %>
+	$('#macabolic').show();
+<% end %>		
 }); 
 	
 </script>
@@ -153,7 +156,8 @@ $(document).ready(function(){
 					<% end %>
 					<div id="macabolic">
 						<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
-						<%= form_for(current_user, :url => member_path(current_user), :html => { :multipart => true }) do |f| %>
+						<%= form_for(@user, :url => member_path(@user), :html => { :multipart => true }) do |f| %>
+							<%= f.error_messages %>
 							<div class="field">
 								<%= f.label 'Upload an image' %><br />
 								<%= f.file_field :avatar %>

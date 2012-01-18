@@ -62,7 +62,10 @@ class MyCollectionsController < ApplicationController
         format.html { redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection was successfully created.') }
       #  format.xml  { render :xml => @my_collection, :status => :created, :location => @my_collection }
       else
-      #  format.html { render :action => "new" }
+        @user = User.find(@my_collection.user_id)
+        @my_collections = @user.my_collections
+        @my_collection_items = @user.my_collection_items        
+        format.html { render "members/collections" }
       #  format.xml  { render :xml => @my_collection.errors, :status => :unprocessable_entity }
       end
     end

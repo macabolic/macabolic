@@ -11,9 +11,11 @@ class Product < ActiveRecord::Base
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
   
   has_attached_file       :thumbnail, 
-                          :styles => { :medium => "300x300>", :thumb => "100x100>" },
+                          :styles => { :thumb => ["100x100>", :png], :medium => ["300x300>", :png] },
                           :url => "/assets/products/:attachment/:id/:style/:filename",
                           :path => ":rails_root/public/assets/products/:attachment/:id/:style/:filename"
+
+  validates_attachment_size :thumbnail,  :less_than => 700000,  :message => "should be less than 700KB."
 
   attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id
   

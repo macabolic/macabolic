@@ -42,10 +42,13 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
+        logger.info "User information is updated."
 #        format.html { redirect_to(@user, :notice => 'Member was successfully updated.') }
         format.html { redirect_to(edit_member_path(@user), :notice => "Your info was successfully updated.") }
         format.xml  { head :ok }
-      else
+      else        
+        logger.error "User information cannot be updated."
+        logger.error "Number of errors: #{@user.errors.size}."
         format.html { render :action => "edit" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
@@ -84,7 +87,10 @@ class MembersController < ApplicationController
     #.paginate	:page => params[:page], 
     #                                                          :per_page => 10,
     #                                                          :order => 'created_at DESC'
-
+    @my_collection = MyCollection.new
+  	@my_collection.name = ''
+  	@my_collection.user = user
+    
     respond_to do |format|
       format.html # collections.html.erb
       format.xml  { render :xml => @member }

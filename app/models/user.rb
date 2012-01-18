@@ -36,10 +36,11 @@ class User < ActiveRecord::Base
   belongs_to :invitation
 
   has_attached_file       :avatar, 
-                          :styles => { :thumb => "50x50>", :small => "180x180>", :medium => "300x300>", :large => "600x600>" },
-                          :url => "/assets/members/:attachment/:id/:style/:filename",
-                          :path => ":rails_root/public/assets/members/:attachment/:id/:style/:filename"
-                            
+                          :styles => { :thumb => ["50x50>", :png], :small => ["180x180>", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
+                          :url => "/assets/members/:attachment/:id/:style/member-:id-:filename",
+                          :path => ":rails_root/public/assets/members/:attachment/:id/:style/member-:id-:filename",
+                          :default_url => "/images/default_photo.png"
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
@@ -60,6 +61,8 @@ class User < ActiveRecord::Base
   
   #validate            :email, :presence => true
   validates_format_of :email, :with => /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/i, :message => "is not a valid email address."
+  
+  validates_attachment_size :avatar,  :less_than => 700000,  :message => "should be less than 700KB."
   
   before_create :set_invitation_limit
   
