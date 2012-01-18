@@ -15,10 +15,10 @@
 	<div class="wrapper-top">
 		<div id="grey-strip">
 			<p class="footerright">Follow Macabolic: &nbsp;
-				<!--a href="#"><%#= image_tag "http://beta.macabolic.com/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %>
-				</a>&nbsp; -->
+				<a id="facebook" href="http://www.facebook.com/macabolic" target="_blank" alt="Macabolic on Facebook">
+					<%= image_tag "#{Rails.root}/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;		
 				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
-					<%= image_tag "http://beta.macabolic.com/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
+					<%= image_tag "#{Rails.root}/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
 				</a>
 			</p>
 		</div>
@@ -37,7 +37,7 @@
 					<br/><br/>
 					
 					<!-- Learn more button/ Accept button -->
-					<%= link_to "Accept Invitation", invitation_url(:host => "macabolic.com", @invitation.id, @invitation.token), :class => "button-green", :title => "Learn more"  %>
+					<%= link_to "Accept Invitation", invitation_url(@invitation.id, @invitation.token, :host => "#{Rails.root}"), :class => "button-green", :title => "Learn more"  %>
 					<br/><br/>
 					
 					The Macabolic Team<br/>
