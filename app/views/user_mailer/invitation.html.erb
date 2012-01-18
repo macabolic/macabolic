@@ -1,8 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-	<%= stylesheet_link_tag "http://beta.macabolic.com/stylesheets/email-layout.css" %>
-	<%= stylesheet_link_tag "http://beta.macabolic.com/stylesheets/email-styles.css" %>
+	<%= stylesheet_link_tag "http://#{@domain}/stylesheets/email-layout.css" %>
+	<%= stylesheet_link_tag "http://#{@domain}/stylesheets/email-styles.css" %>
 </head>
 <body>		
 <div class="wrapper">
@@ -16,9 +16,9 @@
 		<div id="grey-strip">
 			<p class="footerright">Follow Macabolic: &nbsp;
 				<a id="facebook" href="http://www.facebook.com/macabolic" target="_blank" alt="Macabolic on Facebook">
-					<%= image_tag "#{Rails.root}/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;		
+					<%= image_tag "#{@domain}/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;		
 				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
-					<%= image_tag "#{Rails.root}/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
+					<%= image_tag "#{@domain}/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
 				</a>
 			</p>
 		</div>
@@ -37,7 +37,7 @@
 					<br/><br/>
 					
 					<!-- Learn more button/ Accept button -->
-					<%= link_to "Accept Invitation", invitation_url(@invitation.id, @invitation.token, :host => "#{Rails.root}"), :class => "button-green", :title => "Learn more"  %>
+					<%= link_to "Accept Invitation", invitation_url(@invitation.id, @invitation.token, :host => "#{@domain}"), :class => "button-green", :title => "Learn more"  %>
 					<br/><br/>
 					
 					The Macabolic Team<br/>
