@@ -16,9 +16,9 @@
 		<div id="grey-strip">
 			<p class="footerright">Follow Macabolic: &nbsp;
 				<a id="facebook" href="http://www.facebook.com/macabolic" target="_blank" alt="Macabolic on Facebook">
-					<%= image_tag "#{@domain}/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;		
+					<%= image_tag "http://#{@domain}/images/sitewide/facebook.png", :alt => "facebook", :width => "16", :height => "16", :class => "social" %></a>&nbsp;		
 				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="macabolic's twitter account">
-					<%= image_tag "#{@domain}/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
+					<%= image_tag "http://#{@domain}/images/sitewide/twitter.png", :alt => "twitter", :width => "16", :height => "16", :class => "social" %>
 				</a>
 			</p>
 		</div>
@@ -30,7 +30,7 @@
 			<div class="registration-thankyou-th"><%= @invitation.sender.full_name %> invited you to join <%= "[Reminder]" if @reminder %></div>
 			<div class="registration-thankyou-body">
 				<p>
-					<%= @invitation.sender.full_name %> invited you to join Macabolic.com
+					<%= @invitation.sender.full_name %> invited you to join <a href="http://<%= @domain %>">Macabolic.com</a>
 					<br/><br/>
 					
 					We are dedicated to serve the Mac community where you share your own product collection, make recommendation and post tips to your friends and others.
