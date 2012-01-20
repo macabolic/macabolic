@@ -89,7 +89,7 @@ class MembersController < ApplicationController
     #                                                          :order => 'created_at DESC'
     @my_collection = MyCollection.new
   	@my_collection.name = ''
-  	@my_collection.user = user
+  	@my_collection.user = @user
     
     respond_to do |format|
       format.html # collections.html.erb
