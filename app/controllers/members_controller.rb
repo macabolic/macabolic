@@ -58,7 +58,7 @@ class MembersController < ApplicationController
   # DELETE /members/1
   # DELETE /members/1.xml
   def destroy
-    @member = Member.find(params[:id])
+    @member = User.find(params[:id])
     @member.destroy
 
     respond_to do |format|

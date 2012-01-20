@@ -3,8 +3,8 @@ class MyCollectionsController < ApplicationController
   # GET /my_collections/1
   # GET /my_collections/1.xml
   def show
-    #@my_collection = MyCollection.find(params[:id])
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     @user = @my_collection.user
     @my_collection_comments = @my_collection.comments.order("created_at DESC")
     
@@ -27,8 +27,10 @@ class MyCollectionsController < ApplicationController
   # GET /my_collections/new
   # GET /my_collections/new.xml
   def new
+    # Step 3 on the registration.
+    # Show only the production from Apple
     @search = Product.search do
-      fulltext "apple"
+      fulltext "apple", :fields => [:vendor_name]
     end
     @products = @search.results
 
@@ -47,8 +49,8 @@ class MyCollectionsController < ApplicationController
 
   # GET /my_collections/1/edit
   def edit
-    #@my_collection = MyCollection.find(params[:id])
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     @user = @my_collection.user
   end
 
@@ -74,8 +76,8 @@ class MyCollectionsController < ApplicationController
   # PUT /my_collections/1
   # PUT /my_collections/1.xml
   def update
-    #@my_collection = MyCollection.find(params[:id])
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
 
     respond_to do |format|
       if @my_collection.update_attributes(params[:my_collection])
@@ -91,8 +93,8 @@ class MyCollectionsController < ApplicationController
   # DELETE /my_collections/1
   # DELETE /my_collections/1.xml
   def destroy
-    #@my_collection = MyCollection.find(params[:id])
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     @my_collection.destroy
 
     respond_to do |format|
@@ -154,7 +156,8 @@ class MyCollectionsController < ApplicationController
   end
 
   def follow
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     follower = MyCollectionFollower.new(:my_collection => @my_collection, :follower => current_user)    
     logger.info "MyCollectionsController.follow."
     if follower.save
@@ -165,7 +168,8 @@ class MyCollectionsController < ApplicationController
   end
 
   def unfollow
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     follower = MyCollectionFollower.where(:my_collection_id => @my_collection.id, :follower_id => current_user.id)    
     logger.info "MyCollectionsController.unfollow."
     if follower.exists?
@@ -177,7 +181,8 @@ class MyCollectionsController < ApplicationController
   end
   
   def like
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     response = MyCollectionResponse.new(:my_collection => @my_collection, :user => current_user)    
     logger.info "MyCollectionsController.like."
     if response.save
@@ -188,7 +193,8 @@ class MyCollectionsController < ApplicationController
   end
   
   def unlike
-    @my_collection = MyCollection.find_by_permalink(params[:id])
+    @my_collection = MyCollection.find(params[:id])
+    #@my_collection = MyCollection.find_by_permalink(params[:id])
     response = MyCollectionResponse.where(:my_collection_id => @my_collection.id, :user_id => current_user.id)    
     logger.info "MyCollectionsController.unlike."
     if response.exists?

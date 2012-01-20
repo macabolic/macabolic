@@ -183,9 +183,14 @@ $(document).ready(function() {
 		
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
+			<% if !@friends_who_owned.nil? %>
 				<%= pluralize(@friends_who_owned.size, 'friend') %> own
+			<% else %>
+				0 friend own
+			<% end %>
 			</div>	
 			<div class="user-grid">
+			<% if !@friends_who_owned.nil? %>
 		    	<ul>
 				<% @friends_who_owned.each do |person| %>
 		  			<li>
@@ -195,14 +200,20 @@ $(document).ready(function() {
 					</li>
 				<% end %>
 				</ul>
+			<% end %>
 			</div>
 		</div><!-- #see who has similar products in his network -->			
 
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
+			<% if !@friends_who_wished.nil? %>				
 				<%= pluralize(@friends_who_wished.size, 'friend') %> wish
+			<% else %>
+				0 friend wish
+			<% end %>
 			</div>	
 			<div class="user-grid">
+			<% if !@friends_who_wished.nil? %>
 		    	<ul>
 				<% @friends_who_wished.each do |person| %>
 		  			<li>
@@ -212,6 +223,7 @@ $(document).ready(function() {
 					</li>
 				<% end %>
 				</ul>
+			<% end %>
 			</div>
 		</div><!-- #see who has similar products in his network -->			
 		

@@ -14,7 +14,11 @@
 		</p>
 		<p>
 		    <strong>Birthday</strong>
+			<% if @user.birthday.present? %>
 		    <%= @user.birthday.strftime("%B %d") %>
+			<% else %>
+			<%= "N/A" %>
+			<% end %>
 		</p>
 		<!--
     	<p><a href="#" title="Delete Account" class="delete-account">Delete Account</a></p>

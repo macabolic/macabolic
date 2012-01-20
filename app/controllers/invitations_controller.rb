@@ -1,14 +1,4 @@
 class InvitationsController < ApplicationController
-  # GET /invitations
-  # GET /invitations.xml
-  def index
-    @invitations = Invitation.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @invitations }
-    end
-  end
 
   # GET /invitations/1
   # GET /invitations/1.xml

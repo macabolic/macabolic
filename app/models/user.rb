@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
   has_many  :reviews
   has_many  :questions
   has_many  :answers
-  has_many  :activities
+  has_many  :activities, :dependent => :destroy
   
   has_many  :sent_invitations,  :class_name => 'Invitation', :foreign_key => 'sender_id'
 
-  has_many  :my_collection_items
+  has_many  :my_collection_items, :dependent => :destroy
   has_many  :products, :through => :my_collection_items
 
   has_many  :wishlist_items
@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   #has_many  :inverse_friendships, :class_name => 'Friendship', :foreign_key => 'friend_id'
   #has_many  :inverse_friends, :through => :inverse_friendships, :source => :user
   
-  has_many  :profile_images
+  has_many  :profile_images, :dependent => :destroy
   
   # There is a problem with #{self.profile_image_id}.
   # The profile_image_id is null initially and running this associations will run into problem.

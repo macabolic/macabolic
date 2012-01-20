@@ -13,18 +13,19 @@ class MyCollectionItemsController < ApplicationController
     @questions = Question.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 10, :page => params[:question_page])    
 
     friends = @user.friend_ids
-    @search_friends_who_owned = MyCollectionItem.search do
-      with(:product_id, params[:product_id])
-      with(:user_id, friends)
-    end
-
-    @search_friends_who_wished = WishlistItem.search do
-      with(:product_id, params[:product_id])
-      with(:user_id, friends)
+    if !friends.nil? and friends.size > 0
+      @search_friends_who_owned = MyCollectionItem.search do
+        with(:product_id, params[:product_id])
+        with(:user_id, friends)
+      end
+      @search_friends_who_wished = WishlistItem.search do
+        with(:product_id, params[:product_id])
+        with(:user_id, friends)
+      end
     end
     
-    @friends_who_owned = @search_friends_who_owned.results.map { |i| i.user }
-    @friends_who_wished = @search_friends_who_wished.results.map { |i| i.user }
+    @friends_who_owned = @search_friends_who_owned.results.map { |i| i.user } if !@search_friends_who_owned.nil? and @search_friends_who_owned.results.present?
+    @friends_who_wished = @search_friends_who_wished.results.map { |i| i.user } if !@search_friends_who_wished.nil? and @search_friends_who_wished.results.present?
     
     @product_comments = @product.comments.order("created_at DESC")
     

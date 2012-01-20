@@ -7,7 +7,7 @@ class MyCollection < ActiveRecord::Base
   
   accepts_nested_attributes_for :my_collection_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
   
-  has_permalink           :name
+  #has_permalink           :name
   has_attached_file       :thumbnail, 
                           :styles => { :thumb => ["50x50>", :png], :small => ["180x180>", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
                           :url => "/assets/members/my_collections/:attachment/:id/:style/:filename",
@@ -20,6 +20,10 @@ class MyCollection < ActiveRecord::Base
   DEFAULT_COLLECTION_NAME = "My Collection"
   
   scope :featured_collections, limit(3)
+  
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
   
   def like?(user)
     return MyCollection.like?(self, user)
