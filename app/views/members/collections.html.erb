@@ -91,23 +91,24 @@ function size(t) {
 					<%= render :partial => 'my_collections/index', :locals => { :my_collections => @my_collections } %>
 				</div>			
 		        <div id="tab2" class="tab_content2 product-grid group">
-					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items } %>
+					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items, :mode => "read" } %>
 				</div>
 				<!--div class="left"><p>Displaying 1 - 11 of 345</p></div-->
 		<% end %>
 			</div>
 			
 			<br/>
+			<!--
 			<div class="tabbed-content-area">    		
 				<ul class="tabs2"> 
 			        <li><a href="#tab2_1">Featured Collections</a></li> 
 				</ul> 		
 		        <div id="tab2_1" class="tab_content3 product-grid group">
-					<% @featured_collections = MyCollection.featured_collections %>
-					<%= render :partial => 'my_collections/featured_collections', :locals => { :my_collections => @featured_collections } %>
+					<%# @featured_collections = MyCollection.featured_collections %>
+					<%#= render :partial => 'my_collections/featured_collections', :locals => { :featured_collections => @featured_collections } %>
 				</div>
 			</div>	
-		
+			-->
 		</div>
 		
 		<%#= render 'products/product_search' %>

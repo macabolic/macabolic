@@ -1,9 +1,14 @@
 Macabolic::Application.routes.draw do
 
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   resources :searches do
     collection do
       get 'find_product'
-    end
+      get 'find_vendor'
+    end    
   end
   
   resources :product_comments
@@ -100,6 +105,7 @@ Macabolic::Application.routes.draw do
       get 'product_search'
     end  
     resources :my_collection_items
+    #get ':id/page/:page', :action => :show, :on => :collection
   end
   
   # Members
@@ -183,11 +189,12 @@ Macabolic::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  namespace :admin do
-    resources :vendors
-    resources :products
-    resources :product_lines
-  end
+  
+  #namespace :admin do
+  #  resources :vendors
+  #  resources :products
+  #  resources :product_lines
+  #end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

@@ -13,7 +13,8 @@
 	
 	.selected {
 		//border: 3px solid #6DB132;
-		border: 3px solid #e3d7a9;
+		//border: 3px solid #e3d7a9;
+		border: 3px solid #da5d18;
 		opacity: 1;
 		-moz-opacity: 1;
 		filter:alpha(opacity=1);
@@ -89,16 +90,12 @@ $(window).load(function(){
 				<ul class="list-my-collections">
 					<% @products.each do |product| %>
 					<li class="inactive">
-						<%#= link_to product_path(product) do %>							
-						<!--span class="right">
-							<%#= link_to '' %>
-						</span-->							
 						<div class="center">
 							<%= f.fields_for :my_collection_items do |builder| %>		
 							<span class="productimage shadow">								
 								<%= hidden_field_tag 'product['+product.name+']', product.id, :class => 'product_name' %>						
 								<%= builder.hidden_field :product_id, :class => 'product_id' %>
-								<%= image_tag product.thumbnail.url(:medium), :width => "180" %>
+								<%= image_tag product.thumbnail.url(:medium), :width => "180", :height => "160" %>
 							</span>
 							<span>
 								<%= product.name %>

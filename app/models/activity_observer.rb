@@ -9,7 +9,13 @@ class ActivityObserver < ActiveRecord::Observer
   def after_create(model)
     log_activity('create', model)
   end
-  
+
+  def after_destroy(model)
+    activity = Activity.where("user_id = ? and name = ? and type_id = ?", model.user.id, model.class.name, model.id).first
+    if !activity.nil?
+      activity.destroy
+    end
+  end
 
   private
   

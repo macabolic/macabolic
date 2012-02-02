@@ -90,20 +90,10 @@ function showAddReview() {
 <% end %>
 </ul>
 <div class="left"><p class="total"><%= page_entries_info @reviews %></p></div>
-<% if @reviews.total_pages > 0 %>
+<%# if @reviews.total_pages > 0 %>
 <div class="right">
-		<div id="pagination">
-		<ul>
-		<% for i in (1..@reviews.total_pages) %>
-			<% if @reviews.current_page == i %>
-			<li class="current"><%= i %></li>
-			<% else %>
-			<li><%= link_to i, product_path(@product, :review_page => i) %></li>
-			<% end %>
-		<% end %>
-			<li><span>of</span></li>
-			<li><%= link_to @reviews.total_pages, product_path(@product, :review_page => @reviews.total_pages) %></li>
-		</ul>
+	<div id="pagination">
+		<%= paginate @reviews, :param_name => :review_page %>
 	</div>
 </div>
-<% end %>
+<%# end %>

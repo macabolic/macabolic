@@ -58,18 +58,8 @@
 <% if (not @answers.nil?) && @answers.size > 0 %>
 <div class="left"><p class="total"><%= page_entries_info @answers %></p></div>
 <div class="right">
-		<div id="pagination">
-		<ul>
-		<% for i in (1..@answers.total_pages) %>
-			<% if @answers.current_page == i %>
-			<li class="current"><%= i %></li>
-			<% else %>
-			<li><%= link_to i, product_path(@question.product, :answer_page => i) %></li>
-			<% end %>
-		<% end %>
-			<li><span>of</span></li>
-			<li><%= link_to @answers.total_pages, product_path(@question.product, :answer_page => @answers.total_pages) %></li>
-		</ul>
+	<div id="pagination">
+		<%= paginate @answers, :param_name => :answer_page %>
 	</div>
 </div>
 <% end %>

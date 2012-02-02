@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
       
     else
       if params[:search].length > 2
-        @search = Product.search do
+        @search = Sunspot.search(Product) do
           fulltext params[:search]
         end
         @products = @search.results
@@ -16,6 +16,14 @@ class ProductsController < ApplicationController
         if !params[:my_collection].nil?
           @my_collection = MyCollection.find_by_id(params[:my_collection])
         end
+        
+        respond_to do |format|
+          format.html # show.html.erb
+          format.xml { render :xml => @products.to_xml(:include => @my_collection) }
+          format.js
+          format.json { render :json => @products }
+        end  
+        
       end
     end
   end
@@ -30,21 +38,23 @@ class ProductsController < ApplicationController
       @my_collection_item = MyCollectionItem.where("user_id = ? and product_id = ?", @user.id, @product.id).first
       redirect_to product_my_collection_item_path(@product, @my_collection_item), :status => 301
     else 
-      @questions = Question.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 10, :page => params[:question_page])    
+      @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:question_page]
     
       friends = @user.friend_ids
-      @search_friends_who_owned = MyCollectionItem.search do
-        with(:product_id, params[:id])
-        with(:user_id, friends)
+      if friends.size > 0
+        @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
+          with(:product_id, params[:id])
+          with(:user_id, friends)
+        end
+      
+        @search_friends_who_wished = Sunspot.search(WishlistItem) do
+          with(:product_id, params[:id])
+          with(:user_id, friends)
+        end
+      
+        @friends_who_owned = @search_friends_who_owned.results.map { |i| i.user }
+        @friends_who_wished = @search_friends_who_wished.results.map { |i| i.user }
       end
-
-      @search_friends_who_wished = WishlistItem.search do
-        with(:product_id, params[:id])
-        with(:user_id, friends)
-      end
-    
-      @friends_who_owned = @search_friends_who_owned.results.map { |i| i.user }
-      @friends_who_wished = @search_friends_who_wished.results.map { |i| i.user }
     
       @product_comments = @product.comments.order("created_at DESC")
     
@@ -72,14 +82,60 @@ class ProductsController < ApplicationController
   # POST /products.xml
   def create
     @product = Product.new(params[:product])
+    @user = current_user
 
+    logger.debug "============================="
+    logger.debug "Product Creation: "
+    logger.debug "name = #{@product.name}"
+    logger.debug "product_line = #{@product.product_line_id}"
+    logger.debug "vendor = #{params[:vendor_name]}"
+    logger.debug "my_collection_id = #{params[:my_collection_id]}"
+    logger.debug "============================="
+    
     if params[:my_collection_id].present?
       my_collection_item = MyCollectionItem.new(:my_collection_id => params[:my_collection_id], :user_id => current_user.id)
-      my_collection_item.product = @product
-      my_collection_item.save!
-      @my_collection = MyCollection.find_by_id(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
-      redirect_to(my_collection_path(@my_collection)) 
+      logger.debug "building product now..."
+
+      if params[:vendor_name].present?
+        @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
+        if @vendor_search_results.size > 0
+          vendor = @vendor_search_results[0]
+          params[:product][:vendor_id] = vendor.id
+          logger.debug "Value is the hash of params[:product]: #{params[:product]}"
+          my_collection_item.build_product( params[:product] )
+          logger.debug "Found the vendor in the database."
+        else
+          logger.debug "Couldn't find the vendor in the database, now building one."
+          params[:product][:vendor_attributes] = { :name => params[:vendor_name] }
+          logger.debug "Value is the hash of params[:product]: #{params[:product]}"
+          my_collection_item.build_product( params[:product] )
+        end
+      end
+
+      if my_collection_item.save
+        logger.debug "save my collection item properly... and about to redirect."
+        @my_collection = MyCollection.find_by_id(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
+        redirect_to(my_collection_path(@my_collection)) 
+      else
+        logger.debug "found problem while saving my collection item, go back to fix the problem."
+        respond_to do |format|
+          format.html { render :action => "new" }
+          format.xml  { render :xml => my_collection_item.errors, :status => :unprocessable_entity }
+        end
+      end
     else
+      
+      if params[:vendor_name].present?
+        @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
+        if @vendor_search_results.size > 0
+          @product.vendor = @vendor_search_results[0]
+          logger.debug "Found the vendor in the database."
+        else
+          logger.debug "Couldn't find the vendor in the database, now building one."
+          @product.build_vendor(:name => params[:vendor_name])
+        end
+      end
+      
       respond_to do |format|
         if @product.save
           format.html { redirect_to(product_path(@product), :notice => 'Product was successfully saved.') }
@@ -96,6 +152,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @product }
+      format.json { render :json => @product }
     end    
   end
 

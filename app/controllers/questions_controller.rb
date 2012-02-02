@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @user = current_user
-    @answers = @question.answers.order("created_at DESC").paginate(:per_page => 999, :page => params[:answer_page])
+    @answers = @question.answers.order("created_at DESC").page params[:answer_page]
     @product = Product.find(params[:product_id])
     @my_collection_item = MyCollectionItem.find(params[:my_collection_item_id])  if params[:my_collection_item_id].present?
 
@@ -104,7 +104,7 @@ class QuestionsController < ApplicationController
   end
   
   def back
-    @questions = Question.where(:product_id => params[:product_id]).order("created_at DESC").paginate(:per_page => 10, :page => params[:question_page])
+    @questions = Question.where(:product_id => params[:product_id]).order("created_at DESC").page params[:question_page]
     @product = Product.find(params[:product_id])
     @my_collection_item = MyCollectionItem.find(params[:my_collection_item_id]) if params[:my_collection_item_id].present?
   end

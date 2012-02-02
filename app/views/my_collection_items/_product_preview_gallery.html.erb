@@ -1,0 +1,69 @@
+<%= javascript_include_tag "jquery.carouFredSel-packed.js" %>
+
+<style type="text/css">
+.html_carousel {
+    padding: 0px 0 0px 0px;
+	position: relative;
+}
+
+.html_carousel img {
+	border: 0px solid #ccc;
+	background-color: white;
+	padding: 0px;
+	margin: 0px;
+	display: block;
+	float: left;
+}
+
+.pagination1 {
+	text-align: center;
+}
+
+.pagination1 a {
+	background: url(/images/sitewide/miscellaneous_sprite.png) 0 -300px no-repeat transparent;
+	width: 15px;
+	height: 15px;
+	margin: 0 5px 0 0;
+	display: inline-block;
+	text-decoration: none;
+}
+
+.pagination1 a.selected {
+	background-position: -25px -300px;
+	cursor: default;
+	text-decoration: none;
+	border: 0px;
+}
+
+.pagination1 a span {
+	display: none;
+}
+
+.clearfix {
+    float: none;
+    clear: both;
+}
+</style>
+<div class="html_carousel">
+    <div id="product_preview_gallery">
+    	<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+		<%= image_tag(my_collection_item.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>>
+    </div>
+    <div class="clearfix"></div>
+	<div class="pagination1" id="product_preview_gallery_pag"></div>
+</div>
+<script type="text/javascript">
+$(window).load(function() {
+	$("#product_preview_gallery").carouFredSel({
+		circular: false,
+		infinite: false,
+		items	: {
+			start: 0,
+			visible: 1
+		},
+		auto	: false,
+		scroll	: 1,
+		pagination: "#product_preview_gallery_pag"
+	});
+});
+</script>

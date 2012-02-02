@@ -7,7 +7,7 @@ class Admin::ProductsController < ApplicationController
   # GET /products.xml
   def index
     #@products = Product.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 10, :page => params[:page])
-    @search = Product.search do
+    @search = Sunspot.search(Product) do
       fulltext params[:search]
     end
     @products = @search.results

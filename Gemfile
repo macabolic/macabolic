@@ -18,7 +18,10 @@ gem 'omniauth-openid'
 gem 'omniauth-twitter'
 
 # Install will_paginate do perform pagination in Admin page
+# will_paginate is kept for Sunspot Solr 
+# For the rest, due to a conflict with kaminari which is required by active_admin
 gem 'will_paginate', '3.0.pre2'
+gem 'kaminari'
 
 # Include jQuery for doing some AJAX in front end
 #gem 'jquery-rails'
@@ -41,10 +44,13 @@ gem 'sunspot_solr'
 gem 'httparty'
 
 # Generate permalink
-gem 'has_permalink'
+#gem 'has_permalink'
 
 # Generate error messages
 gem 'dynamic_form'
+
+# Admin console
+gem 'activeadmin'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'

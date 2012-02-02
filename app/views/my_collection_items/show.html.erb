@@ -77,7 +77,7 @@ $(document).ready(function() {
     	<div class="product-item sidebar-content">	         
 			<div class="product-image">
 				<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
-				<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
+				<%= render :partial => 'my_collection_items/product_preview_gallery', :locals => { :my_collection_item => @my_collection_item } %>
 	        </div>			
 	        <div class="product-detail">
 	            <div>
@@ -86,10 +86,15 @@ $(document).ready(function() {
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
 				<% if @user == current_user %>				
+				<p>
+					<div id="add_wishlist">
+						<%= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
+					</div>	
+				</p>
 	            <p>
 					<% if current_user.own_this_product?(@product) %>
-	                <div id="i_own_this">
-						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item, :product_id => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
+	                <div id="i_own_this-<%= @product.id %>">
+						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item, :product_id => @product.id }, :method => "delete", :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
 					</div>
 					<div id="response-product-<%= @product.id %>">
 					<% if @product.like?(current_user) %>					

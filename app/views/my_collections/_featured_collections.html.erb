@@ -32,8 +32,8 @@ $(window).load(function(){
 </script>
 
 <ul class="list-my-collections">
-	<% if !my_collections.nil? %>
-	<% my_collections.each do |my_collection| %>
+	<% if !featured_collections.nil? %>
+	<% featured_collections.each do |my_collection| %>
 	<li>
 		<%= link_to(my_collection) do %>
 			<%= link_to "edit", member_my_collection_path(my_collection.user, my_collection), :id => "action_link", :class => "edit_link" %>

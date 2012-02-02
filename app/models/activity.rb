@@ -5,11 +5,11 @@ class Activity < ActiveRecord::Base
   scope :friends_activities, joins('INNER JOIN friendships ON friendships.friend_id = activities.user_id')
   
   scope :user_activities, lambda { |user| 
-    users_activities.where('activities.user_id = ?', user.id) 
+    users_activities.where('activities.user_id = ? and activities.action = ?', user.id, "create") 
   }
 
   scope :user_friends_activities, lambda { |user| 
-    friends_activities.where('friendships.user_id = ?', user.id) 
+    friends_activities.where('friendships.user_id = ? and activities.action = ?', user.id, "create") 
   }
 
   scope :questions, joins('INNER JOIN questions ON activities.type_id = questions.id').where('activities.name = ?', 'Question')
@@ -32,7 +32,7 @@ class Activity < ActiveRecord::Base
   
   def my_collection
     if name == 'MyCollection'
-      MyCollection.find_by_id(type_id) # This change is caused by the use of has_permalink plugin
+      MyCollection.find(type_id)
     end
   end
   

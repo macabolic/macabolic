@@ -7,6 +7,7 @@ class MyCollectionsController < ApplicationController
     #@my_collection = MyCollection.find_by_permalink(params[:id])
     @user = @my_collection.user
     @my_collection_comments = @my_collection.comments.order("created_at DESC")
+		@my_collection_items = @my_collection.my_collection_items.page params[:collection_items_page]
     
 #    ids = @user.friends.map { |i| i.id }
 #    ids.insert(0, @user.id)
@@ -29,8 +30,9 @@ class MyCollectionsController < ApplicationController
   def new
     # Step 3 on the registration.
     # Show only the production from Apple
-    @search = Product.search do
-      fulltext "apple", :fields => [:vendor_name]
+    @search = Sunspot.search(Product) do
+      fulltext "Apple Inc.", :fields => [:vendor_name]
+      with(:product_line_id, [1, 3, 4, 5])
     end
     @products = @search.results
 

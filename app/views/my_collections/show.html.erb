@@ -59,7 +59,6 @@ $(document).ready(function() {
 			    <br class="clear" />
 			</div>			
 			
-		<% @my_collection_items = @my_collection.my_collection_items.paginate(:per_page => 10, :page => params[:collection_items_page])     %>
 		<% if @my_collection_items.empty? %>
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
@@ -79,26 +78,16 @@ $(document).ready(function() {
 			        <li><a href="#tab1">Collection Items</a></li> 
 				</ul> 		
 		        <div id="tab1" class="tab_content product-grid group"> 
-					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items } %>
+					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items, :mode => "read" } %>
 				</div>
 				<div class="left"><p class="total"><%= page_entries_info @my_collection_items %></p></div>
-				<% if @my_collection_items.total_pages > 0 %>
+				<%# if @my_collection_items.total_pages > 0 %>
 				<div class="right">
-						<div id="pagination">
-						<ul>
-						<% for i in (1..@my_collection_items.total_pages) %>
-							<% if @my_collection_items.current_page == i %>
-							<li class="current"><%= i %></li>
-							<% else %>
-							<li><%= i %><%#= link_to i, product_path(@product, :collection_items_page => i) %></li>
-							<% end %>
-						<% end %>
-							<li><span>of</span></li>
-							<li><%= @my_collection_items.total_pages %><%#= link_to my_collection_items.total_pages, product_path(@product, :question_page => @questions.total_pages) %></li>
-						</ul>
+					<div id="pagination">
+						<%= paginate @my_collection_items, :param_name => :collection_items_page %>
 					</div>
 				</div>
-				<% end %>				
+				<%# end %>				
 			</div>
 		<% end %>		
 		</div>

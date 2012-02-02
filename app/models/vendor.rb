@@ -1,4 +1,10 @@
 class Vendor < ActiveRecord::Base
   has_many  :products
-  has_many  :product_lines
+  
+  searchable do
+    text  :vendor_name do
+      self.name
+    end
+  end
+  
 end

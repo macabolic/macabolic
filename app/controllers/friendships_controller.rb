@@ -6,7 +6,7 @@ class FriendshipsController < ApplicationController
   def index
     if !params[:user_id].nil?
       if params[:search].length > 2
-        @search = Friendship.search do
+        @search = Sunspot.search(Friendship) do
           #any_of do
           with :user_id, params[:user_id]
           keywords params[:search]
@@ -109,10 +109,10 @@ class FriendshipsController < ApplicationController
 
     if params[:name].length > 2
       # Macabolic ---------
-      @search = Friendship.search do
+      @search = Sunspot.search(Friendship) do
         #any_of do
         with(:user_id, params[:user_id])
-        #fulltext params[:name]
+        fulltext params[:name], :fields => [:friend_name]            
       end
       @friends = @search.results      
       logger.info "Friends search result: #{@friends.size}."

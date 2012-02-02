@@ -15,7 +15,8 @@ class MyCollection < ActiveRecord::Base
                           :default_url => "/images/product/no-image_:style.jpg",
                           :default_style => :thumb
   
-  validates_attachment_size :thumbnail,  :less_than => 700000,  :message => "should be less than 700KB."
+  validates_attachment_size         :thumbnail, :less_than => 700000,  :message => "should be less than 700KB."
+  validates_attachment_content_type :thumbnail, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
   
   DEFAULT_COLLECTION_NAME = "My Collection"
   
@@ -64,20 +65,20 @@ class MyCollection < ActiveRecord::Base
   end
 
   def self.like?(my_collection, user)
-    @search = MyCollectionResponse.search do
+    @search = Sunspot.search(MyCollectionResponse) do
       with  :my_collection_id, my_collection.id 
       with  :user_id, user.id
     end
     
-    if @search.results.size > 0
-      return true
-    else
+    #if @search.results.size > 0
+    #  return true
+    #else
       return false
-    end
+    #end
   end
     
   def self.following?(my_collection, user)
-    @search = MyCollectionFollower.search do
+    @search = Sunspot.search(MyCollectionFollower) do
       with  :my_collection_id, my_collection.id 
       with  :follower_id, user.id
     end

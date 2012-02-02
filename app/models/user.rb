@@ -62,7 +62,8 @@ class User < ActiveRecord::Base
   #validate            :email, :presence => true
   validates_format_of :email, :with => /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/i, :message => "is not a valid email address."
   
-  validates_attachment_size :avatar,  :less_than => 700000,  :message => "should be less than 700KB."
+  validates_attachment_size         :avatar,  :less_than => 700000,  :message => "should be less than 700KB."
+  validates_attachment_content_type :avatar, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
   
   before_create :set_invitation_limit
   

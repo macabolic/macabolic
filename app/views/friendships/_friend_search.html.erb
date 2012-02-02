@@ -38,7 +38,24 @@ $(document).ready(function() {
 				<%= render :partial => 'friendships/friend_search_result', :locals => { :product => product } %>
 			</div>
     		<!--/ul-->
-		</div>
+			<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
+			<div style="display: block; margin-top: 5px; margin-bottom: 5px;">
+				<span style="font-size: 14px; color: #cccccc;">Share via</span>
+				<div style="margin-bottom: 5px; padding-bottom: 10px;">
+					<span class='recommended_user'>
+						<%= link_to '#' do %>
+							<%= image_tag "auth/facebook_32.png", :size => "32x32", :alt => "Facebook", :class => "social facebook" %>
+						<% end %>
+					</span>
+					<span class='recommended_user'>
+						<%= link_to '#' do %>
+							<%= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %>
+						<% end %>
+					</span>
+					<br/>
+				</div>
+			</div>			
+		</div>		
 	</div>
 </div><!-- #new-product -->
 

@@ -14,6 +14,7 @@
 
 <% @products.each do |product| %>
   <tr>
+	<td><%= image_tag product.thumbnail.url(:thumb), :width => "50", :height => "50" %></td>
     <td><%= product.name %></td>
     <td><%= product.vendor.name %></td>
     <td><%= product.product_line.name %></td>
@@ -30,4 +31,4 @@ else
 </table>
 
 <br />
-<%#= will_paginate @products %>
+<%= paginate @products %>

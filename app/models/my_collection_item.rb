@@ -2,12 +2,19 @@ class MyCollectionItem < ActiveRecord::Base
   belongs_to  :my_collection
   belongs_to  :product
   belongs_to  :user
+
+  has_attached_file       :thumbnail, 
+                          :styles => { :thumb => ["50x50>", :png], :small => ["180x180>", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
+                          :url => "/assets/members/my_collections/my_collection_items/:attachment/:id/:style/:filename",
+                          :path => ":rails_root/public/assets/members/my_collections/my_collection_items/:attachment/:id/:style/:filename",
+                          :default_url => "/images/product/no-image_:style.jpg",
+                          :default_style => :thumb
   
-  cattr_reader  :per_page
-  @@per_page = 10
-    
-  attr_accessible         :user_id, :product_id, :my_collection_id
-  
+  validates_attachment_size         :thumbnail, :less_than => 700000,  :message => "should be less than 700KB."
+  validates_attachment_content_type :thumbnail, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
+  validates_associated    :product    
+  attr_accessible         :user_id, :product_id, :my_collection_id, :thumbnail
+
   searchable do
     integer :my_collection_id
     integer :user_id

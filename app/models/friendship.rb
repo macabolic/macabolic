@@ -5,6 +5,9 @@ class Friendship < ActiveRecord::Base
   searchable do
     integer :user_id
     integer :friend_id
+    text    :friend_name do
+      friend.full_name.downcase
+    end
   end
     
   def full_name

@@ -10,15 +10,15 @@ class MyCollectionItemsController < ApplicationController
     @user = current_user if !@user.present?
     @product = Product.find(params[:product_id])
     #@reviews = Review.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 10, :page => params[:review_page])
-    @questions = Question.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 10, :page => params[:question_page])    
+    @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:page]
 
     friends = @user.friend_ids
     if !friends.nil? and friends.size > 0
-      @search_friends_who_owned = MyCollectionItem.search do
+      @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
         with(:product_id, params[:product_id])
         with(:user_id, friends)
       end
-      @search_friends_who_wished = WishlistItem.search do
+      @search_friends_who_wished = Sunspot.search(WishlistItem) do
         with(:product_id, params[:product_id])
         with(:user_id, friends)
       end
@@ -33,6 +33,13 @@ class MyCollectionItemsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @product }
     end  
+  end
+
+  # GET /my_collection_items/1/edit
+  def edit
+    @my_collection_item = MyCollectionItem.find(params[:id])
+    @product = Product.find(params[:product_id])
+    @user = @my_collection_item.user
   end
 
   # POST /my_collection_items
@@ -60,6 +67,23 @@ class MyCollectionItemsController < ApplicationController
       #  format.xml  { render :xml => @my_collection.errors, :status => :unprocessable_entity }
       end
     #end
+  end
+
+  # PUT /my_collection_items/1
+  # PUT /my_collection_items/1.xml
+  def update
+    @my_collection_item = MyCollectionItem.find(params[:id])
+    @product = Product.find(params[:product_id])
+
+    respond_to do |format|
+      if @my_collection_item.update_attributes(params[:my_collection_item])
+        format.html { redirect_to(product_my_collection_item_path(@product, @my_collection_item), :notice => 'My collection item was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @my_collection_item.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /my_collection_items/1

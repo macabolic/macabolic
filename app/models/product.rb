@@ -15,11 +15,24 @@ class Product < ActiveRecord::Base
                           :url => "/assets/products/:attachment/:id/:style/:filename",
                           :path => ":rails_root/public/assets/products/:attachment/:id/:style/:filename"
 
-  validates_attachment_size :thumbnail,  :less_than => 700000,  :message => "should be less than 700KB."
+  validates               :name, 
+                          :length => { :minimum => 3, :maximum => 100, :too_short => "must have at least %{count} characters", :too_long => "must have at most %{count} characters" },
+                          :uniqueness => { :scope => :vendor_id, :case_sensitive => false, :message => "is created in the vendor you specified already."}
+  validates               :description, 
+                          :length => { :maximum => 1000, :too_long => "must have at most %{count} characters" }
+  validates               :vendor, :presence => true
+  validates               :product_line, :presence => true
+  validates_associated    :product_line
+  validates_associated    :vendor
 
-  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id
+  validates_attachment_size         :thumbnail, :less_than => 700000,  :message => "should be less than 700KB."
+  validates_attachment_content_type :thumbnail, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
+  
+  accepts_nested_attributes_for :vendor, :reject_if => lambda { |a| a[:name].blank? }
+  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes
   
   searchable do
+    integer :product_line_id
     text  :name
     text  :vendor_name do
       vendor.name
@@ -38,21 +51,21 @@ class Product < ActiveRecord::Base
   end
   
   def people_who_owned
-    @search = MyCollectionItem.search do
+    @search = Sunspot.search(MyCollectionItem) do
       with(:product_id, self.id)
     end
     @people_who_owned = @search.results.map { |i| i.user }
   end
 
   def people_who_wished 
-    @search = WishlistItem.search do
+    @search = Sunspot.search(WishlistItem) do
       with(:product_id, self.id)      
     end
     @people_who_wished = @search.results.map { |i| i.user }
   end
   
   def self.like?(product, user)
-    @search = ProductResponse.search do
+    @search = Sunspot.search(ProductResponse) do
       with  :product_id, product.id 
       with  :user_id, user.id
     end

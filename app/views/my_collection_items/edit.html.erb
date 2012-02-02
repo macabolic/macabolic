@@ -1,6 +1,75 @@
-<h1>Editing my_collection_item</h1>
+<% title @product.name %>
+<style type="text/css">
+	.save_button {
+		cursor: pointer;
+	}
+</style>
 
-<%= render 'form' %>
+<script type="text/javascript">  
+$(document).ready(function() {
+ 	$(document).pngFix(); 
 
-<%= link_to 'Show', @my_collection_item %> |
-<%= link_to 'Back', my_collection_items_path %>
+    //Input Form placeholder
+    $('input:text').focus(function(){
+        if(this.value === this.defaultValue) {
+            this.value = "";
+        } else {
+            this.select();
+        }
+    })
+    .blur(function(){
+        if ($.trim(this.value) === "") {
+            this.value = (this.defaultValue ? this.defaultValue: "")
+        }
+    });
+});
+</script>
+
+<div id="grey-strip-signedin">
+	<div class="wrapper-top">
+		<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>						
+	</div>
+</div>
+
+<div class="wrapper-mh">
+	<div class="maincol">
+		<%= form_for(@my_collection_item, :html => { :multipart => true }) do |f| %>		
+    	<div class="product-item sidebar-content">	         
+			<div class="product-image">
+				<%= image_tag @my_collection_item.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
+				<div style="padding-top:15px; text-align: center">
+					<span class="home-signupbutton">
+				   		<%= link_to "Delete this item?", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item }, :method => "delete", :title => "Delete this item?", :confirm => "Are you sure?" %>
+					</span>
+				 </div>					
+	        </div>			
+	        <div class="product-detail">
+	            <div>
+					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
+				</div>
+				<p class="left">
+					<%= f.file_field :thumbnail %>
+				</p>				
+				<%#= f.text_field :name, :class => 'big_input' %><br/>
+				<p>
+					<div id="add_wishlist">						
+						<%= f.submit 'Save', :class => "save_button" %>
+						<%= link_to 'Done editing', product_my_collection_item_path(@product, @my_collection_item) %>
+					</div>
+				</p>
+	        </div>
+		    <br class="clear" />
+	    </div>
+			<%= hidden_field_tag 'product_id', @product.id %>
+		<% end %>
+	</div>
+	
+	<div class="sidebar">
+		<!-- Recommend a friend -->
+		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
+
+		<!-- In the same collection -->
+		<%= render :partial => 'my_collection_items/in_the_same_my_collection', :locals => { :current_my_collection_item => @my_collection_item } %>
+		
+	</div>
+</div>

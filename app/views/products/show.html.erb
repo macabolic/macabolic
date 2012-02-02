@@ -128,6 +128,7 @@ $(document).ready(function() {
 		<!-- Recommend a friend -->
 		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
 		
+		<% if !@friends_who_owned.nil? %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
 				<%= pluralize(@friends_who_owned.size, 'friend') %> own
@@ -144,7 +145,8 @@ $(document).ready(function() {
 				</ul>
 			</div>
 		</div><!-- #see who has similar products in his network -->			
-
+		<% end %>
+		<% if !@friends_who_wished.nil? %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
 				<%= pluralize(@friends_who_wished.size, 'friend') %> wish
@@ -161,7 +163,7 @@ $(document).ready(function() {
 				</ul>
 			</div>
 		</div><!-- #see who has similar products in his network -->			
-		
+		<% end %>
 		<!--
         <div id="product-tips" class="sidebar-content">
             <div class="sidebar-header">

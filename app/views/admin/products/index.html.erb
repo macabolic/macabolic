@@ -1,11 +1,12 @@
-
-<%= form_tag admin_products_path, :method => 'get', :id => 'products_search' do %>
-	<p>
-		<%= text_field_tag :search, params[:search], :autocomplete => 'off' %>
-		<%= submit_tag "Search", :name => nil %>
+<div style="margin: 15px;">
+<%= form_tag admin_products_path, :method => 'get', :id => 'products_search', :remote => true do %>
+	<p style="padding-bottom: 15px;">
+		<strong>Search</strong>: <%= search_field_tag :search, params[:search], :autocomplete => 'off' %>
+		<%#= submit_tag "Search", :name => nil %>
 	</p>
 	<div id="products"><%= render 'products' %></div>
 <% end %>
 
 <!-- product.released_at.strftime("%B %e, %Y") -->
 <%= link_to 'New Product', new_admin_product_path %>
+</div>

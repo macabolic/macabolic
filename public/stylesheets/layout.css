@@ -109,6 +109,18 @@ padding: 13px 0px 0px 0px;
 	margin-bottom: -3px;
 }
 
+img.twitter {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top;
+}
+
+img.facebook {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top;	
+}
+
 .wrapper-homecontent {
 width: 496px;
 margin: 0 auto;

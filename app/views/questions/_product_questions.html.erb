@@ -56,21 +56,9 @@ function showAnswer(id) {
 <% end %>
 </ul> 
 <div class="left"><p class="total"><%= page_entries_info @questions %></p></div>
-<% if @questions.total_pages > 0 %>
 <div class="right">
-		<div id="pagination">
-		<ul>
-		<% for i in (1..@questions.total_pages) %>
-			<% if @questions.current_page == i %>
-			<li class="current"><%= i %></li>
-			<% else %>
-			<li><%= link_to i, product_path(@product, :question_page => i) %></li>
-			<% end %>
-		<% end %>
-			<li><span>of</span></li>
-			<li><%= link_to @questions.total_pages, product_path(@product, :question_page => @questions.total_pages) %></li>
-		</ul>
+	<div id="pagination">
+		<%= paginate @questions %>
 	</div>
 </div>
-<% end %>
 

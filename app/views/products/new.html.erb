@@ -1,5 +1,9 @@
-<% title 'Add new product' %>
-
+<% title 'Add a new product' %>
+<style type="text/css">
+select {
+	width: 200px;
+}
+</style>
 <script type="text/javascript"> 
     $(document).ready(function(){ 
         $(document).pngFix(); 
@@ -18,11 +22,88 @@
 	        }
 	    });
     }); 
+
+	$(function() {
+		$( "#product_name" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "<%= products_path %>",
+					dataType: "json",
+					data: {
+						search: request.term
+					},
+					success: function( data ) {
+						response( $.map( data, function( item ) {
+							return {
+								label: item.product.name,
+								value: item.product.name
+							}
+						}));
+					}
+				});
+			},
+			minLength: 2,
+			select: function( event, ui ) {
+				$(this).value(ui.item.label);
+			},			
+			open: function() {
+				$(this).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$(this).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+		});
+
+		$( "#vendor_name" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "<%= find_vendor_searches_path %>",
+					dataType: "json",
+					data: {
+						query: request.term
+					},
+					success: function( data ) {
+						response( $.map( data, function( item ) {
+							return {
+								label: item.vendor.name,
+								value: item.vendor.name
+							}
+						}));
+					}
+				});
+			},
+			minLength: 2,
+			select: function( event, ui ) {
+				$(this).value(ui.item.label);
+			},			
+			open: function() {
+				$(this).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$(this).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+		});
+
+		$("#my_collection_link img").click(function() {
+			// Selected
+			$(this).toggleClass('selected-product', true); 
+			if ($(this).hasClass('selected-product')) {
+				$(this).parents('li').removeClass('not-selected-product');
+				$(this).parents('li').siblings().removeClass('selected-product');
+				$(this).parents('li').siblings().addClass('not-selected-product');
+				$('#my_collection_id').attr('value', $(this).attr("id"))
+			} else {
+				$(this).parents('li').addClass('not-selected-product');			
+			}
+		});
+
+	});
+
 </script>
 
 <div id="grey-strip-signedin">
 	<div class="wrapper-top">
-		<%= render :partial => 'layouts/navigation', :locals => {:user => @user, :item => "Collections"} %>						
+		<%= render :partial => 'layouts/navigation', :locals => {:user => @user, :item => ""} %>						
 	</div>
 </div>
 
@@ -30,6 +111,7 @@
 <div class="wrapper-mh">
 	<div class="add-product-maincol"> 
     	<div class="add-product-content">
+			<!--
 			<div class="add-product-methods">
 				<ul>
 					<li>
@@ -44,35 +126,56 @@
 					<li class="noborder alt">Twitter<span><%= image_tag "auth/twitter_64.png", :size => "64x64", :alt => "Twitter", :class => "social" %></span></li>
 				</ul>
 			</div>
+			-->
+			<div id="error_explanation" style="margin-left: 20px;">
+				<%= f.error_messages %>
+			</div>
 			<div class="add-product-methods">				
-				<h3>Create a new product</h3>
-				<label for="tiptitle">Name</label>
+				<br/>
+				<h3>Add a new product</h3>
+			  	<%= f.label :name %>
 				<%= f.text_field :name, :class => "text", :placeholder => "e.g. iPad 3" %><br/><br/>
 
 			  	<%= f.label :vendor_id %>
-				<%= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %><br/><br/>
+				<%= text_field_tag 'vendor_name', nil, :class => "text", :placeholder => "e.g. Apple Inc." %><br/><br/>
+				<%#= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %>
 
 			  	<%= f.label :product_line_id %>
-				<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name) %><br/><br/>
+				<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name, :prompt => true) %><br/><br/>
 
+			  	<%= f.label :description %>
+				<%= f.text_area :description, :cols => 70, :rows => 5, :class=> "answer_area" %><br/><br/>
 
-				<%= hidden_field_tag :my_collection_id, params[:my_collection] %>
-				<%#= hidden_field :user_id,  %>
+				<%= hidden_field_tag :my_collection_id %>
+				
+				<div>
+			  		<%= f.label 'Upload a image' %>
+					<%= f.file_field :thumbnail %>			
+				</div>	
+				<br/>
+
 				<div class="actions">
 					<%= f.submit 'Submit', :class => "submit-tip-button" %>
-				</div>				
+				</div>
+				<br/>
 			</div>
 	    </div>
 	</div>
-	<div class="upload-image-sidebar">			
+	
+	<!--div class="upload-image-sidebar"-->			
+	<div class="sidebar"-->
 		<div class="sidebar-content">
-			<div class="upload-image">
-				<div>
-			  		<%= f.label 'Upload a image' %>
-					<img src="/images/product/no-image.jpg" alt="Product Image" class="preview-image">
-					<br/><br/>
-					<%= f.file_field :thumbnail %>			
-				</div>		        				
+            <div class="sidebar-header">Add to your collection?</div>			
+			<div id="question" class="product-grid" style="margin: 17px; border: 0px;">
+		    	<ul>
+				<% current_user.my_collections.each do |my_collection| %>
+		  			<li id="<%= my_collection.id %>" class="not-selected-product">	
+						<%= link_to '#', :id => 'my_collection_link' do %>	
+							<%= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+						<% end %>
+					</li>
+				<% end %>
+				</ul>
 			</div>
 		</div>
 	</div>
