@@ -16,7 +16,12 @@
 		<% @my_collection_items.each do |my_collection_item| %>
   			<li id="<%= my_collection_item.id %>" class="not-selected-product">	
 				<%= link_to '#', :id => 'product_question_link' do %>	
+				<% if my_collection_item.thumbnail.present? %>
+					<%= image_tag my_collection_item.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection_item.product.id, :title => my_collection_item.product.name %>
+				<% else %>
 					<%= image_tag my_collection_item.product.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection_item.product.id, :title => my_collection_item.product.name %>
+				<% end %>
+				
 				<% end %>
 			</li>
 		<% end %>

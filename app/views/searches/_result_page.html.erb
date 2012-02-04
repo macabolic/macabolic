@@ -45,7 +45,7 @@
 				<p class="left">
 					<h3 style="text-align: left;"><%= link_to product.name, product_path(product) %></h3>
 				</p>
-				<p><%= product.description %></p>								
+				<p><%=h truncate(product.description, :length => 200) %></p>																
 			</div>
 <!--
       <p>
@@ -58,7 +58,7 @@
       	</ul>
 </p>
 -->
-      		<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'person') %></a> own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
+			<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'person') %></a> own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
 			<p>
           		<ul class="friend-ownthis" style="margin-bottom: 10px;">
 				<% product.owners.each do |owner| %>
@@ -69,9 +69,6 @@
 					</li>
 				<% end %>
 				</ul>
-			</p>
-			<p>
-				<%#= render :partial => 'searches/product_action', :locals => { :product => product }%>
 			</p>
 		</div>
 		<br class="clear" />

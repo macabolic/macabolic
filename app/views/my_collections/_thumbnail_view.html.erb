@@ -1,0 +1,58 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#my_collection_link img").click(function() {
+		// Selected
+		$(this).toggleClass('selected-product', true); 
+		if ($(this).hasClass('selected-product')) {
+			$(this).parents('li').removeClass('not-selected-product');
+			$(this).parents('li').siblings().removeClass('selected-product');
+			$(this).parents('li').siblings().addClass('not-selected-product');
+			$('#my_collection_id').attr('value', $(this).parents('li').attr("id"))
+		} else {
+			$(this).parents('li').addClass('not-selected-product');			
+			//$(this).find('.product_id').attr('value', '')
+		}
+	});
+});
+</script>
+<%= form_for MyCollectionItem.new, :as => :my_collection_item, :url => my_collection_items_path, :html => { :id => "do-you-have-one-form", :class => "question-form" } do |f| %>
+<div style="width: 800px;">
+	<div style="width: 760px; background: #ffffff; margin-left: auto; margin-right: auto; padding: 15px;">
+		<h3>Which collection do you want it be?</h3> 
+		<div id="question" class="product-grid" style="float: left; margin: 17px; border: 0px; width: 700px;">
+			<a id="popupMyCollectionClose" style="cursor: pointer">x</a>
+			<ul>
+			<% @my_collections.each do |my_collection| %>
+				<li id="<%= my_collection.id %>" class="not-selected-product" style="margin-right: 10px; margin-bottom: 10px">	
+					<%= link_to '#', :id => 'my_collection_link' do %>	
+						<%= image_tag my_collection.thumbnail.url(:medium), :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+					<% end %>			
+					<span>
+						<p><%#= simple_format(word_wrap(my_collection.name, :line_width => 10)) %></p>
+					</span>						
+				</li>		
+			<% end %>
+			</ul>
+				<%= hidden_field_tag 'product_id', @product.id %>
+				<%= hidden_field_tag 'page_id', 'Product' %>
+				<%= hidden_field_tag 'my_collection_id', nil %>			
+		</div>
+	<!--	<div style="margin-left: auto; margin-right: auto; width: 100%; height: 5px; border-bottom: 1px dotted #d4d4d4;"></div>	-->
+		<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
+			<div class="actions">
+				<%= f.submit 'Submit', :class => "submit-tip-button" %>
+			</div>			
+		</div>
+	<!--
+		<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
+			<b>Create a new collection</b>
+			<%# 
+				@my_collection = MyCollection.new 
+				@my_collection.name = ''
+			%>
+			<%#= render "my_collections/form" %>
+		</div>
+	-->
+	</div>
+</div>
+<% end %>

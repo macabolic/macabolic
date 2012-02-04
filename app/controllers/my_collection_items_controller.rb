@@ -48,7 +48,7 @@ class MyCollectionItemsController < ApplicationController
     logger.info "MyCollectionItemsController => create"
     #@product = Product.find(params[:id])
     @product = Product.find(params[:product_id])
-    @my_collection = MyCollection.find_by_id(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
+    @my_collection = MyCollection.find(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
     
     @my_collection_item = MyCollectionItem.new
     @my_collection_item.my_collection_id = params[:my_collection_id]

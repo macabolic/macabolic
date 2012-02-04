@@ -76,5 +76,52 @@ $(function() {
 				//$(this).find('.product_id').attr('value', '')
 			}
 	});
+
+/*
+  $.fn.extend({
+		modalPanel: function() {
+
+        //Create our overlay object
+        var overlay = $("<div id='modal-overlay'></div>");
+				var modalWindow = $("<div id='modal-window'></div>");
+        return this.each(function() {
+
+            //Listen for clicks on objects passed to the plugin
+            $(this).click(function(e) {
+                //Append the overlay to the document body
+                $("body").append(overlay.click(function() { 
+                    modalHide(); 
+                }))
+
+                //Set the css and fade in our overlay
+                overlay.css("opacity", 0.8);
+                overlay.fadeIn(150);
+
+                //Prevent the anchor link from loading
+                e.preventDefault();
+
+                //Activate a listener 
+                $(document).keydown(handleEscape);		
+            });
+        });
+
+        //Our function for hiding the modalbox
+        function modalHide() {
+				    $(document).unbind("keydown", handleEscape)
+				    var remove = function() { $(this).remove(); };
+				    overlay.fadeOut(remove);
+				    modalWindow.fadeOut(remove).empty();
+        }
+
+        //Our function that listens for escape key.
+        function handleEscape(e) {
+            if (e.keyCode == 27) {
+                modalHide();
+            }
+        }
+    }
+	});
 	
+	$('a[rel*=modalPanel]').modalPanel();	
+*/	
 });

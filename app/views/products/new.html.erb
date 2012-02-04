@@ -147,6 +147,7 @@ select {
 				<%= f.text_area :description, :cols => 70, :rows => 5, :class=> "answer_area" %><br/><br/>
 
 				<%= hidden_field_tag :my_collection_id %>
+				<%= hidden_field_tag "product[uploader_id]", current_user.id %>
 				
 				<div>
 			  		<%= f.label 'Upload a image' %>

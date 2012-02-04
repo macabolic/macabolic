@@ -8,11 +8,11 @@ class ProductsController < ApplicationController
       
     else
       if params[:search].length > 2
-        @search = Sunspot.search(Product) do
+        search = Sunspot.search(Product) do
           fulltext params[:search]
         end
-        @products = @search.results
-        #@products = Product.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 10, :page => params[:page])
+
+        @products = search.results        
         if !params[:my_collection].nil?
           @my_collection = MyCollection.find_by_id(params[:my_collection])
         end
@@ -57,6 +57,8 @@ class ProductsController < ApplicationController
       end
     
       @product_comments = @product.comments.order("created_at DESC")
+      
+      @my_collections = current_user.my_collections
     
       respond_to do |format|
         format.html # show.html.erb

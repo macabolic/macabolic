@@ -207,4 +207,11 @@ class MyCollectionsController < ApplicationController
     @number_of_likes = @my_collection.responses.size
   end
   
+  def thumbnail_view
+    @user = current_user
+    @my_collections = current_user.my_collections
+    @my_collection = MyCollection.new
+  	@my_collection.name = ''
+  	@my_collection.user = @user    
+  end
 end

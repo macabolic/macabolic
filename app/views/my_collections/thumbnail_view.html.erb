@@ -1,0 +1,65 @@
+<% title 'Select a collection' %>
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">  
+$(document).ready(function() {
+    $(document).pngFix(); 
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+});
+</script>
+
+<body class="subpage">
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+			        <li><a href="#tab1">Collections</a></li> 
+				</ul> 		
+		        <div id="tab1" class="tab_content product-grid group"> 
+					<div id="question" class="product-grid" style="margin: 17px; border: 0px;">
+						<ul>
+						<% @my_collections.each do |my_collection| %>
+							<li id="<%= my_collection.id %>" class="not-selected-product">	
+								<%= link_to '#', :id => 'product_question_link' do %>	
+									<%= image_tag my_collection.thumbnail.url(:medium), :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+								<% end %>
+								<span>
+									<p><%= simple_format(word_wrap(my_collection.name, :line_width => 50)) %></p>
+								</span>			
+							</li>
+						<% end %>
+						</ul>
+					</div>
+				</div>
+			</div>
+		    <br/>
+		</div>
+		<% if @user == current_user %>
+		<div class="sidebar">
+			<div>
+				<div class="sidebar-content account-info">
+					<div class="sidebar-header">
+						Add a new collection
+					</div>
+					<div class="sidebar-inner">								
+						<%= render :partial => 'my_collections/form', :locals => { :user => @user } %>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<% end %>
+	</div>
+</body>
+									

@@ -81,19 +81,24 @@ function size(t) {
 		<% if @my_collections.empty? %>			
 		        <div id="tab1" class="tab_content product-grid group"> 
 	            	<div id="search-result" class="no-result">
-		                <p>
-		                	There is no collection yet. Create one now.
-		                </p>	
+		                <p>There is no collection yet. Create one now.</p>	
 	            	</div>
 				</div>
 		<% else %>
 		        <div id="tab1" class="tab_content product-grid group"> 
 					<%= render :partial => 'my_collections/index', :locals => { :my_collections => @my_collections } %>
-				</div>			
+				</div>	
+		<% end %>
+		<% if @my_collection_items.empty? %>
+				<div id="tab2" class="tab_content2 product-grid group">
+					<div id="search-result" class="no-result">
+						<p>There is no collection yet. Create one now.</p>
+					</div>
+				</div>
+		<% else %>		
 		        <div id="tab2" class="tab_content2 product-grid group">
 					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items, :mode => "read" } %>
 				</div>
-				<!--div class="left"><p>Displaying 1 - 11 of 345</p></div-->
 		<% end %>
 			</div>
 			
@@ -126,15 +131,5 @@ function size(t) {
 			</div>			
 		</div>
 		<% end %>
-<!--
-		<div class="sidebar">
-			<div>
-				<div class="sidebar-content account-info">
-					<div class="sidebar-inner">
-					</div>
-				</div>
-			</div>			
-		</div>
--->		
 	</div>
 </body>

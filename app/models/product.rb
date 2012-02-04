@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to              :product_line
   belongs_to              :vendor
+  belongs_to              :uploader,            :class_name => "User",  :foreign_key => "uploader_id"
   has_many                :reviews,             :dependent => :destroy
   has_many                :questions,           :dependent => :destroy  
   has_many                :answers,             :dependent => :destroy
@@ -33,6 +34,7 @@ class Product < ActiveRecord::Base
   
   searchable do
     integer :product_line_id
+    integer :response_ids, :multiple => true
     text  :name
     text  :vendor_name do
       vendor.name

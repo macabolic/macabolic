@@ -28,6 +28,11 @@
 					<p><%= simple_format(word_wrap(my_collection_item.product.name, :line_width => 50)) %></p>
 				<% end %>				        	
 			</span>
+			<span class="right">
+				<span>
+					<%= pluralize(my_collection_item.product.responses.size, "like") %> | <%= pluralize(my_collection_item.product.comments.size, "comment") %>
+				</span>
+			</span>																		
 		<% end %>
 	</li>							
 	<% end %>	

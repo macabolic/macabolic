@@ -24,15 +24,15 @@ ActiveAdmin.register Product do
   end
   
     
-  form :partial => "form"  
-  #form do |f|
-  #    f.inputs "Product" do
-  #      f.input :name
-  #      f.input :vendor
-  #      f.input :product_line
-  #      f.input :thumbnail
-  #      f.input :description
-  #    end
-  #    f.buttons
-  #end  
+  #form :partial => "form"  
+  form do |f|
+      f.inputs "Product" do
+        f.input :name
+        f.input :vendor
+        f.input :product_line
+        #f.input :thumbnail
+        f.input :description
+      end
+      f.buttons
+  end  
 end

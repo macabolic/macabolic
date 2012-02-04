@@ -1309,3 +1309,26 @@ input:blur {
 	margin-bottom: 10px;
 }
 
+#modal-overlay {
+   position: fixed;
+   z-index:100;
+   top: 0px;
+   left: 0px;
+   height:100%;
+   width:100%;
+   background: #000;
+   display: none;
+}
+
+#modal-window {
+   position: fixed;
+   z-index: 102;
+   display:none;
+   top:50%;
+   left:50%;
+}
+
+#modal-window img {
+   display: block;
+   border: 3px solid #ccc;
+}

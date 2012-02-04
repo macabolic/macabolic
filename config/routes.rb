@@ -69,6 +69,7 @@ Macabolic::Application.routes.draw do
       get 'skip'
       get 'follow'
       get 'unfollow'
+      get 'thumbnail_view'
     end
     
     collection do
