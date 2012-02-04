@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
   validates_attachment_content_type :thumbnail, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
   
   accepts_nested_attributes_for :vendor, :reject_if => lambda { |a| a[:name].blank? }
-  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes
+  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description
   
   searchable do
     integer :product_line_id

@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @user = current_user
     
-    if @user.own_this_product?(@product)
+    if @user.present? && @user.own_this_product?(@product)
       @my_collection_item = MyCollectionItem.where("user_id = ? and product_id = ?", @user.id, @product.id).first
       redirect_to product_my_collection_item_path(@product, @my_collection_item), :status => 301
     else 
