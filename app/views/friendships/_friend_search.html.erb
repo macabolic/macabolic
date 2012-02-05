@@ -1,4 +1,8 @@
 <script type="text/javascript">
+!function(d,s,id) {
+	var js,fjs=d.getElementsByTagName(s)[0];
+	if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
 $(document).ready(function() {
 	$("#friend_name").keydown(function(event) {
 		if (event.which == 13) {
@@ -18,9 +22,6 @@ $(document).ready(function() {
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-</script>
-<script>
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
 <div class="sidebar-content" id="new-product">				
 	<div class="sidebar-header">Recommend to Your Friends</div>	
@@ -62,7 +63,7 @@ $(document).ready(function() {
 						<%# end %>
 					</span>
 					<span class='recommended_user'>
-						<a href="https://twitter.com/share" data-url="<%= product_url(product) %>" data-via="recommend" data-count="horizontal" class="twitter-share-button" data-lang="en">Tweet</a>
+						<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= product_url(product) %>" data-counturl="<%= product_url(product) %>" data-title="<%= product.name %>" data-lang="en" data-count="horizontal" data-via="macabolic">Tweet</a>						
 						<%#= link_to '#' do %>
 							<%#= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %>
 						<%# end %>

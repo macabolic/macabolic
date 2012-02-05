@@ -44,7 +44,6 @@
 <script type="text/javascript"> 
 	function requestCallback(response) {
 		// Handle callback here
-		//alert("Handle callback...");
 	}
 
     $(document).ready(function(){ 
@@ -52,7 +51,6 @@
 
 		//Default Action
 		$(".invite_link").click(function() {
-			//alert("Clicked invite link");
 			FB.init({
 				appId  : '249685278407440',
 				status : true,
@@ -60,14 +58,7 @@
 				oauth: true
 			});
 			
-			var user_id = $(this).attr("id");
-			//alert("Get the user id: " + user_id);
-			//FB.ui({	method: 'apprequests',
-			//		message: 'Meet the fellow Mac lovers in an all new way. Share your collections, post tips and make recommendations.',
-			//		to: user_id,
-			//		//to: '610814778',
-			//	}, requestCallback);
-			
+			var user_id = $(this).attr("id");			
 			FB.ui({	method: 'send',
 					name: 'Welcome to join Macabolic.com',
 					link: 'http://teaser.macabolic.com',

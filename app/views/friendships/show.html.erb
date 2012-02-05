@@ -18,26 +18,6 @@ $(document).ready(function() {
 			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Friends" } %>			
 		</div>
 	</div>
-	<!-- ====================================================================================================== 
-	$(".invite_link1").click(function() {
-		alert("Clicked invite");
-		FB.init({
-			appId  : '249685278407440',
-			status : true,
-			cookie : true,
-			oauth: true
-		});
-
-		var user_id = $(this).attr("id");
-		FB.ui({	method: 'apprequests',
-				message: 'My Great Request',
-				to: user_id, 
-			}, requestCallback);
-		}
-		$(this).attr("value", "invited")
-	});
-	
-	-->
 	<div class="wrapper-mh">
 		<div class="maincol">
 			<div class="tabbed-content-area">
