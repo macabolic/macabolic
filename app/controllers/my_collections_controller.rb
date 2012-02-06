@@ -1,4 +1,5 @@
 class MyCollectionsController < ApplicationController
+  before_filter :require_invitation, :only => [ :new ]
 
   # GET /my_collections/1
   # GET /my_collections/1.xml
@@ -213,5 +214,12 @@ class MyCollectionsController < ApplicationController
     @my_collection = MyCollection.new
   	@my_collection.name = ''
   	@my_collection.user = @user    
+  end
+  
+  private 
+  def require_invitation
+    if current_user.invitation_id.nil?
+      redirect_to home_index_path # halts request cycle
+    end
   end
 end

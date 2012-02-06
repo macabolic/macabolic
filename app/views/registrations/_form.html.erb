@@ -56,7 +56,7 @@
 	<% logger.info "invitation_token: #{params[:invitation_token]}"%>
 	<div class="home-signup-th">Accept Invitation from <%= @invitation.sender.full_name if @invitation.sender %><%#= params[:from] %></div>
 <%else %>
-	<div class="home-signup-th">Sign Up Now</div>
+	<div class="home-signup-th">Request an invite</div>
 <% end %>
 	<%= registration_error_messages! %>
 	<div id="left" class="invite-friends">
@@ -82,7 +82,7 @@
 		</div>
 		<div>
 			<span class="home-signupbutton">
-				<%= submit_tag "Join", :class => "home-signupbutton" %>
+				<%= submit_tag "Sign me up", :class => "home-signupbutton" %>
 			</span>  
 		</div>
 		<% end %>

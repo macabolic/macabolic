@@ -21,7 +21,7 @@ Macabolic::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
     
   # Action Mailer Configuration
-  config.action_mailer.default_url_options = { :host => 'localhost:3001' }
+  #config.action_mailer.default_url_options = { :host => 'localhost:3001' }
   
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true

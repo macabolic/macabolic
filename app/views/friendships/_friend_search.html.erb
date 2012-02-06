@@ -58,15 +58,9 @@ $(document).ready(function() {
 				<div style="margin-bottom: 5px; padding-bottom: 10px;">
 					<span class='recommended_user'>
 						<div class="fb-like" data-href="<%= product_url(product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>						
-						<%#= link_to '#' do %>
-							<%#= image_tag "auth/facebook_32.png", :size => "32x32", :alt => "Facebook", :class => "social facebook" %>
-						<%# end %>
 					</span>
 					<span class='recommended_user'>
-						<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= product_url(product) %>" data-counturl="<%= product_url(product) %>" data-title="<%= product.name %>" data-lang="en" data-count="horizontal" data-via="macabolic">Tweet</a>						
-						<%#= link_to '#' do %>
-							<%#= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %>
-						<%# end %>
+						<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= product_url(product) %>" data-text="I would love to recommend the <%= product.name %>. Check it out now." data-counturl="<%= product_url(product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 					</span>
 					<br/>
 				</div>

@@ -27,7 +27,7 @@
 	<!-- A form here with First Name, Last Name, Email Address -->	
 	
 	<div id="step2" class="home-signup" style="margin-top: 35px; height: 220px">
-		<div class="home-signup-th"><span><strong>Invite your friends</strong></span></div>
+		<div class="home-signup-th"><span><strong>Spread the words out!</strong></span></div>
 		<div id="left" class="invite-friends">
 			<%= form_for(Invitation.new, :remote => true, :html => { :class => "home-signupform", :id => "invite-friend-form" }) do |f| %>
 			<div>	
@@ -42,7 +42,7 @@
 		</div>
 		<div style="margin-top: 30px; float: left; width 1px; height: 100px; border: 1px dotted #d4d4d4;"><div class="push"></div></div>
 		<div style="padding: 5px 5px 5px 5px; margin-top: 23px; width: 150px; float: right;">			
-		<% if params[:origin] == 'facebook' %>
+		<%# if params[:origin] == 'facebook' %>
 			<span style="font-size: 14px; color: #cccccc;">via Facebook</span>
 			<div style="margin-top: 5px; margin-bottom: 10px;">
 				<!-- If coming from facebook login -->
@@ -53,7 +53,7 @@
 			<div style="margin-top: 5px;">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.macabolic.com" data-text="Are you an Apple users? Come check it out!" data-count="none" data-via="macabolic">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 			</div>
-		<% end %>		
+		<%# end %>		
 		</div>
 		<div style="height: 20px; clear: both; float: right; margin-top: 0px; padding-right: 10px; padding-top: 15px;">
 			<%= link_to "No thanks, I am done.", skip_invitation_path(1) %>

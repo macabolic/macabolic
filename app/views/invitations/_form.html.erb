@@ -46,7 +46,7 @@
 			<div>
 				<div>
         			<strong style="padding-bottom: 5px;">Email</strong>
-		  			<%= f.text_field :recipient_email, :placeholder => 'billy@macabolic.com, sam@macabolic.com' %>
+		  			<%= f.text_field :recipient_email, :placeholder => 'billy@macabolic.com' %>
 					<span id="loading">
 						<%= image_tag "loading.gif" %>
 					</span>
@@ -63,7 +63,10 @@
 				<div style="margin-top: 5px; margin-bottom: 15px;">
 					<ul style="list:none;">
 						<li style="float: left;"><%= image_tag "auth/facebook_32.png", :size => "32x32", :alt => "Facebook", :class => "social facebook" %></li>
-						<li style="float: left;"><%= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %></li>
+						<li style="float: left;">
+							<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.macabolic.com" data-text="Are you an Apple users? Come check it out!" data-count="none" data-via="macabolic">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+							<%#= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %>
+							</li>
 					</ul>
 				</div>
 			</div>

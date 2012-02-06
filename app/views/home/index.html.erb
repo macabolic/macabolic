@@ -7,10 +7,13 @@
 			</ul>
 	</div>
 </div>
-
+<% if @notice.present? %>
+<div style="float: left; width: 200px; padding: 15px; margin-left: 50px; margin-top: 20px; display: inline; border: 2px dotted red; background: #ffffff">
+	We are on invitation now. We will let you know when it is ready.
+</div>
+<% end %>
 <div class="wrapper-homecontent">
 	<%= image_tag "/images/sitewide/home-or.png", :alt => "home-or", :width => "186", :height => "10", :class => "or" %>
 	<!-- A form here with First Name, Last Name, Email Address -->
-	<%#= render "home/form" %>	
 	<%= render "registrations/form" %>
 </div>

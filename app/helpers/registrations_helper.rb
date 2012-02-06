@@ -15,7 +15,7 @@ module RegistrationsHelper
 #                      :resource => resource_name)
 #      <h2>#{sentence} - errors</h2>
     html = <<-HTML 
-    <div id="error_explanation">
+    <div id="errorExplanation">
       <ul>#{messages}</ul>
     </div>
     HTML

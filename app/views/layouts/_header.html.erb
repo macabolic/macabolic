@@ -19,7 +19,7 @@
 			</ul>
 			<% if user_signed_in? %>
 			<div class="user-loggedin">
-				Welcome back, <%= link_to current_user.full_name, profile_member_path(current_user), :class => "user-name" %>
+				Welcome, <%= link_to current_user.full_name, profile_member_path(current_user), :class => "user-name" %>
                </div>
 			<% end %>
 		</div>
