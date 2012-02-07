@@ -74,7 +74,7 @@ class InvitationsController < ApplicationController
       @existing_invitation.update_attribute("sent_at", Time.now)
       @success = true
     else
-      @existing_user = User.where("email = ? and invitation_id not null", @invitation.recipient_email)
+      @existing_user = User.where("email = ? and invitation_id is not null", @invitation.recipient_email)
       if @existing_user.exists?
         @success = false
       else        
