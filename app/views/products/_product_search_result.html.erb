@@ -2,7 +2,15 @@
 	<% @products.each do |product| %>
         <li>
 			<div>
-			  	<%= image_tag(product.thumbnail.url(:thumb), :size => "45x45") %>
+			  	<%#= image_tag(product.thumbnail.url(:thumb), :size => "45x45") %>
+				<% if product.thumbnail.present? %>
+					<%= image_tag(product.thumbnail.url(:thumb), :size => "45x45") %>
+				<% elsif product.image_url.present? %>
+					<%= image_tag(product.image_url, :size => "45x45" %>
+				<% else %>
+					<%= image_tag "/images/product/no-image_thumb.jpg", :size => "45x45" %>
+				<% end %>
+			
 				<div class="left">
 					<p><%= link_to product.name, (product) %></p>
 				</div>
