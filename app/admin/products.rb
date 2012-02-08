@@ -32,6 +32,7 @@ ActiveAdmin.register Product do
         f.input :product_line
         #f.input :thumbnail
         f.input :description
+        f.input :image_url
       end
       f.buttons
   end  
