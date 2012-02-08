@@ -76,4 +76,5 @@ group :test, :production do
 	#gem 'mysql2'
 	gem 'progress_bar'
 	gem 'ruby-mysql'
+	gem 'rmagick'
 end

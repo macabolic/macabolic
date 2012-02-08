@@ -89,7 +89,7 @@ function showAddReview() {
 	<% end %>
 <% end %>
 </ul>
-<div class="left"><p class="total"><%= page_entries_info @reviews %></p></div>
+<div class="left"><p class="total"><%= (page_entries_info @reviews, :entry_name => "reviews").html_safe %></p></div>
 <%# if @reviews.total_pages > 0 %>
 <div class="right">
 	<div id="pagination">

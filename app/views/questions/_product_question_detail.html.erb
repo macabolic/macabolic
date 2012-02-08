@@ -56,7 +56,7 @@
     </ul>
 </div> 
 <% if (not @answers.nil?) && @answers.size > 0 %>
-<div class="left"><p class="total"><%= page_entries_info @answers %></p></div>
+<div class="left"><p class="total"><%= (page_entries_info @answers, :entry_name => "answers").html_safe %></p></div>
 <div class="right">
 	<div id="pagination">
 		<%= paginate @answers, :param_name => :answer_page %>
