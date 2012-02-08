@@ -37,8 +37,13 @@
 <% @found_products.each do |product| %>
 	<li class="search-item">
   		<div class="product-image-thumb">
-			<%= image_tag(product.thumbnail.url(:medium), :width => "128", :class => "preview-image") %>
-
+			<% if product.thumbnail.present? %>
+				<%= image_tag(product.thumbnail.url(:medium), :width => "128", :class => "preview-image") %>
+			<% elsif product.image_url.present? %>
+				<%= image_tag(product.image_url, :width => "128", :class => "preview-image") %>
+			<% else %>
+				<%= image_tag "/images/product/no-image_medium.jpg", :width => "128", :class => "preview-image" %>
+			<% end %>
   		</div>
   		<div class="product-detail">
    			<div>

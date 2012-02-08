@@ -47,7 +47,15 @@
 <div class="html_carousel">
     <div id="product_preview_gallery">
     	<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
-    	<%= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+    	<%#= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+		<% if product.thumbnail.present? %>
+			<%= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+		<% elsif product.image_url.present? %>
+			<%= image_tag(product.image_url, :width => "200", :class => "preview-image") %>
+		<% else %>
+			<%= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
+		<% end %>
+
     </div>
     <div class="clearfix"></div>
 	<div class="pagination1" id="product_preview_gallery_pag"></div>
