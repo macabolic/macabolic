@@ -23,7 +23,7 @@
 					<% if my_collection_item.product.thumbnail.present? %>
 						<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :size => "150x150") %>
 					<% elsif my_collection_item.product.image_url.present? %>
-						<%= image_tag(my_collection_item.product.image_url, :size => "150x150" %>
+						<%= image_tag(my_collection_item.product.image_url, :size => "150x150") %>
 					<% else %>
 						<%= image_tag "/images/product/no-image_medium.jpg", :size => "150x150" %>
 					<% end %>
