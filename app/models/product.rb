@@ -18,7 +18,7 @@ class Product < ActiveRecord::Base
 
   validates               :name, 
                           :length => { :minimum => 3, :maximum => 100, :too_short => "must have at least %{count} characters", :too_long => "must have at most %{count} characters" },
-                          :uniqueness => { :scope => :vendor_id, :case_sensitive => false, :message => "is created in the vendor you specified already."}
+                          :uniqueness => { :scope => [:vendor_id, :product_line_id], :case_sensitive => false, :message => "is created in the vendor you specified already."}
   validates               :description, 
                           :length => { :maximum => 1000, :too_long => "must have at most %{count} characters" }
   validates               :vendor, :presence => true
