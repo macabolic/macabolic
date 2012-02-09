@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
     
     if @user.present? && @user.own_this_product?(@product)
       @my_collection_item = MyCollectionItem.where("user_id = ? and product_id = ?", @user.id, @product.id).first
-      redirect_to product_my_collection_item_path(@product, @my_collection_item), :status => 301
+      redirect_to product_my_collection_item_path(@product.id, @my_collection_item.id), :status => 301
     else 
       @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:question_page]
     
@@ -45,11 +45,13 @@ class ProductsController < ApplicationController
         @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
           with(:product_id, params[:id])
           with(:user_id, friends)
+          with(:interest_indicator, 1)          
         end
       
-        @search_friends_who_wished = Sunspot.search(WishlistItem) do
+        @search_friends_who_wished = Sunspot.search(MyCollectionItem) do
           with(:product_id, params[:id])
           with(:user_id, friends)
+          with(:interest_indicator, 2)          
         end
       
         @friends_who_owned = @search_friends_who_owned.results.map { |i| i.user }

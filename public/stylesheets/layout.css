@@ -940,6 +940,41 @@ padding-bottom: 40px;
 	cursor: pointer;
 }
 
+.button-orange {
+  background:#DA5D18;
+  padding:5px 20px;
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  text-decoration:none;
+  border: 1px solid #5B8F10;
+  color: #fff !important;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: Arial;
+  text-shadow: 0px -1px 0px #385c05;
+  -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+  border-radius:20px;
+}
+
+.button-orange:hover {
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.50, rgb(109,173,17)),
+        color-stop(0.9, rgb(101,164,11))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(109,173,17) 50%,
+        rgb(101,164,11) 90%
+    );
+	cursor: pointer;
+}
+
+
 #own-this, #add-wishlist, .add-wishlist, #invite-my-friend { 
     float:left; 
     display:inline;

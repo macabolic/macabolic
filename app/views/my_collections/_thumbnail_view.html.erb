@@ -33,9 +33,10 @@ $(document).ready(function() {
 				</li>		
 			<% end %>
 			</ul>
-				<%= hidden_field_tag 'product_id', @product.id %>
+				<%= hidden_field_tag 'product_id', product_id %>
 				<%= hidden_field_tag 'page_id', 'Product' %>
-				<%= hidden_field_tag 'my_collection_id', nil %>			
+				<%= hidden_field_tag 'my_collection_id', nil %>
+				<%= hidden_field_tag 'interest_indicator', nil %>			
 		</div>
 	<!--	<div style="margin-left: auto; margin-right: auto; width: 100%; height: 5px; border-bottom: 1px dotted #d4d4d4;"></div>	-->
 		<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">

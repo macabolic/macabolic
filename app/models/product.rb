@@ -1,13 +1,13 @@
 class Product < ActiveRecord::Base
   belongs_to              :product_line
   belongs_to              :vendor
-  belongs_to              :uploader,            :class_name => "User",  :foreign_key => "uploader_id"
+  belongs_to              :discoverer,          :class_name => "User",  :foreign_key => "uploader_id"
   has_many                :reviews,             :dependent => :destroy
   has_many                :questions,           :dependent => :destroy  
   has_many                :answers,             :dependent => :destroy
   has_many                :my_collection_items
   has_many                :owners,              :source => :user, :through => :my_collection_items
-  has_many                :wishlist_items,      :dependent => :destroy
+  #has_many                :wishlist_items,      :dependent => :destroy
   has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
   
@@ -55,13 +55,15 @@ class Product < ActiveRecord::Base
   def people_who_owned
     @search = Sunspot.search(MyCollectionItem) do
       with(:product_id, self.id)
+      with(:interest_indicator, 1)
     end
     @people_who_owned = @search.results.map { |i| i.user }
   end
 
   def people_who_wished 
-    @search = Sunspot.search(WishlistItem) do
-      with(:product_id, self.id)      
+    @search = Sunspot.search(MyCollectionItem) do
+      with(:product_id, self.id)
+      with(:interest_indicator, 2)
     end
     @people_who_wished = @search.results.map { |i| i.user }
   end

@@ -1,44 +1,48 @@
 class WishlistItemsController < ApplicationController
-  # GET /wishlist_items
-  # GET /wishlist_items.xml
-  def index
-    @wishlist_items = WishlistItem.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @wishlist_items }
-    end
-  end
-
-  # GET /wishlist_items/1
-  # GET /wishlist_items/1.xml
-  def show
-    @wishlist_item = WishlistItem.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @wishlist_item }
-    end
-  end
 
   # POST /wishlist_items
   # POST /wishlist_items.xml
   def create
-    @product = Product.find(params[:product])
-    if Wishlist.defined_default_wishlist?(current_user)
-      @wishlist = Wishlist.default_wishlist(current_user)
-    else
-      @wishlist = Wishlist.new(:name => "My Wishlist", :user_id => current_user.id, :default_list => true)
-    end
+      logger.info "WishlistItemsController => create"
+      @product = Product.find(params[:product_id])
+      @my_collection = MyCollection.find(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
+
+      @my_collection_item = MyCollectionItem.new
+      @my_collection_item.my_collection_id = params[:my_collection_id]
+      @my_collection_item.product_id = params[:product_id]
+      @my_collection_item.user = current_user
+      @my_collection_item.interest_indicator = MyCollectionItem::WISH
+
+      #respond_to do |format|
+        if @my_collection_item.save
+          redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+        #if MyCollection.add_product_to_collection(current_user, @product)
+        #  format.html { redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.') }
+        #  format.html { redirect_to(:controller => 'members', :action => 'collections', :id => current_user.id, :notice => 'My collection was successfully created.') }
+        #  format.xml  { render :xml => @my_collection, :status => :created, :location => @my_collection }
+        #else
+        #  format.html { render :action => "new" }
+        #  format.xml  { render :xml => @my_collection.errors, :status => :unprocessable_entity }
+        end
+      #end
+    #end
     
-    if WishlistItem.where("product_id = ?", @product.id).exists?
-      @wishlist_item = WishlistItem.find_by_product_id(@product.id)
-    else
-      @wishlist_item = WishlistItem.new
-      @wishlist_item.product = @product
-      @wishlist_item.wishlist = @wishlist
-      @wishlist_item.user = current_user 
-    end
+    
+    #@product = Product.find(params[:product])
+    #if Wishlist.defined_default_wishlist?(current_user)
+    #  @wishlist = Wishlist.default_wishlist(current_user)
+    #else
+    #  @wishlist = Wishlist.new(:name => "My Wishlist", :user_id => current_user.id, :default_list => true)
+    #end
+    
+    #if WishlistItem.where("product_id = ?", @product.id).exists?
+    #  @wishlist_item = WishlistItem.find_by_product_id(@product.id)
+    #else
+    #  @wishlist_item = WishlistItem.new
+    #  @wishlist_item.product = @product
+    #  @wishlist_item.wishlist = @wishlist
+    #  @wishlist_item.user = current_user 
+    #end
 
     # if no wishlist defined, use the default wishlist
     #if @wishlist_item.wishlist_id.nil?
@@ -47,8 +51,8 @@ class WishlistItemsController < ApplicationController
       #@wishlist_item.wishlist_id = @wishlist.id
     #end
  
-    @wishlist_item.save
-    @action = "create"
+    #@wishlist_item.save
+    #@action = "create"
 #    render :nothing => true
 #    respond_to do |format|
 #      if @wishlist_item.save
@@ -81,15 +85,29 @@ class WishlistItemsController < ApplicationController
   # DELETE /wishlist_items/1.xml
   def destroy
     #@wishlist_item = WishlistItem.find(params[:id])
-    @product = Product.find(params[:product])
-    @wishlist_item = WishlistItem.find_by_product_id(params[:product])    
-    @wishlist_item.destroy
+    #@product = Product.find(params[:product])
+    #@wishlist_item = WishlistItem.find_by_product_id(params[:product])    
+    #@wishlist_item.destroy
 
     #respond_to do |format|
     #  format.html { redirect_to(wishlist_items_url) }
     #  format.xml  { head :ok }
     #end
-    @action = "destroy"
+    #@action = "destroy"
+
+    logger.debug "DELETE /my_collection_items/:id"
+    @my_collection_item = MyCollectionItem.find(params[:id])
+    #@my_collection_item = MyCollectionItem.where("product_id = ? and user_id = ?", params[:product_id], current_user).first
+    if !@my_collection_item.nil?
+      @my_collection_item.destroy
+    end
+
+    @product = Product.find(params[:product_id])
+    
+    respond_to do |format|
+      format.html { redirect_to(product_path(@product)) }
+      format.xml  { head :ok }
+    end
     
   end
 end

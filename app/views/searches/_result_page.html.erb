@@ -1,3 +1,133 @@
+<style type="text/css">
+#backgroundPopup {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:1;
+}
+#popupMyCollection {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+//	width:808px;
+	background:#f6f1de;
+	border:2px solid #cecece;
+	z-index:2;
+	padding:12px;
+	font-size:13px;
+}
+
+#popupMyCollectionClose {
+	font-size:14px;
+	line-height:14px;
+	right:6px;
+	top:4px;
+	position:absolute;
+	color:#5c5c5c;
+	font-weight:700;
+	display:block;
+}
+
+.do_you_have_one {
+	color: #da5d18;
+}
+.do_you_wish_one {
+	color: #da5d18;
+}
+</style>
+<script type="text/javascript"> 
+//SETTING UP OUR POPUP
+//0 means disabled; 1 means enabled;
+var popupStatus = 0;
+
+//loading popup with jQuery magic!
+function loadPopup(){
+	//loads popup only if it is disabled
+	if(popupStatus==0){
+		$("#backgroundPopup").css( {"opacity": "0.7"} );
+		$("#backgroundPopup").fadeIn("slow");
+		$("#popupMyCollection").fadeIn("slow");
+		popupStatus = 1;
+	}
+}
+
+//disabling popup with jQuery magic!
+function disablePopup(){
+	//disables popup only if it is enabled
+	if(popupStatus==1){
+		$("#backgroundPopup").fadeOut("slow");
+		$("#popupMyCollection").fadeOut("slow");
+		popupStatus = 0;
+	}
+}
+
+//centering popup
+function centerPopup(){
+
+	//request data for centering
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#popupMyCollection").height();
+	var popupWidth = $("#popupMyCollection").width();
+	//centering
+	$("#popupMyCollection").css({
+		"position": "absolute",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
+	//only need force for IE6
+
+	$("#backgroundPopup").css( {"height": windowHeight} );
+} 
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+
+	//LOADING POPUP
+	//Click the button event!
+	$(".do_you_have_one").click(function(){
+		$("#interest_indicator").attr('value', 1);
+		$("#product_id").attr('value', $(".do_you_have_one").attr('obj-id'));
+		//centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+	});
+
+	$(".do_you_wish_one").click(function(){
+		$("#interest_indicator").attr('value', 2);
+		$("#product_id").attr('value', $(".do_you_wish_one").attr('obj-id'));
+		//centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+	});
+	
+	//CLOSING POPUP
+	//Click the x event!
+	$("#popupMyCollectionClose").click(function(){
+		disablePopup();
+	});
+	
+	//Click out event!
+	$("#backgroundPopup").click(function(){
+		disablePopup();
+	});
+	
+	//Press Escape event!
+	$(document).keypress(function(e){
+		if(e.keyCode==27 && popupStatus==1) {
+			disablePopup();
+		}
+	});
+	
+});
+</script>
 <div class="pagination-wrapper top">
 	<div class="left">
 		<p>
@@ -50,20 +180,9 @@
 				<p class="left">
 					<h3 style="text-align: left;"><%= link_to product.name, product_path(product) %></h3>
 				</p>
-				<p><%=h truncate(product.description, :length => 200) %></p>																
+				<p><%=h truncate(product.description, :length => 200) %></p>																				
 			</div>
-<!--
-      <p>
-<ul class='star-rating'>
-              <li><a href='#' title='Rate this 1 star out of 5' class='one-star'>1</a></li>
-              <li><a href='#' title='Rate this 2 stars out of 5' class='two-stars'>2</a></li>
-              <li><a href='#' title='Rate this 3 stars out of 5' class='three-stars'>3</a></li>
-              <li><a href='#' title='Rate this 4 stars out of 5' class='four-stars'>4</a></li>
-              <li><a href='#' title='Rate this 5 stars out of 5' class='five-stars'>5</a></li>
-      	</ul>
-</p>
--->
-			<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'person') %></a> own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
+ 			<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'person') %></a> own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
 			<p>
           		<ul class="friend-ownthis" style="margin-bottom: 10px;">
 				<% product.owners.each do |owner| %>
@@ -71,9 +190,15 @@
 						<%= link_to profile_member_path(owner) do %>
 							<%= image_tag current_profile_image_thumbnail_url(owner), :width => 37, :title => owner.full_name %>
 						<% end %>
-					</li>
+					</li>					
 				<% end %>
 				</ul>
+				<div class="product-detail">
+					<p>
+						<div id="i_own_this"><a href="#" id="own-this" class="do_you_have_one" obj-id="<%= product.id %>">Do you have one?</a></div>
+						<div id="wishlist_link"><a href="#" id="own-this" class="do_you_wish_one" obj-id="<%= product.id %>">Add to Wishlist!</a></div>
+					</p>
+				</div>				
 			</p>
 		</div>
 		<br class="clear" />
@@ -82,7 +207,7 @@
 </ul>
 
 <div class="pagination-wrapper bottom">
-	<div class="left"><p class="total"><%= page_entries_info @found_products %></p></div>	
+	<div class="left"><p class="total"><%= (page_entries_info @found_products).html_safe %></p></div>	
 	<!--<div class="left"><p>Displaying 1 - 11 of 345</p></div>-->
 	<% if @found_products.total_pages > 0 %>					
 	<div class="right">
@@ -112,3 +237,7 @@
 	</div>
 	<% end %>
 </div><!-- .pagination-wrapper -->                
+<div id="popupMyCollection">
+	<%= render :partial => "my_collections/thumbnail_view", :locals => { :product_id => "" } %>
+</div>
+<div id="backgroundPopup"></div>

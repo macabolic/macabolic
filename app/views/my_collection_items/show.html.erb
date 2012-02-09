@@ -1,6 +1,85 @@
 <% title @product.name %>
+<style type="text/css">
+#backgroundPopup {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:1;
+}
+#popupMyCollection {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+//	width:808px;
+	background:#f6f1de;
+	border:2px solid #cecece;
+	z-index:2;
+	padding:12px;
+	font-size:13px;
+}
+
+#popupMyCollectionClose {
+	font-size:14px;
+	line-height:14px;
+	right:6px;
+	top:4px;
+	position:absolute;
+	color:#5c5c5c;
+	font-weight:700;
+	display:block;
+}
+</style>
+
 <script type="text/javascript"> 
- 
+//SETTING UP OUR POPUP
+//0 means disabled; 1 means enabled;
+var popupStatus = 0;
+
+//loading popup with jQuery magic!
+function loadPopup(){
+	//loads popup only if it is disabled
+	if(popupStatus==0){
+		$("#backgroundPopup").css( {"opacity": "0.7"} );
+		$("#backgroundPopup").fadeIn("slow");
+		$("#popupMyCollection").fadeIn("slow");
+		popupStatus = 1;
+	}
+}
+
+//disabling popup with jQuery magic!
+function disablePopup(){
+	//disables popup only if it is enabled
+	if(popupStatus==1){
+		$("#backgroundPopup").fadeOut("slow");
+		$("#popupMyCollection").fadeOut("slow");
+		popupStatus = 0;
+	}
+}
+
+//centering popup
+function centerPopup(){
+
+	//request data for centering
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#popupMyCollection").height();
+	var popupWidth = $("#popupMyCollection").width();
+	//centering
+	$("#popupMyCollection").css({
+		"position": "absolute",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
+	//only need force for IE6
+
+	$("#backgroundPopup").css( {"height": windowHeight} );
+} 
 $(document).ready(function() {
  	$(document).pngFix(); 
 
@@ -63,6 +142,54 @@ $(document).ready(function() {
             this.value = (this.defaultValue ? this.defaultValue: "")
         }
     });
+
+	//LOADING POPUP
+	//Click the button event!
+	$(".do_you_have_one").click(function(){
+		$("#interest_indicator").attr('value', 1);
+		//centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+	});
+
+	$(".do_you_wish_one").click(function(){
+		$("#interest_indicator").attr('value', 2);
+		//centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+	});
+	
+	//CLOSING POPUP
+	//Click the x event!
+	$("#popupMyCollectionClose").click(function(){
+		disablePopup();
+	});
+	
+	//Click out event!
+	$("#backgroundPopup").click(function(){
+		disablePopup();
+	});
+	
+	//Press Escape event!
+	$(document).keypress(function(e){
+		if(e.keyCode==27 && popupStatus==1) {
+			disablePopup();
+		}
+	});
+	
+	$("#product-gallery").hover(function() {
+		$("#add_wishlist").fadeIn();
+	}, function() {
+		$("#add_wishlist").fadeOut();
+	});
+
+	$("#add_wishlist").hover(function() {
+		$("#add_wishlist").css("display", "inline");
+	}, function() {
+		$("#add_wishlist").css("display", "none");
+	});
 });
 </script>
 
@@ -77,7 +204,12 @@ $(document).ready(function() {
     	<div class="product-item sidebar-content">	         
 			<div class="product-image">
 				<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+				<div id="product-gallery">
 				<%= render :partial => 'my_collection_items/product_preview_gallery', :locals => { :my_collection_item => @my_collection_item } %>
+				</div>
+				<div id="add_wishlist" style="display:none">
+					<%= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
+				</div>	
 	        </div>			
 	        <div class="product-detail">
 	            <div>
@@ -88,7 +220,7 @@ $(document).ready(function() {
 				<% if @user == current_user %>				
 				<p>
 					<div id="add_wishlist">
-						<%= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
+						<%#= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
 					</div>	
 				</p>
 	            <p>
@@ -106,19 +238,19 @@ $(document).ready(function() {
 					<% else %>
 						<% if current_user.wish_this_product?(@product) %>
 					<div id="i_own_this">
-						<!-- TODO: important -->
-						<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
+							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "In my Wishlist already", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							
 					</div>
 						<% else %>
 					<div id="i_own_this">
 						<!-- TODO: important -->
-						<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+						<a href="#" id="own-this" class="button-green do_you_wish_one">Add to Wishlist!</a>
+						<%#= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
 					</div>
 						<% end %>														
 					<% end %>
@@ -246,7 +378,9 @@ $(document).ready(function() {
 	</div>
 	<div class="sidebar" id="comment-display">			
 		<%= render :partial => 'product_comments/show', :locals => { :product => @product } %>
-	</div>
-	
-	
+	</div>	
 </div>
+<div id="popupMyCollection">
+	<%= render :partial => "my_collections/thumbnail_view", :locals => { :product_id => @product.id } %>
+</div>
+<div id="backgroundPopup"></div>

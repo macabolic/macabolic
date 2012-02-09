@@ -17,10 +17,12 @@ class MyCollectionItemsController < ApplicationController
       @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
         with(:product_id, params[:product_id])
         with(:user_id, friends)
+        with(:interest_indicator, 1)        
       end
-      @search_friends_who_wished = Sunspot.search(WishlistItem) do
+      @search_friends_who_wished = Sunspot.search(MyCollectionItem) do
         with(:product_id, params[:product_id])
         with(:user_id, friends)
+        with(:interest_indicator, 2)        
       end
     end
     
@@ -28,6 +30,7 @@ class MyCollectionItemsController < ApplicationController
     @friends_who_wished = @search_friends_who_wished.results.map { |i| i.user } if !@search_friends_who_wished.nil? and @search_friends_who_wished.results.present?
     
     @product_comments = @product.comments.order("created_at DESC")
+    @my_collections = @user.my_collections
     
     respond_to do |format|
       format.html # show.html.erb
@@ -54,8 +57,15 @@ class MyCollectionItemsController < ApplicationController
     @my_collection_item.my_collection_id = params[:my_collection_id]
     @my_collection_item.product_id = params[:product_id]
     @my_collection_item.user = current_user
-        
+    @my_collection_item.interest_indicator = params[:interest_indicator]
+    
+    search_item = MyCollectionItem.where("user_id = ? and product_id = ?", current_user.id, params[:product_id])
     #respond_to do |format|
+    if search_item.exists?
+      # do an update instead on my_collection_id and interest_indicator
+      search_item.first.update_attributes(:my_collection_id => params[:my_collection_id], :interest_indicator => params[:interest_indicator])
+      redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+    else        
       if @my_collection_item.save
         redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
       #if MyCollection.add_product_to_collection(current_user, @product)
@@ -66,7 +76,7 @@ class MyCollectionItemsController < ApplicationController
       #  format.html { render :action => "new" }
       #  format.xml  { render :xml => @my_collection.errors, :status => :unprocessable_entity }
       end
-    #end
+    end
   end
 
   # PUT /my_collection_items/1

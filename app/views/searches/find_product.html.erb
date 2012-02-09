@@ -67,7 +67,7 @@ $(document).ready(function() {
         <div class="search-box sidebar-content">
 			<%= form_tag find_product_searches_path, :method => :get, :remote => true do %>
 				<%= text_field_tag 'query', nil, :placeholder => "Search for products. e.g. iPhone or MacBook Pro", :class => "ie-input" %>
-                <input type="submit" class="ie-button" value="Search"/>
+			    <%= submit_tag "Search" %>
 			<% end %>
         </div>
         

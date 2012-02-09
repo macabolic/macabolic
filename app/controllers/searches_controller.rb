@@ -9,7 +9,7 @@ class SearchesController < ApplicationController
     end
     
     @found_products = @search.results
-    
+    @my_collections = current_user.my_collections
   #  respond_to do |format|
   #    format.html # show.html.erb
   #    format.xml  { render :xml => @wishlist }

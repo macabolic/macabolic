@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many  :authentications, :dependent => :destroy
-  has_many  :wishlists, :dependent => :destroy
+#  has_many  :wishlists, :dependent => :destroy
   has_many  :my_collections, :dependent => :destroy
   has_many  :reviews
   has_many  :questions
@@ -12,20 +12,18 @@ class User < ActiveRecord::Base
   has_many  :my_collection_items, :dependent => :destroy
   has_many  :products, :through => :my_collection_items
 
-  has_many  :wishlist_items
-  has_many  :wished_products, :through => :wishlist_items, :source => :product
+#  has_many  :wishlist_items
+  has_many  :owned_products, :through => :my_collection_items, :source => :product, :conditions => { :my_collection_items => {:interest_indicator => 1} }  
+  has_many  :wished_products, :through => :my_collection_items, :source => :product, :conditions => { :my_collection_items => {:interest_indicator => 2} }
   
   has_many  :recommendations, :class_name => 'Recommendation', :foreign_key => 'from_user_id'
   has_many  :recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'from_user_id'
-  
+
 #  has_many  :received_reommendations, :class_name => 'Recommendation', :foreign_key => 'to_user_id'
 #  has_many  :being_recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'to_user_id'
   
   has_many  :friendships
   has_many  :friends, :through => :friendships
-
-  #has_many  :inverse_friendships, :class_name => 'Friendship', :foreign_key => 'friend_id'
-  #has_many  :inverse_friends, :through => :inverse_friendships, :source => :user
   
   has_many  :profile_images, :dependent => :destroy
   
@@ -81,34 +79,20 @@ class User < ActiveRecord::Base
   def password_required?
     (authentications.empty? || !password.blank?) && super
   end
-
-  def has_default_wishlist?
-    Wishlist.defined_default_wishlist?(self)
-  end
-  
-  def create_default_wishlist_if_not_present
-    wishlist = Wishlist.create_default_if_not_present(self)
-  end
-  
-  def default_wishlist
-    wishlist = Wishlist.default_wishlist(self)
-  end
-  
-  def already_in_wishlist?(product)
-    # Get the wishlist.
-    # Search the wishlist with the provided product
-  end
   
   def default_collection
     MyCollection.default_collection(self)
   end
   
   def own_this_product?(product)    
-    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id }).any?
+    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id, :interest_indicator => 1 }).any?
+    #MyCollectionItem.where(:user_id => self.id, :product_id => product.id, :interest_indicator => 1).any?
   end
 
   def wish_this_product?(product)    
-    Wishlist.joins(:wishlist_items).where(:user_id => self.id, :wishlist_items => { :product_id => product.id }).any?
+    #wished_products.where("product_id = ?", product.id)
+    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id, :interest_indicator => 2 }).any?
+    #Wishlist.joins(:wishlist_items).where(:user_id => self.id, :wishlist_items => { :product_id => product.id }).any?
   end
   
   def invitation_token

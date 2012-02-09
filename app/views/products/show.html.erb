@@ -116,6 +116,15 @@ $(document).ready(function() {
 	//LOADING POPUP
 	//Click the button event!
 	$(".do_you_have_one").click(function(){
+		$("#interest_indicator").attr('value', 1);
+		//centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+	});
+
+	$(".do_you_wish_one").click(function(){
+		$("#interest_indicator").attr('value', 2);
 		//centering with css
 		centerPopup();
 		//load popup
@@ -162,6 +171,7 @@ $(document).ready(function() {
 				<p><%= @product.description %></p>								
 				<% if @user == current_user %>				
 	            <p>
+					<%# OWN THIS PRODUCT %>
 					<% if current_user.own_this_product?(@product) %>
 	                <div id="i_own_this">
 						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :product_id => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
@@ -174,21 +184,21 @@ $(document).ready(function() {
 					<% end %>
 					</div>						
 					<% else %>
+						<%# WISH THIS PRODUCT %>
 						<% if current_user.wish_this_product?(@product) %>
 					<div id="i_own_this">
-						<%= link_to 'Do you have one?', { :controller => "my_collections", :action => "thumbnail_view" }, :class => "button-green", :id => "own-this", :title => "Own one?", :rel => "modelPanel" %>
-						<!--<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>-->
+						<%#= link_to 'Do you have one?', { :controller => "my_collections", :action => "thumbnail_view" }, :class => "button-green", :id => "own-this", :title => "Own one?", :rel => "modelPanel" %>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
 						<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
 					</div>
 						<% else %>
 					<div id="i_own_this">
-						<%#= link_to 'Do you have one?', { :controller => "my_collections", :action => "thumbnail_view" }, :class => "button-green", :id => "own-this", :title => "Own one?", :rel => "modelPanel" %>
 						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+						<a href="#" id="own-this" class="button-green do_you_wish_one">Add to Wishlist!</a>
 					</div>
 						<% end %>														
 					<% end %>
@@ -199,7 +209,7 @@ $(document).ready(function() {
 						<% if current_user.wish_this_product?(@product) %>
 							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
 						<% else %>
-							<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+							<a href="#" id="own-this" class="button-green do_you_wish_one">Add to Wishlist!</a>
 						<% end %>
 					</div>
 	            </p>
@@ -307,6 +317,6 @@ $(document).ready(function() {
 </div>
 
 <div id="popupMyCollection">
-	<%= render "my_collections/thumbnail_view" %>
+	<%= render :partial => "my_collections/thumbnail_view", :locals => { :product_id => @product.id } %>
 </div>
 <div id="backgroundPopup"></div>

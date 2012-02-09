@@ -106,6 +106,7 @@ Macabolic::Application.routes.draw do
       get 'product_search'
     end  
     resources :my_collection_items
+    resources :wishlist_items
     #get ':id/page/:page', :action => :show, :on => :collection
   end
   
@@ -121,16 +122,7 @@ Macabolic::Application.routes.draw do
   end
   
   resources :authentications
-  resources :wishlists
   resources :wishlist_items
-
-  # My Collections
-  resources :wishlists do    
-    delete 'wishlist_items/:product' => 'wishlist_items#destroy'
-    resources :wishlist_items
-  end
-
-  #resources :registrations
 
   get "home/index"
 
