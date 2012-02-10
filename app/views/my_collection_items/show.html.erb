@@ -217,17 +217,8 @@ $(document).ready(function() {
 				</div>
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
-				<% if @user == current_user %>				
-				<p>
-					<div id="add_wishlist">
-						<%#= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
-					</div>	
-				</p>
+				<% if @user == current_user || @user != current_user %>
 	            <p>
-					<% if current_user.own_this_product?(@product) %>
-	                <div id="i_own_this-<%= @product.id %>">
-						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item, :product_id => @product.id }, :method => "delete", :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
-					</div>
 					<div id="response-product-<%= @product.id %>">
 					<% if @product.like?(current_user) %>					
 						<%= link_to 'Unlike', unlike_product_path(@product, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
@@ -235,22 +226,26 @@ $(document).ready(function() {
 						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>
 					<% end %>
 					</div>						
+		
+					<% if current_user.own_this_product?(@product) %>
+	                <div id="i_own_this-<%= @product.id %>">
+						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item, :product_id => @product.id }, :method => "delete", :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
+					</div>
 					<% else %>
 						<% if current_user.wish_this_product?(@product) %>
 					<div id="i_own_this">
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>
 					</div>
 					<div id="wishlist_link">
-							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "In my Wishlist already", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							
+							<%= link_to 'Added to Wishlist', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "In my Wishlist already", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							
 					</div>
 						<% else %>
 					<div id="i_own_this">
 						<!-- TODO: important -->
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<a href="#" id="own-this" class="button-green do_you_wish_one">Add to Wishlist!</a>
-						<%#= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+						<a href="#" id="add-wishlist" class="button-green do_you_wish_one">Wishlist!</a>
 					</div>
 						<% end %>														
 					<% end %>

@@ -67,8 +67,12 @@ $(document).ready(function() {
 	<div class="wrapper-mh">
 		<div class="maincol">		
 			<div class="tabbed-content-area">	
-				<ul class="tabs"> 
+				<ul class="tabs">
+				<% if @user == current_user %> 
 			        <li><a href="#tab1">My Updates</a></li> 
+				<% else %>
+					<li><a href="#tab1">Updates</a></li> 
+				<% end %>
 			<!--
 			        <li><a href="#tab2">Recent Answers</a></li> 
 			        <li><a href="#tab3">Recent Tips</a></li> 

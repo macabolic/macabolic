@@ -1,6 +1,6 @@
 <div class="sidebar-content account-info">
 	<div class="sidebar-header">
-    	About myself <%= link_to 'Edit', edit_member_path(@user) %>
+    	About <% if @user == current_user %><%= link_to 'Edit', edit_member_path(@user) %><% end %>
 	</div>
 	<div class="sidebar-inner">					
     	<p class="username">
