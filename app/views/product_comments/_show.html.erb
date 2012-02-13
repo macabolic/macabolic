@@ -23,8 +23,10 @@
 			<% end %>
 			</div>
     	</ul>	
+		<% if user_signed_in? %>
 		<div style="margin-top: 10px;">
 			<%= render :partial => 'product_comments/form', :local => { :product => @product } %>
 		</div>
+		<% end %>
 	</div>
 </div>

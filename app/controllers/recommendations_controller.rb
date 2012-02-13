@@ -1,4 +1,7 @@
 class RecommendationsController < ApplicationController
+  before_filter :store_location
+  before_filter :authenticate_user!
+
   # GET /recommendations/1
   # GET /recommendations/1.xml
   def show

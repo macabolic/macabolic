@@ -215,6 +215,7 @@ $(document).ready(function() {
 	            <div>
 					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
 				</div>
+				<p>from <span class="vendor"><%= @product.vendor.name %></span></p>
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
 				<% if @user == current_user || @user != current_user %>

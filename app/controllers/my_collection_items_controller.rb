@@ -1,4 +1,6 @@
 class MyCollectionItemsController < ApplicationController
+  before_filter :store_location
+  before_filter :authenticate_user!
 
   # GET /my_collection_items/1
   # GET /my_collection_items/1.xml

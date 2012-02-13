@@ -1,4 +1,6 @@
 class MyCollectionCommentsController < ApplicationController
+  before_filter :store_location
+  before_filter :authenticate_user!
   
   # POST /my_collections
   # POST /my_collections.xml

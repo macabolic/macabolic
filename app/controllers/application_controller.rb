@@ -8,5 +8,18 @@ class ApplicationController < ActionController::Base
   def self.default_url_options(options={})
     options.merge({ :locale => I18n.locale })
   end
+
+  def store_location
+    logger.info "Store location: url=#{request.url}"
+    session["user_return_to"] = request.url if request.get? && !request.xhr?
+  end
+
+  def show_invitation_notice
+    if user_signed_in? && current_user.invitation_id.nil?
+      @user = User.new
+      @notice = "We are on invitation right now. We will let you know when your invitation is sent out."
+      render "home/home"
+    end    
+  end
   
 end

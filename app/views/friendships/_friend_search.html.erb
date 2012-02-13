@@ -26,6 +26,7 @@ $(document).ready(function() {
 <div class="sidebar-content" id="new-product">				
 	<div class="sidebar-header">Recommend to Your Friends</div>	
 	<div class="sidebar-inner">
+	<% if user_signed_in? %>
     	<ul>
   			<li id="product-search-form">
 				<%= form_tag search_in_network_friendships_path, :method => 'get', :id => 'recommend-friends-form', :remote => true do %>
@@ -36,23 +37,15 @@ $(document).ready(function() {
   			</li>
 		</ul>
 		<br/>
+	<% end %>
 		<div class="user-grid">
-    		<!--ul id="search-friend-list"-->
-				<!--
-				Click on the image to recommend:
-				<%# @friends = current_user.friends %>
-				<%# @friends.each do |friend| %>
-		        <li>
-					<%#= link_to '#', :id => 'recommend_link'  do %>
-						<%#= image_tag avatar_url(friend, 50), :width => 50, :title => friend.full_name, :class => "noborderimage" %>
-					<%# end %>
-				</li-->				
-				<%# end %>
+	<% if user_signed_in? %>
 			<div id="friends">
 				<%= render :partial => 'friendships/friend_search_result', :locals => { :product => product } %>
 			</div>
     		<!--/ul-->
 			<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
+	<% end %>
 			<div style="display: block; margin-top: 5px; margin-bottom: 5px;">
 				<span style="font-size: 14px; color: #cccccc;">Via</span>
 				<div style="margin-bottom: 5px; padding-bottom: 10px;">

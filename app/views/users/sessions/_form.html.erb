@@ -58,7 +58,7 @@
 	<%#= registration_error_messages! %>
 	<div class="home-signup-th">Login Now</div>
 	<% if flash.present? %>
-	<div id="error_explanation">
+	<div id="errorExplanation" style="margin-left: auto; margin-right: auto; padding-left: 30px; width: 300px;">
 		<ul>
 			<% flash.each do |key, msg| %>
 				<%= content_tag :li, msg, :class => 'error_item', :id => key %>
@@ -88,7 +88,7 @@
 	<div style="margin-top: 30px; float: left; width 1px; height: 250px; border: 1px dotted #d4d4d4;"><div class="push"></div></div>
 	<!--div class="auth_providers"-->
 	<div>
-		<%= render "devise/sessions/other_services" %>	
+		<%= render "other_services" %>	
 	</div>
 </div>
 

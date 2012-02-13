@@ -1,5 +1,6 @@
 require 'httparty'
 class FriendshipsController < ApplicationController
+  before_filter :show_invitation_notice
 
   # GET /products
   # GET /products.xml

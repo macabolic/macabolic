@@ -1,0 +1,50 @@
+<style type="text/css">
+	#action_link {
+		text-align: right;
+		border: 0px solid black;
+		display: none;
+	}
+</style>
+<ul id="collection-items" class="list-my-collections">
+	<% products.each do |product| %>
+	<li>
+		<%= link_to(product) do %>
+			<span class="right">
+				<%= link_to '#', product, :method => 'show', :id => "action_link", :class => "edit_link" %>
+			</span>															
+			<div class="center">
+			<span class="productimage">
+				<%= link_to product_path(product) do %>
+					<% if product.thumbnail.present? %>
+						<%= image_tag(product.thumbnail.url(:medium), :size => "150x150") %>
+					<% elsif product.image_url.present? %>
+						<%= image_tag(product.image_url, :size => "150x150") %>
+					<% else %>
+						<%= image_tag "/images/product/no-image_medium.jpg", :size => "150x150" %>
+					<% end %>
+					
+				<% end %>
+			</span>								
+			</div>								
+			<span>
+				<%= link_to product_path(product) do %>
+					<p>
+						<%= simple_format(word_wrap(product.name, :line_width => 50)) %>
+					</p>
+				<% end %>
+				<br/>
+				<% if product.discoverer.present? %>
+					<p class="discover">discovered by <%= link_to product.discoverer.full_name, member_path(product.discoverer) %></p>
+				<% end %>
+			</span>
+			<span class="right">
+				<span>
+					<%= pluralize(product.responses.size, "like") %> | <%= pluralize(product.comments.size, "comment") %>
+				</span>
+			</span>																		
+		<% end %>
+	</li>							
+	<% end %>	
+</ul>
+
+

@@ -1,4 +1,7 @@
 class MembersController < ApplicationController
+  before_filter :show_invitation_notice
+  before_filter :store_location
+  before_filter :authenticate_user!
 
   # GET /members/1
   # GET /members/1.xml
@@ -69,7 +72,8 @@ class MembersController < ApplicationController
   
   def profile
     @user = User.find(params[:id])
-    @activities = @user.activities
+    #@activities = @user.activities
+    @activities = @user.all_activities
     
     respond_to do |format|
       format.html # profile.html.erb

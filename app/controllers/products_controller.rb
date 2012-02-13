@@ -1,4 +1,7 @@
 class ProductsController < ApplicationController
+  before_filter :show_invitation_notice
+  before_filter :store_location
+  before_filter :authenticate_user!, :except =>  [:index, :search]
   helper_method :sort_column, :sort_direction
 
   # GET /products
@@ -38,9 +41,11 @@ class ProductsController < ApplicationController
       @my_collection_item = MyCollectionItem.where("user_id = ? and product_id = ?", @user.id, @product.id).first
       redirect_to product_my_collection_item_path(@product.id, @my_collection_item.id), :status => 301
     else 
+      # Allow public access.
       @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:question_page]
     
-      friends = @user.friend_ids
+      #friends = @user.friend_ids
+      friends = MyCollectionItem.all.map(&:user_id)
       if friends.size > 0
         @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
           with(:product_id, params[:id])
@@ -60,7 +65,8 @@ class ProductsController < ApplicationController
     
       @product_comments = @product.comments.order("created_at DESC")
       
-      @my_collections = current_user.my_collections
+      # Put a comment here when found out the purpose of it.
+      #@my_collections = current_user.my_collections
     
       respond_to do |format|
         format.html # show.html.erb
@@ -152,11 +158,33 @@ class ProductsController < ApplicationController
     end
   end
   
-  def product_search
-    respond_to do |format|
-      format.html 
-      format.xml  { render :xml => @product }
-      format.json { render :json => @product }
+  def search
+    #respond_to do |format|
+    #  format.html 
+    #  format.xml  { render :xml => @product }
+    #  format.json { render :json => @product }
+    #end    
+    if params[:search].nil? or params[:search].length == 0
+      
+    else
+      if params[:search].length > 2
+        search = Sunspot.search(Product) do
+          fulltext params[:search]
+        end
+
+        @products = search.results        
+        if !params[:my_collection].nil?
+          @my_collection = MyCollection.find_by_id(params[:my_collection])
+        end
+        
+        respond_to do |format|
+          format.html # show.html.erb
+          format.xml { render :xml => @products.to_xml(:include => @my_collection) }
+          format.js
+          format.json { render :json => @products }
+        end  
+        
+      end
     end    
   end
 

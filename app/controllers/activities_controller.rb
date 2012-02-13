@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+  before_filter :authenticate_user!
 
   # GET /activities/1
   # GET /activities/1.xml

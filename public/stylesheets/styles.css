@@ -435,6 +435,14 @@ input[type="submit"]:hover {
 	padding: 27px;
 }
 
+#mini.home-signupform {
+	padding: 0px;
+}
+
+#mini.home-signupform input[type="password"] {
+	width: 230px;
+}
+
 .home-signupform input {
 	height: 38px;
 	line-height: 38px;
@@ -467,8 +475,12 @@ input[type="submit"]:hover {
 	padding: 0px 8px 0px 8px;
 }
 
+#mini.home-signupform input[type="text"] {
+	width: 230px;
+}
+
 .home-signupform input[type="submit"] {
-  	background:url(../images/buttons/home-signup.jpg) no-repeat left top;
+  background:url(../images/buttons/home-signup.jpg) no-repeat left top;
 	width: 173px;
 	height: 42px;
 	border: 0px solid #b7b7b7;
@@ -479,6 +491,12 @@ input[type="submit"]:hover {
 	overflow: hidden;
 	margin: 10px 0px 0px 0px;
 	text-align: center;
+}
+
+#mini.home-signupform input[type="submit"] {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	cursor: pointer;
 }
 
 .home-signupform input[type="submit"]:hover {
@@ -1331,4 +1349,18 @@ input:blur {
 #modal-window img {
    display: block;
    border: 3px solid #ccc;
+}
+
+.vendor {
+	font-size: 14px;
+	font-weight: bold;
+	font-style: italic;
+	font-color: #cccccc;
+}
+
+.discover {
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	font-color: #ffffff;
 }

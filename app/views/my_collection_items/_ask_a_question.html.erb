@@ -6,7 +6,7 @@
 <script type="text/javascript">
 </script>
 <div class="sidebar-content">				
-<% @my_collection_items = current_user.my_collection_items %>
+<% @my_collection_items = @user.my_collection_items %>
 <% if !@my_collection_items.nil? and @my_collection_items.size > 0 %>
 	<div class="sidebar-header">
 		Got questions?

@@ -89,7 +89,8 @@ Macabolic::Application.routes.draw do
                                 :sign_out => 'logout' },
                                 #:sign_up => 'register' },
               :controllers => { :registrations => 'registrations',
-                                :omniauth_callbacks => 'users/omniauth_callbacks' } do
+                                :omniauth_callbacks => 'users/omniauth_callbacks',
+                                :sessions => 'users/sessions' } do
      get 'users/sign_up/:invitation_token' => "registrations#new" 
      get 'users/auth/:provider' => 'users/omniauth_callbacks#passthru'          
   end
@@ -103,7 +104,7 @@ Macabolic::Application.routes.draw do
     end
 
     collection do
-      get 'product_search'
+      get 'search'
     end  
     resources :my_collection_items
     resources :wishlist_items
@@ -132,6 +133,7 @@ Macabolic::Application.routes.draw do
   match 'features' => 'home#feature_tour'
   match 'contact' => 'home#contact_us'
   match 'faq' => 'home#faq'
+  match 'discover' => 'home#home'
 
 # TODO
 #  match '/auth/failure' => 'something to handle this error'
@@ -191,7 +193,7 @@ Macabolic::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "home#index"
+  root :to => "home#home"
 
   # See how all your routes lay out with "rake routes"
 

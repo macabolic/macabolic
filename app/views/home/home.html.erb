@@ -1,0 +1,51 @@
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+//		$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+    }); 
+</script>
+
+<% title "Home" %>
+	<div id="grey-strip" style="height: 115px">
+		<div class="wrapper-top">
+			<%= render 'layouts/tagline' %>
+		</div>
+	</div>
+	<!-- ====================================================================================================== -->
+	<div class="wrapper-mh">
+		<div class="maincol">
+			<div class="tabbed-content-area">
+		        <div id="tab1" class="tab_content product-grid group"> 
+					<% @user = User.new %>
+					<%= render :partial => 'products/index', :locals => { :products => Product.limit(15).order("created_at DESC") } %>
+				</div>	
+			</div>
+			<br/>
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+			        <li><a href="#tab1">Staff Favorites</a></li> 
+				</ul> 		
+		        <div id="tab1" class="tab_content product-grid group"> 
+					<%= render :partial => 'my_collections/index', :locals => { :my_collections => MyCollection.all(:limit => 15), :preview_gallery => false } %>
+				</div>	
+			</div>
+		</div>
+		<div class="sidebar">
+		<% if @notice.present? %>
+			<div class="sidebar-content" id="recent-search">
+			    <div class="sidebar-header">Thank you for your interest!</div>
+				<div class="sidebar-inner">
+					<p style="background:#fff; color: red; border: 2px dotted red; padding: 4px;">
+						We are on invitation now. We will let you know when it is ready.
+					</p>
+				</div>
+			</div>
+		<% end %>
+			
+		<% if !user_signed_in? %>
+			<%= render :partial => 'users/sessions/mini_form' %>
+		<% else %>
+			<%= render 'products/add_a_product_link' %>		
+		<% end %>		
+		</div>
+	</div>	

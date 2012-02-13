@@ -1,14 +1,17 @@
 class QuestionsController < ApplicationController
+  before_filter :store_location, :except => :show
+  before_filter :authenticate_user!, :except => :show
+  
   # GET /questions
   # GET /questions.xml
-  def index
-    @questions = Question.all
+  #def index
+  #  @questions = Question.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @questions }
-    end
-  end
+  #  respond_to do |format|
+  #    format.html # index.html.erb
+  #    format.xml  { render :xml => @questions }
+  #  end
+  #end
 
   # GET /questions/1
   # GET /questions/1.xml
@@ -27,19 +30,19 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   # GET /questions/new.xml
-  def new
-    @question = Question.new
+  #def new
+  #  @question = Question.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @question }
-    end
-  end
+  #  respond_to do |format|
+  #    format.html # new.html.erb
+  #    format.xml  { render :xml => @question }
+  #  end
+  #end
 
   # GET /questions/1/edit
-  def edit
-    @question = Question.find(params[:id])
-  end
+  #def edit
+  #  @question = Question.find(params[:id])
+  #end
 
   # POST /questions
   # POST /questions.xml

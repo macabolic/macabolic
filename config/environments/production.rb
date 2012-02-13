@@ -48,6 +48,9 @@ Macabolic::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+  # Action Mailer Configuration
+  config.action_mailer.default_url_options = { :host => 'www.macabolic.com' }
+  
   # Send email
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {

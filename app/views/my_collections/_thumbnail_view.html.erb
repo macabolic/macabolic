@@ -15,6 +15,11 @@ $(document).ready(function() {
 	});
 });
 </script>
+<%# 
+	The following should be using the collections from the current_user rather than the visiting user.
+	So that the current_user can add the product to current_user's collections.
+%>
+<% my_collections = current_user.my_collections %>
 <%= form_for MyCollectionItem.new, :as => :my_collection_item, :url => my_collection_items_path, :html => { :id => "do-you-have-one-form", :class => "question-form" } do |f| %>
 <div style="width: 800px;">
 	<div style="width: 760px; background: #ffffff; margin-left: auto; margin-right: auto; padding: 15px;">
@@ -22,7 +27,7 @@ $(document).ready(function() {
 		<div id="question" class="product-grid" style="float: left; margin: 17px; border: 0px; width: 700px;">
 			<a id="popupMyCollectionClose" style="cursor: pointer">x</a>
 			<ul>
-			<% @my_collections.each do |my_collection| %>
+			<% my_collections.each do |my_collection| %>
 				<li id="<%= my_collection.id %>" class="not-selected-product" style="margin-right: 10px; margin-bottom: 10px">	
 					<%= link_to '#', :id => 'my_collection_link' do %>	
 						<%= image_tag my_collection.thumbnail.url(:medium), :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>

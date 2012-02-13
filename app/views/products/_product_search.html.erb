@@ -7,7 +7,7 @@
 	<div class="sidebar-inner">
     	<ul>
   			<li id="product-search-form">
-				<%= form_tag products_path, :method => 'get', :id => 'products_search' do %>
+				<%= form_tag search_products_path, :method => 'get', :id => 'products_search' do %>
 					<%= hidden_field_tag :my_collection, my_collection.id %>
 					<%= text_field_tag :search, params[:search], :placeholder => 'Search', :autocomplete => 'off', :class => 'product_text_search' %>
 					<%#= submit_tag "Search", :name => nil %>

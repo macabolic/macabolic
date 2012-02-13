@@ -66,10 +66,10 @@ $(document).ready(function() {
 		</div>
 		<div class="sidebar">
 			<%= render :partial => 'my_collection_items/ask_a_question', :locals => { :page_id => "Home" } %>
-
+		<% if @user == current_user %>
 			<%= render :partial => 'invitations/form', :locals => { :invitation => Invitation.new } %>
-
 			<%= render 'products/add_a_product_link' %>
+		<% end %>
 
 		</div>
 	</div>

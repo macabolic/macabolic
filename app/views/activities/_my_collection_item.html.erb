@@ -11,7 +11,7 @@
 			<%= image_tag current_profile_image_thumbnail_url(user), :width => 50, :title => user.full_name %>
 		</div>
 		<div class="questions-content">
-			<%= link_to user.full_name, profile_member_path(user) %></a> added <%= link_to product.name, product_my_collection_item_path(product, my_collection_item) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+			<%= link_to user.full_name, member_path(user) %></a> added <%= link_to product.name, product_my_collection_item_path(product, my_collection_item) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
 			<div style="display: block; margin-top: 5px; margin-bottom: 5px">				
 				<span class='recommended_user'>
 					<%= image_tag(product.thumbnail.url(:thumb), :width => 50, :class => "preview-image") %>
