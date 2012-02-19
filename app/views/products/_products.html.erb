@@ -40,7 +40,7 @@
 				<% if added %>
 					<b>Added</b>
 				<% else %>
-				<%= link_to 'Add to Wishlist', wishlist_items_path(:wishlist_item => { :wishlist_id => @wishlist_id, :product_id => product.id }), :method => 'post', :remote => true %>
+				<%= link_to 'I want one!', wishlist_items_path(:wishlist_item => { :wishlist_id => @wishlist_id, :product_id => product.id }), :method => 'post', :remote => true %>
 				<% end %>
 				</div>
 			</div>

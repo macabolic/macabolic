@@ -963,13 +963,13 @@ padding-bottom: 40px;
         linear,
         left bottom,
         left top,
-        color-stop(0.50, rgb(109,173,17)),
-        color-stop(0.9, rgb(101,164,11))
+        color-stop(0.50, rgb(226,102,30)),
+        color-stop(0.9, rgb(218,93,24))
     );
     background-image: -moz-linear-gradient(
         center bottom,
-        rgb(109,173,17) 50%,
-        rgb(101,164,11) 90%
+        rgb(226,102,30) 50%,
+        rgb(218,93,24) 90%
     );
 	cursor: pointer;
 }
@@ -1317,6 +1317,23 @@ padding-bottom: 40px;
     background-position:0 -42px;
     border:none;
     cursor:pointer;
+}
+
+.search-result {padding:18px 22px 24px 23px }
+.search-result h2 { margin-top:15px !important }
+.search-result p {font-size:14px;color:#545454;margin-bottom:10px}
+.search-result .left p {
+    font-size:11px;
+    color:#808080
+}
+.search-result.no-result {padding-bottom:300px}
+.search-result .pagination-wrapper.top {
+    margin-bottom:25px;
+    padding-bottom:15px
+}
+.search-result .pagination-wrapper.bottom {
+    margin-top:0;
+    padding:19px 0 0 0
 }
 
 #search-result {padding:18px 22px 24px 23px }

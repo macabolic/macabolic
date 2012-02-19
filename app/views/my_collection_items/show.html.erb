@@ -257,7 +257,7 @@ $(document).ready(function() {
 						<% if current_user.wish_this_product?(@product) %>
 							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
 						<% else %>
-							<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+							<%= link_to 'I want one!', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-orange", :id => "add-wishlist", :title => "I want one!" %>
 						<% end %>
 					</div>
 	            </p>

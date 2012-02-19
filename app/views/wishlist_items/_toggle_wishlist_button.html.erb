@@ -1,5 +1,5 @@
 <% if @action == 'create' %>
 	<%= link_to 'Wanted!', { :controller => "wishlist_items", :action => "destroy", :id => 1, :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
 <% elsif @action == 'destroy' %>
-	<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add to Wishlist" %>
+	<%= link_to 'I want one!', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "I want one!" %>
 <% end %>

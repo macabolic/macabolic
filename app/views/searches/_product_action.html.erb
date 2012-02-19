@@ -24,7 +24,7 @@
 			<a class="button-green" id="own-this" href="" title="Own this">Do you have one?</a>
 		</div>
 		<div id="wishlist_link">
-			<%= link_to 'Add to Wishlist', { :controller => "wishlist_items", :action => "create", :product => product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "Add To Wishlist" %>
+			<%= link_to 'I want one!', { :controller => "wishlist_items", :action => "create", :product => product.id }, :method => "post", :remote => true, :class => "button-green", :id => "add-wishlist", :title => "I want one!" %>
 		</div>
 	<% end %>														
 <% end %>

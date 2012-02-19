@@ -1,0 +1,71 @@
+<div class="pagination-wrapper top">
+	<div class="left">
+		<p>
+			<strong><span style="text-decoration:underline"><%= pluralize(@found_collection_items.size, 'collections') %></span></strong> found based on your search: <strong><%= params[:query] %></strong>
+		</p>
+	</div>
+	<% if @found_collection_items.total_pages > 0 %>					
+	<div class="right">
+  		<div id="pagination">
+			<ul>
+			<% if @found_collection_items.current_page == 1 %>
+				<li class="nolink">«</li>
+			<% else %>
+				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :collection_page => @found_collection_items.current_page - 1), :remote => true %></li>
+			<% end %>
+		<% for i in (1..@found_collection_items.total_pages) %>
+			<% if @found_collection_items.current_page == i %>
+				<li class="current"><%= i %></li>
+			<% else %>
+				<li><%= link_to i, find_product_searches_path(:query => params[:query], :collection_page => i), :remote => true %></li>
+			<% end %>
+		<% end %>
+				<li><span>of</span></li>
+				<li><%= link_to @found_collection_items.total_pages, find_product_searches_path(:query => params[:query], :collection_page => @found_collection_items.total_pages), :remote => true %></li>
+			<% if @found_collection_items.current_page == @found_collection_items.total_pages %>
+				<li class="nolink">»</li>
+			<% else %>
+				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :collection_page => @found_collection_items.current_page + 1), :remote => true %></li>
+			<% end %>																
+      		</ul>
+  		</div>
+	</div>
+<% end %>
+</div><!-- .pagination-wrapper -->		
+<% if @found_collection_items.total_pages > 0 %>					
+
+<div class="tab_content product-grid group">
+	<%= render :partial => 'my_collections/index', :locals => { :my_collections => @found_collections, :preview_gallery => false } %>
+</div>
+<div class="pagination-wrapper bottom">
+	<div class="left"><p class="total"><%= (page_entries_info @found_collection_items, :entry_name => "collections").html_safe %></p></div>	
+	<!--<div class="left"><p>Displaying 1 - 11 of 345</p></div>-->
+	<% if @found_collection_items.total_pages > 0 %>					
+	<div class="right">
+  		<div id="pagination">
+			<ul>
+			<% if @found_collection_items.current_page == 1 %>
+				<li class="nolink">«</li>
+			<% else %>
+				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :collection_page => @found_collection_items.current_page - 1), :remote => true %></li>
+			<% end %>
+		<% for i in (1..@found_collection_items.total_pages) %>
+			<% if @found_collection_items.current_page == i %>
+				<li class="current"><%= i %></li>
+			<% else %>
+				<li><%= link_to i, find_product_searches_path(:query => params[:query], :collection_page => i), :remote => true %></li>
+			<% end %>
+		<% end %>
+				<li><span>of</span></li>
+				<li><%= link_to @found_collection_items.total_pages, find_product_searches_path(:query => params[:query], :collection_page => @found_collection_items.total_pages), :remote => true %></li>
+			<% if @found_collection_items.current_page == @found_collection_items.total_pages %>
+				<li class="nolink">»</li>
+			<% else %>
+				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :collection_page => @found_collection_items.current_page + 1), :remote => true %></li>
+			<% end %>																
+      		</ul>
+  		</div>
+	</div>
+	<% end %>
+</div><!-- .pagination-wrapper -->
+<% end %>

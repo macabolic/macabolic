@@ -167,6 +167,7 @@ $(document).ready(function() {
 <% @found_products.each do |product| %>
 	<li class="search-item">
   		<div class="product-image-thumb">
+		<%= link_to product_path(product) do %>
 			<% if product.thumbnail.present? %>
 				<%= image_tag(product.thumbnail.url(:medium), :width => "128", :class => "preview-image") %>
 			<% elsif product.image_url.present? %>
@@ -174,6 +175,7 @@ $(document).ready(function() {
 			<% else %>
 				<%= image_tag "/images/product/no-image_medium.jpg", :width => "128", :class => "preview-image" %>
 			<% end %>
+		<% end %>
   		</div>
   		<div class="product-detail">
    			<div>
@@ -193,12 +195,14 @@ $(document).ready(function() {
 					</li>					
 				<% end %>
 				</ul>
+			<% if user_signed_in? %>
 				<div class="product-detail">
 					<p>
 						<div id="i_own_this"><a href="#" id="own-this" class="do_you_have_one" obj-id="<%= product.id %>">Do you have one?</a></div>
-						<div id="wishlist_link"><a href="#" id="own-this" class="do_you_wish_one" obj-id="<%= product.id %>">Add to Wishlist!</a></div>
+						<div id="wishlist_link"><a href="#" id="own-this" class="do_you_wish_one" obj-id="<%= product.id %>">I want one!</a></div>
 					</p>
-				</div>				
+				</div>
+			<% end %>	
 			</p>
 		</div>
 		<br class="clear" />
@@ -236,8 +240,10 @@ $(document).ready(function() {
   		</div>
 	</div>
 	<% end %>
-</div><!-- .pagination-wrapper -->                
+</div><!-- .pagination-wrapper -->   
+<% if user_signed_in? %>             
 <div id="popupMyCollection">
 	<%= render :partial => "my_collections/thumbnail_view", :locals => { :product_id => "" } %>
 </div>
 <div id="backgroundPopup"></div>
+<% end %>

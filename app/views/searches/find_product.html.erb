@@ -64,17 +64,15 @@ $(document).ready(function() {
 	<div class="wrapper-mh">
 		<div class="maincol">
         
-        <div class="search-box sidebar-content">
-			<%= form_tag find_product_searches_path, :method => :get, :remote => true do %>
-				<%= text_field_tag 'query', nil, :placeholder => "Search for products. e.g. iPhone or MacBook Pro", :class => "ie-input" %>
-			    <%= submit_tag "Search" %>
-			<% end %>
-        </div>
-        
+        <%= render :partial => 'searches/form' %>
+
 		<div class="tabbed-content-area">
-			<div id="search-result">
+			<div id="search-products-result" class="search-result">
             	<%= render 'searches/result_page' %>
 			</div>
+	        <div id="search-collections-result" class="search-result"> 
+            	<%= render 'searches/result_collections' %>			
+			</div>				
 		</div>
         </div><!-- .maincol -->
 

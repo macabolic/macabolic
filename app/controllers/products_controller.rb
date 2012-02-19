@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_filter :show_invitation_notice
   before_filter :store_location
-  before_filter :authenticate_user!, :except =>  [:index, :search]
+  before_filter :authenticate_user!, :except =>  [:index, :search, :show]
   helper_method :sort_column, :sort_direction
 
   # GET /products
@@ -43,7 +43,12 @@ class ProductsController < ApplicationController
     else 
       # Allow public access.
       @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:question_page]
-    
+
+      search_more_like_this = Sunspot.more_like_this(@product) do
+        fields :name, :category_name
+      end
+      @more_like_this = search_more_like_this.results
+      
       #friends = @user.friend_ids
       friends = MyCollectionItem.all.map(&:user_id)
       if friends.size > 0
@@ -64,6 +69,12 @@ class ProductsController < ApplicationController
       end
     
       @product_comments = @product.comments.order("created_at DESC")
+      
+      my_collection_item_search = Sunspot.search(MyCollectionItem) do
+        with(:product_id, params[:id])
+      end
+      @found_collection_items = my_collection_item_search.results
+      @found_collections = @found_collection_items.map { |i| i.my_collection }
       
       # Put a comment here when found out the purpose of it.
       #@my_collections = current_user.my_collections

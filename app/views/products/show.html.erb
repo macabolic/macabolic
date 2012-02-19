@@ -202,7 +202,7 @@ $(document).ready(function() {
 						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<a href="#" id="own-this" class="button-green do_you_wish_one">Add to Wishlist!</a>
+						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!!</a>
 					</div>
 						<% end %>														
 					<% end %>
@@ -213,11 +213,18 @@ $(document).ready(function() {
 						<% if current_user.wish_this_product?(@product) %>
 							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
 						<% else %>
-							<a href="#" id="own-this" class="button-green do_you_wish_one">Add to Wishlist!</a>
+							<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>
 						<% end %>
 					</div>
 	            </p>
 				<% end %>
+				<% else %>
+					<div id="i_own_this">
+						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+					</div>
+					<div id="wishlist_link">
+						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>
+					</div>				
 				<% end %>
 	        </div>
 	
@@ -226,12 +233,44 @@ $(document).ready(function() {
 		<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">
 			<%= render 'products/product_stat' %>
 		</div>
+			
+		<div class="tabbed-content-area">
+			<div class="pagination-wrapper top">
+				<div class="left">
+					<p style="font-size:11px; color:#808080; padding-left: 23px;">
+						<strong><span style="text-decoration:underline;">Also in <%= pluralize(@found_collection_items.size, 'collections') %></span></strong>
+					</p>
+				</div>
+			</div><!-- .pagination-wrapper -->		
+						
+			<div class="product-grid group">
+				<%= render :partial => 'my_collections/index', :locals => { :my_collections => @found_collections, :preview_gallery => false } %>
+			</div>
+        </div>	
+		<br/><br/>
 
+		<div class="tabbed-content-area">
+			<div class="pagination-wrapper top">
+				<div class="left">
+					<p style="font-size:11px; color:#808080; padding-left: 23px;">
+						<strong><span style="text-decoration:underline;"><%= pluralize(@more_like_this.size, 'products') %></span></strong> similar to <%= @product.name %>
+					</p>
+				</div>
+			</div><!-- .pagination-wrapper -->		
+						
+			<div class="product-grid group">
+				<%= render :partial => 'products/index', :locals => { :products => @more_like_this } %>
+			</div>
+        </div>	
+		<br/><br/>
+
+		<% if user_signed_in? %>
 		<div>
 			<%= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "Product", :my_collection_item => nil } %>
 		</div>
-
+		<% end %>
 		<div class="tabbed-content-area">			
+
 			<ul class="tabs"> 
 		    	<li><a href="#questions">Questions &amp; Answers</a></li> 
 		    	<!--<li><a href="#reviews">Reviews</a></li>-->
@@ -255,7 +294,7 @@ $(document).ready(function() {
 		<% if !@friends_who_owned.nil? %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@friends_who_owned.size, 'friend') %> own
+				<%= pluralize(@friends_who_owned.size, 'friend') %> owned
 			</div>	
 			<div class="user-grid">
 		    	<ul>
@@ -273,7 +312,7 @@ $(document).ready(function() {
 		<% if !@friends_who_wished.nil? %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@friends_who_wished.size, 'friend') %> wish
+				<%= pluralize(@friends_who_wished.size, 'friend') %> wanted
 			</div>	
 			<div class="user-grid">
 		    	<ul>

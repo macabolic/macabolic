@@ -35,11 +35,11 @@ class Product < ActiveRecord::Base
   searchable do
     integer :product_line_id
     integer :response_ids, :multiple => true
-    text  :name
-    text  :vendor_name do
+    text  :name, :more_like_this => true
+    text  :vendor_name, :more_like_this => true do
       vendor.name
     end
-    text  :category_name do
+    text  :category_name, :more_like_this => true do
       product_line.name
     end
   end

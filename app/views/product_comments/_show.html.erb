@@ -1,5 +1,12 @@
 <div class="sidebar-content" id="comment-list">
-	<div class="sidebar-header">Comments</div>	
+	<div class="sidebar-header">
+	<% if !@product_comments.nil? %>	
+		<%= pluralize(@product_comments.size, "Comment") %>
+	<% else %>
+		Comment
+	<% end %>
+	</div>	
+	
 	<div class="sidebar-inner">
     	<ul id="search-list">
 			<div id="products">

@@ -14,10 +14,13 @@
 	<!-- ====================================================================================================== -->
 	<div class="wrapper-mh">
 		<div class="maincol">
+
+	        <%= render :partial => 'searches/form' %>
+
 			<div class="tabbed-content-area">
 		        <div id="tab1" class="tab_content product-grid group"> 
 					<% @user = User.new %>
-					<%= render :partial => 'products/index', :locals => { :products => Product.limit(15).order("created_at DESC") } %>
+					<%= render :partial => 'products/index', :locals => { :products => Product.limit(15).order("updated_at DESC") } %>
 				</div>	
 			</div>
 			<br/>

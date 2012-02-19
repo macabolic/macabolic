@@ -41,16 +41,20 @@ function showAnswer(id) {
 		<div class="answer-wrapper">
 			<div class="answers-meta">
 				<%= render :partial => 'questions/answers_meta_info', :locals => { :question => question }%>
+				<% if user_signed_in? %>
 				<span>
 					<strong>
 						<a href="javascript:onClick=showAnswer(<%= question.id %>)" title="Answer">Answer now</a>
 					</strong>
 				</span>
+				<% end %>
 			</div>
 		</div>
+		<% if user_signed_in? %>
 		<div id="answer-<%= question.id %>" style="display:none">		
 			<%= render :partial => 'questions/answer_a_question', :locals => { :question => question } %>
 		</div>
+		<% end %>
 	</li>
 	<% end %>
 <% end %>

@@ -22,7 +22,7 @@ class MyCollectionItem < ActiveRecord::Base
     integer :my_collection_id
     integer :user_id
     integer :product_id
-    string  :product_name
+    text  :product_name
     integer :interest_indicator # OWN = 1; WISH = 2
   end
         

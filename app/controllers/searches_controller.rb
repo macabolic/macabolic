@@ -8,8 +8,16 @@ class SearchesController < ApplicationController
       paginate(:per_page => 25, :page => params[:product_page])
     end
     
+    my_collection_item_search = Sunspot.search(MyCollectionItem) do
+      fulltext params[:query]
+      paginate(:per_page => 2, :page => params[:collection_page])
+    end
+    
     @found_products = @search.results
-    @my_collections = current_user.my_collections
+    @found_collection_items = my_collection_item_search.results
+    @found_collections = @found_collection_items.map { |i| i.my_collection }
+    
+    @my_collections = current_user.my_collections if user_signed_in?
   #  respond_to do |format|
   #    format.html # show.html.erb
   #    format.xml  { render :xml => @wishlist }
