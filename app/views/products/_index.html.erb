@@ -16,9 +16,11 @@
 			<span class="productimage">
 				<%= link_to product_path(product) do %>
 					<% if product.thumbnail.present? %>
-						<%= image_tag(product.thumbnail.url(:medium), :size => "150x150") %>
+						<%#= image_tag(product.thumbnail.url(:medium), :size => "150x150") %>
+						<%= image_tag(product.thumbnail.url(:small)) %>
 					<% elsif product.image_url.present? %>
-						<%= image_tag(product.image_url, :size => "150x150") %>
+						<%#= image_tag(product.image_url, :size => "150x150") %>
+						<%= image_tag(product.image_url, :width => "150") %>
 					<% else %>
 						<%= image_tag "/images/product/no-image_medium.jpg", :size => "150x150" %>
 					<% end %>

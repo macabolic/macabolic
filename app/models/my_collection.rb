@@ -9,7 +9,8 @@ class MyCollection < ActiveRecord::Base
   
   #has_permalink           :name
   has_attached_file       :thumbnail, 
-                          :styles => { :thumb => ["50x50>", :png], :small => ["180x180>", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
+                          :styles => {  :thumb => ["50x50#", :png], 
+                                        :small => ["150x150#", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
                           :url => "/assets/members/my_collections/:attachment/:id/:style/:filename",
                           :path => ":rails_root/public/assets/members/my_collections/:attachment/:id/:style/:filename",
                           :default_url => "/images/product/no-image_:style.jpg",

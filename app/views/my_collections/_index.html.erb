@@ -94,7 +94,7 @@ $(window).load(function(){
 					
 					<% my_collection_items = my_collection.my_collection_items %>
 					<% if my_collection.thumbnail.present? %>
-						<%= image_tag my_collection.thumbnail.url(:medium), :width => "150", :height => "150", :title => "#{my_collection.name}" %>
+						<%= image_tag my_collection.thumbnail.url(:small), :title => "#{my_collection.name}" %>
 					<% end %>
 					<% if my_collection_items.size == 0 %>
 						<% if !my_collection.thumbnail.present? %>
@@ -105,16 +105,16 @@ $(window).load(function(){
 							<% my_collection_items.each do |my_collection_item| %>
 								<%#= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "150", :height => "150",  :class => "preview-image") %>
 								<% if my_collection_item.product.thumbnail.present? %>
-									<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :size => "150x150", :class => "preview-image") %>
+									<%= image_tag(my_collection_item.product.thumbnail.url(:small), :class => "preview-image") %>
 								<% elsif my_collection_item.product.image_url.present? %>
-									<%= image_tag(my_collection_item.product.image_url, :size => "150x150", :class => "preview-image") %>
+									<%= image_tag(my_collection_item.product.image_url, :width => "150", :class => "preview-image") %>
 								<% else %>
 									<%= image_tag "/images/product/no-image_medium.jpg", :size => "150x150", :class => "preview-image" %>
 								<% end %>
 							<% end %>
 						<% else %>
 							<% if !my_collection.thumbnail.present? %>
-								<%= image_tag(my_collection_items[0].product.thumbnail.url(:medium), :size => "150x150", :class => "preview-image") %>
+								<%= image_tag(my_collection_items[0].product.thumbnail.url(:small), :class => "preview-image") %>
 							<% end %>
 						<% end %>
 					<% end %>

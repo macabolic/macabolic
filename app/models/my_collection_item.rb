@@ -4,7 +4,7 @@ class MyCollectionItem < ActiveRecord::Base
   belongs_to  :user
 
   has_attached_file       :thumbnail, 
-                          :styles => { :thumb => ["50x50>", :png], :small => ["180x180>", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
+                          :styles => { :thumb => ["50x50#", :png], :small => ["150x150#", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
                           :url => "/assets/members/my_collections/my_collection_items/:attachment/:id/:style/:filename",
                           :path => ":rails_root/public/assets/members/my_collections/my_collection_items/:attachment/:id/:style/:filename",
                           :default_url => "/images/product/no-image_:style.jpg",
