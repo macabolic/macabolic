@@ -43,7 +43,123 @@
     float: none;
     clear: both;
 }
+
+#backgroundZoomIn {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:1;
+}
+#popupZoomIn {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+//	width:808px;
+	background:#f6f1de;
+	border:2px solid #cecece;
+	z-index:2;
+	padding:12px;
+	font-size:13px;
+}
+
+#popupZoomInClose {
+	font-size:14px;
+	line-height:14px;
+	right:6px;
+	top:4px;
+	position:absolute;
+	color:#5c5c5c;
+	font-weight:700;
+	display:block;
+}
+
+#product_preview_gallery {
+	cursor: pointer;
+}
 </style>
+<script type="text/javascript"> 
+//SETTING UP OUR POPUP
+//0 means disabled; 1 means enabled;
+var zoomInStatus = 0;
+
+//loading popup with jQuery magic!
+function loadZoomIn(){
+	//loads popup only if it is disabled
+	if(zoomInStatus==0){
+		$("#backgroundZoomIn").css( {"opacity": "0.7"} );
+		$("#backgroundZoomIn").fadeIn("slow");
+		$("#popupZoomIn").fadeIn("slow");
+		zoomInStatus = 1;
+	}
+}
+
+//disabling popup with jQuery magic!
+function disableZoomIn(){
+	//disables popup only if it is enabled
+	if(zoomInStatus==1){
+		$("#backgroundZoomIn").fadeOut("slow");
+		$("#popupZoomIn").fadeOut("slow");
+		zoomInStatus = 0;
+	}
+}
+
+//centering popup
+function centerZoomIn(){
+
+	//request data for centering
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#popupZoomIn").height();
+	var popupWidth = $("#popupZoomIn").width();
+	//centering
+	$("#popupZoomIn").css({
+		"position": "absolute",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
+	//only need force for IE6
+
+	$("#backgroundZoomIn").css( {"height": windowHeight} );
+}
+
+
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+
+	//LOADING POPUP
+	//Click the button event!
+	$("#product_preview_gallery").click(function(){
+		//centering with css
+		centerZoomIn();
+		//load popup
+		loadZoomIn();
+	});
+
+	//CLOSING POPUP
+	//Click the x event!
+	$("#popupZoomInClose").click(function(){
+		disableZoomIn();
+	});
+	
+	//Click out event!
+	$("#backgroundZoomIn").click(function(){
+		disableZoomIn();
+	});
+	
+	//Press Escape event!
+	$(document).keypress(function(e){
+		if(e.keyCode==27 && zoomInStatus==1) {
+			disableZoomIn();
+		}
+	});	
+});
+</script>
 <div class="html_carousel">
     <div id="product_preview_gallery">
     	<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
@@ -75,3 +191,8 @@ $(window).load(function() {
 	});
 });
 </script>
+<div id="popupZoomIn">
+	<%= image_tag(product.thumbnail.url(:original)) %>
+</div>
+<div id="backgroundZoomIn"></div>
+
