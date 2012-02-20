@@ -172,7 +172,7 @@ $(document).ready(function() {
 				<p>from <span class="vendor"><%= @product.vendor.name %></span></p>
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
-				<% if @user.present? || current_user.present? %>
+			<% if @user.present? || current_user.present? %>
 				<% if @user == current_user %>				
 	            <p>
 					<%# OWN THIS PRODUCT %>
@@ -186,7 +186,8 @@ $(document).ready(function() {
 					<% else %>
 						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>
 					<% end %>
-					</div>						
+					</div>
+					<%# Does not own this product %>						
 					<% else %>
 						<%# WISH THIS PRODUCT %>
 						<% if current_user.wish_this_product?(@product) %>
@@ -198,11 +199,12 @@ $(document).ready(function() {
 						<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
 					</div>
 						<% else %>
+						<!-- Requires login here -->
 					<div id="i_own_this">
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<a href="" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!!</a>
+						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!</a>
 					</div>
 						<% end %>														
 					<% end %>
@@ -218,14 +220,17 @@ $(document).ready(function() {
 					</div>
 	            </p>
 				<% end %>
-				<% else %>
+			<%# Not log-in yet. %>
+			<% else %>
 					<div id="i_own_this">
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<%= link_to "Do you have one?", user_session_path, :class => "button-green", :id => "own-this" %>						
+						<%#<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>%>
 					</div>
 					<div id="wishlist_link">
-						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>
+						<%= link_to "I want one!", user_session_path, :class => "button-orange", :id => "own-this" %>						
+						<%#<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>%>
 					</div>				
-				<% end %>
+			<% end %>
 	        </div>
 	
 	    	<br class="clear" />

@@ -192,7 +192,13 @@ $(window).load(function() {
 });
 </script>
 <div id="popupZoomIn">
-	<%= image_tag(product.thumbnail.url(:original)) %>
+	<% if product.thumbnail.present? %>
+		<%= image_tag(product.thumbnail.url(:original)) %>
+	<% elsif product.image_url.present? %>
+		<%= image_tag(product.image_url) %>
+	<% else %>
+		<%= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
+	<% end %>		
 </div>
 <div id="backgroundZoomIn"></div>
 

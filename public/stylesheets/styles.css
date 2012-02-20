@@ -908,13 +908,17 @@ ul.list-my-collections {
 
 .list-my-collections li {
 	width: 190px;
-//	border: 1px solid #e3d7a9;
 	background-position: 0 50%;
-//	padding: 10px 5px 5px 5px!important;
 	padding: 10px 5px 10px 5px!important;
-//	margin: 10px 5px 12px 5px;
-	margin: 10px 8px 12px 8px;
+	margin-right: 8px;
+	margin-left: 8px;
+	margin-top: 10px;
+	margin-bottom: auto;
+	//	margin: 10px 8px 12px 8px;
 	color: #414141;
+	//	border: 1px solid #e3d7a9;
+	//	padding: 10px 5px 5px 5px!important;
+	//	margin: 10px 5px 12px 5px;
 }
 
 .list-my-collections div.right {

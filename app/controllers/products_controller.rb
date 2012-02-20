@@ -99,6 +99,11 @@ class ProductsController < ApplicationController
     end
   end
   
+  def bookmarklet
+    @product = Product.new(:image_url => params[:image_url])
+    @user = current_user
+  end
+  
   # POST /products
   # POST /products.xml
   def create

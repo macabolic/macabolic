@@ -70,10 +70,33 @@
 				<span style="font-size: 14px; color: #cccccc;">Login via</span>
 				<div style="margin-top: 5px; margin-bottom: 15px;">
 					<ul style="list:none;">
+						<!--
 						<li style="float: left; margin-bottom: 5px;">
-							<%= link_to user_omniauth_authorize_path(:facebook) do %>
-								<%= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook", :class => "social" %>
-							<% end %>								
+							<%#= link_to user_omniauth_authorize_path(:facebook) do %>
+								<%#= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook", :class => "social" %>
+							<%# end %>								
+						</li>
+						-->
+						<li>
+						    <div id="fb-root"></div>
+						    <script>
+						      window.fbAsyncInit = function() {
+						        FB.init({
+									appId      : '249685278407440',	//255146254550038
+									status     : true, 
+									cookie     : true,
+									xfbml      : true,
+									oauth      : true,
+						        });
+						      };
+						      (function(d){
+						         var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+						         js = d.createElement('script'); js.id = id; js.async = true;
+						         js.src = "//connect.facebook.net/en_US/all.js";
+						         d.getElementsByTagName('head')[0].appendChild(js);
+						       }(document));
+						    </script>
+						    <div class="fb-login-button">Login with Facebook</div>							
 						</li>
 					</ul>
 				</div>
