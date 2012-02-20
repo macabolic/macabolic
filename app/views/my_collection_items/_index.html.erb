@@ -6,6 +6,7 @@
 	}
 </style>
 <ul id="collection-items" class="list-my-collections">
+	<% count = 0 %>
 	<% my_collection_items.each do |my_collection_item| %>
 	<li>
 		<%= link_to(my_collection_item) do %>
@@ -43,6 +44,14 @@
 			</span>																		
 		<% end %>
 	</li>							
+	<%
+		count = count + 1
+		if count % 3 == 0
+	%>
+		<hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/>
+	<% 
+		end 
+	%>
 	<% end %>	
 </ul>
 

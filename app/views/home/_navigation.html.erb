@@ -5,6 +5,8 @@
 		features = "nav-item-on"
 	elsif item == 'FAQ'
 		faq = "nav-item-on"
+	elsif item == 'Extra'
+		extra = "nav-item-on"
 	elsif item == 'Contact Us'
 		contact_us = "nav-item-on"
 	else 
@@ -17,6 +19,9 @@
 	</li>
 	<li id="<%= features %>">
 		<%= link_to 'Feature Tour', features_url %>
+	</li>	
+	<li id="<%= extra %>">
+		<%= link_to 'Extra', extra_url %>
 	</li>	
 	<!--
 	<li id="<%= faq %>">

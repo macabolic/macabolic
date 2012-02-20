@@ -139,6 +139,7 @@ Macabolic::Application.routes.draw do
   match 'contact' => 'home#contact_us'
   match 'faq' => 'home#faq'
   match 'discover' => 'home#home'
+  match 'extra' => 'home#extra'
   
 # TODO
 #  match '/auth/failure' => 'something to handle this error'

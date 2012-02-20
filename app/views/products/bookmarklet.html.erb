@@ -1,4 +1,35 @@
-<% title 'Add a new product' %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Macabolic - <%= 'Add a new product' %></title>
+	
+  	<%= stylesheet_link_tag "layout.css" %>
+  	<%= stylesheet_link_tag "macabolic.css" %>
+  	<%= stylesheet_link_tag "reset.css" %>
+  	<%= stylesheet_link_tag "scaffold.css" %>
+  	<%= stylesheet_link_tag "styles.css" %>
+	<%= stylesheet_link_tag "jquery-ui-1.8.17.custom.css" %>
+	
+	<%= javascript_include_tag "jquery.js" %>
+	<%= javascript_include_tag "jquery_ujs.js" %>
+	<%= javascript_include_tag "application.js" %>
+	<%= javascript_include_tag "jquery.min.js" %>
+	<%= javascript_include_tag "jquery.pngFix.js" %>
+	<%= javascript_include_tag "jquery.ui.js" %>
+	<%= javascript_include_tag "jquery-ui-1.8.17.custom.min.js" %>
+
+  	<%= csrf_meta_tag %>
+
+<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+<!--[if IE 6]>
+	<%= stylesheet_link_tag "ie6.css" %>
+<![endif]-->
+<!--[if IE 7]>
+	<%= stylesheet_link_tag "ie7.css" %>	
+<![endif]-->
+
+</head>
+
 <style type="text/css">
 select {
 	width: 200px;
@@ -96,79 +127,65 @@ select {
 				$(this).parents('li').addClass('not-selected-product');			
 			}
 		});
-
-		$("submit-tip-button").click(function() {
-			$("#macabolicframe_veil").fadeOut(750);
-			$("#macabolicframe iframe").slideUp(500);
-			setTimeout("$('#macabolicframe').remove()", 750);			
-		})
 	});
 
 </script>
 
-<body class="subpage productpage">
-<%= form_for(@product) do |f| %>
-<div class="wrapper-mh">
-	<div class="add-product-maincol"> 
-    	<div class="add-product-content">
-			<div class="add-product-methods">
-				<ul>
-					<li>
-						Facebook<span><%= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook", :class => "social" %></span>
-					</li>
-					<li class="noborder alt">Twitter<span><%= image_tag "auth/twitter_64.png", :size => "64x64", :alt => "Twitter", :class => "social" %></span></li>
-				</ul>
-			</div>
-			<div class="add-product-methods">				
-				<br/>
-				<h3>Add a new product</h3>
-			  	<%= f.label :name %>
-				<%= f.text_field :name, :class => "text", :placeholder => "e.g. iPad 3" %><br/><br/>
 
-			  	<%= f.label :vendor_id %>
-				<%= text_field_tag 'vendor_name', nil, :class => "text", :placeholder => "e.g. Apple Inc." %><br/><br/>
-				<%#= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %>
-
-			  	<%= f.label :product_line_id %>
-				<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name, :prompt => true) %><br/><br/>
-
-			  	<%= f.label :description %>
-				<%= f.text_area :description, :cols => 70, :rows => 5, :class=> "answer_area" %><br/><br/>
-
-				<%= hidden_field_tag :my_collection_id %>
-				<%= hidden_field_tag "product[uploader_id]", current_user.id %>
-				
-				<div>
-			  		<%= f.label 'Image path' %>
-					<%= f.hidden_field :image_url %>			
-				</div>	
-				<br/>
-
-				<div class="actions">
-					<%= f.submit 'Submit', :class => "submit-tip-button" %>
-				</div>
-				<br/>
-			</div>
-	    </div>
-	</div>
-	
-	<!--div class="upload-image-sidebar"-->			
-	<div class="sidebar"-->
-		<div class="sidebar-content">
-            <div class="sidebar-header">Add to your collection?</div>			
-			<div id="question" class="product-grid" style="margin: 17px; border: 0px;">
-		    	<ul>
-				<% current_user.my_collections.each do |my_collection| %>
-		  			<li id="<%= my_collection.id %>" class="not-selected-product">	
-						<%= link_to '#', :id => 'my_collection_link' do %>	
-							<%= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
-						<% end %>
-					</li>
-				<% end %>
-				</ul>
-			</div>
+	<div id="black-strip">
+		<div>
+			<div class="logo-holder">
+				<a href="<%= root_url %>"><h1>Macabolic</h1></a>
+			</div>				
 		</div>
 	</div>
-</div>
-<% end %>
-</body>
+	
+	<div class="wrapper-popup">
+		<%= form_for(@product) do |f| %>
+		<div style="background: #f6f1de;overflow: hidden; float:center;"> 
+			<div id="question" class="product-grid" style="margin: 17px; border: 0px;">
+				<span style="text-align: left; margin-bottom: 10px;"><%= f.label "Add to collection (optional)" %></span>
+				<div style="display: block; overflow: visible; margin-bottom: 10px;">						
+					<ul>
+					<% current_user.my_collections.each do |my_collection| %>
+			  			<li id="<%= my_collection.id %>" class="not-selected-product">	
+							<%= link_to '#', :id => 'my_collection_link' do %>	
+								<%= image_tag my_collection.thumbnail.url(:small), :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+							<% end %>
+						</li>
+					<% end %>
+					</ul>
+				</div>
+				<br/><br/>
+				<div style="display: block; overflow: hidden; float: left;">
+					<span style="display: block; overfloat: hidden; float: left; text-align: left; margin-right: 20px;">
+						<%= f.label :name %>
+						<%= f.text_field :name, :class => "text", :placeholder => "e.g. iPad 3" %><br/><br/>
+					</span>
+					<span style="display: block; overfloat: hidden; float: left; text-align: left; margin-right: 20px;">
+					  	<%= f.label :vendor_id %>
+						<%= text_field_tag 'vendor_name', nil, :class => "text", :placeholder => "e.g. Apple Inc." %><br/><br/>
+						<%#= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %>
+					</span>
+					<span style="display: block; overfloat: hidden; float: left; text-align: left;">
+					  	<%= f.label :product_line_id %>
+						<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name, :prompt => true) %><br/><br/>
+					</span>
+				  	<%#= f.label :description %>
+					<%#= f.text_area :description, :cols => 70, :rows => 5, :class=> "answer_area" %><br/><br/>
+
+					<%= hidden_field_tag :my_collection_id %>
+					<%= hidden_field_tag "product[uploader_id]", current_user.id %>
+		
+					<%= f.hidden_field :image_url %>			
+					<div class="actions" style="margin-bottom: 15px;">
+						<%= f.submit 'Submit', :class => "submit-tip-button" %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% end %>
+	</div>    	
+
+
+

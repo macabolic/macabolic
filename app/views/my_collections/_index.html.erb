@@ -154,7 +154,15 @@ $(window).load(function(){
 		});
 	});
 	</script>							
-	<% count = count + 1 %>
+	<%
+		count = count + 1
+		if count % 3 == 0
+	%>
+		<hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/>
+	<% 
+		end 
+	%>
+	
 	<% end %>	
 </ul>
 

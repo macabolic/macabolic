@@ -41,6 +41,12 @@ margin-left: -489px;
 	margin: 0 auto -44px; /* the bottom margin is the negative value of the footer's height */
 }
 
+.wrapper-popup {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;	
+}
+
 #black-strip {
 height: 100px;
 background-color: black;

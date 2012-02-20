@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :show_invitation_notice, :except => [ :about_us, :feature_tour, :faq, :home, :contact_us ]
+  before_filter :show_invitation_notice, :except => [ :about_us, :feature_tour, :faq, :home, :contact_us, :extra ]
   
   def index
     if user_signed_in?
@@ -28,6 +28,10 @@ class HomeController < ApplicationController
   end
 
   def home
+    
+  end
+
+  def extra
     
   end
   

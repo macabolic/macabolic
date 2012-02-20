@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   belongs_to :invitation
 
   has_attached_file       :avatar, 
-                          :styles => { :thumb => ["50x50>", :png], :small => ["180x180>", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
+                          :styles => { :thumb => ["50x50#", :png], :small => ["180x180#", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
                           :url => "/assets/members/:attachment/:id/:style/member-:id-:filename",
                           :path => ":rails_root/public/assets/members/:attachment/:id/:style/member-:id-:filename",
                           :default_url => "/images/default_photo.png"
