@@ -7,6 +7,7 @@
     #      :recommendation, TODO: received_recommendation is not yet DONE.
     #      :my_collection_comment,
     #      :my_collection_response
+	#  	   :product
   
 	activities.each do |activity| 
 		if activity.name == 'Question'
@@ -24,6 +25,10 @@
 		elsif activity.name == 'Recommendation'
 %>
 			<%= render :partial => 'activities/product_recommendation', :locals => { :activity => activity } %>
+<%			
+		elsif activity.name == 'Product'
+%>
+			<%= render :partial => 'activities/product', :locals => { :activity => activity } %>
 <%
 		end
 %>

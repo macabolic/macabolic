@@ -17,6 +17,7 @@ class Activity < ActiveRecord::Base
   scope :my_collections, joins('INNER JOIN my_collections ON activities.type_id = my_collections.id').where('activities.name = ?', 'MyCollection')
   scope :recommendations, joins('INNER JOIN recommendations ON activities.type_id = recommendations.id').where('activities.name = ?', 'Recommendation')
   scope :my_collection_comments, joins('INNER JOIN my_collection_comments ON activities.type_id = my_collection_comments.id').where('activities.name = ?', 'MyCollectionComment')
+  scope :products, joins('INNER JOIN products ON activities.type_id = products.id').where('activities.name = ?', 'Product')
   
   def question
     if name == 'Question'
@@ -47,6 +48,12 @@ class Activity < ActiveRecord::Base
       MyCollectionComment.find(type_id)
     end
   end  
+  
+  def product
+    if name == 'Product'
+      Product.find(type_id)
+    end
+  end
   
   def lapsed_time
     @minutes = 60

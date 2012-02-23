@@ -1,0 +1,41 @@
+<%
+	user = activity.user
+	product = activity.product
+%>
+
+<li>
+	<div class="questions-block" style="border-bottom: 0px; padding-bottom: 0px">
+		<div class="questions-img">
+			<%= image_tag current_profile_image_thumbnail_url(user), :width => 50, :title => user.full_name %>
+		</div>
+		<div class="questions-content">
+			<%= link_to user.full_name, member_path(user) %></a> discovered <%= link_to product.name, product_path(product) %>.
+			<div style="display: block; margin-top: 5px; margin-bottom: 5px">				
+				<span class='recommended_user'>
+					<% if product.thumbnail.present? %>
+						<%= image_tag(product.thumbnail.url(:small), :width => 150, :class => "preview-image") %>
+					<% elsif product.image_url.present? %>
+						<%= image_tag(product.image_url, :width => "150", :class => "preview-image") %>
+					<% else %>
+						<%= image_tag "/images/product/no-image_small.jpg", :size => "150x150", :class => "preview-image" %>
+					<% end %>
+				</span>
+			</div>			
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="answer-wrapper">
+		<div class="answers-meta">
+			<p class="left"><%= activity.lapsed_time %> with <span id="response-stat-product-<%= product.id %>"><%= product.responses.size %></span> like</p>
+			<p>
+				<span id="home-response-product-<%= product.id %>">
+					<% if product.like?(current_user) %>					
+						<%= link_to 'Unlike', unlike_product_path(product, :user_id => current_user.id), :title => "Unlike", :remote => true %>
+					<% else %>
+						<%= link_to 'Like', like_product_path(product, :user_id => current_user.id), :title => "Like", :remote => true %>
+					<% end %>
+				</span>
+			</p>
+		</div>
+	</div>							
+</li>
