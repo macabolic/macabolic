@@ -1427,3 +1427,49 @@ input:blur {
 	//font-size: 15px;
 	//line-height: 30px;
 }
+
+#buy_now {
+	width: 80px;
+	height: 25px;
+  background:#F6F1DE;
+	//background:#ffffff;
+  padding:5px 20px;
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  text-decoration:none;
+  //border: 1px solid #5B8F10;
+	border: 1px solid #d5d5d5;
+  color: #fff !important;
+	font-color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: Arial;
+	line-height: 25px;
+  //text-shadow: 0px -1px 0px #385c05;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+}
+
+#buy_now:hover {
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.50, rgb(254,249,230)),
+        color-stop(0.9, rgb(246,241,222))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(254,249,230) 50%,
+        rgb(246,241,222) 90%
+    );
+	cursor: pointer;
+
+}
+
+#buy_now a {
+	text-decoration: none;
+	color: #da5d18;
+}

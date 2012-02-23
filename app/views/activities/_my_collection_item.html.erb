@@ -14,7 +14,14 @@
 			<%= link_to user.full_name, member_path(user) %></a> added <%= link_to product.name, product_my_collection_item_path(product, my_collection_item) %> to the <%= link_to my_collection.name, my_collection_path(my_collection) %>.
 			<div style="display: block; margin-top: 5px; margin-bottom: 5px">				
 				<span class='recommended_user'>
-					<%= image_tag(product.thumbnail.url(:thumb), :width => 50, :class => "preview-image") %>
+					<%#= image_tag(product.thumbnail.url(:thumb), :width => 50, :class => "preview-image") %>
+					<% if product.thumbnail.present? %>
+						<%= image_tag(product.thumbnail.url(:small), :width => 150, :class => "preview-image") %>
+					<% elsif product.image_url.present? %>
+						<%= image_tag(product.image_url, :width => "150", :class => "preview-image") %>
+					<% else %>
+						<%= image_tag "/images/product/no-image_small.jpg", :size => "150x150", :class => "preview-image" %>
+					<% end %>
 				</span>
 			</div>			
 		</div>

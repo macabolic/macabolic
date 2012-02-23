@@ -177,7 +177,8 @@ select {
 					<%= hidden_field_tag :my_collection_id %>
 					<%= hidden_field_tag "product[uploader_id]", current_user.id %>
 		
-					<%= f.hidden_field :image_url %>			
+					<%= f.hidden_field :image_url %>
+					<%= hidden_field_tag "product_link", @product_url %>	
 					<div class="actions" style="margin-bottom: 15px;">
 						<%= f.submit 'Submit', :class => "submit-tip-button" %>
 					</div>

@@ -1,3 +1,11 @@
+<style type="text/css">
+#own_want a {
+	font-size: 12px;
+	font-weight: normal;
+	color: #65A40B;
+	display: inline;
+}
+</style>
 <% if !@products.nil? %>
 	<% @products.each do |product| %>
         <li>
@@ -28,9 +36,10 @@
 				</p>
 				<% end %>
 				<div class="right">
-					<p>
+					<p id="own_want">
 						<% if !@my_collection.nil? %>	
-							<%= link_to 'Add', my_collection_my_collection_items_path(@my_collection.id, MyCollectionItem.new, :product_id => product.id), :method => 'post' %>
+							<%= link_to 'Own', my_collection_my_collection_items_path(@my_collection.id, MyCollectionItem.new, :product_id => product.id, :interest_indicator => 1), :method => 'post' %> | 
+							<%= link_to 'Want', my_collection_my_collection_items_path(@my_collection.id, MyCollectionItem.new, :product_id => product.id, :interest_indicator => 2), :method => 'post' %>
 						<% end %>
 					</p>
 				</div>				

@@ -122,6 +122,10 @@ class ProductsController < ApplicationController
       my_collection_item = MyCollectionItem.new(:my_collection_id => params[:my_collection_id], :user_id => current_user.id)
       logger.debug "building product now..."
 
+      if params[:product_link].present?
+        params[:product][:product_link_attributes] = { :informer_id => current_user.id, :link => params[:product_link] }
+      end
+
       if params[:vendor_name].present?
         @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
         if @vendor_search_results.size > 0
@@ -137,7 +141,7 @@ class ProductsController < ApplicationController
           my_collection_item.build_product( params[:product] )
         end
       end
-
+      
       if my_collection_item.save
         logger.debug "save my collection item properly... and about to redirect."
         @my_collection = MyCollection.find_by_id(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
@@ -150,6 +154,10 @@ class ProductsController < ApplicationController
         end
       end
     else
+      
+      if params[:product_link].present?
+        @product.build_product_link(:informer_id => current_user.id, :link => params[:product_link])
+      end
       
       if params[:vendor_name].present?
         @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
@@ -227,6 +235,19 @@ class ProductsController < ApplicationController
     @number_of_likes = @product.responses.size
   end
   
+  def buy_now
+    product = Product.find(params[:id])
+    link = product.product_link.link
+    if link.present?
+      redirect_to link
+    else
+      redirect_to product_path(product)
+    end    
+  end
+  
+  def suggest_where
+    
+  end
   
   private
   

@@ -16,7 +16,14 @@
 			<% if current_my_collection_item != my_collection_item %>
   			<li id="<%= my_collection_item.id %>">	
 				<%= link_to product_my_collection_item_path(my_collection_item.product, my_collection_item), :id => 'product_question_link' do %>
-					<%= image_tag my_collection_item.product.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection_item.product.id, :title => my_collection_item.product.name %>
+					<% if my_collection_item.product.thumbnail.present? %>
+						<%= image_tag(my_collection_item.product.thumbnail.url(:small), :width => "64", :class => "preview-image") %>
+					<% elsif my_collection_item.product.image_url.present? %>
+						<%= image_tag(my_collection_item.product.image_url, :width => "64", :class => "preview-image") %>
+					<% else %>
+						<%= image_tag "/images/product/no-image_small.jpg", :size => "64x64", :class => "preview-image" %>
+					<% end %>
+
 				<% end %>
 			</li>
 			<% end %>

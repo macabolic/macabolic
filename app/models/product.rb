@@ -10,6 +10,7 @@ class Product < ActiveRecord::Base
   #has_many                :wishlist_items,      :dependent => :destroy
   has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
+  has_one                 :product_link,        :dependent => :destroy
   
   has_attached_file       :thumbnail, 
                           :styles => {  :thumb => ["100x100#", :png],
@@ -26,14 +27,15 @@ class Product < ActiveRecord::Base
                           :length => { :maximum => 1000, :too_long => "must have at most %{count} characters" }
   validates               :vendor, :presence => true
   validates               :product_line, :presence => true
-  validates_associated    :product_line
-  validates_associated    :vendor
+  #validates_associated    :product_line
+  #validates_associated    :vendor
 
   validates_attachment_size         :thumbnail, :less_than => 700000,  :message => "should be less than 700KB."
   validates_attachment_content_type :thumbnail, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
   
   accepts_nested_attributes_for :vendor, :reject_if => lambda { |a| a[:name].blank? }
-  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url
+  accepts_nested_attributes_for :product_link, :reject_if => lambda { |a| a[:link].blank? }
+  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url, :product_link_attributes
   
   searchable do
     integer :product_line_id
@@ -82,6 +84,11 @@ class Product < ActiveRecord::Base
     else
       return false
     end
+  end
+  
+  # This is created for Activity.log_activity
+  def user
+    self.discoverer
   end
   
   #def self.search(search)

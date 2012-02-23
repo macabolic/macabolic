@@ -82,6 +82,11 @@
 #product_preview_gallery {
 	cursor: pointer;
 }
+
+#zoom_now {
+	color: #595959;
+	cursor: pointer;
+}
 </style>
 <script type="text/javascript"> 
 //SETTING UP OUR POPUP
@@ -141,6 +146,11 @@ $(document).ready(function() {
 		loadZoomIn();
 	});
 
+	$("#zoom_now").click(function() {
+		centerZoomIn();
+		loadZoomIn();
+	});
+	
 	//CLOSING POPUP
 	//Click the x event!
 	$("#popupZoomInClose").click(function(){
@@ -165,11 +175,11 @@ $(document).ready(function() {
     	<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
     	<%#= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
 		<% if product.thumbnail.present? %>
-			<%= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+			<%= image_tag(product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
 		<% elsif product.image_url.present? %>
-			<%= image_tag(product.image_url, :width => "200", :class => "preview-image") %>
+			<%= image_tag(product.image_url, :width => "180", :class => "preview-image") %>
 		<% else %>
-			<%= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
+			<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
 		<% end %>
 
     </div>
@@ -201,4 +211,17 @@ $(window).load(function() {
 	<% end %>		
 </div>
 <div id="backgroundZoomIn"></div>
+<div style="padding-top:5px; text-align: center">
+	<span class="home-signupbutton">
+   		<a id="zoom_now">click to zoom</a>
+	</span>
+</div>									
+<br/>
+<div id="add_wishlist" style="text-align: left; margin-bottom: 10px;">
+	<div id="report_issue">
+	<% if @product.product_link.present? %>
+		<%= link_to 'Report Issue', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
+	<% end %>
+	</div>									
+</div>
 

@@ -31,7 +31,7 @@ $(document).ready(function() {
 					<% if @user == current_user %>				
 					<p>
 						<div id="add_wishlist">
-							<%= link_to 'Edit Collection', edit_member_my_collection_path(current_user, @my_collection), :class => "button-green", :id => "add-wishlist", :title => "Edit Collection" %>
+							<%= link_to 'Edit Collection', edit_member_my_collection_path(current_user, @my_collection), :class => "button-green round-button", :id => "add-wishlist", :title => "Edit Collection" %>
 						</div>	
 					</p>
 					<% else %>

@@ -99,12 +99,15 @@ Macabolic::Application.routes.draw do
      get 'users/auth/:provider' => 'users/omniauth_callbacks#passthru'          
   end
 
+  resources :product_links
+  
   # Products
   resources :products do
     member do
       get 'like'
       get 'unlike'
       get 'recommend'
+      get 'buy_now'
     end
 
     collection do
@@ -113,7 +116,7 @@ Macabolic::Application.routes.draw do
     end  
     resources :my_collection_items
     resources :wishlist_items
-    #get ':id/page/:page', :action => :show, :on => :collection
+    #get ':id/page/:page', :action => :show, :on => :collection    
   end
   
   # Members

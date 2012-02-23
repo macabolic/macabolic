@@ -1,0 +1,8 @@
+<% @product_link = ProductLink.new(:informer_id => current_user.id, :product_id => product.id) %>
+
+<%= form_for(@product_link, :url => product_links_path(@product_link), :remote => true, :html => { :id => "suggest_where_form", :class => "suggest_where_form" }) do |f| %>
+	<%= f.hidden_field :informer_id %>
+	<%= f.hidden_field :product_id %>
+	<%= f.text_field :link %>
+	<%= f.submit 'Submit', :class => "submit-tip-button" %>
+<% end %>

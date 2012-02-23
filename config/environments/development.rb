@@ -34,7 +34,6 @@ Macabolic::Application.configure do
     :password             => 'nichetec',
     :authentication       => 'plain',
     :enable_starttls_auto => true
-  }
-  
+  }  
 end
 

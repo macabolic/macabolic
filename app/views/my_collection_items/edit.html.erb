@@ -39,7 +39,7 @@ $(document).ready(function() {
 				<%= image_tag @my_collection_item.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
 				<div style="padding-top:15px; text-align: center">
 					<span class="home-signupbutton">
-				   		<%= link_to "Delete this item?", { :controller => "my_collection_items", :action => "destroy", :id => @my_collection_item }, :method => "delete", :title => "Delete this item?", :confirm => "Are you sure?" %>
+				   		<%= link_to "Delete this item?", product_my_collection_item_path(@product, @my_collection_item), :method => "delete", :title => "Delete this item?", :confirm => "Are you sure?" %>
 					</span>
 				 </div>					
 	        </div>			

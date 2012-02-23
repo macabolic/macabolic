@@ -1,8 +1,9 @@
 <script type="text/javascript">
+/*
 !function(d,s,id) {
 	var js,fjs=d.getElementsByTagName(s)[0];
 	if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
+*/
 $(document).ready(function() {
 	$("#friend_name").keydown(function(event) {
 		if (event.which == 13) {
@@ -13,8 +14,9 @@ $(document).ready(function() {
 	});	
 });
 </script>
-<div id="fb-root"></div>
+<!--<div id="fb-root"></div>
 <script>
+/*
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -22,7 +24,9 @@ $(document).ready(function() {
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+*/
 </script>
+-->
 <div class="sidebar-content" id="new-product">				
 	<div class="sidebar-header">Recommend to Your Friends</div>	
 	<div class="sidebar-inner">
@@ -43,13 +47,15 @@ $(document).ready(function() {
 			<div id="friends">
 				<%= render :partial => 'friendships/friend_search_result', :locals => { :product => product } %>
 			</div>
-    		<!--/ul-->
+			<!--
 			<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
+			-->
 	<% end %>
-			<div style="display: block; margin-top: 5px; margin-bottom: 5px;">
+	<!--
+			<div style="display: block; margin-top: 5px; margin-bottom: 5px; overflow: visible;">
 				<span style="font-size: 14px; color: #cccccc;">Via</span>
-				<div style="margin-bottom: 5px; padding-bottom: 10px;">
-					<span class='recommended_user'>
+				<div style="margin-bottom: 5px; padding-bottom: 10px; overflow: visble;">
+					<span class='recommended_user' style="overflow: visible;">
 						<div class="fb-like" data-href="<%= product_url(product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>						
 					</span>
 					<span class='recommended_user'>
@@ -58,6 +64,7 @@ $(document).ready(function() {
 					<br/>
 				</div>
 			</div>			
+			-->
 		</div>		
 	</div>
 </div><!-- #new-product -->

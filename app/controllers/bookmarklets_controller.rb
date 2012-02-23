@@ -6,6 +6,7 @@ class BookmarkletsController < ApplicationController
   def new
     @product = Product.new(:image_url => params[:image_url])
     @user = current_user
+    @product_url = params[:product_url]
     render "products/bookmarklet", :layout => nil
     #redirect_to bookmarklet_products_path(:image_url => params[:image_url])
   end

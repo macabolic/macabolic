@@ -43,19 +43,142 @@
     float: none;
     clear: both;
 }
+#backgroundZoomIn {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:1;
+}
+#popupZoomIn {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+//	width:808px;
+	background:#f6f1de;
+	border:2px solid #cecece;
+	z-index:2;
+	padding:12px;
+	font-size:13px;
+}
+
+#popupZoomInClose {
+	font-size:14px;
+	line-height:14px;
+	right:6px;
+	top:4px;
+	position:absolute;
+	color:#5c5c5c;
+	font-weight:700;
+	display:block;
+}
+#product_preview_gallery {
+	cursor: pointer;
+}
+#zoom_now {
+	color: #595959;
+	cursor: pointer;
+}
+
 </style>
+<script type="text/javascript"> 
+//SETTING UP OUR POPUP
+//0 means disabled; 1 means enabled;
+var zoomInStatus = 0;
+
+//loading popup with jQuery magic!
+function loadZoomIn(){
+	//loads popup only if it is disabled
+	if(zoomInStatus==0){
+		$("#backgroundZoomIn").css( {"opacity": "0.7"} );
+		$("#backgroundZoomIn").fadeIn("slow");
+		$("#popupZoomIn").fadeIn("slow");
+		zoomInStatus = 1;
+	}
+}
+
+//disabling popup with jQuery magic!
+function disableZoomIn(){
+	//disables popup only if it is enabled
+	if(zoomInStatus==1){
+		$("#backgroundZoomIn").fadeOut("slow");
+		$("#popupZoomIn").fadeOut("slow");
+		zoomInStatus = 0;
+	}
+}
+
+//centering popup
+function centerZoomIn(){
+
+	//request data for centering
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#popupZoomIn").height();
+	var popupWidth = $("#popupZoomIn").width();
+	//centering
+	$("#popupZoomIn").css({
+		"position": "absolute",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
+	//only need force for IE6
+
+	$("#backgroundZoomIn").css( {"height": windowHeight} );
+}
+
+
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+
+	//LOADING POPUP
+	//Click the button event!
+	$("#product_preview_gallery").click(function(){
+		//centering with css
+		centerZoomIn();
+		//load popup
+		loadZoomIn();
+	});
+
+	$("#zoom_now").click(function() {
+		centerZoomIn();
+		loadZoomIn();
+	});
+
+	//CLOSING POPUP
+	//Click the x event!
+	$("#popupZoomInClose").click(function(){
+		disableZoomIn();
+	});
+	
+	//Click out event!
+	$("#backgroundZoomIn").click(function(){
+		disableZoomIn();
+	});
+	
+	//Press Escape event!
+	$(document).keypress(function(e){
+		if(e.keyCode==27 && zoomInStatus==1) {
+			disableZoomIn();
+		}
+	});	
+});
+</script>
 <div class="html_carousel">
     <div id="product_preview_gallery">
-    	<%#= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
 		<% if my_collection_item.product.thumbnail.present? %>
-			<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "128", :class => "preview-image") %>
+			<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
 		<% elsif my_collection_item.product.image_url.present? %>
-			<%= image_tag(my_collection_item.product.image_url, :width => "128", :class => "preview-image") %>
+			<%= image_tag(my_collection_item.product.image_url, :width => "180", :class => "preview-image") %>
 		<% else %>
-			<%= image_tag "/images/product/no-image_medium.jpg", :width => "128", :class => "preview-image" %>
+			<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
 		<% end %>
 		<% if my_collection_item.thumbnail.present? %>
-			<%= image_tag(my_collection_item.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
+			<%= image_tag(my_collection_item.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
 		<% end %>
     </div>
     <div class="clearfix"></div>
@@ -76,3 +199,29 @@ $(window).load(function() {
 	});
 });
 </script>
+<div id="popupZoomIn">
+	<% if my_collection_item.product.thumbnail.present? %>
+		<%= image_tag(my_collection_item.product.thumbnail.url(:original)) %>
+	<% elsif my_collection_item.product.image_url.present? %>
+		<%= image_tag(my_collection_item.product.image_url) %>
+	<% else %>
+		<%= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
+	<% end %>		
+</div>
+<div id="backgroundZoomIn"></div>
+<div style="padding-top:5px; text-align: center">
+	<span class="home-signupbutton">
+	  	<a id="zoom_now">click to zoom</a>
+	</span>
+</div>			
+<br/>
+<div id="add_wishlist" style="text-align: left; margin-bottom: 10px;">
+<% if @user == current_user %>
+	<%= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "edit_link", :title => "Edit Collection" %>
+<% end %>	
+	<div id="report_issue">
+<% if @product.product_link.present? %>
+		<%= link_to 'Report Issue', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
+<% end %>
+	</div>									
+</div>

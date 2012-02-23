@@ -1,5 +1,9 @@
 <% title @product.name %>
 <style type="text/css">
+#suggest_where_to_buy {
+	text-decoration: underline;
+	cursor: pointer;
+}
 #backgroundPopup {
 	display:none;
 	position:fixed;
@@ -36,6 +40,10 @@
 }
 </style>
 <script type="text/javascript"> 
+!function(d,s,id) {
+	var js,fjs=d.getElementsByTagName(s)[0];
+	if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
 //SETTING UP OUR POPUP
 //0 means disabled; 1 means enabled;
 var popupStatus = 0;
@@ -148,11 +156,42 @@ $(document).ready(function() {
 			disablePopup();
 		}
 	});	
+	
+	$("#add_wishlist").hover(function() {
+		$("#add_wishlist").css("display", "inline");
+	}, function() {
+		$("#add_wishlist").css("display", "none");
+	});
+	
+	$("#suggest_where_to_buy").click(function() {
+		if ($("#suggest_where_wrapper").css("display") == "inline") {
+			$("#suggest_where_wrapper").fadeOut();
+			$("#suggest_where_wrapper").css("display", "none");
+		} else {
+			$("#suggest_where_wrapper").fadeIn();
+			$("#suggest_where_wrapper").css("display", "inline");
+		}
+	});
+	
+	$('#suggest_where_form').submit(function() {
+		$("#suggest_where_wrapper").fadeOut();
+		$("#suggest_where_wrapper").css("display", "none");
+	});
+	
 });
 </script>
-
 <body class="subpage productpage">
-
+<!-- FACEBOOK LIKE BUTTON INITIALIZER -->	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+<!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
+	
 	<div id="grey-strip-signedin">
 		<div class="wrapper-top">
 			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "" } %>						
@@ -163,8 +202,10 @@ $(document).ready(function() {
 	<div class="maincol"> 
     	<div class="product-item sidebar-content">	         
 			<div class="product-image">
-				<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
-	        </div>			
+				<div id="product-gallery">				
+					<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
+				</div>
+	        </div>		
 	        <div class="product-detail">
 	            <div>
 					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
@@ -172,20 +213,21 @@ $(document).ready(function() {
 				<p>from <span class="vendor"><%= @product.vendor.name %></span></p>
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
+
 			<% if @user.present? || current_user.present? %>
 				<% if @user == current_user %>				
 	            <p>
-					<%# OWN THIS PRODUCT %>
-					<% if current_user.own_this_product?(@product) %>
-	                <div id="i_own_this">
-						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :product_id => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
-					</div>
 					<div id="response-product-<%= @product.id %>">
 					<% if @product.like?(current_user) %>					
 						<%= link_to 'Unlike', unlike_product_path(@product, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
 					<% else %>
-						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>
+						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "own-this", :title => "Like", :remote => true %>
 					<% end %>
+					</div>
+					<%# OWN THIS PRODUCT %>
+					<% if current_user.own_this_product?(@product) %>
+	                <div id="i_own_this">
+						<%= link_to "I have one", { :controller => "my_collection_items", :action => "destroy", :product_id => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
 					</div>
 					<%# Does not own this product %>						
 					<% else %>
@@ -196,12 +238,12 @@ $(document).ready(function() {
 						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
+						<%= link_to 'In my Collection already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
 					</div>
 						<% else %>
-						<!-- Requires login here -->
+						<!-- Not own or want yet -->						
 					<div id="i_own_this">
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?!</a>
 					</div>
 					<div id="wishlist_link">
 						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!</a>
@@ -210,12 +252,21 @@ $(document).ready(function() {
 					<% end %>
 				</p>
 				<% else %>
+				<!-- Requires login here -->
 				<p>
+					<div id="response-product-<%= @product.id %>">
+					<% if @product.like?(current_user) %>					
+						<%= link_to 'Unlike', unlike_product_path(@product, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
+					<% else %>
+						<%= link_to 'Like', like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "own-this", :title => "Like", :remote => true %>
+					<% end %>
+					</div>
+					
 					<div id="wishlist_link">
 						<% if current_user.wish_this_product?(@product) %>
-							<%= link_to 'In my Wishlist already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
+							<%= link_to 'In my Collection already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
 						<% else %>
-							<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>
+							<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!</a>
 						<% end %>
 					</div>
 	            </p>
@@ -231,10 +282,36 @@ $(document).ready(function() {
 						<%#<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>%>
 					</div>				
 			<% end %>
-	        </div>
-	
+				<br/><br/><br/>			
+				<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+				<div style="margin: 5px;">
+					<div style="overflow: visible;" class="fb-like social" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
+					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="I would love to recommend the <%= @product.name %>. Check it out now." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+				</div>
+				<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+				<br/>
+				<div style="width: 100%; height: 1px; border-bottom: 1px solid #d6d6d6;"></div>
+				<br/>
+				<% if @product.product_link.present? %>
+				<div id="buy_now" style="display:inline; float: right;">
+				<% else %>
+				<div id="buy_now" style="display:none; float: right;">
+				<% end %>
+					<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
+				</div>
+				<% if !@product.product_link.present? %>
+				<div id="suggest_now">
+					<a title="Suggest where to buy" class="suggest_where" id="suggest_where_to_buy">Suggest where to buy</a>
+					<%#= link_to 'Suggest where to buy', :class => "suggest_where", :id => "suggest_where_to_buy", :title => "Suggest where to buy" %>
+					<div id="suggest_where_wrapper" style="display:none">
+						<%= render :partial => 'products/suggest_where_to_buy', :locals => { :product => @product } %>
+					</div>
+				</div>					
+				<% end %>				
+	        </div>	
 	    	<br class="clear" />
 	    </div>
+	
 		<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">
 			<%= render 'products/product_stat' %>
 		</div>
@@ -243,7 +320,7 @@ $(document).ready(function() {
 			<div class="pagination-wrapper top">
 				<div class="left">
 					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><span style="text-decoration:underline;">Also in <%= pluralize(@found_collection_items.size, 'collections') %></span></strong>
+						<strong><span style="text-decoration:underline;">Also in <%= pluralize(@found_collection_items.size, 'collection') %></span></strong>
 					</p>
 				</div>
 			</div><!-- .pagination-wrapper -->		
@@ -296,7 +373,7 @@ $(document).ready(function() {
 		<!-- Recommend a friend -->
 		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
 
-		<% if !@friends_who_owned.nil? %>
+		<% if !@friends_who_owned.nil? && @friends_who_owned.size > 0 %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
 				<%= pluralize(@friends_who_owned.size, 'friend') %> owned
@@ -314,7 +391,7 @@ $(document).ready(function() {
 			</div>
 		</div><!-- #see who has similar products in his network -->			
 		<% end %>
-		<% if !@friends_who_wished.nil? %>
+		<% if !@friends_who_wished.nil? && @friends_who_wished.size > 0 %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
 				<%= pluralize(@friends_who_wished.size, 'friend') %> wanted

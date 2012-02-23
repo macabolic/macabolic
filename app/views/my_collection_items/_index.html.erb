@@ -12,7 +12,7 @@
 		<%= link_to(my_collection_item) do %>
 			<span class="right">
 				<% if mode == "edit" %>
-					<%= link_to 'delete', my_collection_item, :method => 'delete', :class => "edit_link" %>
+					<%= link_to 'delete', product_my_collection_item_path(my_collection_item.product, my_collection_item), :method => 'delete', :class => "edit_link" %>
 				<% else %>				
 					<%= link_to '#', my_collection_item, :method => 'show', :id => "action_link", :class => "edit_link" %>
 				<% end %>
