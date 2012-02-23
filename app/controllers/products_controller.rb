@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_filter :show_invitation_notice
   before_filter :store_location
-  before_filter :authenticate_user!, :except =>  [:index, :search, :show]
+  before_filter :authenticate_user!, :except =>  [:index, :search, :show, :buy_now]
   helper_method :sort_column, :sort_direction
 
   # GET /products

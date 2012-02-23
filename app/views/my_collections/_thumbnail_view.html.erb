@@ -30,7 +30,18 @@ $(document).ready(function() {
 			<% my_collections.each do |my_collection| %>
 				<li id="<%= my_collection.id %>" class="not-selected-product" style="margin-right: 10px; margin-bottom: 10px">	
 					<%= link_to '#', :id => 'my_collection_link' do %>	
-						<%= image_tag my_collection.thumbnail.url(:medium), :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+						<% if !my_collection.thumbnail.present? && !my_collection.my_collection_items.nil? && my_collection.my_collection_items.size > 0 %>
+							<%#= image_tag(my_collection_items[0].product.thumbnail.url(:small), :class => "preview-image") %>							
+							<% if my_collection.my_collection_items[0].product.thumbnail.present? %>
+								<%= image_tag( my_collection.my_collection_items[0].product.thumbnail.url(:small), :width => "100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+							<% elsif  my_collection.my_collection_items[0].product.image_url.present? %>
+								<%= image_tag( my_collection.my_collection_items[0].product.image_url, :width => "100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+							<% else %>
+								<%= image_tag "/images/product/no-image_medium.jpg", :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+							<% end %>
+						<% else %>
+							<%= image_tag my_collection.thumbnail.url(:medium), :size => "100x100", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>						
+						<% end %>
 					<% end %>			
 					<span>
 						<p><%#= simple_format(word_wrap(my_collection.name, :line_width => 10)) %></p>
@@ -43,22 +54,11 @@ $(document).ready(function() {
 				<%= hidden_field_tag 'my_collection_id', nil %>
 				<%= hidden_field_tag 'interest_indicator', nil %>			
 		</div>
-	<!--	<div style="margin-left: auto; margin-right: auto; width: 100%; height: 5px; border-bottom: 1px dotted #d4d4d4;"></div>	-->
 		<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
 			<div class="actions">
 				<%= f.submit 'Submit', :class => "submit-tip-button" %>
 			</div>			
 		</div>
-	<!--
-		<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
-			<b>Create a new collection</b>
-			<%# 
-				@my_collection = MyCollection.new 
-				@my_collection.name = ''
-			%>
-			<%#= render "my_collections/form" %>
-		</div>
-	-->
 	</div>
 </div>
 <% end %>

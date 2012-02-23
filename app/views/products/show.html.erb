@@ -304,7 +304,13 @@ $(document).ready(function() {
 					<a title="Suggest where to buy" class="suggest_where" id="suggest_where_to_buy">Suggest where to buy</a>
 					<%#= link_to 'Suggest where to buy', :class => "suggest_where", :id => "suggest_where_to_buy", :title => "Suggest where to buy" %>
 					<div id="suggest_where_wrapper" style="display:none">
-						<%= render :partial => 'products/suggest_where_to_buy', :locals => { :product => @product } %>
+						<% if @user.present? || current_user.present? %>
+							<%= render :partial => 'products/suggest_where_to_buy', :locals => { :product => @product } %>
+						<% else %>
+							<div style="margin-top: 5px">
+								Please <%= link_to 'log in', user_session_path %> or <%= link_to "sign up", new_registration_path(User.new) %>.						
+							</div>
+						<% end %>
 					</div>
 				</div>					
 				<% end %>				
