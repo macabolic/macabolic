@@ -16,6 +16,10 @@ class Vendor < ActiveRecord::Base
   def like?(user)
     return Vendor.like?(self, user)
   end
+ 
+  def following?(user)
+    return Vendor.following?(self, user)
+  end
   
   def self.like?(vendor, user)
     @search = Sunspot.search(VendorResponse) do
@@ -29,5 +33,18 @@ class Vendor < ActiveRecord::Base
       return false
     end
   end
+
+  def self.following?(vendor, user)
+    @search = Sunspot.search(VendorFollower) do
+      with  :vendor_id, vendor.id 
+      with  :follower_id, user.id
+    end
+    
+    if @search.results.size > 0
+      return true
+    else
+      return false
+    end
+  end  
   
 end

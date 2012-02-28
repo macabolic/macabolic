@@ -1,0 +1,2 @@
+$("#follower-stat-store-<%= @vendor.id %>").html("<%= @number_of_followers %>");
+try { $("#follow-store-<%= @vendor.id %>").html('<%= link_to "Following", unfollow_store_path(@vendor, :follower_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unfollow", :remote => true %>'); } catch (e) {}

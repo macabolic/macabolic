@@ -1,4 +1,5 @@
 class VendorsController < ApplicationController
+  before_filter :store_location
   #layout 'admin/admin'
   
   # GET /vendors
@@ -16,6 +17,7 @@ class VendorsController < ApplicationController
   # GET /vendors/1.xml
   def show
     @vendor = Vendor.find(params[:id])
+    @user = current_user
     #@products = Product.where(:vendor_id => @vendor.id)
     
     respond_to do |format|
@@ -105,6 +107,29 @@ class VendorsController < ApplicationController
     end
     
     @number_of_likes = @vendor.responses.size
+  end
+  
+  def follow
+    @vendor = Vendor.find(params[:id])
+    follower = VendorFollower.new(:vendor => @vendor, :follower => current_user)    
+    logger.info "VendorsController.follow."
+    if follower.save
+      logger.info "#{follower.follower.full_name} is following #{follower.vendor.name}."
+    end
+    
+    @number_of_followers = @vendor.followers.size
+  end
+
+  def unfollow
+    @vendor = Vendor.find(params[:id])
+    follower = VendorFollower.where(:vendor_id => @vendor.id, :follower_id => current_user.id)    
+    logger.info "VendorsController.unfollow."
+    if follower.exists?
+      follower.first.destroy #destroy the first one and always expect only one for each user and collection.
+      logger.info "#{follower.first.follower.full_name} is unfollowing #{follower.first.vendor.name}."
+    end
+    
+    @number_of_followers = @vendor.followers.size    
   end
   
 end

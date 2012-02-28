@@ -49,19 +49,21 @@ $(document).ready(function() {
 	    	<div class="product-item sidebar-content">		
 		        <div class="product-image">		        
 					<%# image_tag @my_collection.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
-					<img src="/images/product/no-image_60x60.jpg" alt="Product Image" width="200" class="preview-image">
+					<img src="/images/product/no-image_medium.jpg" alt="Product Image" width="200" class="preview-image">
 			    </div>
 		        <div class="product-detail">
 			        <div>
 						<p class="left"><h3 style="text-align: left;"><%= @vendor.name %></h3></p>
 					</div>
+				<% if @user.present? || current_user.present? %>
+					<% if @user == current_user %>									
 					<p>					
-						<div id="follow-my-collection-<%= @vendor.id %>">
-						<%# if @my_collection.following?(current_user) %>
-							<%#= link_to 'Following', unfollow_my_collection_path(@my_collection, :follower_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unfollow", :remote => true %>
-						<%# else %>
-							<%= link_to 'Follow',  '', :class => "button-green", :id => "own-this", :title => "Follow", :remote => true %>
-						<%# end %>
+						<div id="follow-store-<%= @vendor.id %>">
+						<% if @vendor.following?(current_user) %>
+							<%= link_to 'Following', unfollow_store_path(@vendor, :follower_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unfollow", :remote => true %>
+						<% else %>
+							<%= link_to 'Follow', follow_store_path(@vendor, :follow_id => current_user.id), :class => "button-green", :id => "own-this", :title => "Follow", :remote => true %>
+						<% end %>
 						</div>						
 						<div id="response-store-<%= @vendor.id %>">
 						<% if @vendor.like?(current_user) %>					
@@ -71,6 +73,17 @@ $(document).ready(function() {
 						<% end %>
 						</div>						
 					</p>
+					<% end %>
+				<% else %>
+				<p>					
+					<div id="follow-store-<%= @vendor.id %>">
+						<%= link_to 'Follow', user_session_path, :class => "button-green", :id => "own-this", :title => "Follow" %>
+					</div>						
+					<div id="response-store-<%= @vendor.id %>">
+						<%= link_to 'Like', user_session_path, :class => "button-green", :id => "own-this", :title => "Like" %>
+					</div>						
+				</p>				
+				<% end %>
 					<br/><br/><br/>			
 					<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
 					<div style="margin: 5px;">
