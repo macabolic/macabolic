@@ -5,4 +5,7 @@ class PriceRange < ActiveRecord::Base
     "$#{from_price} - #{to_price}"
   end
   
+  def to_s
+    "$#{from_price} - #{to_price}"
+  end
 end

@@ -1490,7 +1490,13 @@ input:blur {
 
 }
 
-#buy_now a {
+#buy_now_wrapper {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: Arial;
+	line-height: 25px;	
+}
+#buy_now_wrapper a {
 	text-decoration: none;
 	color: #da5d18;
 }

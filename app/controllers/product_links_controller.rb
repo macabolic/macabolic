@@ -4,6 +4,6 @@ class ProductLinksController < ApplicationController
   def create
     @product_link = ProductLink.new(params[:product_link])      
     @product_link.save
-    @product = Product.find(@product_link.product_id)
+    #@product = Product.find(@product_link.product_id)
   end
 end

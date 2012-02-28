@@ -316,7 +316,7 @@ $(document).ready(function() {
 				<% else %>
 				<div id="buy_now" style="display:none; float: right;">
 				<% end %>
-					<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
+					<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
 				</div>
 				<% if !@product.product_link.present? %>
 				<div id="suggest_now">

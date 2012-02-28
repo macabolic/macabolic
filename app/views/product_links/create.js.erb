@@ -1,2 +1,4 @@
 $("#suggest_where_to_buy").fadeOut();
-$("#buy_now").fadeIn();
+$("#price_range_wrapper").html("<%= @product_link.price_range.display %>");
+$("#buy_now_wrapper").fadeIn();
+
