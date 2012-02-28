@@ -76,6 +76,18 @@ class ProductsController < ApplicationController
       @found_collection_items = my_collection_item_search.results
       @found_collections = @found_collection_items.map { |i| i.my_collection }
       
+      vendor_id = @product.vendor_id
+      same_store_search = Sunspot.search(Product) do
+        with(:vendor_id, vendor_id)
+        without(:id, params[:id])
+      end
+      @same_store_items = same_store_search.results
+
+      if user_signed_in?
+        @product_link = ProductLink.new(:informer_id => @user.id, :product_id => @product.id)
+        @price_ranges = PriceRange.order("sort_order ASC")
+      end
+      
       # Put a comment here when found out the purpose of it.
       #@my_collections = current_user.my_collections
     

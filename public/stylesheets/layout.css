@@ -846,7 +846,8 @@ padding-bottom: 40px;
 .username span {
     color:#65a40b;
     font-weight:bold;
-    font-size:20px
+    font-size:20px;
+		line-height: 27px;
 }
 
 .delete-account {
@@ -1586,7 +1587,7 @@ padding-bottom: 40px;
 
 .productimage {
 //	border: 3px solid #e3d7a9;
-	border: 3px solid #eeead9;
+//	border: 3px solid #eeead9;
 	height: 170px;
 	margin-bottom: 10px;
 }

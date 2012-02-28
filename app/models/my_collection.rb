@@ -71,11 +71,11 @@ class MyCollection < ActiveRecord::Base
       with  :user_id, user.id
     end
     
-    #if @search.results.size > 0
-    #  return true
-    #else
+    if @search.results.size > 0
+      return true
+    else
       return false
-    #end
+    end
   end
     
   def self.following?(my_collection, user)

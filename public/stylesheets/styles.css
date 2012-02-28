@@ -1363,7 +1363,12 @@ input:blur {
 	font-size: 14px;
 	font-weight: bold;
 	font-style: italic;
-	font-color: #cccccc;
+	font-color: #565656;
+}
+
+.vendor a {
+	text-decoration: underline;
+	color: #565656;
 }
 
 .discover {
@@ -1426,6 +1431,22 @@ input:blur {
 	font-color: #fff;
 	//font-size: 15px;
 	//line-height: 30px;
+}
+
+.suggest_where_form input[type="text"] {
+		height: 38px;
+		line-height: 20px;
+		width: 250px;
+		border: 1px solid #b7b7b7;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		background: url(../images/backgrounds/home-formbg.png) repeat-x;
+		background-position: top;
+		margin: 10px 0px 14px 0px;
+		font-size: 20px;
+	//	color: #131e22;
+		font-family: Arial;
+		//padding: 0px 8px 0px 8px;
 }
 
 #buy_now {

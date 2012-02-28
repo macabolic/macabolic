@@ -217,10 +217,11 @@ $(window).load(function() {
 	</span>
 </div>									
 <br/>
-<div id="add_wishlist" style="text-align: left; margin-bottom: 10px;">
+<div id="product-action-list" style="text-align: left; margin-bottom: 10px;">
 	<div id="report_issue">
 	<% if @product.product_link.present? %>
-		<%= link_to 'Report Issue', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
+		<%= link_to 'More Info', buy_now_product_path(@product), :title => "Buy Now", :target => "_blank" %><br/>
+		<%= link_to 'Report Issue', :title => "Buy Now", :target => "_blank" %>
 	<% end %>
 	</div>									
 </div>

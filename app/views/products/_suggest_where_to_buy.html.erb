@@ -1,8 +1,52 @@
-<% @product_link = ProductLink.new(:informer_id => current_user.id, :product_id => product.id) %>
+<style type="text/css">
+.price_range {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #000000;
+	margin-right: 5px;
+}
+
+.selected-price {
+	font-weight: bold;
+	color: #DA5D18;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".price_range").click(function() {
+		// Selected
+		$(this).toggleClass('selected-price');
+		if ($(this).hasClass('selected-price')) {
+			$(this).siblings().removeClass('selected-price');
+			$('#product_link_price_range_id').attr('value', $(this).attr("id"));
+		} else {
+			$('#product_link_price_range_id').attr('value', "");
+		}
+	});
+});
+</script>
+<%# @product_link = ProductLink.new(:informer_id => current_user.id, :product_id => product.id) %>
+<%# @price_ranges = PriceRange.all %>
+<div style="margin: 5px 10px 5px; border: 1px solid grey; padding: 5px 10px 5px;">
+	<p><strong>Price Ranges</strong></p>
+<% count = 1 %>
+<% @price_ranges.each do |price_range| %>
+	<% if count == @price_ranges.size %>
+	<a class="price_range" id="<%= price_range.id %>">$<%= price_range.from_price %>+</a>
+	<% else %>
+	<a class="price_range" id="<%= price_range.id %>">$<%= price_range.from_price %> - $<%= price_range.to_price %></a>
+	<% end %>
+	<% count = count + 1 %>
+	<% if count == 5 %>
+	<br/>
+	<% end %>
+<% end %>
 
 <%= form_for(@product_link, :url => product_links_path(@product_link), :remote => true, :html => { :id => "suggest_where_form", :class => "suggest_where_form" }) do |f| %>
 	<%= f.hidden_field :informer_id %>
 	<%= f.hidden_field :product_id %>
-	<%= f.text_field :link %>
-	<%= f.submit 'Submit', :class => "submit-tip-button" %>
+	<%= f.hidden_field :price_range_id %>
+	<%= f.text_field :link, :placeholder => "URL to buy" %>
+	<%= f.submit 'Submit', :class => "submit-tip-button1" %>
 <% end %>
+</div>

@@ -16,7 +16,6 @@
 		<div class="maincol">
 
 	        <%= render :partial => 'searches/form' %>
-
 			<div class="tabbed-content-area">
 		        <div id="tab1" class="tab_content product-grid group"> 
 					<% @user = User.new %>
@@ -48,7 +47,25 @@
 		<% if !user_signed_in? %>
 			<%= render :partial => 'users/sessions/mini_form' %>
 		<% else %>
-			<%= render 'products/add_a_product_link' %>		
+			<%#= render 'products/add_a_product_link' %>		
+		<!--
+			<div class="sidebar-content account-info">
+				<div class="sidebar-inner">					
+			    	<p class="username">
+						<%#= image_tag current_profile_image_thumbnail_url(current_user), :width => 50, :height => 50 %>
+			    		<span><%#= current_user.full_name %></span>
+			    	</p>
+				</div>
+				<div style="height: 300px; margin: 5px 5px 5px;">
+				<%# product_lines = ProductLine.all %>
+					<ul>
+						<%# product_lines.each do |product_line| %>
+						<li><%#= link_to product_line.name, find_product_searches_path(:query => product_line.name) %></li>
+						<%# end %>
+					</ul>
+				</div>
+			</div>
+		-->
 		<% end %>		
 		</div>
 
@@ -61,13 +78,9 @@
 						<%= image_tag "/images/featuretour/extra.png" %>
 						<br/><br/>
 						<p style="font-size: 12px; font-family: Verdana;">
-							Drag the "To Macabolic" Button to your Bookmark Bar, then you can add products to your collection at any time.<br/><br/>
-							It is best to do it on the product detail page where the picture is the biggest!
+							There is an easy way to tag the product you like while you are visiting another website.
 							<br/><br/>
-							<span class="extra_to_macabolic">
-								<a href="javascript:(function(){if(window.myBookmarklet!==undefined){myBookmarklet();}else{document.body.appendChild(document.createElement('script')).src='http://macbook-pro.local:3001/bookmarklet/saveit.js?';}})();">To Macabolic</a>
-							</span>
-
+							Check it out at our <%= link_to 'Extra', extra_path %> for the widget.
 							<br/>					
 						</p>
 					</div>

@@ -1,0 +1,17 @@
+<%= form_for(@email_preference) do |f| %>
+  <% if @email_preference.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@email_preference.errors.count, "error") %> prohibited this email_preference from being saved:</h2>
+
+      <ul>
+      <% @email_preference.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

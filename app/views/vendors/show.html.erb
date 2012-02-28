@@ -1,0 +1,99 @@
+<% title @vendor.name %>
+<script type="text/javascript">  
+!function(d,s,id) {
+	var js,fjs=d.getElementsByTagName(s)[0];
+	if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+$(document).ready(function() {
+    $(document).pngFix(); 
+ 
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	$(".tab1_paging").show();
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		$(".tab1_paging").show();
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+	
+});
+</script>
+<body class="subpage">
+	<!-- FACEBOOK LIKE BUTTON INITIALIZER -->	
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+	<!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
+	
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "" } %>			
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">
+	    	<div class="product-item sidebar-content">		
+		        <div class="product-image">		        
+					<%# image_tag @my_collection.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
+					<img src="/images/product/no-image_60x60.jpg" alt="Product Image" width="200" class="preview-image">
+			    </div>
+		        <div class="product-detail">
+			        <div>
+						<p class="left"><h3 style="text-align: left;"><%= @vendor.name %></h3></p>
+					</div>
+					<p>					
+						<div id="follow-my-collection-<%= @vendor.id %>">
+						<%# if @my_collection.following?(current_user) %>
+							<%#= link_to 'Following', unfollow_my_collection_path(@my_collection, :follower_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unfollow", :remote => true %>
+						<%# else %>
+							<%= link_to 'Follow',  '', :class => "button-green", :id => "own-this", :title => "Follow", :remote => true %>
+						<%# end %>
+						</div>						
+						<div id="response-store-<%= @vendor.id %>">
+						<% if @vendor.like?(current_user) %>					
+							<%= link_to 'Unlike', unlike_store_path(@vendor, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
+						<% else %>
+							<%= link_to 'Like', like_store_path(@vendor, :user_id => current_user.id), :class => "button-green", :id => "own-this", :title => "Like", :remote => true %>
+						<% end %>
+						</div>						
+					</p>
+					<br/><br/><br/>			
+					<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+					<div style="margin: 5px;">
+						<div style="overflow: visible;" class="fb-like social" data-href="<%= store_url(@vendor) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
+						<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= store_url(@vendor) %>" data-text="I would love to recommend the <%= @vendor.name %>. Check it out now." data-counturl="<%= store_url(@vendor) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+					</div>
+					<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+					
+					<div id="my-collection-stat-details" class="product-stat-details" style="float: left; width: 333px;">
+						<%= render :partial => 'vendors/profile_stat', :locals => { :vendor => @vendor } %>	
+					</div>
+		        </div>
+			    <br class="clear" />
+			</div>			
+			
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+			        <li><a href="#tab1">Products</a></li> 
+				</ul> 		
+		        <div id="tab1" class="tab_content product-grid group"> 
+					<%= render :partial => 'products/index', :locals => { :products => @vendor.products } %>
+				</div>	
+			<br/>
+		</div>		
+	</div>
+</body>

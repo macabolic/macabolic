@@ -1,0 +1,2 @@
+$("#response-stat-store-<%= @vendor.id %>").html("<%= @number_of_likes %>");
+try {$("#response-store-<%= @vendor.id %>").html('<%= link_to "Like", like_store_path(@vendor, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>');} catch (e) {}

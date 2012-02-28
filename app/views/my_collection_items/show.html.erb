@@ -248,9 +248,12 @@ $(document).ready(function() {
 	        </div>			
 	        <div class="product-detail">
 	            <div>
-					<p class="left"><h3 style="text-align: left;"><%= @product.name %></h3></p>
+					<p class="left"><h3 style="text-align: left; line-height: 27px;"><%= @product.name %></h3></p>
 				</div>
-				<p>from <span class="vendor"><%= @product.vendor.name %></span></p>
+				<p>from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></p>
+			<% if @product.discoverer.present? %>
+				<p class="discover">discovered by <%= link_to @product.discoverer.full_name, member_path(@product.discoverer) %></p>
+			<% end %>
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
 				<% if @user == current_user || @user != current_user %>
@@ -332,6 +335,23 @@ $(document).ready(function() {
 			<%= render 'products/product_stat' %>
 		</div>
 
+		<% if @same_store_items.size > 0 %>	
+		<div class="tabbed-content-area">
+			<div class="pagination-wrapper top">
+				<div class="left">
+					<p style="font-size:11px; color:#808080; padding-left: 23px;">
+						<strong><%= pluralize(@same_store_items.size, 'product') %> also from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>
+					</p>
+				</div>
+			</div><!-- .pagination-wrapper -->		
+						
+			<div class="product-grid group">
+				<%= render :partial => 'products/index', :locals => { :products => @same_store_items } %>
+			</div>
+        </div>	
+		<br/><br/>
+		<% end %>
+		<% if @found_collection_items.size > 0 %>	
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
 				<div class="left">
@@ -346,7 +366,7 @@ $(document).ready(function() {
 			</div>
         </div>	
 		<br/><br/>
-
+		<% end %>
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
 				<div class="left">

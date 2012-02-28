@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222044213) do
+ActiveRecord::Schema.define(:version => 20120227191416) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -79,6 +79,11 @@ ActiveRecord::Schema.define(:version => 20120222044213) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
+  end
+
+  create_table "email_preferences", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "friendships", :force => true do |t|
@@ -159,6 +164,14 @@ ActiveRecord::Schema.define(:version => 20120222044213) do
 
   add_index "my_collections", ["permalink"], :name => "index_my_collections_on_permalink"
 
+  create_table "price_ranges", :force => true do |t|
+    t.integer  "from_price"
+    t.integer  "to_price"
+    t.integer  "sort_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "product_comments", :force => true do |t|
     t.integer  "product_id"
     t.integer  "user_id"
@@ -180,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20120222044213) do
     t.string   "link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "price_range_id"
   end
 
   create_table "product_responses", :force => true do |t|
@@ -290,6 +304,21 @@ ActiveRecord::Schema.define(:version => 20120222044213) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "vendor_followers", :force => true do |t|
+    t.integer  "vendor_id"
+    t.integer  "follower_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "vendor_responses", :force => true do |t|
+    t.integer  "vendor_id"
+    t.integer  "user_id"
+    t.boolean  "response_for"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "vendors", :force => true do |t|
     t.string   "name"

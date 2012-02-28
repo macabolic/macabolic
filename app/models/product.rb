@@ -10,11 +10,14 @@ class Product < ActiveRecord::Base
   #has_many                :wishlist_items,      :dependent => :destroy
   has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
+  
+  # Right now, we are assuming there is only 1 product_link and thus only 1 price range
   has_one                 :product_link,        :dependent => :destroy
+  has_one                 :price_range,         :through => :product_link
   
   has_attached_file       :thumbnail, 
                           :styles => {  :thumb => ["100x100#", :png],
-                                        :small => ["150x150#", :png],
+                                        :small => ["160x160#", :png],
                                         :medium => ["300x300>", :png],
                                      },
                           :url => "/assets/products/:attachment/:id/:style/:filename",
@@ -38,8 +41,10 @@ class Product < ActiveRecord::Base
   attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url, :product_link_attributes
   
   searchable do
+    integer :id
     integer :product_line_id
     integer :response_ids, :multiple => true
+    integer :vendor_id
     text  :name, :more_like_this => true
     text  :vendor_name, :more_like_this => true do
       vendor.name
@@ -47,6 +52,7 @@ class Product < ActiveRecord::Base
     text  :category_name, :more_like_this => true do
       product_line.name
     end
+    time  :updated_at
   end
   
   def to_param

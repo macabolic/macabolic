@@ -1,1 +1,2 @@
 FACEBOOK_APP_ID = '249685278407440'
+HOST = 'macbook-pro.local:3001'

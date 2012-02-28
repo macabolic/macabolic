@@ -24,10 +24,15 @@ class MyCollectionItem < ActiveRecord::Base
     integer :product_id
     text  :product_name
     integer :interest_indicator # OWN = 1; WISH = 2
+    integer :product_line_id
+    time  :updated_at    
   end
         
   def product_name
     self.product.name
   end
   
+  def product_line_id
+    self.product.product_line_id
+  end
 end

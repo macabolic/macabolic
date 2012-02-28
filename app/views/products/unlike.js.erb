@@ -1,3 +1,3 @@
 $("#response-stat-product-<%= @product.id %>").html("<%= @number_of_likes %>");
-try {$("#response-product-<%= @product.id %>").html('<%= link_to "Like", like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "add-wishlist", :title => "Like", :remote => true %>');} catch (e) {}
+try {$("#response-product-<%= @product.id %>").html('<%= link_to "Like", like_product_path(@product, :user_id => current_user.id), :class => "button-green", :id => "own-this", :title => "Like", :remote => true %>');} catch (e) {}
 try {$("#home-response-product-<%= @product.id %>").html('<%= link_to "Like", like_product_path(@product, :user_id => current_user.id), :title => "Like", :remote => true %>');} catch (e) {}

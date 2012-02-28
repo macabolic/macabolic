@@ -4,47 +4,82 @@
 		border: 0px solid black;
 		display: none;
 	}
+	.overlay{
+	    position:relative;
+	    top:0px;
+	    bottom:0px;
+	    left:0px;
+	    right:0px;
+	    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+		z-index: 2;
+	}
+	#like_comment {
+		color: #ABABAB;
+	}
+	#like_comment a {
+		text-decoration: none;
+		font-weight: normal;
+		color: #ABABAB;
+	}
 </style>
 <ul id="collection-items" class="list-my-collections">
 	<% count = 0 %>
 	<% products.each do |product| %>
-	<li>
+	<li id="product-<%= count %>">
 		<%= link_to(product) do %>
 			<span class="right">
 				<%= link_to '#', product, :method => 'show', :id => "action_link", :class => "edit_link" %>
-			</span>															
+			</span>				
+						
 			<div class="center">
-			<span class="productimage">
-				<%= link_to product_path(product) do %>
-					<% if product.thumbnail.present? %>
-						<%#= image_tag(product.thumbnail.url(:medium), :size => "150x150") %>
-						<%= image_tag(product.thumbnail.url(:small)) %>
-					<% elsif product.image_url.present? %>
-						<%#= image_tag(product.image_url, :size => "150x150") %>
-						<%= image_tag(product.image_url, :width => "150") %>
-					<% else %>
-						<%= image_tag "/images/product/no-image_medium.jpg", :size => "150x150" %>
-					<% end %>
+				<span class="productimage">
+					<%= link_to product_path(product) do %>
+						<% if product.thumbnail.present? %>
+							<%#= image_tag(product.thumbnail.url(:medium), :size => "150x150") %>
+							<%= image_tag(product.thumbnail.url(:small), :width => "150") %>
+						<% elsif product.image_url.present? %>
+							<%#= image_tag(product.image_url, :size => "150x150") %>
+							<%= image_tag(product.image_url, :width => "150") %>
+						<% else %>
+							<%= image_tag "/images/product/no-image_medium.jpg", :size => "150x150" %>
+						<% end %>
 					
-				<% end %>
-			</span>								
-			</div>								
-			<span>
-				<%= link_to product_path(product) do %>
-					<p>
-						<%= simple_format(word_wrap(product.name, :line_width => 50)) %>
-					</p>
-				<% end %>
-				<br/>
-				<% if product.discoverer.present? %>
-					<p class="discover">discovered by <%= link_to product.discoverer.full_name, member_path(product.discoverer) %></p>
-				<% end %>
-			</span>
-			<span class="right">
-				<span>
-					<%= pluralize(product.responses.size, "like") %> | <%= pluralize(product.comments.size, "comment") %>
+					<% end %>
+				</span>								
+			</div>
+			<div>
+				<span class="vendor">
+					<%= link_to simple_format(word_wrap(product.vendor.name, :line_width => 50)), store_path(product.vendor) %>
 				</span>
-			</span>																		
+				<span>
+					<%= link_to product_path(product) do %>
+						<p>
+							<%= simple_format(word_wrap(product.name, :line_width => 50)) %>
+						</p>
+					<% end %>
+					<!--
+					<br/>
+					<%# if product.discoverer.present? %>
+						<p class="discover">discovered by <%#= link_to product.discoverer.full_name, member_path(product.discoverer) %></p>
+					<%# end %>
+					-->
+				</span>
+			</div>
+			<div id="product-info-<%= count %>" class="overlay" style="height: 30px; display:inline;">
+				<p style="position: relative;">
+					<span id="like_comment" class="right">
+						<%= link_to pluralize(product.responses.size, "like"), product_path(product) %> |  
+						<%= link_to pluralize(product.comments.size, "comment"), product_path(product) %>
+					</span>
+					<span id="like_comment" style="text-align: left">
+					<% if product.price_range.present? %>					
+						<%= product.price_range.display %>
+					<% else %>
+						<!-- Not showing the price -->
+					<% end %>
+					</span>
+				</p>
+			</div>			
 		<% end %>
 	</li>							
 	<%
@@ -58,5 +93,14 @@
 
 	<% end %>	
 </ul>
-
-
+<script type="text/javascript"> 
+    $(document).ready(function(){
+	<% (0..count).each do |i| %> 
+		$("#product-<%= i %>").hover(function() {
+			$("#product-info-<%= i %>").fadeIn();
+		}, function() {
+			$("#product-info-<%= i %>").fadeOut();
+		});				
+	<% end %>
+    }); 
+</script>

@@ -168,7 +168,7 @@ select {
 	<!--div class="upload-image-sidebar"-->			
 	<div class="sidebar"-->
 		<div class="sidebar-content">
-            <div class="sidebar-header">Add to your collection?</div>			
+            <div class="sidebar-header">Add to your collection? [optional]</div>			
 			<div id="question" class="product-grid" style="margin: 17px; border: 0px;">
 		    	<ul>
 				<% current_user.my_collections.each do |my_collection| %>
@@ -193,7 +193,7 @@ select {
 						You can bookmark any item you find to your Macabolic collections. Just drag the "To Macabolic" to your Bookmark bar now.<br/><br/>
 
 						<span class="extra_to_macabolic">
-							<a href="javascript:(function(){if(window.myBookmarklet!==undefined){myBookmarklet();}else{document.body.appendChild(document.createElement('script')).src='http://macbook-pro.local:3001/bookmarklet/saveit.js?';}})();">To Macabolic</a>
+							<a href="javascript:(function(){if(window.myBookmarklet!==undefined){myBookmarklet();}else{document.body.appendChild(document.createElement('script')).src='http://<%= HOST %>/bookmarklet/saveit.js?';}})();">To Macabolic</a>
 						</span>
 					</p>
 				</div>

@@ -70,9 +70,11 @@ $(document).ready(function() {
 			<div id="search-products-result" class="search-result">
             	<%= render 'searches/result_page' %>
 			</div>
+			<% if @found_collection_items.size > 0 %>								
 	        <div id="search-collections-result" class="search-result"> 
             	<%= render 'searches/result_collections' %>			
-			</div>				
+			</div>
+			<% end %>
 		</div>
         </div><!-- .maincol -->
 

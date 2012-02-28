@@ -1,11 +1,18 @@
 Macabolic::Application.routes.draw do
 
-  resources :bookmarklets do
-    
+  resources :stores, :controller => "vendors" do
+    member do
+      get 'like'
+      get 'unlike'
+      get 'follow'
+      get 'unfollow'
+    end
   end
+  
+  resources :email_preferences
+  resources :bookmarklets
 
   ActiveAdmin.routes(self)
-
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   resources :searches do
@@ -16,9 +23,7 @@ Macabolic::Application.routes.draw do
   end
   
   resources :product_comments
-
   resources :my_collection_comments
-
   resources :recommendations
 
   resources :friendships do
@@ -143,6 +148,7 @@ Macabolic::Application.routes.draw do
   match 'faq' => 'home#faq'
   match 'discover' => 'home#home'
   match 'extra' => 'home#extra'
+  match 'newsletter/:year/monthly/:month' => 'home#monthly'
   
 # TODO
 #  match '/auth/failure' => 'something to handle this error'

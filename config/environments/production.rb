@@ -63,5 +63,6 @@ Macabolic::Application.configure do
     :enable_starttls_auto => true
   }
   
-  FACEBOOK_APP_ID = 255146254550038
+  FACEBOOK_APP_ID = '255146254550038'
+  HOST = 'www.macabolic.com'
 end
