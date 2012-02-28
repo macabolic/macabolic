@@ -1461,8 +1461,8 @@ input:blur {
   text-decoration:none;
   //border: 1px solid #5B8F10;
 	border: 1px solid #d5d5d5;
-  color: #fff !important;
-	font-color: #fff;
+  //color: #fff !important;
+	//font-color: #fff;
   font-size: 15px;
   font-weight: bold;
   font-family: Arial;

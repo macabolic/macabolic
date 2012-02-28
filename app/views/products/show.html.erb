@@ -39,6 +39,19 @@
 	display:block;
 }
 </style>
+<!-- Piwik --> 
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://eclipse.macabolic.com/" : "http://eclipse.macabolic.com/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 3);
+} catch( err ) {}
+</script>
+<noscript><p><img src="http://eclipse.macabolic.com/piwik.php?idsite=3" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+
 <script type="text/javascript"> 
 !function(d,s,id) {
 	var js,fjs=d.getElementsByTagName(s)[0];
@@ -178,6 +191,10 @@ $(document).ready(function() {
 		$("#suggest_where_wrapper").css("display", "none");
 	});
 	
+	$("#buy_now").click(function() {
+		piwikTracker.trackGoal(1);
+	});
+	
 });
 </script>
 <body class="subpage productpage">
@@ -308,7 +325,7 @@ $(document).ready(function() {
 					<% end %>
 					</span>
 					<span class="right">						
-						<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
+						<%= link_to 'Buy Now', buy_now_product_path(@product), :id => "buy_now", :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
 					</span>
 				</div>
 				<% if !@product.product_link.present? %>
