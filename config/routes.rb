@@ -1,5 +1,7 @@
 Macabolic::Application.routes.draw do
 
+  resources :notifications, :only => :show
+  
   resources :stores, :controller => "vendors" do
     member do
       get 'like'
@@ -149,6 +151,7 @@ Macabolic::Application.routes.draw do
   match 'discover' => 'home#home'
   match 'extra' => 'home#extra'
   match 'newsletter/:year/monthly/:month' => 'home#monthly'
+  match 'fdfabbdcddfcfecfee/send' => 'notifications#send_reminder'
   
 # TODO
 #  match '/auth/failure' => 'something to handle this error'

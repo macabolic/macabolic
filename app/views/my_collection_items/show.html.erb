@@ -273,15 +273,15 @@ $(document).ready(function() {
 					<% else %>
 						<% if current_user.wish_this_product?(@product) %>
 					<div id="i_own_this">
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>
 					</div>
 					<div id="wishlist_link">
-							<%= link_to 'In my Collection already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "In my Wishlist already", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							
+							<%= link_to 'Wanted', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "Wanted", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							
 					</div>
 						<% else %>
 					<div id="i_own_this">
 						<!-- TODO: important -->
-						<a href="#" id="own-this" class="button-green do_you_have_one">Do you have one?</a>
+						<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>
 					</div>
 					<div id="wishlist_link">
 						<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!</a>
@@ -294,7 +294,7 @@ $(document).ready(function() {
 				<p>
 					<div id="wishlist_link">
 						<% if current_user.wish_this_product?(@product) %>
-							<%= link_to 'In my Collection already', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
+							<%= link_to 'Wanted', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>						
 						<% else %>
 							<%= link_to 'I want one!', { :controller => "wishlist_items", :action => "create", :product => @product.id }, :method => "post", :remote => true, :class => "button-orange", :id => "add-wishlist", :title => "I want one!" %>
 						<% end %>

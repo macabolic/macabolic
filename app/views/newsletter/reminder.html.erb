@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<style type="text/css">
+/* Layout */
+* { 
+	margin: 0;
+}
+
+img, div { behavior: url(../iepngfix.htc); }
+
+a { 
+	color:#65a40b;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+html, body {
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-weight: normal;
+	text-decoration: none;
+	line-height: 150%;
+	font-size:12px;
+	background-color: #e9e9e9;
+	height: 100%;
+}
+
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -44px; /* the bottom margin is the negative value of the footer's height */
+	width: 600px;
+	background-color: #ffffff;
+	padding: 0px 40px 0px;
+}
+
+.wrapper-top {
+	background-color: #f6f1de;	
+	//width: 496px;
+	position: relative;
+	margin: 0 auto;
+}
+
+.wrapper-content {
+	background-color: #f6f1de;	
+	position: relative;
+	margin: 0 auto;
+}
+
+.message-content {
+	background-color: #fff;
+	position: relative;
+	margin: 0 auto;
+}
+
+.social-content {
+	background-color: #fff;
+	position: relative;
+	margin: 25px auto 25px;
+	text-align: center;	
+}
+
+.social-content span {
+	float: center;
+}
+
+#message-body {
+	margin: 15px 0px 15px;
+	font-size: 12px;
+}
+
+#black-strip {
+	height: 100px;
+	background-color: black;
+	background-image: url(http://<%= @host %>/images/backgrounds/header-bg.png);
+}
+
+#grey-strip {
+	height: 60px;
+	background-color: #ffffff;
+	border-top: 1px solid #fff;
+	//border-bottom: 1px solid #d2d2d2;
+}
+
+.logo-holder {
+	float: left;
+	width: 225px;
+	height: 100px;
+}
+
+
+.footer, .push {
+	height: 44px; /* .push must be the same height as .footer */
+	margin-top: 0px;
+}
+
+.sticky {
+	position: relative;
+	margin: 0 auto;
+	background-color: black;
+	background-image: url(http://<%= @host %>/images/backgrounds/footer-bg.png);
+}
+
+p.footerleft {
+	float: left;
+	text-align: left;
+	color: #cfcfcf;
+	font-size: 12px;
+	padding: 13px 0px 0px 5px;
+}
+
+p.footerright {
+	float: right;
+	text-align: right;
+	color: #cfcfcf;
+	font-size: 12px;
+	padding: 13px 5px 0px 0px;
+}
+
+.social {
+	margin-bottom: -3px;
+}
+
+.product-grid span {
+	font-size: 12px;
+	font-weight: bold;
+	color: #313131;
+	display: inline;
+	padding-top: 8px;
+	text-align: center;
+}
+
+.product-grid li {
+	float: left;
+	border: 1px solid #e3d7a9;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 1px 2px #ece8d5;
+	overflow: hidden;
+}
+
+.product-grid li:last-child {
+	margin-bottom: 12px;
+}
+
+.productimage {
+	//border: 3px solid #eeead9;
+	height: 170px;
+	margin-bottom: 10px;
+	//display: inline;
+}
+
+/* Style */
+h1 {
+	text-indent: -5000px;
+	background: url(http://<%= @host %>/images/sitewide/logo.png) no-repeat;
+	width: 215px;
+	height: 38px;
+	margin: 24px 0px 0px 20px!important;
+}
+h2 {
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	color: #111a1f;
+	margin-bottom: 10px!important;
+	margin-top: 10px!important;
+}
+
+h2 span {
+	color: #cc6824;
+}
+
+h3 {
+	font-size: 16px;
+	font-weight: normal!important;
+	color: #111a1f;
+	text-align: right;
+}
+
+ul.list-my-collections {
+	list-style: none;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 30px; 
+	padding-bottom: 10px;
+}
+
+.list-my-collections li {
+	width: 160px;
+	height: 250px;
+	background-color: #fff;
+	background-position: 0 50%;
+	padding: 10px 5px 10px 5px!important;
+	margin-right: 5px;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	color: #414141;
+}
+
+.group:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+#discover_now {
+	font-size: 16px;
+	font-weight: normal!important;
+	color: #111a1f;
+	float: right;
+}
+
+#discover_now a {
+	color:#65a40b
+	text-decoration: none;
+	text-align: right;	
+}
+
+/* footer navigation
+----------------------------------------------------------------------*/
+.footer-nav-holder {
+	padding-left: 15px;
+}
+.footer-nav-item a {
+	font-size: 12px;
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+	-webkit-transition-duration:0.33s;
+	-moz-transition-duration:0.33s;
+	margin-left: 5px;
+}
+
+.footer-nav-item a:hover {
+	text-decoration: none;
+	color: #7c8386;
+}
+
+#title-header {
+	text-align: center;
+	padding-top: 20px;
+	font-weight: bold!important;
+	font-size: 20px;
+	color: #595959;
+}
+
+.small-word {
+	font-style: italic;
+	color: #595959;	
+}
+
+.category {
+	width: 520px;
+	height: 30px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 5px;
+	font-size: 15px;
+	line-height: 30px;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	background-color: #DA5D18;
+	//opacity: 0.5;
+	//-moz-opacity: 0.5;
+	//filter:alpha(opacity=0.5);	
+	border: 1px solid #e3d7a9;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 1px 2px #ece8d5;	
+	display: block;
+}
+
+.vendor {
+	font-size: 14px;
+	font-weight: bold;
+	font-style: italic;
+	font-color: #565656;
+}
+
+.vendor a {
+	text-decoration: none;
+	color: #565656;
+}
+
+</style>
+<!-- Tumblr -->
+</head>
+<body>		
+<div class="wrapper">
+	<div class="wrapper-top">
+		<div id="black-strip">
+			<div class="logo-holder"><h1>Macabolic</h1></div>
+		</div>
+	</div>
+	<div id="grey-strip">
+		<h2>Discover new products for your <span>Mac</span> everyday</h2>
+		<!--<span id="discover_now" class="discover_now"><a href="http://<%= @host %>">Find out more ></a></span>-->
+	</div>
+	
+<!-- Content -->		
+	<div class="message-content">
+		<p>
+			<span id="message-header">Dear <span id="message-addressee"><%= @user.first_name %></span>,</span> 
+		</p>
+		<p id="message-body">	
+			We did not forget about you. We know you are eagerly waiting to try out and share your collections to your friends.
+			Since our last announcement on accepting registration, we received valuable feedback and comments from our community on how to make Macabolic better.
+			Your voice means a lot to us.
+			<br/>
+		</p>
+		<p id="message-body">	
+			While we are working day and night to push out tweaks and new features almost everyday, you can always come to <%= link_to 'Macabolic', root_url %> to discover new stuffs.
+			Our products are hand picked honestly by our community. We make it very social so that you can easily share and recommend to your friends when you found something interesting.  
+			<br/>
+		<p id="message-body">	
+			To stop you from waiting for to long, we will be sending you an invitation on <strong>March 5th, 2012</strong>. You are right, before the launch of the iPad 3. 
+			Remember to check your mailbox!
+			<br/>
+		</p>
+		<p id="message-body">
+			Meanwhile, we have selected some interesting products discovered this month. Feel free to forward to your friends!
+			<br/>						
+		</p>
+		<p>
+			Best,<br/>
+			The Macabolic Team
+		</p>
+		<div class="social-content">
+			<span style="font-size: 14px; margin-bottom: 5px;"><strong>Help spreading out the word and follow us!</strong></span>
+			<br/>
+			<span>
+				<a id="facebook" href="http://www.facebook.com/macabolic" target="_blank" alt="Be a Macabolic on Facebook">
+					<%= image_tag "http://#{@host}/images/auth/facebook_32.png", :alt => "facebook", :width => "32", :height => "32", :class => "social" %>
+				</a>
+				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="Follow us on Twitter">
+					<%= image_tag "http://#{@host}/images/auth/twitter_32.png", :alt => "twitter", :width => "32", :height => "32", :class => "social" %>
+				</a>
+			</span>
+			<br/>
+		</div>
+	</div>
+
+	<div class="wrapper-content">
+		<div>
+			<p id="title-header">
+				<span class="small-word" style="font-size: 12px; font-weight: normal;">February 2012</span><br/>
+				Our Favorites of the Month
+			</p>
+		</div>
+		<div class="product-grid group">
+			<ul id="collection-items" class="list-my-collections">
+				<div class="category">For your ears</div>
+				<% @cat1_products.each do |product| %>
+				<li>
+					<div class="productimage">
+					<%= link_to product_url(product) do %>
+						<% if product.thumbnail.present? %>
+							<%= image_tag("http://#{@host}#{product.thumbnail.url(:small)}", :width => "160") %>
+						<% elsif product.image_url.present? %>
+							<%= image_tag(product.image_url, :width => "160") %>
+						<% else %>
+							<%= image_tag "http://#{@host}/images/product/no-image_medium.jpg", :size => "160x160" %>
+						<% end %>
+					<% end %>
+					</div>								
+					<span class="vendor right" style="margin-bottom:5px;">
+						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
+					</span>															
+					<span style="margin-bottom: 10px;">
+						<p style="margin-bottom: 10px;">
+							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
+						</p>
+					</span>
+				</li>							
+				<% end %>	
+			</ul>
+		</div>
+		<div class="product-grid group">		
+			<ul id="collection-items" class="list-my-collections">
+				<div class="category">For your iPad</div>				
+				<% @cat2_products.each do |product| %>
+				<li>
+					<div class="productimage">
+					<%= link_to product_url(product) do %>
+						<% if product.thumbnail.present? %>
+							<%= image_tag("http://#{@host}#{product.thumbnail.url(:small)}", :width => "160") %>
+						<% elsif product.image_url.present? %>
+							<%= image_tag(product.image_url, :width => "160") %>
+						<% else %>
+							<%= image_tag "http://#{@host}/images/product/no-image_medium.jpg", :size => "160x160" %>
+						<% end %>
+					<% end %>
+					</div>								
+					<span class="right" style="margin-bottom:5px;">
+						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
+					</span>															
+					<span style="margin-bottom: 10px;">
+						<p style="margin-bottom: 10px;">
+							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
+						</p>
+					</span>
+				</li>							
+				<% end %>	
+			</ul>
+		</div>
+		<div class="product-grid group">		
+			<ul id="collection-items" class="list-my-collections">
+				<div class="category">For your home</div>				
+				<% @cat3_products.each do |product| %>
+				<li>
+					<div class="productimage">
+					<%= link_to product_url(product) do %>
+						<% if product.thumbnail.present? %>
+							<%= image_tag("http://#{@host}#{product.thumbnail.url(:small)}", :width => "160") %>
+						<% elsif product.image_url.present? %>
+							<%= image_tag(product.image_url, :width => "160") %>
+						<% else %>
+							<%= image_tag "http://#{@host}/images/product/no-image_medium.jpg", :size => "160x160" %>
+						<% end %>
+					<% end %>
+					</div>								
+					<span class="right" style="margin-bottom:5px;">
+						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
+					</span>															
+					<span style="margin-bottom: 10px;">
+						<p style="margin-bottom: 10px;">
+							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
+						</p>
+					</span>
+				</li>							
+				<% end %>	
+			</ul>
+		</div>		
+		<div style="text-align: right; padding-bottom: 15px; margin: 15px 10px 0px 0px;">
+			Warmly brought to you by Macabolic
+		</div>
+	</div>
+	<div class="wrapper-top">
+		<div id="grey-strip">
+			<p class="footerleft">
+	    		<span class="small-word">This email was sent to <%= @user.email %> by <%= link_to "macabolic.com", 'http://#{@host}' %>.</span>
+			</p>
+		</div>
+	</div>	
+	<div class="footer sticky">
+		<div class="wrapper-top">
+	    	<p class="footerleft">
+				<span class="footer-nav-holder">
+					<span class="footer-nav-item"><%= link_to 'About', about_url %></span>
+					<span class="footer-nav-item"><a href="http://blog.macabolic.com">Blog</a></span>				
+					<span class="footer-nav-item"><%= link_to 'Extra', extra_url %></span>
+					<span class="footer-nav-item"><%= link_to 'Contact Us', contact_url %></span>
+					<span class="footer-nav-item"><a href="mailto:feedback@macabolic.com">Feedback</a></span>
+				</span>
+			</p>			
+			<p class="footerright">© 2012 Macabolic</p>
+		</div>
+	</div>
+</div>  
+</body>	
+</html>

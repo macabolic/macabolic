@@ -176,10 +176,13 @@ $(document).ready(function() {
     	<%#= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
 		<% if product.thumbnail.present? %>
 			<%= image_tag(product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+			<% thumbnail_image_path "http://#{HOST}#{product.thumbnail.url(:medium)}" %>			
 		<% elsif product.image_url.present? %>
 			<%= image_tag(product.image_url, :width => "180", :class => "preview-image") %>
+			<% thumbnail_image_path product.image_url %>			
 		<% else %>
 			<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+			<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
 		<% end %>
 
     </div>
