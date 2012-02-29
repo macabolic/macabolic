@@ -284,7 +284,7 @@ ul.list-my-collections {
 }
 
 .vendor {
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	font-style: italic;
 	font-color: #565656;
@@ -295,6 +295,10 @@ ul.list-my-collections {
 	color: #565656;
 }
 
+.product {
+	font-size: 12px;
+	font-weight: normal;
+}
 </style>
 <!-- Tumblr -->
 </head>
@@ -376,10 +380,10 @@ ul.list-my-collections {
 						<% end %>
 					<% end %>
 					</div>								
-					<span class="vendor right" style="margin-bottom:5px;">
+					<span class="right vendor" style="margin-bottom:5px;">
 						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
 					</span>															
-					<span style="margin-bottom: 10px;">
+					<span class="product" style="margin-bottom: 10px;">
 						<p style="margin-bottom: 10px;">
 							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
 						</p>
@@ -404,10 +408,10 @@ ul.list-my-collections {
 						<% end %>
 					<% end %>
 					</div>								
-					<span class="right" style="margin-bottom:5px;">
+					<span class="right vendor" style="margin-bottom:5px;">
 						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
 					</span>															
-					<span style="margin-bottom: 10px;">
+					<span class="product" style="margin-bottom: 10px;">
 						<p style="margin-bottom: 10px;">
 							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
 						</p>
@@ -432,10 +436,10 @@ ul.list-my-collections {
 						<% end %>
 					<% end %>
 					</div>								
-					<span class="right" style="margin-bottom:5px;">
+					<span class="right vendor" style="margin-bottom:5px;">
 						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
 					</span>															
-					<span style="margin-bottom: 10px;">
+					<span class="product" style="margin-bottom: 10px;">
 						<p style="margin-bottom: 10px;">
 							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
 						</p>
@@ -451,7 +455,7 @@ ul.list-my-collections {
 	<div class="wrapper-top">
 		<div id="grey-strip">
 			<p class="footerleft">
-	    		<span class="small-word">This email was sent to <%= @user.email %> by <%= link_to "macabolic.com", 'http://#{@host}' %>.</span>
+	    		<span class="small-word">This email was sent to <%= @user.email %> by <%= link_to "macabolic.com", "http://#{@host}" %>.</span>
 			</p>
 		</div>
 	</div>	

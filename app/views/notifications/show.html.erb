@@ -82,7 +82,7 @@ html, body {
 #black-strip {
 	height: 100px;
 	background-color: black;
-	background-image: url(http://<%= @host %>/images/backgrounds/header-bg.png);
+	background-image: url(http://<%= HOST %>/images/backgrounds/header-bg.png);
 }
 
 #grey-strip {
@@ -108,7 +108,7 @@ html, body {
 	position: relative;
 	margin: 0 auto;
 	background-color: black;
-	background-image: url(http://<%= @host %>/images/backgrounds/footer-bg.png);
+	background-image: url(http://<%= HOST %>/images/backgrounds/footer-bg.png);
 }
 
 p.footerleft {
@@ -162,7 +162,7 @@ p.footerright {
 /* Style */
 h1 {
 	text-indent: -5000px;
-	background: url(http://<%= @host %>/images/sitewide/logo.png) no-repeat;
+	background: url(http://<%= HOST %>/images/sitewide/logo.png) no-repeat;
 	width: 215px;
 	height: 38px;
 	margin: 24px 0px 0px 20px!important;
@@ -284,7 +284,7 @@ ul.list-my-collections {
 }
 
 .vendor {
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	font-style: italic;
 	font-color: #565656;
@@ -293,6 +293,11 @@ ul.list-my-collections {
 .vendor a {
 	text-decoration: none;
 	color: #565656;
+}
+
+.product {
+	font-size: 12px;
+	font-weight: normal;
 }
 
 </style>
@@ -307,7 +312,7 @@ ul.list-my-collections {
 	</div>
 	<div id="grey-strip">
 		<h2>Discover new products for your <span>Mac</span> everyday</h2>
-		<!--<span id="discover_now" class="discover_now"><a href="http://<%= @host %>">Find out more ></a></span>-->
+		<!--<span id="discover_now" class="discover_now"><a href="http://<%= HOST %>">Find out more ></a></span>-->
 	</div>
 	
 <!-- Content -->		
@@ -343,10 +348,10 @@ ul.list-my-collections {
 			<br/>
 			<span>
 				<a id="facebook" href="http://www.facebook.com/macabolic" target="_blank" alt="Be a Macabolic on Facebook">
-					<%= image_tag "http://#{@host}/images/auth/facebook_32.png", :alt => "facebook", :width => "32", :height => "32", :class => "social" %>
+					<%= image_tag "http://#{HOST}/images/auth/facebook_32.png", :alt => "facebook", :width => "32", :height => "32", :class => "social" %>
 				</a>
 				<a id="twitter" href="http://twitter.com/macabolic" target="_blank" alt="Follow us on Twitter">
-					<%= image_tag "http://#{@host}/images/auth/twitter_32.png", :alt => "twitter", :width => "32", :height => "32", :class => "social" %>
+					<%= image_tag "http://#{HOST}/images/auth/twitter_32.png", :alt => "twitter", :width => "32", :height => "32", :class => "social" %>
 				</a>
 			</span>
 			<br/>
@@ -376,11 +381,11 @@ ul.list-my-collections {
 						<% end %>
 					<% end %>
 					</div>								
-					<span class="vendor right" style="margin-bottom:5px;">
+					<span class="right vendor" style="margin-bottom:5px;">
 						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
 					</span>															
-					<span style="margin-bottom: 10px;">
-						<p style="margin-bottom: 10px;">
+					<span class="product" style="margin-bottom: 10px;">
+						<p style="margin-bottom: 10px">
 							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
 						</p>
 					</span>
@@ -404,10 +409,10 @@ ul.list-my-collections {
 						<% end %>
 					<% end %>
 					</div>								
-					<span class="right" style="margin-bottom:5px;">
+					<span class="right vendor" style="margin-bottom:5px;">
 						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
 					</span>															
-					<span style="margin-bottom: 10px;">
+					<span class="product" style="margin-bottom: 10px;">
 						<p style="margin-bottom: 10px;">
 							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
 						</p>
@@ -432,10 +437,10 @@ ul.list-my-collections {
 						<% end %>
 					<% end %>
 					</div>								
-					<span class="right" style="margin-bottom:5px;">
+					<span class="right vendor" style="margin-bottom:5px;">
 						<%= link_to simple_format(word_wrap("#{product.vendor.name}", :line_width => 50)), store_url(product.vendor) %>
 					</span>															
-					<span style="margin-bottom: 10px;">
+					<span class="product" style="margin-bottom: 10px;">
 						<p style="margin-bottom: 10px;">
 							<%= link_to word_wrap(product.name, :line_width => 50), product_url(product) %>
 						</p>
