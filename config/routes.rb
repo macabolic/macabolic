@@ -56,7 +56,7 @@ Macabolic::Application.routes.draw do
   end
   
   # Invitations
-  resources :invitations do
+  resources :invitations, :except => [:show, :edit, :update, :destroy] do
     member do
       get 'accept/:invitation_token' => "invitations#show"
       get 'skip'

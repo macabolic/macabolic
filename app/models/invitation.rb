@@ -4,7 +4,7 @@ class Invitation < ActiveRecord::Base
   
   validates_presence_of   :recipient_email
   validate                :recipient_is_not_registered
-  validate                :sender_has_invitations, :if => :sender
+  #validate                :sender_has_invitations, :if => :sender
   #validate                :invitation_token_is_invalid
   
   before_create           :generate_token
@@ -17,9 +17,13 @@ class Invitation < ActiveRecord::Base
   
 private
 
+  # During the invitation period, user is only allowed to use when he/she is registered + invited
   def recipient_is_not_registered
-    errors.add :recipient_email, 'is already registered.' if User.find_by_email(recipient_email)
+    errors.add :recipient_email, 'is already registered.' if User.where("email = ? and invitation_id is not null", recipient_email).exists?
   end
+  #def recipient_is_not_registered
+  #  errors.add :recipient_email, 'is already registered.' if User.find_by_email(recipient_email)
+  #end
   
   def sender_has_invitations
     unless sender.invitation_limit > 0
@@ -36,7 +40,7 @@ private
   end
   
   def decrement_sender_count
-    sender.decrement! :invitation_limit
+    #sender.decrement! :invitation_limit
   end
 
 end

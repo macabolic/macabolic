@@ -52,11 +52,6 @@ class InvitationsController < ApplicationController
     end
   end
 
-  # GET /invitations/1/edit
-  def edit
-    @invitation = Invitation.find(params[:id])
-  end
-
   # POST /invitations
   # POST /invitations.xml
   def create    
@@ -78,11 +73,14 @@ class InvitationsController < ApplicationController
       if @existing_user.exists?
         @success = false
       else        
-        @invitation.save
-        # Send a email to recipient_email
-        UserMailer.invite(@invitation).deliver
-        @invitation.update_attribute("sent_at", Time.now)
-        @success = true
+        if @invitation.save
+          # Send a email to recipient_email
+          UserMailer.invite(@invitation).deliver
+          @invitation.update_attribute("sent_at", Time.now)
+          @success = true
+        else
+          @success = false
+        end
       end
     end    
     #respond_to do |format|
