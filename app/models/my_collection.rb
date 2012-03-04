@@ -22,7 +22,7 @@ class MyCollection < ActiveRecord::Base
   DEFAULT_COLLECTION_NAME = "My Collection"
   
   scope :featured_collections, limit(3)
-  
+
   def to_param
     "#{id}-#{name.parameterize}"
   end

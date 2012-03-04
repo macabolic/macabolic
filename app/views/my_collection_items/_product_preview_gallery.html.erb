@@ -172,13 +172,17 @@ $(document).ready(function() {
     <div id="product_preview_gallery">
 		<% if my_collection_item.product.thumbnail.present? %>
 			<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+			<% thumbnail_image_path "http://#{HOST}#{my_collection_item.product.thumbnail.url(:medium)}" %>
 		<% elsif my_collection_item.product.image_url.present? %>
 			<%= image_tag(my_collection_item.product.image_url, :width => "180", :class => "preview-image") %>
+			<% thumbnail_image_path my_collection_item.product.image_url %>
 		<% else %>
 			<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+			<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>
 		<% end %>
 		<% if my_collection_item.thumbnail.present? %>
 			<%= image_tag(my_collection_item.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+			<% thumbnail_image_path "http://#{HOST}#{my_collection_item.thumbnail.url(:medium)}" %>
 		<% end %>
     </div>
     <div class="clearfix"></div>

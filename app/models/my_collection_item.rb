@@ -13,7 +13,9 @@ class MyCollectionItem < ActiveRecord::Base
   validates_attachment_size         :thumbnail, :less_than => 700000,  :message => "should be less than 700KB."
   validates_attachment_content_type :thumbnail, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
   #validates_associated    :product    
-  attr_accessible         :user_id, :product_id, :my_collection_id, :thumbnail, :interest_indicator
+  
+  accepts_nested_attributes_for :product, :reject_if => lambda { |a| a[:name].blank? }  
+  attr_accessible         :user_id, :product_id, :my_collection_id, :thumbnail, :interest_indicator, :product_attributes
 
   OWN = 1
   WISH = 2

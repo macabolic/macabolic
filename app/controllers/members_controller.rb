@@ -74,6 +74,7 @@ class MembersController < ApplicationController
     @user = User.find(params[:id])
     #@activities = @user.activities
     @activities = @user.all_activities
+    @discovered_products = @user.discovered_products
     
     respond_to do |format|
       format.html # profile.html.erb

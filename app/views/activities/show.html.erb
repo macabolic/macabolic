@@ -29,6 +29,14 @@
 		elsif activity.name == 'Product'
 %>
 			<%= render :partial => 'activities/product', :locals => { :activity => activity } %>
+<%			
+		elsif activity.name == 'MyCollectionResponse'
+%>
+			<%= render :partial => 'activities/my_collection_response', :locals => { :activity => activity } %>
+<%			
+		elsif activity.name == 'MyCollectionFollower'
+%>
+			<%= render :partial => 'activities/my_collection_follower', :locals => { :activity => activity } %>
 <%
 		end
 %>

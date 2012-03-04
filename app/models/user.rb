@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   has_many  :recommendations, :class_name => 'Recommendation', :foreign_key => 'from_user_id'
   has_many  :recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'from_user_id'
 
+  has_many  :discovered_products, :class_name => 'Product', :foreign_key => 'uploader_id'
+
 #  has_many  :received_reommendations, :class_name => 'Recommendation', :foreign_key => 'to_user_id'
 #  has_many  :being_recommended_products, :through => :recommendations, :source => :product, :foreign_key => 'to_user_id'
   

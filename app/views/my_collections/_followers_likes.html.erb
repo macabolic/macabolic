@@ -1,0 +1,38 @@
+<% if !followers.nil? && followers.size > 0 %>
+<div class="sidebar-content">				
+	<div class="sidebar-header">
+		<%= pluralize(followers.size, 'follower') %>
+	</div>	
+	<div class="user-grid">
+    	<ul>
+		<% followers.each do |follower| %>
+  			<li>
+				<%= link_to collections_member_path(follower.follower) do %>
+					<%= image_tag current_profile_image_thumbnail_url(follower.follower), :width => 50, :title => follower.follower.full_name %>
+				<% end %>
+			</li>
+		<% end %>
+		</ul>
+	</div>
+</div><!-- #see who has similar products in his network -->			
+<% end %>
+<% if !responses.nil? && responses.size > 0 %>
+<br/>
+<div class="sidebar-content">				
+	<div class="sidebar-header">
+		<%= pluralize(responses.size, 'like') %>
+	</div>	
+	<div class="user-grid">
+    	<ul>
+		<% followers.each do |follower| %>
+  			<li>
+				<%= link_to collections_member_path(follower.follower) do %>
+					<%= image_tag current_profile_image_thumbnail_url(follower.follower), :width => 50, :title => follower.follower.full_name %>
+				<% end %>
+			</li>
+		<% end %>
+		</ul>
+	</div>
+</div><!-- #see who has similar products in his network -->			
+<% end %>
+

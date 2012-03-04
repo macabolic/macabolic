@@ -29,13 +29,41 @@ $(document).ready(function() {
 			<% if current_my_collection != my_collection %>
   			<li id="<%= my_collection.id %>" class="not-selected-product">	
 				<%= link_to "#", :id => 'my_collection_link' do %>
-					<%= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+					<%#= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+					
+					<% if !my_collection.thumbnail.present? && !my_collection.my_collection_items.nil? && my_collection.my_collection_items.size > 0 %>
+						<%#= image_tag(my_collection_items[0].product.thumbnail.url(:small), :class => "preview-image") %>							
+						<% if my_collection.my_collection_items[0].product.thumbnail.present? %>
+							<%= image_tag( my_collection.my_collection_items[0].product.thumbnail.url(:small), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+						<% elsif  my_collection.my_collection_items[0].product.image_url.present? %>
+							<%= image_tag( my_collection.my_collection_items[0].product.image_url, :width => "64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+						<% else %>
+							<%= image_tag "/images/product/no-image_medium.jpg", :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+						<% end %>
+					<% else %>
+						<%= image_tag my_collection.thumbnail.url(:small), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>						
+					<% end %>
+					
 				<% end %>
 			</li>
 			<% else %>
   			<li id="<%= my_collection.id %>" class="selected-product">	
 				<%= link_to "#", :id => 'my_collection_link' do %>
-					<%= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+					<%#= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+
+					<% if !my_collection.thumbnail.present? && !my_collection.my_collection_items.nil? && my_collection.my_collection_items.size > 0 %>
+						<%#= image_tag(my_collection_items[0].product.thumbnail.url(:small), :class => "preview-image") %>							
+						<% if my_collection.my_collection_items[0].product.thumbnail.present? %>
+							<%= image_tag( my_collection.my_collection_items[0].product.thumbnail.url(:small), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+						<% elsif  my_collection.my_collection_items[0].product.image_url.present? %>
+							<%= image_tag( my_collection.my_collection_items[0].product.image_url, :width => "64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+						<% else %>
+							<%= image_tag "/images/product/no-image_medium.jpg", :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+						<% end %>
+					<% else %>
+						<%= image_tag my_collection.thumbnail.url(:small), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>						
+					<% end %>
+
 				<% end %>
 			</li>
 			<% end %>

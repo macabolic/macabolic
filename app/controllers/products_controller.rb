@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_filter :show_invitation_notice
   before_filter :store_location
-  before_filter :authenticate_user!, :except =>  [:index, :search, :show, :buy_now]
+  before_filter :authenticate_user!, :except =>  [:index, :search, :show, :buy_now, :bookmarklet]
   helper_method :sort_column, :sort_direction
 
   # GET /products
@@ -104,6 +104,10 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @user = current_user
+    @product_link = @product.build_product_link(:informer_id => @user.id)
+
+    @price_ranges = PriceRange.order("sort_order ASC")
+    @product_target_audiences = ProductTargetAudience.order("sort_order ASC")
     
     respond_to do |format|
       format.html # new.html.erb
@@ -112,12 +116,12 @@ class ProductsController < ApplicationController
   end
   
   def bookmarklet
-    @product = Product.new(:image_url => params[:image_url])
-    @user = current_user
+    @product = Product.new(:image_url => params[:image_url])    
+    @user = current_user    
   end
   
   # POST /products
-  # POST /products.xml
+  # POST /products.xml  
   def create
     @product = Product.new(params[:product])
     @user = current_user
@@ -165,31 +169,70 @@ class ProductsController < ApplicationController
           format.xml  { render :xml => my_collection_item.errors, :status => :unprocessable_entity }
         end
       end
-    else
+    else # No collection selected
       
-      if params[:product_link].present?
-        @product.build_product_link(:informer_id => current_user.id, :link => params[:product_link])
-      end
-      
-      if params[:vendor_name].present?
-        @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
-        if @vendor_search_results.size > 0
-          @product.vendor = @vendor_search_results[0]
-          logger.debug "Found the vendor in the database."
+      if params[:create_new].present? && params[:create_new] == "yes"
+        my_collection = MyCollection.new(:name => params[:my_collection_name], :user_id => current_user.id)
+        
+        # now build the [:my_collection_item]
+        param_my_collection = Hash.new
+        param_my_collection[:my_collection_item] = Hash.new
+        param_my_collection[:my_collection_item][:user_id] = current_user.id
+        param_my_collection[:my_collection_item][:interest_indicator] = MyCollectionItem::WISH
+        params[:product][:product_link_attributes] = { :informer_id => current_user.id, :link => params[:product_link] }
+        if params[:vendor_name].present?
+          @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
+          if @vendor_search_results.size > 0
+            vendor = @vendor_search_results[0]
+            params[:product][:vendor_id] = vendor.id
+          else
+            params[:product][:vendor_attributes] = { :name => params[:vendor_name] }
+          end
+        end 
+        param_my_collection[:my_collection_item][:product_attributes] = params[:product]
+        my_collection.my_collection_items.build(param_my_collection[:my_collection_item])
+        
+        logger.info "#{param_my_collection[:my_collection_item]}"
+        
+        # .. then save
+        if my_collection.save
+          logger.debug "save my collection properly... and about to redirect."
+          redirect_to(my_collection_path(my_collection)) 
         else
-          logger.debug "Couldn't find the vendor in the database, now building one."
-          @product.build_vendor(:name => params[:vendor_name])
+          logger.debug "found problem while saving my collection item, go back to fix the problem."
+          respond_to do |format|
+            format.html { render :action => "new" }
+            format.xml  { render :xml => my_collection_item.errors, :status => :unprocessable_entity }
+          end
         end
-      end
+        
+      else
       
-      respond_to do |format|
-        if @product.save
-          format.html { redirect_to(product_path(@product), :notice => 'Product was successfully saved.') }
-          format.xml  { render :xml => @product, :status => :created, :location => @product }          
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }      
+        if params[:product_link].present?
+          @product.build_product_link(:informer_id => current_user.id, :link => params[:product_link])
         end
+      
+        if params[:vendor_name].present?
+          @vendor_search_results = Vendor.where("name = ?", params[:vendor_name])
+          if @vendor_search_results.size > 0
+            @product.vendor = @vendor_search_results[0]
+            logger.debug "Found the vendor in the database."
+          else
+            logger.debug "Couldn't find the vendor in the database, now building one."
+            @product.build_vendor(:name => params[:vendor_name])
+          end
+        end
+            
+        respond_to do |format|
+          if @product.save
+            format.html { redirect_to(product_path(@product), :notice => 'Product was successfully saved.') }
+            format.xml  { render :xml => @product, :status => :created, :location => @product }          
+          else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }      
+          end
+        end
+        
       end
     end
   end

@@ -2,17 +2,18 @@ class MyCollectionsController < ApplicationController
   before_filter :show_invitation_notice
   before_filter :require_invitation, :only => [ :new ]
   before_filter :store_location
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
 
   # GET /my_collections/1
   # GET /my_collections/1.xml
   def show
     @my_collection = MyCollection.find(params[:id])
     #@my_collection = MyCollection.find_by_permalink(params[:id])
-    @user = @my_collection.user
+    @user = @my_collection.user if user_signed_in?
     @my_collection_comments = @my_collection.comments.order("created_at DESC")
 		@my_collection_items = @my_collection.my_collection_items.page params[:collection_items_page]
-    
+    @followers = @my_collection.followers
+    @responses = @my_collection.responses
 #    ids = @user.friends.map { |i| i.id }
 #    ids.insert(0, @user.id)
     

@@ -5,7 +5,8 @@ class ActivityObserver < ActiveRecord::Observer
           :recommendation, 
           :my_collection_comment,
           :my_collection_response,
-          :product
+          :product,
+          :my_collection_follower
 
   def after_create(model)
     log_activity('create', model)

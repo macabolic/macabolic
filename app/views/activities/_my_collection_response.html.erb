@@ -1,0 +1,21 @@
+<%
+	user = activity.user
+	my_collection_response = activity.my_collection_response
+	my_collection = my_collection_response.my_collection
+%>
+<li>
+	<div class="questions-block" style="border-bottom:0px; padding-bottom:0px;">
+	    <div class="questions-img">
+			<%= image_tag current_profile_image_thumbnail_url(user), :width => 50, :title => user.full_name %>
+		</div>
+	    <div class="questions-content">
+			<%= link_to user.full_name, profile_member_path(user) %></a> likes a collection <%= link_to my_collection.name, my_collection_path(my_collection) %>.
+	    </div>
+	    <div class="clear"></div>
+	</div>
+	<div class="answer-wrapper">
+		<div class="answers-meta">
+			<p class="left"><%= activity.lapsed_time %></p>
+		</div>
+	</div>								
+</li>

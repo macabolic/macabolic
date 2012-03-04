@@ -3,6 +3,24 @@
 select {
 	width: 200px;
 }
+.price_range {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #000000;
+	margin-right: 5px;
+}
+
+.product_target_audience {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #000000;
+	margin-right: 5px;
+}
+
+.selected-price {
+	font-weight: bold;
+	color: #DA5D18;
+}
 </style>
 <script type="text/javascript"> 
     $(document).ready(function(){ 
@@ -97,6 +115,28 @@ select {
 			}
 		});
 
+		$(".price_range").click(function() {
+			// Selected
+			$(this).toggleClass('selected-price');
+			if ($(this).hasClass('selected-price')) {
+				$(this).siblings().removeClass('selected-price');
+				$('#product_product_link_attributes_price_range_id').attr('value', $(this).attr("id"));
+			} else {
+				$('#product_product_link_attributes_price_range_id').attr('value', "");
+			}
+		});
+
+		$(".product_target_audience").click(function() {
+			// Selected
+			$(this).toggleClass('selected-price');
+			if ($(this).hasClass('selected-price')) {
+				$(this).siblings().removeClass('selected-price');
+				$('#product_product_target_audience_id').attr('value', $(this).attr("id"));
+			} else {
+				$('#product_product_target_audience_id').attr('value', "");
+			}
+		});
+
 	});
 
 </script>
@@ -136,18 +176,49 @@ select {
 				<br/>
 				<h3>Add a new product</h3>
 			  	<%= f.label :name %>
-				<%= f.text_field :name, :class => "text", :placeholder => "e.g. iPad 3" %><br/><br/>
+				<%= f.text_field :name, :class => "text", :placeholder => "e.g. iPad 3" %>
+				<br/><br/>
 
-			  	<%= f.label :vendor_id %>
-				<%= text_field_tag 'vendor_name', nil, :class => "text", :placeholder => "e.g. Apple Inc." %><br/><br/>
+			  	<%= f.label "Brand" %>
+				<%= text_field_tag 'vendor_name', nil, :class => "text", :placeholder => "e.g. Apple Inc." %>
+				<br/><br/>
 				<%#= select_tag "product[vendor_id]", options_from_collection_for_select(Vendor.all, "id", "name") %>
 
-			  	<%= f.label :product_line_id %>
-				<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name, :prompt => true) %><br/><br/>
+			  	<%= f.label "Category" %>
+				<%= collection_select(:product, :product_line_id, ProductLine.all, :id, :name, :prompt => true) %>
+				<br/><br/>
 
-			  	<%= f.label :description %>
-				<%= f.text_area :description, :cols => 70, :rows => 5, :class=> "answer_area" %><br/><br/>
+				<%= f.label "For whom?" %>
+				<% @product_target_audiences.each do |product_target_audience| %>  	
+					<a class="product_target_audience" id="<%= product_target_audience.id %>"><%= product_target_audience.name %></a>
+				<% end %>
+				<br/><br/>
 
+				<%= f.fields_for :product_link do |builder| %>					
+				  	<%= f.label "Price" %>
+					<% count = 1 %>
+					<%# product_product_link_attributes_price_range_id %>
+					<% @price_ranges.each do |price_range| %>
+						<% if count == @price_ranges.size %>
+						<a class="price_range" id="<%= price_range.id %>">$<%= price_range.from_price %>+</a>
+						<% else %>
+						<a class="price_range" id="<%= price_range.id %>">$<%= price_range.from_price %> - $<%= price_range.to_price %></a>
+						<% end %>
+						<% count = count + 1 %>
+						<% if count == 5 %>
+						<br/>
+						<% end %>
+					<% end %>
+					<br/></br/>
+					
+				  	<%= f.label "Where to buy?" %>
+					<%= builder.hidden_field :informer_id %>
+					<%= builder.hidden_field :price_range_id %>
+					<%= builder.text_field :link, :class => 'text', :placeholder => "http://" %>
+					<br/><br/>
+				<% end %>					
+
+				<%= f.hidden_field :product_target_audience_id %>
 				<%= hidden_field_tag :my_collection_id %>
 				<%= hidden_field_tag "product[uploader_id]", current_user.id %>
 				
@@ -156,6 +227,10 @@ select {
 					<%= f.file_field :thumbnail %>			
 				</div>	
 				<br/>
+
+			  	<%= f.label :description %>
+				<%= f.text_area :description, :cols => 70, :rows => 5, :class=> "answer_area" %>
+				<br/><br/>
 
 				<div class="actions">
 					<%= f.submit 'Submit', :class => "submit-tip-button" %>
@@ -174,7 +249,17 @@ select {
 				<% current_user.my_collections.each do |my_collection| %>
 		  			<li id="<%= my_collection.id %>" class="not-selected-product">	
 						<%= link_to '#', :id => 'my_collection_link' do %>	
-							<%= image_tag my_collection.thumbnail.url(:medium), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+							<% if !my_collection.thumbnail.present? && !my_collection.my_collection_items.nil? && my_collection.my_collection_items.size > 0 %>
+								<% if my_collection.my_collection_items[0].product.thumbnail.present? %>
+									<%= image_tag( my_collection.my_collection_items[0].product.thumbnail.url(:small), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+								<% elsif  my_collection.my_collection_items[0].product.image_url.present? %>
+									<%= image_tag( my_collection.my_collection_items[0].product.image_url, :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name) %>
+								<% else %>
+									<%= image_tag "/images/product/no-image_medium.jpg", :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>
+								<% end %>
+							<% else %>
+								<%= image_tag my_collection.thumbnail.url(:small), :size => "64x64", :class => "preview-image", :id => my_collection.id, :title => my_collection.name %>						
+							<% end %>							
 						<% end %>
 					</li>
 				<% end %>

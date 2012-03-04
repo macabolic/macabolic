@@ -2,6 +2,7 @@ class Product < ActiveRecord::Base
   belongs_to              :product_line
   belongs_to              :vendor
   belongs_to              :discoverer,          :class_name => "User",  :foreign_key => "uploader_id"
+  belongs_to              :product_target_audience
   has_many                :reviews,             :dependent => :destroy
   has_many                :questions,           :dependent => :destroy  
   has_many                :answers,             :dependent => :destroy
@@ -38,7 +39,7 @@ class Product < ActiveRecord::Base
   
   accepts_nested_attributes_for :vendor, :reject_if => lambda { |a| a[:name].blank? }
   accepts_nested_attributes_for :product_link, :reject_if => lambda { |a| a[:link].blank? }
-  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url, :product_link_attributes
+  attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url, :product_link_attributes, :product_target_audience_id
   
   searchable do
     integer :id

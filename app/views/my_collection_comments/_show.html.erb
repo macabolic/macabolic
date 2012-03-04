@@ -24,7 +24,11 @@
 			</div>
     	</ul>	
 		<div style="margin-top: 10px;">
+		<% if user_signed_in? %>	
 			<%= render :partial => 'my_collection_comments/form', :local => { :my_collection => @my_collection } %>
+		<% else %>
+			Please <%= link_to 'log in', user_session_path %> or <%= link_to "sign up", new_registration_path(User.new) %> to leave a comment.
+		<% end %>
 		</div>
 	</div>
 </div>

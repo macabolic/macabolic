@@ -217,7 +217,7 @@ $(document).ready(function() {
 
 <div class="wrapper-mh">
 	<div class="maincol"> 
-    	<div class="product-item sidebar-content">	         
+    	<div class="product-item sidebar-content" style="overflow: visible;">	         
 			<div class="product-image">
 				<div id="product-gallery">				
 					<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
@@ -234,6 +234,14 @@ $(document).ready(function() {
 				<!--<p>Used since: <span>2010</span></p>-->
 				<p><%= @product.description %></p>								
 
+				<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+				<div style="margin: 5px;">
+					<div style="overflow: visible;" class="fb-like social" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
+					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="I would love to recommend the <%= @product.name %>. Check it out now." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+				</div>
+				<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+				<br/>
+				
 			<% if @user.present? || current_user.present? %>
 				<% if @user == current_user %>				
 	            <p>
@@ -293,6 +301,9 @@ $(document).ready(function() {
 				<% end %>
 			<%# Not log-in yet. %>
 			<% else %>
+					<div id="response-product-<%= @product.id %>">
+						<%= link_to 'Like', user_session_path, :class => "button-green", :id => "own-this", :title => "Like", :remote => true %>
+					</div>
 					<div id="i_own_this">
 						<%= link_to "Have one?", user_session_path, :class => "button-green", :id => "own-this" %>						
 						<%#<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>%>
@@ -302,13 +313,7 @@ $(document).ready(function() {
 						<%#<a href="#" id="own-this" class="button-orange do_you_wish_one">I want one!!</a>%>
 					</div>				
 			<% end %>
-				<br/><br/><br/>			
-				<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
-				<div style="margin: 5px;">
-					<div style="overflow: visible;" class="fb-like social" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
-					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="I would love to recommend the <%= @product.name %>. Check it out now." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-				</div>
-				<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+<br/><br/>
 				<br/>
 				<div style="width: 100%; height: 1px; border-bottom: 1px solid #d6d6d6;"></div>
 				<br/>
@@ -425,7 +430,7 @@ $(document).ready(function() {
 	
 	<div class="sidebar">
 		<!-- Recommend a friend -->
-		<%#= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
+		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
 
 		<% if !@friends_who_owned.nil? && @friends_who_owned.size > 0 %>
 		<div class="sidebar-content">				

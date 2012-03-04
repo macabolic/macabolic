@@ -49,6 +49,18 @@ class Activity < ActiveRecord::Base
     end
   end  
   
+  def my_collection_response
+    if name == 'MyCollectionResponse'
+      MyCollectionResponse.find(type_id)
+    end
+  end
+
+  def my_collection_follower
+    if name == 'MyCollectionFollower'
+      MyCollectionFollower.find(type_id)
+    end
+  end
+  
   def product
     if name == 'Product'
       Product.find(type_id)

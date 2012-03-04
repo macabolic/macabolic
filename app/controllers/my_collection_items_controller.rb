@@ -1,6 +1,6 @@
 class MyCollectionItemsController < ApplicationController
   before_filter :store_location
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => :show
 
   # GET /my_collection_items/1
   # GET /my_collection_items/1.xml
@@ -51,8 +51,10 @@ class MyCollectionItemsController < ApplicationController
     end
     @same_store_items = same_store_search.results
 
-    @product_link = ProductLink.new(:informer_id => current_user.id, :product_id => @product.id)
-    @price_ranges = PriceRange.order("sort_order ASC")
+    if user_signed_in?
+      @product_link = ProductLink.new(:informer_id => current_user.id, :product_id => @product.id)
+      @price_ranges = PriceRange.order("sort_order ASC")
+    end
     
     @my_collections = @user.my_collections
     
