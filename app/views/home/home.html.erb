@@ -32,9 +32,9 @@
 				</div>	
 			</div>
 		</div>
-				
-		<div class="sidebar">
-		<% if @notice.present? %>
+		
+		<% if @notice.present? %>		
+		<div class="sidebar">		
 			<div class="sidebar-content" id="recent-search">
 			    <div class="sidebar-header">Thank you for your interest!</div>
 				<div class="sidebar-inner">
@@ -43,9 +43,11 @@
 					</p>
 				</div>
 			</div>
+		</div>
 		<% end %>
 			
 		<% if !user_signed_in? %>
+		<div class="sidebar">
 			<%= render :partial => 'users/sessions/mini_form' %>
 		<% else %>
 			<%#= render 'products/add_a_product_link' %>		
@@ -67,8 +69,8 @@
 				</div>
 			</div>
 		-->
-		<% end %>		
 		</div>
+		<% end %>		
 
 		<%= render :template => 'home/heat_map' %>
 		
