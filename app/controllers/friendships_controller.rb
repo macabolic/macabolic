@@ -32,6 +32,16 @@ class FriendshipsController < ApplicationController
     @user = User.find(params[:id])
     @friends = @user.friends
 
+    me_and_my_friends = @friends.map(&:id)
+    me_and_my_friends << @user.id
+
+    @suggested_from_macabolic_search = Sunspot.search(User) do
+      without(:id, me_and_my_friends)
+    end
+    
+    @suggested_from_macabolic = @suggested_from_macabolic_search.results
+    logger.debug "Number of suggestions: #{@suggested_from_macabolic.size}."
+        
     ## Future TODO: restructure the following code and put it in a model to perform the logic.
     # ---------- Get the friends from Facebook
     # A dirty way of doing it.

@@ -7,37 +7,18 @@
 			$("#loading").show();
 		});
 		
-		$('.facebook').click(function() {
-		
-			FB.init({
-					appId	: <%= FACEBOOK_APP_ID %>,				
-		      		status     : true, 
-		      		cookie     : true,
-		      		xfbml      : true,
-		      		oauth      : true,
-		    	});
-
-	        // calling the API ...
-	        var obj = {
-	          method: 'feed',
-	          link: 'http://www.macabolic.com',
-	          picture: 'http://www.macabolic.com/images/logo.png',
-	          name: 'Macabolic',
-	          caption: 'Meet the fellow Mac lovers in an all new way.',
-	          description: 'Share your collections, post tips and make recommendations.'
-	        };
-	
-	        FB.ui(obj);	
-		});		
     }); 
 </script>
-<style type="text/css">
-.facebook {	
-	cursor: pointer;
-}
-</style>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <div>
-	<div class="sidebar-content account-info">
+	<div class="sidebar-content account-info" style="overflow: visible">
 		<div class="sidebar-header">
 			Invite your friends
 		</div>
@@ -59,10 +40,12 @@
 			<% end %>
 			<div style="margin-left: auto; margin-right: auto; width: 100%; height: 1px; border-bottom: 1px dotted #d4d4d4;"></div>
 			<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
-				<span style="font-size: 14px; color: #cccccc;">Post messages via</span>
+				<span style="font-size: 14px; color: #cccccc;">Invite your friends via</span>
 				<div style="margin-top: 5px; margin-bottom: 15px;">
 					<ul style="list:none;">
-						<li style="float: left;"><%= image_tag "auth/facebook_32.png", :size => "32x32", :alt => "Facebook", :class => "social facebook" %></li>
+						<li style="float: left; margin-right: 15px;">
+							<div class="fb-send" data-href="http://www.macabolic.com" data-font="verdana"></div>
+						</li>
 						<li style="float: left;">
 							<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.macabolic.com" data-text="Are you an Apple users? Come check it out!" data-count="none" data-via="macabolic">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 							<%#= image_tag "auth/twitter_32.png", :size => "32x32", :alt => "Twitter", :class => "social twitter" %>

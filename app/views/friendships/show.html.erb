@@ -22,7 +22,7 @@ $(document).ready(function() {
 		<div class="maincol">
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
-        			<li><a href="#tab1">All Friends</a></li> 
+        			<li><a href="#tab1">Friends</a></li> 
         		<!--
 					<li><a href="#tab2">Recent Answers</a></li> 
         			<li><a href="#tab3">Recent Tips</a></li> 
@@ -44,12 +44,12 @@ $(document).ready(function() {
 						<li class="grid group">
 							<div>
 								<span style="padding-bottom: 15px;">Friends from macabolic:</span>
-								<% if @friends.size > 0 %>								
+								<% if !@friends.nil? && @friends.size > 0 %>								
 								<ul class="friendships" id="macabolic_friends">
 									<%= render :partial => 'macabolic_friends' %>
 								</ul>
-								<% else%>
-								<div>
+								<% else %>
+								<div> 
 					                <p>
 					                	You do not have any friends yet.
 					                </p>	
@@ -57,6 +57,25 @@ $(document).ready(function() {
 								<% end %>
 							</div>
 						</li>
+						<% if !@facebook_friends.nil? && @facebook_friends.size > 0 %>								
+						<li class="grid group">
+							<div>
+								<span style="padding-bottom: 15px;">Friends from facebook:</span>
+								<ul class="friendships" id="facebook_friends">
+									<%= render :partial => 'facebook_friends' %>
+								</ul>
+							</div>
+						</li>										
+						<% end %>
+						<li class="grid group">
+							<div>
+								<span style="padding-bottom: 15px;">Suggested from macabolic:</span>
+								<ul class="friendships" id="suggested_from_macaboilc">
+									<%= render :partial => 'suggestion_from_macabolic' %>
+								</ul>
+							</div>
+						</li>
+						
 					<!--			
 						<li class="recent-question">
 							<div>
@@ -123,14 +142,6 @@ $(document).ready(function() {
 							</div>							
 						</li>
 				-->
-						<li class="grid group">
-							<div>
-								<span style="padding-bottom: 15px;">Friends from facebook:</span>
-								<ul class="friendships" id="facebook_friends">
-									<%= render :partial => 'facebook_friends' %>
-								</ul>								
-							</div>
-						</li>										
 					</ul> 
 		        </div> 
 			</div>

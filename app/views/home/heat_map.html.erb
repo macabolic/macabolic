@@ -1,0 +1,38 @@
+<div class="sidebar">
+	<div class="sidebar-content">
+        <div class="sidebar-header" style="background: #dd6219;">Top Interests</div>			
+		<div style="margin: 17px; border: 0px;">
+			<div>
+				<p style="font-size: 12px; font-family: Verdana;">
+		    	<ul id="search-list">
+					<div id="products">					
+						<% @heat_map_search.facet(:product_line_id).rows.each do |facet| %>	
+				        <li>
+							<div>
+								<%# if product.thumbnail.present? %>
+									<%#= image_tag(product.thumbnail.url(:thumb), :size => "45x45") %>
+								<%# elsif product.image_url.present? %>
+									<%#= image_tag(product.image_url, :size => "45x45") %>
+								<%# else %>
+									<%#= image_tag "/images/product/no-image_thumb.jpg", :size => "60x60" %>
+								<%# end %>
+								<div class="left" style="margin-right: 10px;">
+									<%= image_tag product_line_thumbnail(facet.value), :size => "60x60" %>									
+								</div>
+								<br/>
+								<p style="margin-bottom: 3px;"><%= link_to product_line(facet.value), find_product_searches_path(:query => facet.value, :scope => "product_line_id") %></p>
+								<div class="answers-meta">
+									<p class="left">
+										<span id="response-stat-product"><%= pluralize(facet.count, 'products') %></span>
+									</p>
+								</div>
+							</div>
+				        </li>				
+						<% end %>
+					</div>
+				</ul>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -149,6 +149,8 @@ class MyCollectionsController < ApplicationController
       @new_my_collection.save
     end    
 
+    UserMailer.welcome(current_user).deliver
+    
     respond_to do |format|
       format.html { redirect_to profile_member_path(current_user) }
       #format.xml  { render :xml => @invitation, :status => :created, :location => @invitation }
@@ -156,6 +158,8 @@ class MyCollectionsController < ApplicationController
   end
   
   def skip
+    UserMailer.welcome(current_user).deliver
+
     respond_to do |format|
       format.html { redirect_to profile_member_path(current_user) }
       #format.xml  { render :xml => @invitation, :status => :created, :location => @invitation }

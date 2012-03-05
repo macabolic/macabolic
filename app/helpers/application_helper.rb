@@ -116,7 +116,7 @@ module ApplicationHelper
     @hours = 24
     @time_differences_in_seconds = Time.now - time
 
-    logger.info "Time differences - #{@time_differences_in_seconds} seconds."
+    logger.debug "Time differences - #{@time_differences_in_seconds} seconds."
     # 59 seconds ago
     if @time_differences_in_seconds < @seconds
       @time_to_display = @time_differences_in_seconds.round

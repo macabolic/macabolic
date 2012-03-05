@@ -46,6 +46,9 @@ class Product < ActiveRecord::Base
     integer :product_line_id
     integer :response_ids, :multiple => true
     integer :vendor_id
+    string :product_line_name do
+      product_line.name
+    end
     text  :name, :more_like_this => true
     text  :vendor_name, :more_like_this => true do
       vendor.name

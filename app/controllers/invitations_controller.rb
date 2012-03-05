@@ -18,8 +18,16 @@ class InvitationsController < ApplicationController
           # Invitation is valid and is accepted -> Login page.
           format.html { redirect_to(new_user_session_path) }
         else
-          # Invitation is valid and not yet accepted.
-          format.html { redirect_to(:controller => 'registrations', :action => 'new', :invitation_token => params[:invitation_token]) }# show.html.erb
+          # Invitation is valid and not yet accepted.          
+          if params[:confirm] == 'true' && params[:source] == 'email'
+            # This is for the early adopters during the early phase for the sign up.
+            @user = User.find_by_email(@invitation.recipient_email)
+            @user.update_attributes(:invitation_id => @invitation.id)
+            sign_in(:user, @user)
+            format.html { redirect_to(:controller => 'my_collections', :action => 'new', :invitation_token => params[:invitation_token]) }# show.html.erb
+          else
+            format.html { redirect_to(:controller => 'registrations', :action => 'new', :invitation_token => params[:invitation_token]) }# show.html.erb
+          end
         end
       else
         format.html { redirect_to(new_user_registration_path) }# show.html.erb
@@ -130,4 +138,24 @@ class InvitationsController < ApplicationController
     end
   end
   
+  def add_as_friend
+    inviting_user = User.find(params[:member_id])
+    logger.debug "#{current_user.full_name} is adding user #{inviting_user.full_name} (#{inviting_user.email}) as friend."
+    logger.debug "Now send my friend a request."
+    UserMailer.friend_request(current_user, inviting_user).deliver
+  end
+      
+  def accept_request
+    inviting_user = User.find(params[:id])
+    accepting_user = User.find(params[:member_id])
+    
+    @friendship = accepting_user.friendships.build(:friend_id => inviting_user.id)
+    @friendship.save
+
+    @inverse_friendship = inviting_user.friendships.build(:friend_id => accepting_user.id)
+    @inverse_friendship.save
+    
+    redirect_to friends_member_path(accepting_user) 
+  end
 end
+

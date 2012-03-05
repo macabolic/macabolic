@@ -95,7 +95,7 @@ $(window).load(function(){
 							<span class="productimage shadow">								
 								<%= hidden_field_tag 'product['+product.name+']', product.id, :class => 'product_name' %>						
 								<%= builder.hidden_field :product_id, :class => 'product_id' %>
-								<%= image_tag product.thumbnail.url(:medium), :width => "180", :height => "160" %>
+								<%= image_tag product.thumbnail.url(:small), :width => "180", :height => "160" %>
 							</span>
 							<span>
 								<%= product.name %>

@@ -54,7 +54,7 @@
 <% end %>
 <% if !params[:invitation_token].nil? && !params[:invitation_token].empty? %>
 	<% logger.info "invitation_token: #{params[:invitation_token]}"%>
-	<div class="home-signup-th">Accept Invitation from <%= @invitation.sender.full_name if @invitation.sender %><%#= params[:from] %></div>
+	<div class="home-signup-th">Accept Invitation<%#= " from #{@invitation.sender.full_name}" if @invitation.sender %><%#= params[:from] %></div>
 <%else %>
 	<div class="home-signup-th">Request an invite</div>
 <% end %>

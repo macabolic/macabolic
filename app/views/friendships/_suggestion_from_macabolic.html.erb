@@ -1,0 +1,67 @@
+<style type="text/css">
+.invite_link {
+	height: 10px;
+	width: 60px;
+	border: 0px solid #b7b7b7;
+	overflow: hidden;
+    text-align: center;
+    text-decoration:none;
+    color: #565656 !important;
+    font-size: 10px;
+	font-weight: bold;
+    font-family: Arial;
+    text-shadow: 0px -1px 0px #385c05;
+	margin-left: auto; 
+	margin-right: auto;
+	padding-bottom: 8px;
+}
+.invite_link:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.invited {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.friend img {
+	margin-left: 25px;
+}
+
+#friend_name {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	color: #313131;
+	display: block;
+	padding-top: 8px;
+}
+</style>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+
+		//Default Action
+		$(".invite_link").click(function() {
+			$(this).addClass("invited");
+			$(this).html("invited");
+		});
+		
+    }); 
+</script>
+
+<% if !@suggested_from_macabolic.nil? %>
+	<% @suggested_from_macabolic.each do |friend| %>	
+		<li class="friend">
+			<div>
+				<!-- Image -->	
+				<%= image_tag current_profile_image_thumbnail_url(friend), :width => 50, :height => 50 %>
+				<span id="friend_name"><%= link_to friend.full_name, member_path(friend) %></span>
+				<span class="invite_link" id="invite_link_<%= friend.id %>" style="text-align: center;">
+					<%= link_to 'add', add_as_friend_member_invitations_path(:member_id => friend.id), :method => :post, :remote => true %>
+				</span>
+			</div>
+		</li>
+	<% end %>
+<% end %>

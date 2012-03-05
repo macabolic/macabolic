@@ -25,13 +25,14 @@
 			<br/>
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
-			        <li><a href="#tab1">Staff Favorites</a></li> 
+			        <li><a href="#tab1">Featured</a></li> 
 				</ul> 		
 		        <div id="tab1" class="tab_content product-grid group"> 
 					<%= render :partial => 'my_collections/index', :locals => { :my_collections => MyCollection.all(:limit => 15), :preview_gallery => false } %>
 				</div>	
 			</div>
 		</div>
+				
 		<div class="sidebar">
 		<% if @notice.present? %>
 			<div class="sidebar-content" id="recent-search">
@@ -69,7 +70,9 @@
 		<% end %>		
 		</div>
 
-		<div class="sidebar"-->
+		<%= render :template => 'home/heat_map' %>
+		
+		<div class="sidebar">
 			<div class="sidebar-content">
 	            <div class="sidebar-header" style="background: #dd6219;">Did you know?</div>			
 				<div style="margin: 17px; border: 0px;">

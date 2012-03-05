@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me, :birthday, :invitation_token, :avatar, :profile_image_id
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me, :birthday, :invitation_token, :avatar, :profile_image_id, :invitation_id
   accepts_nested_attributes_for :my_collections, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
   
   validate            :first_name,    :presence => true
@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
   
   # TODO - Still deciding if I should create a default MyCollection. If I should, this should be the best place to do.
   # after_create :add_default_my_collection
+  searchable do
+    integer :id
+  end
+
 
   def full_name
     fn = first_name

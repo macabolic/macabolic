@@ -27,6 +27,7 @@ class MyCollectionItem < ActiveRecord::Base
     text  :product_name
     integer :interest_indicator # OWN = 1; WISH = 2
     integer :product_line_id
+    string  (:my_collection_id_str) { |p| p.my_collection_id.to_s }
     time  :updated_at    
   end
         

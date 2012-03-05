@@ -1,4 +1,6 @@
-$('#invitation_recipient_email').val("");
-$("#loading").hide();
-$("#message").show().html("<%= escape_javascript(render("create")) %>");
-$("#message").fadeOut(3000);
+try {
+	$('#invitation_recipient_email').val("");
+	$("#loading").hide();
+	$("#message").show().html("<%= escape_javascript(render("create")) %>");
+	$("#message").fadeOut(3000);
+} catch (e) {}

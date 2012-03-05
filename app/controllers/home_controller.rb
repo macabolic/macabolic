@@ -31,10 +31,17 @@ class HomeController < ApplicationController
     #if user_signed_in?
       @user = current_user
     #end
+    
+    list_of_product_line_ids = [6, 13, 15, 20]
+    
+    @heat_map_search = Sunspot.search(Product) do      
+      with(:product_line_id, list_of_product_line_ids)
+      facet :product_line_id
+    end    
   end
 
   def extra
     
   end
-  
+    
 end

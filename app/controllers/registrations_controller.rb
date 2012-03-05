@@ -7,9 +7,9 @@ class RegistrationsController < Devise::RegistrationsController
     # if token, -> invited by someone
     if !params[:invitation_token].nil? && !params[:invitation_token].empty?
       @invitation = Invitation.where("token = ?", params[:invitation_token]).first
-      logger.info "the invitation is for #{@invitation.recipient_email}."
+      logger.debug "the invitation is for #{@invitation.recipient_email}."
       @sender = @invitation.sender
-      logger.info "and the sender is #{@sender.full_name}."
+      #logger.debug "and the sender is #{@sender.full_name}."
     end      
     # else -> regular registration
     
@@ -37,12 +37,14 @@ class RegistrationsController < Devise::RegistrationsController
       @invitation.accepted_at = Time.now
       @invitation.update_attribute("accepted_at", Time.now)
       
-      # 2. Add as a friend to the sender      
-      @friendship = @user.friendships.build(:friend_id => @invitation.sender.id)
-      @friendship.save
+      # 2. Add as a friend to the sender
+      if @invitation.sender
+        @friendship = @user.friendships.build(:friend_id => @invitation.sender.id)
+        @friendship.save
 
-      @inverse_friendship = @invitation.sender.friendships.build(:friend_id => @user.id)
-      @inverse_friendship.save      
+        @inverse_friendship = @invitation.sender.friendships.build(:friend_id => @user.id)
+        @inverse_friendship.save      
+      end
     end
     
     # TODO: comment out because of the routing error - 17 Nov 2011.

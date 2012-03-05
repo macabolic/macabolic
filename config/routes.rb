@@ -1,7 +1,11 @@
 Macabolic::Application.routes.draw do
 
-  resources :notifications, :only => :show
-  
+  resources :notifications, :only => [:show, :beta_invitation] do
+    collection do
+      get 'beta_invitation'
+    end
+  end
+    
   resources :stores, :controller => "vendors" do
     member do
       get 'like'
@@ -135,6 +139,14 @@ Macabolic::Application.routes.draw do
     end
     
     resources :my_collections
+    resources :invitations, :only => :add_as_friend do
+      member do
+        get 'accept_request'        
+      end
+      collection do
+        post 'add_as_friend'
+      end
+    end
   end
   
   resources :authentications
