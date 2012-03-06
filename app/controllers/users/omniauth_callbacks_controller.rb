@@ -3,18 +3,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model
     #@user = User.find_for_facebook_oauth(env["omniauth.auth"], current_user)
     # Change on Dec 5, 2011 as below
-    logger.info "Omniauth.auth: #{request.env["omniauth.auth"]}"
+    logger.debug "Omniauth.auth: #{request.env["omniauth.auth"]}"
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
 
     if @user.persisted? and @user.confirmed?
-      logger.info "User is both persisted and confirmed."
+      logger.debug "User is both persisted and confirmed."
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
       sign_in_and_redirect @user, :event => :authentication
     elsif @user.persisted? and !@user.confirmed?
       # Getting the authentication response and store in session.
       session["devise.facebook_data"] = request.env["omniauth.auth"]
 
-      logger.info "User from database: #{@user.first_name} | #{@user.last_name} | #{@user.email}"
+      logger.debug "User from database: #{@user.first_name} | #{@user.last_name} | #{@user.email}"
       redirect_to new_invitation_path :email => @user.email, :origin => "facebook"
     else
       # Getting the authentication response and store in session.
@@ -53,15 +53,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #	uid="610814778"
       #>
             
-      logger.info "facebook session data: #{session['devise.facebook_data']}"
-      logger.info "User info: #{session['devise.facebook_data'].info.name}."      
+      logger.debug "facebook session data: #{session['devise.facebook_data']}"
+      logger.debug "User info: #{session['devise.facebook_data'].info.name}."      
 
       redirect_to new_registration_path(@user, :origin => "facebook")
     end
   end
 
 #  def twitter
-#    logger.info "==> OmniauthCallBacksController.twitter..."
+#    logger.debug "==> OmniauthCallBacksController.twitter..."
     # You need to implement the method below in your model
 #    @user = User.find_for_twitter_oauth(request.env["omniauth.auth"], current_user)
 

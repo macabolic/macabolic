@@ -89,9 +89,9 @@ class VendorsController < ApplicationController
   def like
     @vendor = Vendor.find(params[:id])
     response = VendorResponse.new(:vendor => @vendor, :user => current_user)    
-    logger.info "VendorsController.like."
+    logger.debug "VendorsController.like."
     if response.save
-      logger.info "#{response.user.full_name} likes #{response.vendor.name}."
+      logger.debug "#{response.user.full_name} likes #{response.vendor.name}."
     end
     
     @number_of_likes = @vendor.responses.size
@@ -100,10 +100,10 @@ class VendorsController < ApplicationController
   def unlike
     @vendor = Vendor.find(params[:id])
     response = VendorResponse.where(:vendor_id => @vendor.id, :user_id => current_user.id)    
-    logger.info "VendorsController.unlike."
+    logger.debug "VendorsController.unlike."
     if response.exists?
       response.first.destroy #destroy the first one and always expect only one for each user and collection.
-      logger.info "#{response.first.user.full_name} unlikes #{response.first.vendor.name}."
+      logger.debug "#{response.first.user.full_name} unlikes #{response.first.vendor.name}."
     end
     
     @number_of_likes = @vendor.responses.size
@@ -112,9 +112,9 @@ class VendorsController < ApplicationController
   def follow
     @vendor = Vendor.find(params[:id])
     follower = VendorFollower.new(:vendor => @vendor, :follower => current_user)    
-    logger.info "VendorsController.follow."
+    logger.debug "VendorsController.follow."
     if follower.save
-      logger.info "#{follower.follower.full_name} is following #{follower.vendor.name}."
+      logger.debug "#{follower.follower.full_name} is following #{follower.vendor.name}."
     end
     
     @number_of_followers = @vendor.followers.size
@@ -123,10 +123,10 @@ class VendorsController < ApplicationController
   def unfollow
     @vendor = Vendor.find(params[:id])
     follower = VendorFollower.where(:vendor_id => @vendor.id, :follower_id => current_user.id)    
-    logger.info "VendorsController.unfollow."
+    logger.debug "VendorsController.unfollow."
     if follower.exists?
       follower.first.destroy #destroy the first one and always expect only one for each user and collection.
-      logger.info "#{follower.first.follower.full_name} is unfollowing #{follower.first.vendor.name}."
+      logger.debug "#{follower.first.follower.full_name} is unfollowing #{follower.first.vendor.name}."
     end
     
     @number_of_followers = @vendor.followers.size    

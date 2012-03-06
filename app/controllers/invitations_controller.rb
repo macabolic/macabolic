@@ -45,12 +45,12 @@ class InvitationsController < ApplicationController
     # I have no choice but to do another sign_in here.
     # The sign_in should be done in RegistrationsController.new 
     # But at some point, it doesn't work there. To fix that, I do another sign_in here.
-    logger.info "InvitationsController.new before - #{user_signed_in?}"
+    logger.debug "InvitationsController.new before - #{user_signed_in?}"
     if !user_signed_in?
       @user = User.find_by_email(params[:email])
       if !@user.nil?
         sign_in(:user, @user)
-        logger.info "InvitationsController.new after - #{user_signed_in?}"
+        logger.debug "InvitationsController.new after - #{user_signed_in?}"
       end
     end
 
@@ -65,14 +65,14 @@ class InvitationsController < ApplicationController
   def create    
     @invitation = Invitation.new(params[:invitation])
     @invitation.sender = current_user
-    logger.info "Invitation..."
-    logger.info "Recipient mail: #{@invitation.recipient_email}"
+    logger.debug "Invitation..."
+    logger.debug "Recipient mail: #{@invitation.recipient_email}"
     
     # Should check if there is an existing invitation from the same sender.
     # If there is one, use the existing.
     @existing_invitation = Invitation.where("sender_id = ? and recipient_email = ?", current_user.id, @invitation.recipient_email).first
     if @existing_invitation
-      logger.info "It is a reminder invitation."
+      logger.debug "It is a reminder invitation."
       UserMailer.invite(@existing_invitation, true).deliver
       @existing_invitation.update_attribute("sent_at", Time.now)
       @success = true

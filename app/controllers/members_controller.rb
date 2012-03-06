@@ -45,7 +45,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        logger.info "User information is updated."
+        logger.debug "User information is updated."
 #        format.html { redirect_to(@user, :notice => 'Member was successfully updated.') }
         format.html { redirect_to(edit_member_path(@user), :notice => "Your info was successfully updated.") }
         format.xml  { head :ok }

@@ -19,7 +19,7 @@ class NotificationsController < ApplicationController
     @cat3_products = Product.where(:id => [261, 253, 252]) # For your home
     
     users.each do |user|
-      logger.info "User = #{user.full_name}"
+      logger.debug "User = #{user.full_name}"
       Newsletter.reminder(user, @cat1_products, @cat2_products, @cat3_products, "We did not forget you!", HOST).deliver
     end
   end

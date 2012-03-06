@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    logger.info "Store location: url=#{request.url}"
+    logger.debug "Store location: url=#{request.url}"
     session["user_return_to"] = request.url if request.get? && !request.xhr?
   end
 

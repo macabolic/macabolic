@@ -16,7 +16,7 @@ class RecommendationsController < ApplicationController
   # POST /recommendations
   # POST /recommendations.xml
   def create
-    logger.info "To user list: #{params[:to_user_id]}."    
+    logger.debug "To user list: #{params[:to_user_id]}."    
     user_ids = params[:to_user_id]
     user_array = user_ids.split(",")
     @recommendation = Recommendation.new(params[:recommendation])

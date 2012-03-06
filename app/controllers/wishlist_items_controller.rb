@@ -3,7 +3,7 @@ class WishlistItemsController < ApplicationController
   # POST /wishlist_items
   # POST /wishlist_items.xml
   def create
-      logger.info "WishlistItemsController => create"
+      logger.debug "WishlistItemsController => create"
       @product = Product.find(params[:product_id])
       @my_collection = MyCollection.find(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
 

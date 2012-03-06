@@ -83,16 +83,16 @@ class ReviewsController < ApplicationController
   end
   
   def vote
-    logger.info "vote for the review..."
-    logger.info "vote value: #{params[:vote]}"
+    logger.debug "vote for the review..."
+    logger.debug "vote value: #{params[:vote]}"
     # 1. Check if the current_user has an entry in the review_response.
     @review_response = ReviewResponse.where("user_id = ? and review_id = ?", current_user.id, params[:id])
     if @review_response.exists?
-      logger.info "Review Response exists: #{@review_response.first}." 
+      logger.debug "Review Response exists: #{@review_response.first}." 
       if @review_response.first.update_attributes(:response_for => params[:vote])     
-        logger.info "Review response updated: #{params[:vote]}"
+        logger.debug "Review response updated: #{params[:vote]}"
       else
-        logger.info "Some problem updating the review response: #{@review_response.first.errors}"
+        logger.debug "Some problem updating the review response: #{@review_response.first.errors}"
       end
     else
       @review_response = ReviewResponse.new
@@ -101,9 +101,9 @@ class ReviewsController < ApplicationController
       @review_response.user = current_user
       
       if @review_response.save
-        logger.info "Review Response newly created: #{@review_response}."
+        logger.debug "Review Response newly created: #{@review_response}."
       else
-        logger.info "Sorry, for some reason your vote is not valid!"
+        logger.debug "Sorry, for some reason your vote is not valid!"
       end
     end
     

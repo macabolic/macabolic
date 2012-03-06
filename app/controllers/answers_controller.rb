@@ -8,28 +8,28 @@ class AnswersController < ApplicationController
     #@answer.question_id = params[:question_id]
     #@answer.user_id = current_user.id
 
-    logger.info "========================================="
-    logger.info "Answer [content]: #{@answer.content}"
-    logger.info "Answer [question_id]: #{@answer.question_id}"
-    logger.info "Answer [product_id]: #{@answer.product_id}"
-    logger.info "Answer [user_id]: #{@answer.user_id}"
-    logger.info "========================================="
+    logger.debug "========================================="
+    logger.debug "Answer [content]: #{@answer.content}"
+    logger.debug "Answer [question_id]: #{@answer.question_id}"
+    logger.debug "Answer [product_id]: #{@answer.product_id}"
+    logger.debug "Answer [user_id]: #{@answer.user_id}"
+    logger.debug "========================================="
 
     @answer.save    
     @question = Question.find(params[:question_id])
   end
   
   def vote
-    logger.info "vote for the answer..."
-    logger.info "vote value: #{params[:vote]}"
+    logger.debug "vote for the answer..."
+    logger.debug "vote value: #{params[:vote]}"
     # 1. Check if the current_user has an entry in the answer_response.
     @answer_response = AnswerResponse.where("user_id = ? and answer_id = ?", current_user.id, params[:id])
     if @answer_response.exists?
-      logger.info "Answer Response exists: #{@answer_response.first}." 
+      logger.debug "Answer Response exists: #{@answer_response.first}." 
       if @answer_response.first.update_attributes(:response_for => params[:vote])     
-        logger.info "Answer response updated: #{params[:vote]}"
+        logger.debug "Answer response updated: #{params[:vote]}"
       else
-        logger.info "Some problem updating the answer response: #{@answer_response.first.errors}"
+        logger.debug "Some problem updating the answer response: #{@answer_response.first.errors}"
       end
     else
       @answer_response = AnswerResponse.new
@@ -38,9 +38,9 @@ class AnswersController < ApplicationController
       @answer_response.user = current_user
       
       if @answer_response.save
-        logger.info "Answer Response newly created: #{@answer_response}."
+        logger.debug "Answer Response newly created: #{@answer_response}."
       else
-        logger.info "Sorry, for some reason your vote is not valid!"
+        logger.debug "Sorry, for some reason your vote is not valid!"
       end
     end
     

@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def new
-    logger.info "Entering the RegistrationsController#new..."
+    logger.debug "Entering the RegistrationsController#new..."
 
     # check if there is a token.
     # if token, -> invited by someone
@@ -14,9 +14,9 @@ class RegistrationsController < Devise::RegistrationsController
     # else -> regular registration
     
     #if session['devise.facebook_data'].present?
-    #  logger.info "Session name: #{session['devise.facebook_data']}"
+    #  logger.debug "Session name: #{session['devise.facebook_data']}"
     #  @user = User.find_by_email(session['devise.facebook_data']['user_info']['email'])
-    #  logger.info "User #{@user}"
+    #  logger.debug "User #{@user}"
     #end
 
     super            
@@ -59,7 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
   
   def after_inactive_sign_up_path_for(resource)
-    logger.info "Customized after_inactive_sign_up_path_for()."
+    logger.debug "Customized after_inactive_sign_up_path_for()."
     super
   end
   
@@ -68,7 +68,7 @@ class RegistrationsController < Devise::RegistrationsController
   def build_resource(*args)
     super
     if session['devise.facebook_data'].present?
-      logger.info "###****** build resource ********"
+      logger.debug "###****** build resource ********"
       @user.apply_omniauth(session['devise.facebook_data'])
     else
       @user.profile_images.build(:provider => ProfileImage::MACABOLIC, :uid => @user.email);

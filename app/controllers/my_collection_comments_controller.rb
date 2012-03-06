@@ -5,11 +5,11 @@ class MyCollectionCommentsController < ApplicationController
   # POST /my_collections
   # POST /my_collections.xml
   def create
-    logger.info "In MyCollectionCommentsController.create"
+    logger.debug "In MyCollectionCommentsController.create"
     @my_collection_comment = MyCollectionComment.new(params[:my_collection_comment])
 
     if @my_collection_comment.save
-      logger.info "Comment is successfully saved - #{@my_collection_comment.content}."
+      logger.debug "Comment is successfully saved - #{@my_collection_comment.content}."
     end
     
     @my_collection = MyCollection.find(@my_collection_comment.my_collection_id)

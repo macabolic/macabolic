@@ -132,8 +132,8 @@ class MyCollectionsController < ApplicationController
     
   def mass_create
     @my_collection = MyCollection.new(params[:my_collection])
-    logger.info "MyCollectionsController.mass_create - #{@my_collection}."
-    logger.info "MyCollectionsController.mass_create - #{@my_collection.my_collection_items}."
+    logger.debug "MyCollectionsController.mass_create - #{@my_collection}."
+    logger.debug "MyCollectionsController.mass_create - #{@my_collection.my_collection_items}."
     # 1. loop the my_collection_items
     # 2. for each my_collection_item
     # 3. create a my_collection
@@ -146,7 +146,7 @@ class MyCollectionsController < ApplicationController
       @new_my_collection.name = 'My ' + my_collection_item.product.name + ' Collection'
       @new_my_collection.user_id = current_user.id
       @new_my_collection.my_collection_items.build(:product_id => my_collection_item.product.id, :user_id => current_user.id)
-      logger.info "#{@new_my_collection.to_yaml}"
+      logger.debug "#{@new_my_collection.to_yaml}"
       @new_my_collection.save
     end    
 
@@ -171,9 +171,9 @@ class MyCollectionsController < ApplicationController
     @my_collection = MyCollection.find(params[:id])
     #@my_collection = MyCollection.find_by_permalink(params[:id])
     follower = MyCollectionFollower.new(:my_collection => @my_collection, :follower => current_user)    
-    logger.info "MyCollectionsController.follow."
+    logger.debug "MyCollectionsController.follow."
     if follower.save
-      logger.info "#{follower.follower.full_name} is following #{follower.my_collection.name}."
+      logger.debug "#{follower.follower.full_name} is following #{follower.my_collection.name}."
     end
     
     @number_of_followers = @my_collection.followers.size
@@ -183,10 +183,10 @@ class MyCollectionsController < ApplicationController
     @my_collection = MyCollection.find(params[:id])
     #@my_collection = MyCollection.find_by_permalink(params[:id])
     follower = MyCollectionFollower.where(:my_collection_id => @my_collection.id, :follower_id => current_user.id)    
-    logger.info "MyCollectionsController.unfollow."
+    logger.debug "MyCollectionsController.unfollow."
     if follower.exists?
       follower.first.destroy #destroy the first one and always expect only one for each user and collection.
-      logger.info "#{follower.first.follower.full_name} is unfollowing #{follower.first.my_collection.name}."
+      logger.debug "#{follower.first.follower.full_name} is unfollowing #{follower.first.my_collection.name}."
     end
     
     @number_of_followers = @my_collection.followers.size    
@@ -196,9 +196,9 @@ class MyCollectionsController < ApplicationController
     @my_collection = MyCollection.find(params[:id])
     #@my_collection = MyCollection.find_by_permalink(params[:id])
     response = MyCollectionResponse.new(:my_collection => @my_collection, :user => current_user)    
-    logger.info "MyCollectionsController.like."
+    logger.debug "MyCollectionsController.like."
     if response.save
-      logger.info "#{response.user.full_name} likes #{response.my_collection.name}."
+      logger.debug "#{response.user.full_name} likes #{response.my_collection.name}."
     end
     
     @number_of_likes = @my_collection.responses.size
@@ -208,10 +208,10 @@ class MyCollectionsController < ApplicationController
     @my_collection = MyCollection.find(params[:id])
     #@my_collection = MyCollection.find_by_permalink(params[:id])
     response = MyCollectionResponse.where(:my_collection_id => @my_collection.id, :user_id => current_user.id)    
-    logger.info "MyCollectionsController.unlike."
+    logger.debug "MyCollectionsController.unlike."
     if response.exists?
       response.first.destroy #destroy the first one and always expect only one for each user and collection.
-      logger.info "#{response.first.user.full_name} unlikes #{response.first.my_collection.name}."
+      logger.debug "#{response.first.user.full_name} unlikes #{response.first.my_collection.name}."
     end
     
     @number_of_likes = @my_collection.responses.size

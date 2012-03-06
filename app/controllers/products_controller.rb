@@ -192,7 +192,7 @@ class ProductsController < ApplicationController
         param_my_collection[:my_collection_item][:product_attributes] = params[:product]
         my_collection.my_collection_items.build(param_my_collection[:my_collection_item])
         
-        logger.info "#{param_my_collection[:my_collection_item]}"
+        logger.debug "#{param_my_collection[:my_collection_item]}"
         
         # .. then save
         if my_collection.save
@@ -270,9 +270,9 @@ class ProductsController < ApplicationController
   def like
     @product = Product.find(params[:id])
     response = ProductResponse.new(:product => @product, :user => current_user)    
-    logger.info "ProductsController.like."
+    logger.debug "ProductsController.like."
     if response.save
-      logger.info "#{response.user.full_name} likes #{response.product.name}."
+      logger.debug "#{response.user.full_name} likes #{response.product.name}."
     end
     
     @number_of_likes = @product.responses.size
@@ -281,10 +281,10 @@ class ProductsController < ApplicationController
   def unlike
     @product = Product.find(params[:id])
     response = ProductResponse.where(:product_id => @product.id, :user_id => current_user.id)    
-    logger.info "ProductsController.unlike."
+    logger.debug "ProductsController.unlike."
     if response.exists?
       response.first.destroy #destroy the first one and always expect only one for each user and collection.
-      logger.info "#{response.first.user.full_name} unlikes #{response.first.product.name}."
+      logger.debug "#{response.first.user.full_name} unlikes #{response.first.product.name}."
     end
     
     @number_of_likes = @product.responses.size

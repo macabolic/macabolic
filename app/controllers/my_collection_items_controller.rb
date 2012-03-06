@@ -74,7 +74,7 @@ class MyCollectionItemsController < ApplicationController
   # POST /my_collection_items
   # POST /my_collection_items.xml
   def create
-    logger.info "MyCollectionItemsController => create"
+    logger.debug "MyCollectionItemsController => create"
     #@product = Product.find(params[:id])
     @product = Product.find(params[:product_id])
     @my_collection = MyCollection.find(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin

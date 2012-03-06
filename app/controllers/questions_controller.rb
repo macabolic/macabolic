@@ -51,12 +51,12 @@ class QuestionsController < ApplicationController
     #@question.product_id = params[:product_id]
     @question.user_id = current_user.id
     
-    logger.info "========================================="
-    logger.info "Question [title]: #{@question.title}"
-    logger.info "Question [product_id]: #{@question.product_id}"
-    logger.info "Question [user_id]: #{@question.user_id}"
-    logger.info "My Collecton Item: #{params[:my_collection_item_id]}"
-    logger.info "========================================="
+    logger.debug "========================================="
+    logger.debug "Question [title]: #{@question.title}"
+    logger.debug "Question [product_id]: #{@question.product_id}"
+    logger.debug "Question [user_id]: #{@question.user_id}"
+    logger.debug "My Collecton Item: #{params[:my_collection_item_id]}"
+    logger.debug "========================================="
     
     respond_to do |format|
       if @question.save
