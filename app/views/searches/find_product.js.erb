@@ -1,2 +1,4 @@
 $("#search-products-result").html("<%= escape_javascript(render("result_page")) %>");
+<% if @show_collection %>
 $("#search-collections-result").html("<%= escape_javascript(render("result_collections")) %>");
+<% end %>

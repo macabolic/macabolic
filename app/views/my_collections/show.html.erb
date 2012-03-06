@@ -158,8 +158,12 @@ $(document).ready(function() {
 			<%= render :partial => 'my_collections/followers_likes', :locals => { :followers => @followers, :responses => @responses } %>
 		</div>
 		
-		<div class="sidebar">			
+		<div class="sidebar">	
+		<% if @user == current_user %>		
 			<%= render :partial => 'products/product_search', :locals => { :my_collection => @my_collection } %>
+		<% else %>
+			<%# Show the list of products that are recommended to you. %>
+		<% end %>
 		</div>
 		
 		<div class="sidebar" id="comment-display">			

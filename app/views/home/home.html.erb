@@ -49,6 +49,7 @@
 		<% if !user_signed_in? %>
 		<div class="sidebar">
 			<%= render :partial => 'users/sessions/mini_form' %>
+		</div>
 		<% else %>
 			<%#= render 'products/add_a_product_link' %>		
 		<!--
@@ -69,7 +70,7 @@
 				</div>
 			</div>
 		-->
-		</div>
+		
 		<% end %>		
 
 		<%= render :template => 'home/heat_map' %>

@@ -8,10 +8,12 @@
     		<strong>Name</strong>
     		<span><%= @user.full_name %></span>
     	</p>
+		<% if @user == current_user %>
 		<p>
     		<strong>Email</strong>
 	  		<%= @user.email %>
 		</p>
+		<% end %>
 		<p>
 		    <strong>Birthday</strong>
 			<% if @user.birthday.present? %>

@@ -33,7 +33,7 @@ class FriendshipsController < ApplicationController
     @friends = @user.friends
 
     me_and_my_friends = @friends.map(&:id)
-    me_and_my_friends << @user.id
+    me_and_my_friends << current_user.id
 
     @suggested_from_macabolic_search = Sunspot.search(User) do
       without(:id, me_and_my_friends)
@@ -48,19 +48,21 @@ class FriendshipsController < ApplicationController
     # 1. Get a list of friends
     # 2. Put a link for the profile page
     # 3. Add an invite button
-    facebook_authentication = @user.authentications.where(:provider => 'facebook')
-    limit = '50'
-    if facebook_authentication.exists?
-      url = 'https://graph.facebook.com/' + facebook_authentication[0].uid + '/friends?access_token=' + facebook_authentication[0].token
-      url = url + '&limit=' + limit
-      logger.info "Generated facebook url is #{url}."
-      # https://graph.facebook.com/me/friends?access_token=AAAAAAITEghMBAHAek9yKuw1WyEGUmB15ovKZBeTA2fVm395hTlYxxWWuIA8rTKEBvm5HYh9m59yDC3ZBARqTQFVJ7Y94NPoqf31Ar9FAZDZD
-      response = HTTParty.get(url)
+    if @user == current_user
+      facebook_authentication = @user.authentications.where(:provider => 'facebook')
+      limit = '50'
+      if facebook_authentication.exists?
+        url = 'https://graph.facebook.com/' + facebook_authentication[0].uid + '/friends?access_token=' + facebook_authentication[0].token
+        url = url + '&limit=' + limit
+        logger.info "Generated facebook url is #{url}."
+        # https://graph.facebook.com/me/friends?access_token=AAAAAAITEghMBAHAek9yKuw1WyEGUmB15ovKZBeTA2fVm395hTlYxxWWuIA8rTKEBvm5HYh9m59yDC3ZBARqTQFVJ7Y94NPoqf31Ar9FAZDZD
+        response = HTTParty.get(url)
 
-      ## The response['data'] is in the format of JSON
-      @facebook_friends = response['data']
-      @facebook_paging = response['paging']
-      logger.info response['data']
+        ## The response['data'] is in the format of JSON
+        @facebook_friends = response['data']
+        @facebook_paging = response['paging']
+        logger.info response['data']
+      end
     end
     
     respond_to do |format|

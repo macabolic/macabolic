@@ -39,6 +39,7 @@ class UserMailer < ActionMailer::Base
   end
   
   def friend_request(user, inviting_user)
+    @host = "www.macabolic.com"
     @user = user
     @inviting_user = inviting_user
     @subject = "#{user.full_name} would like to be a friend in Macabolic"

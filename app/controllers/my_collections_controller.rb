@@ -38,6 +38,7 @@ class MyCollectionsController < ApplicationController
     @search = Sunspot.search(Product) do
       fulltext "Apple Inc.", :fields => [:vendor_name]
       with(:product_line_id, [1, 3, 4, 5])
+      paginate :page => 1, :per_page => 100
     end
     @products = @search.results
 

@@ -26,13 +26,14 @@ class NotificationsController < ApplicationController
   
   def beta_invitation
     @host = "#{HOST}"
+    #users = User.where("email = ? and invitation_id is null", "billy.cheng@macabolic.com")
     users = User.where("invitation_id is null")
     users.each do |user|
       #@invitation = Invitation.find(18)
       @invitation = Invitation.new(:sender_id => -999, :recipient_email => user.email)
       @invitation.save
-      UserMailer.beta_invitation(@user, @invitation).deliver
-      invitation.update_attribute("sent_at", Time.now)
+      UserMailer.beta_invitation(user, @invitation).deliver
+      @invitation.update_attribute("sent_at", Time.now)
     end
   end
 

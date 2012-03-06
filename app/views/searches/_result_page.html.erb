@@ -141,21 +141,21 @@ $(document).ready(function() {
 			<% if @found_products.current_page == 1 %>
 				<li class="nolink">«</li>
 			<% else %>
-				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page - 1), :remote => true %></li>
+				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page - 1), :remote => true %></li>
 			<% end %>
 		<% for i in (1..@found_products.total_pages) %>
 			<% if @found_products.current_page == i %>
 				<li class="current"><%= i %></li>
 			<% else %>
-				<li><%= link_to i, find_product_searches_path(:query => params[:query], :product_page => i), :remote => true %></li>
+				<li><%= link_to i, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => i), :remote => true %></li>
 			<% end %>
 		<% end %>
 				<li><span>of</span></li>
-				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :product_page => @found_products.total_pages), :remote => true %></li>
+				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.total_pages), :remote => true %></li>
 			<% if @found_products.current_page == @found_products.total_pages %>
 				<li class="nolink">»</li>
 			<% else %>
-				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page + 1), :remote => true %></li>
+				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page + 1), :remote => true %></li>
 			<% end %>																
       		</ul>
   		</div>
@@ -220,21 +220,21 @@ $(document).ready(function() {
 			<% if @found_products.current_page == 1 %>
 				<li class="nolink">«</li>
 			<% else %>
-				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page - 1), :remote => true %></li>
+				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page - 1), :remote => true %></li>
 			<% end %>
 		<% for i in (1..@found_products.total_pages) %>
 			<% if @found_products.current_page == i %>
 				<li class="current"><%= i %></li>
 			<% else %>
-				<li><%= link_to i, find_product_searches_path(:query => params[:query], :product_page => i), :remote => true %></li>
+				<li><%= link_to i, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => i), :remote => true %></li>
 			<% end %>
 		<% end %>
 				<li><span>of</span></li>
-				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :product_page => @found_products.total_pages), :remote => true %></li>
+				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.total_pages), :remote => true %></li>
 			<% if @found_products.current_page == @found_products.total_pages %>
 				<li class="nolink">»</li>
 			<% else %>
-				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :product_page => @found_products.current_page + 1), :remote => true %></li>
+				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page + 1), :remote => true %></li>
 			<% end %>																
       		</ul>
   		</div>

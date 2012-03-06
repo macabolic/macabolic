@@ -57,15 +57,17 @@ $(document).ready(function() {
 								<% end %>
 							</div>
 						</li>
-						<% if !@facebook_friends.nil? && @facebook_friends.size > 0 %>								
-						<li class="grid group">
-							<div>
-								<span style="padding-bottom: 15px;">Friends from facebook:</span>
-								<ul class="friendships" id="facebook_friends">
-									<%= render :partial => 'facebook_friends' %>
-								</ul>
-							</div>
-						</li>										
+						<% if @user == current_user %>
+							<% if !@facebook_friends.nil? && @facebook_friends.size > 0 %>								
+							<li class="grid group">
+								<div>
+									<span style="padding-bottom: 15px;">Friends from facebook:</span>
+									<ul class="friendships" id="facebook_friends">
+										<%= render :partial => 'facebook_friends' %>
+									</ul>
+								</div>
+							</li>										
+							<% end %>
 						<% end %>
 						<li class="grid group">
 							<div>
