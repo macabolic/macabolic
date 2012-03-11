@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in? && current_user.invitation_id.nil?
       @user = User.new
       @notice = "We are on invitation right now. We will let you know when your invitation is sent out."
-      render "home/home"
+      #render "home/home"
     end    
   end
   

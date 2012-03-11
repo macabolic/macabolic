@@ -44,6 +44,9 @@ Macabolic::Application.routes.draw do
 
   # Home
   resources :home do
+    collection do
+      get 'discover'
+    end
   end
 
   # Questions
@@ -160,7 +163,7 @@ Macabolic::Application.routes.draw do
   match 'features' => 'home#feature_tour'
   match 'contact' => 'home#contact_us'
   match 'faq' => 'home#faq'
-  match 'discover' => 'home#home'
+  match 'discover' => 'home#discover'
   match 'extra' => 'home#extra'
   match 'newsletter/:year/monthly/:month' => 'home#monthly'
   match 'fdfabbdcddfcfecfee/send' => 'notifications#send_reminder'

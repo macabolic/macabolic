@@ -3,10 +3,20 @@ class Vendor < ActiveRecord::Base
   has_many    :responses,                 :dependent => :destroy, :class_name => "VendorResponse"
   has_many    :followers,                 :dependent => :destroy, :class_name => "VendorFollower"
   
+  has_attached_file       :logo, 
+                          :styles => { :thumb => ["50x50#", :png], :small => ["180x180#", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
+                          :url => "/assets/vendors/:attachment/:id/:style/vendor-:id-:filename",
+                          :path => ":rails_root/public/assets/vendors/:attachment/:id/:style/vendor-:id-:filename",
+                          :default_url => "/images/default_photo.png"
+  
   searchable do
     text  :vendor_name do
       self.name
     end
+  end
+
+  def to_s
+    return name
   end
 
   def to_param

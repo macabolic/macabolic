@@ -345,6 +345,10 @@ $(document).ready(function() {
 			<% end %>
 
 <br/><br>
+				<div style="float: center; width: 334px; margin-bottom: 20px;" class="product-stat-details">
+				<!--<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">-->
+					<%= render 'products/product_stat' %>
+				</div>
 
 
 				<br/>
@@ -384,16 +388,14 @@ $(document).ready(function() {
 	
 	    	<br class="clear" />
 	    </div>
-		<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">
-			<%= render 'products/product_stat' %>
-		</div>
 
 		<% if @same_store_items.size > 0 %>	
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
-				<div class="left">
-					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><%= pluralize(@same_store_items.size, 'product') %> also from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>
+				<div>
+					<p style="font-size:14px; color:#808080; padding-left: 23px; text-align: center">
+						<strong>Also from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>
+						<!--<strong><%#= pluralize(@same_store_items.size, 'product') %> also from <span class="vendor"><%#= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>-->
 					</p>
 				</div>
 			</div><!-- .pagination-wrapper -->		
@@ -404,28 +406,41 @@ $(document).ready(function() {
         </div>	
 		<br/><br/>
 		<% end %>
-		<% if @found_collection_items.size > 0 %>	
+		
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
-				<div class="left">
-					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><span style="text-decoration:underline;">Also in <%= pluralize(@found_collection_items.size, 'collection') %></span></strong>
+				<div>
+					<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:center">
+						<strong><span>Also Found in <%= link_to @my_collection_item.my_collection.name, my_collection_path(@my_collection_item.my_collection) %> ...</span></strong>
 					</p>
+<!--
+					<p style="font-size:11px; color:#808080; padding-left: 23px;">
+						<strong><span style="text-decoration:underline;">Also in <%#= pluralize(@found_collection_items.size, 'collection') %></span></strong>
+					</p>
+-->
 				</div>
 			</div><!-- .pagination-wrapper -->		
 						
 			<div class="product-grid group">
-				<%= render :partial => 'my_collections/index', :locals => { :my_collections => @found_collections, :preview_gallery => false } %>
+				<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_item.my_collection.my_collection_items, :mode => "read", :filter_my_collection_item => @my_collection_item } %>
 			</div>
         </div>	
 		<br/><br/>
+
+		<% if @found_collection_items.size > 0 %>	
 		<% end %>
+		
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
-				<div class="left">
-					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><span style="text-decoration:underline;"><%= pluralize(@more_like_this.size, 'products') %></span></strong> similar to <%= @product.name %>
+				<div>
+					<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:center">
+						<strong><span>You may be interested in having ...</span></strong>
 					</p>
+				<!--
+					<p style="font-size:11px; color:#808080; padding-left: 23px;">
+						<strong><span style="text-decoration:underline;"><%#= pluralize(@more_like_this.size, 'products') %></span></strong> similar to <%#= @product.name %>
+					</p>
+				-->
 				</div>
 			</div><!-- .pagination-wrapper -->		
 						
@@ -435,19 +450,24 @@ $(document).ready(function() {
         </div>	
 		<br/><br/>
 
+		<!--
 		<div>
-			<%= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "MyCollectionItem", :my_collection_item => @my_collection_item } %>
+			<%#= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "MyCollectionItem", :my_collection_item => @my_collection_item } %>
 		</div>
-
+		-->
+		<!--
 		<div class="tabbed-content-area">			
 			<ul class="tabs"> 
 		    	<li><a href="#questions">Questions &amp; Answers</a></li> 
+		-->
 		    	<!--<li><a href="#reviews">Reviews</a></li>-->
+		<!--
 			</ul> 
 
     		<div id="questions" class="tab_content"> 
-				<%= render :partial => 'questions/product_questions', :locals => { :my_collection_item => @my_collection_item, :product => @product } %>
+				<%#= render :partial => 'questions/product_questions', :locals => { :my_collection_item => @my_collection_item, :product => @product } %>
 		    </div> 
+		-->
 		<!--
 		    <div id="reviews" class="tab_content"> 
 				<%#= render 'reviews/product_reviews' %>
@@ -461,7 +481,7 @@ $(document).ready(function() {
 		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
 
 		<!-- In the same collection -->
-		<%= render :partial => 'my_collection_items/in_the_same_my_collection', :locals => { :current_my_collection_item => @my_collection_item } %>
+		<%#= render :partial => 'my_collection_items/in_the_same_my_collection', :locals => { :current_my_collection_item => @my_collection_item } %>
 		
 		<% if !@friends_who_owned.nil? && @friends_who_owned.size > 0 %>
 		<div class="sidebar-content">				

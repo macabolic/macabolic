@@ -1,0 +1,120 @@
+<style type="text/css">
+
+.action_type {
+  	background:#F6F1DE;
+  	padding:5px 10px;
+  	display: inline;
+  	overflow: visible;
+  	text-align: center;
+  	text-decoration:none;
+  	color: #DA5D18 !important;
+	font-color: #DA5D18;
+  	font-size: 15px;
+  	font-weight: bold;
+  	font-family: Arial;
+	line-height: 25px;
+  	-webkit-border-radius:5px;
+  	-moz-border-radius:5px;
+  	border-radius:5px;
+	width: 100px;
+	height: 25px;
+	float: left;	
+}
+
+.what-we-do {
+	margin-bottom: 15px;
+	margin-left: 35px;
+	margin-right: 15px;
+	font-size: 14px;
+	//width: 100%;
+	//height: 30px;
+}
+
+.what-we-do span {
+	color: #595959;
+	font-size: 14px;
+	padding: 5px;
+	margin-top: 10px;
+}
+
+.what-we-do strong {
+	color: #f0f0f0;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.what-we-do a {
+	color: #f0f0f0;	
+	//font-weight: bold;
+	font-size: 16px;
+}
+
+#popupLearnMoreClose {
+	width: 25px;
+	line-height: 25px;
+	color: #595959;
+	text-align: center;
+	//text-decoration: underline;
+	cursor: pointer;
+	border: 3px solid black;
+  	-webkit-border-radius:20px;
+  	-moz-border-radius:20px;
+  	border-radius:20px;	
+}
+</style>
+
+<span>
+	<p style="margin-top: 25px; margin-left: 15px; margin-right: auto; margin-bottom: 15px;">
+		<strong style="color: #fff; font-size: 23px; text-decoration: none">With Macabolic you will find... </strong>
+	</p>
+	<p class="what-we-do">
+		<span><strong>Products hand picked by our community</strong></span>
+		<br/>
+		<span>with the list is growing everyday</span>
+	</p>
+	<p class="what-we-do">
+		<span><strong>Popular and trendy products</strong></span>
+		<br/>
+		<span>based on what the community wants</span>		
+	</p>
+</span>
+<div style="margin-right: 15px; border: 0px solid black; width: 100%">
+	<p style="margin-top: 25px; margin-left: 15px; margin-right: auto; margin-bottom: 15px;">
+		<strong style="color: #fff; font-size: 23px; text-decoration: none">With Macabolic you can ... </strong>
+	</p>	
+	<div class="what-we-do">
+		<span><strong>Build your collection of products</strong></span>
+		<br/>
+		<span>from your favorite people and brands</span><br>
+	</div>
+	<div class="what-we-do">
+		<span><strong>Share and recommend</strong></span>
+		<br/>
+		<span>the products to your favorite friends</span>
+	</div>
+	<div class="what-we-do">
+		<span><strong>Own or Want a product</strong></span>
+		<br/>
+		<span>buy now or save the stuff you want to buy later</span>
+	</div>
+</div>	
+<!--	
+	<div class="tag_block">
+		<span class="action_type">Discover</span>
+		<span><strong>Discover the best products online</strong></span>
+	</div>
+	<div>
+		<div class="action_type">Follow</div>
+		<span><strong>Follow your favorite people and brands</strong></span>
+	</div>
+	<div>
+		<div class="action_type">I want one!</div>
+		<span><strong>Save the stuff you want to buy later</strong></span>
+	</div>
+-->
+<div style="margin-right: 15px; float:center;">
+	<div class="what-we-do">
+		<span><%= link_to "Sign up", new_registration_path(User.new) %></span> 
+		<span><a id="popupLearnMoreClose">X</a></span>
+	</div>
+</div>

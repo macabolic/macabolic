@@ -17,21 +17,34 @@
 	_position:absolute; /* hack for internet explorer 6*/
 //	width:808px;
 	background:#f6f1de;
-	border:2px solid #cecece;
+//	border:2px solid #cecece;
 	z-index:2;
 	padding:12px;
 	font-size:13px;
+  	-webkit-border-radius:20px;
+  	-moz-border-radius:20px;
+  	border-radius:20px;				
 }
 
 #popupMyCollectionClose {
 	font-size:14px;
 	line-height:14px;
-	right:6px;
-	top:4px;
+	right:3px;
+	top:1px;
 	position:absolute;
 	color:#5c5c5c;
 	font-weight:700;
 	display:block;
+	width: 25px;
+	line-height: 25px;
+	color: #595959;
+	text-align: center;
+	//text-decoration: underline;
+	cursor: pointer;
+	border: 3px solid black;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;		
 }
 
 .do_you_have_one {
@@ -78,8 +91,8 @@ function centerPopup(){
 	//centering
 	$("#popupMyCollection").css({
 		"position": "absolute",
-		"top": windowHeight/2-popupHeight/2,
-		"left": windowWidth/2-popupWidth/2
+		"top": windowHeight/2-popupHeight/2-30,
+		"left": windowWidth/2-popupWidth/2-100
 	});
 	//only need force for IE6
 
@@ -88,26 +101,7 @@ function centerPopup(){
 $(document).ready(function() {
  	$(document).pngFix(); 
 
-	//LOADING POPUP
-	//Click the button event!
-	$(".do_you_have_one").click(function(){
-		$("#interest_indicator").attr('value', 1);
-		$("#product_id").attr('value', $(".do_you_have_one").attr('obj-id'));
-		//centering with css
-		centerPopup();
-		//load popup
-		loadPopup();
-	});
-
-	$(".do_you_wish_one").click(function(){
-		$("#interest_indicator").attr('value', 2);
-		$("#product_id").attr('value', $(".do_you_wish_one").attr('obj-id'));
-		//centering with css
-		centerPopup();
-		//load popup
-		loadPopup();
-	});
-	
+	//LOADING POPUP	
 	//CLOSING POPUP
 	//Click the x event!
 	$("#popupMyCollectionClose").click(function(){
@@ -131,7 +125,7 @@ $(document).ready(function() {
 <div class="pagination-wrapper top">
 	<div class="left">
 		<p>
-			<strong><span style="text-decoration:underline"><%= pluralize(@found_products.size, 'product') %></span></strong> found based on your search: <strong><%= params[:query] %></strong> <!--Related Products: <a href="#">iPod</a>, <a href="#">iPad</a>-->
+			<strong><span style="text-decoration:underline"><%= pluralize(@found_products.size, 'product') %></span></strong> found based on your search: <strong><%= @query %></strong> <!--Related Products: <a href="#">iPod</a>, <a href="#">iPad</a>-->
 		</p>
 	</div>
 	<% if @found_products.total_pages > 0 %>					
@@ -141,21 +135,21 @@ $(document).ready(function() {
 			<% if @found_products.current_page == 1 %>
 				<li class="nolink">«</li>
 			<% else %>
-				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page - 1), :remote => true %></li>
+				<li><%= link_to '«', find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => @found_products.current_page - 1), :remote => true %></li>
 			<% end %>
 		<% for i in (1..@found_products.total_pages) %>
 			<% if @found_products.current_page == i %>
 				<li class="current"><%= i %></li>
 			<% else %>
-				<li><%= link_to i, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => i), :remote => true %></li>
+				<li><%= link_to i, find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => i), :remote => true %></li>
 			<% end %>
 		<% end %>
 				<li><span>of</span></li>
-				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.total_pages), :remote => true %></li>
+				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => @found_products.total_pages), :remote => true %></li>
 			<% if @found_products.current_page == @found_products.total_pages %>
 				<li class="nolink">»</li>
 			<% else %>
-				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page + 1), :remote => true %></li>
+				<li><%= link_to '»', find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => @found_products.current_page + 1), :remote => true %></li>
 			<% end %>																
       		</ul>
   		</div>
@@ -180,11 +174,11 @@ $(document).ready(function() {
   		<div class="product-detail">
    			<div>
 				<p class="left">
-					<h3 style="text-align: left;"><%= link_to product.name, product_path(product) %></h3>
+					<h3 style="text-align: left; line-height: 27px;"><%= link_to product.name, product_path(product) %></h3>
 				</p>
 				<p><%=h truncate(product.description, :length => 200) %></p>																				
 			</div>
- 			<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'person') %></a> own this product with <%= pluralize(product.responses.size, 'like') %>.</p>
+ 			<p class="friend-ownthis-text"><a href="#"><%= pluralize(product.owners.size, 'person') %></a> own | <a href="#"><%= pluralize(product.wanters.size, 'person') %></a> want | <%= pluralize(product.responses.size, 'like') %>.</p>
 			<p>
           		<ul class="friend-ownthis" style="margin-bottom: 10px;">
 				<% product.owners.each do |owner| %>
@@ -195,12 +189,39 @@ $(document).ready(function() {
 					</li>					
 				<% end %>
 				</ul>
+          		<ul class="friend-ownthis" style="margin-bottom: 10px;">
+				<% product.wanters.each do |wanter| %>
+					<li>
+						<%= link_to profile_member_path(wanter) do %>
+							<%= image_tag current_profile_image_thumbnail_url(wanter), :width => 37, :title => wanter.full_name %>
+						<% end %>
+					</li>					
+				<% end %>
+				</ul>
 			<% if user_signed_in? %>
 				<div class="product-detail">
 					<p>
-						<div id="i_own_this"><a href="#" id="own-this" class="do_you_have_one" obj-id="<%= product.id %>">Have one?</a></div>
-						<div id="wishlist_link"><a href="#" id="own-this" class="do_you_wish_one" obj-id="<%= product.id %>">I want one!</a></div>
+						<div id="i_own_this"><a href="#" id="own-this" class="do_you_have_one-<%= product.id %>" obj-id="<%= product.id %>">Have one?</a></div>
+						<div id="wishlist_link"><a href="#" id="own-this" class="do_you_wish_one-<%= product.id %>" obj-id="<%= product.id %>">I want one!</a></div>
 					</p>
+					<script type="text/javascript"> 
+					$(".do_you_wish_one-<%= product.id %>").click(function(){
+						$("#interest_indicator").attr('value', 2);
+						$("#product_id").attr('value', $(this).attr('obj-id'));
+						//centering with css
+						centerPopup();
+						//load popup
+						loadPopup();
+					});				
+					$(".do_you_have_one-<%= product.id %>").click(function(){
+						$("#interest_indicator").attr('value', 1);
+						$("#product_id").attr('value', $(this).attr('obj-id'));
+						//centering with css
+						centerPopup();
+						//load popup
+						loadPopup();
+					});				
+					</script>
 				</div>
 			<% end %>	
 			</p>
@@ -220,21 +241,21 @@ $(document).ready(function() {
 			<% if @found_products.current_page == 1 %>
 				<li class="nolink">«</li>
 			<% else %>
-				<li><%= link_to '«', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page - 1), :remote => true %></li>
+				<li><%= link_to '«', find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => @found_products.current_page - 1), :remote => true %></li>
 			<% end %>
 		<% for i in (1..@found_products.total_pages) %>
 			<% if @found_products.current_page == i %>
 				<li class="current"><%= i %></li>
 			<% else %>
-				<li><%= link_to i, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => i), :remote => true %></li>
+				<li><%= link_to i, find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => i), :remote => true %></li>
 			<% end %>
 		<% end %>
 				<li><span>of</span></li>
-				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.total_pages), :remote => true %></li>
+				<li><%= link_to @found_products.total_pages, find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => @found_products.total_pages), :remote => true %></li>
 			<% if @found_products.current_page == @found_products.total_pages %>
 				<li class="nolink">»</li>
 			<% else %>
-				<li><%= link_to '»', find_product_searches_path(:query => params[:query], :scope => params[:scope], :product_page => @found_products.current_page + 1), :remote => true %></li>
+				<li><%= link_to '»', find_product_searches_path(:query => @query, :scope => params[:scope], :product_page => @found_products.current_page + 1), :remote => true %></li>
 			<% end %>																
       		</ul>
   		</div>

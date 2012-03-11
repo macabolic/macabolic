@@ -20,12 +20,12 @@ $(document).ready(function() {
 	So that the current_user can add the product to current_user's collections.
 %>
 <% my_collections = current_user.my_collections %>
-<%= form_for MyCollectionItem.new, :as => :my_collection_item, :url => my_collection_items_path, :html => { :id => "do-you-have-one-form", :class => "question-form" } do |f| %>
-<div style="width: 800px;">
-	<div style="width: 760px; background: #ffffff; margin-left: auto; margin-right: auto; padding: 15px;">
+<%= form_for MyCollectionItem.new, :as => :my_collection_item, :url => my_collection_items_path, :html => { :id => "do-you-have-one-form", :class => "question1-form" } do |f| %>
+<div>	
+	<div style="width: 800px; background: #ffffff; margin-left: auto; margin-right: auto; padding: 15px;">
 		<h3>Which collection do you want it be?</h3> 
 		<div id="question" class="product-grid" style="float: left; margin: 17px; border: 0px; width: 700px;">
-			<a id="popupMyCollectionClose" style="cursor: pointer">x</a>
+			<a id="popupMyCollectionClose" style="cursor: pointer">X</a>
 			<ul>
 			<% my_collections.each do |my_collection| %>
 				<li id="<%= my_collection.id %>" class="not-selected-product" style="margin-right: 10px; margin-bottom: 10px">	
@@ -54,6 +54,14 @@ $(document).ready(function() {
 				<%= hidden_field_tag 'my_collection_id', nil %>
 				<%= hidden_field_tag 'interest_indicator', nil %>			
 		</div>
+		<!-- Create a new collection -->
+		<hr style="width: 100%; border-top: 1px solid #d4d4d4; margin-bottom: 15px;"/>								
+		<%= check_box_tag 'create_new', 'yes', false %>&nbsp;Create a new collection<br/>
+
+		<label for="tiptitle">Name</label>
+		<%= text_field_tag "my_collection_name", nil, :placeholder => "My favorites iPad cases", :class => "text" %>
+		<br/><br/>				
+		
 		<div style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px;">
 			<div class="actions">
 				<%= f.submit 'Submit', :class => "submit-tip-button" %>

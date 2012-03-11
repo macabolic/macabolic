@@ -40,6 +40,7 @@ class MyCollectionItemsController < ApplicationController
     
     my_collection_item_search = Sunspot.search(MyCollectionItem) do
       with(:product_id, params[:product_id])
+      without(:id, params[:id])
     end
     @found_collection_items = my_collection_item_search.results
     @found_collections = @found_collection_items.map { |i| i.my_collection }
@@ -77,7 +78,12 @@ class MyCollectionItemsController < ApplicationController
     logger.debug "MyCollectionItemsController => create"
     #@product = Product.find(params[:id])
     @product = Product.find(params[:product_id])
-    @my_collection = MyCollection.find(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
+    
+    if params[:create_new].present? && params[:create_new] == "yes"
+      @my_collection = MyCollection.new(:name => params[:my_collection_name], :user_id => current_user.id)
+    else
+      @my_collection = MyCollection.find(params[:my_collection_id]) # This change is caused by the use of has_permalink plugin
+    end
     
     @my_collection_item = MyCollectionItem.new
     @my_collection_item.my_collection_id = params[:my_collection_id]
@@ -94,23 +100,29 @@ class MyCollectionItemsController < ApplicationController
     #respond_to do |format|
     if search_item.exists?
       logger.debug "Search item exists..."
-      # do an update instead on my_collection_id and interest_indicator
-      search_item.first.update_attributes(:my_collection_id => params[:my_collection_id], :interest_indicator => params[:interest_indicator])
+      if params[:create_new].present? && params[:create_new] == "yes"
+        search_item.first.interest_indicator = params[:interest_indicator]
+        @my_collection.my_collection_items<<search_item.first
+        @my_collection.save
+      else
+        # do an update instead on my_collection_id and interest_indicator      
+        search_item.first.update_attributes(:my_collection_id => params[:my_collection_id], :interest_indicator => params[:interest_indicator])
+      end
       redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
     else        
       logger.debug "Going to save now..."
-      if @my_collection_item.save
-        logger.debug "Done saving. Now redirecting to member_my_collection page."
+      if params[:create_new].present? && params[:create_new] == "yes"
+        @my_collection.my_collection_items.build(:product_id => params[:product_id], :user_id => current_user.id, :interest_indicator => params[:interest_indicator])
+        @my_collection.save
         redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
-      #if MyCollection.add_product_to_collection(current_user, @product)
-      #  format.html { redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.') }
-      #  format.html { redirect_to(:controller => 'members', :action => 'collections', :id => current_user.id, :notice => 'My collection was successfully created.') }
-      #  format.xml  { render :xml => @my_collection, :status => :created, :location => @my_collection }
       else
-        logger.debug "Something is wrong."
-        redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
-      #  format.html { render :action => "new" }
-      #  format.xml  { render :xml => @my_collection.errors, :status => :unprocessable_entity }
+        if @my_collection_item.save
+          logger.debug "Done saving. Now redirecting to member_my_collection page."
+          redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+        else
+          logger.debug "Something is wrong."
+          redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+        end
       end
     end
   end

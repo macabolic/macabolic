@@ -1,0 +1,158 @@
+<% title 'Discover' %>
+<div class="wrapper-mh">
+	<% if !user_signed_in? %>
+	<div>
+		<%= render :partial => "home/learn_more" %>	
+	</div>
+	<% end %>
+
+	<div class="maincol"> 		
+
+		<div class="tabbed-content-area">
+			<div style="margin-top: 15px; font-size: 20px;padding-top:5px; text-align: center">
+				<span class="home-signupbutton">
+			   		Discover / <%= @category %>
+				</span>
+			</div>									
+			<br/>						
+			<div class="product-grid group">
+				<%= render :partial => "products/index", :locals => { :products => @products }%>				
+				<%#= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @collection_items, :mode => "read", :filter_my_collection_item => nil } %>
+			</div>
+			<div class="pagination-wrapper bottom">				
+				<div class="right">
+					<div class="right">
+						<div id="pagination">
+							<%= paginate @listed_items, :param_name => :page %>
+						</div>
+					</div>
+				</div>
+			</div><!-- .pagination-wrapper -->					
+        </div>	
+		<br/><br/>
+		
+	</div>
+	
+	<div class="sidebar">
+		<div class="sidebar-content">
+	        <div class="sidebar-header" style="background: #dd6219;">Browse for</div>
+			<div style="margin: 17px; border: 0px;">
+				<div>
+					<p style="font-size: 12px; font-family: Verdana;">					
+			    	<ul id="search-list">
+						<div id="products">
+							<li>
+								<div>
+									<!--
+									<div class="left" style="margin-right: 10px;">
+										<%#= image_tag product_line_thumbnail(productline.id), :size => "60x60" %>									
+									</div>
+									<br/>
+									-->
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'Everything', discover_home_index_path(:category => "all") %>
+									</p>
+									<div class="answers-meta">
+										<p class="left">
+											<span id="response-stat-product"><%#= pluralize(facet.count, 'products') %></span>
+										</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'For Mac', discover_home_index_path(:category => "mac") %>
+									</p>
+								</div>
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'For iPad', discover_home_index_path(:category => "ipad") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'For iPhone', discover_home_index_path(:category => "iphone") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'For iPod', discover_home_index_path(:category => "ipod") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'For audiophile', discover_home_index_path(:category => "audiophile") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'Others', discover_home_index_path(:category => "others") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to 'Popular Ones', discover_home_index_path(:category => "popular") %>
+									</p>
+								</div>
+								
+							</li>
+						<!--	
+							<li><br/><hr/><br/></li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px;">
+										<%#= link_to 'For Everyone', discover_home_index_path(:category => "everyone") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px;">
+										<%#= link_to 'For Him', discover_home_index_path(:category => "him") %>
+									</p>
+								</div>
+								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px;">
+										<%#= link_to 'For Her', discover_home_index_path(:category => "her") %>
+									</p>
+								</div>								
+							</li>
+							<li>
+								<div>
+									<p style="margin-bottom: 3px;">
+										<%#= link_to 'For Little One', discover_home_index_path(:category => "little") %>
+									</p>
+								</div>								
+							</li>
+						-->
+						</div>
+					</ul>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+</div>

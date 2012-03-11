@@ -93,7 +93,7 @@ function size(t) {
 				</div>
 		<% else %>		
 		        <div id="tab2" class="tab_content2 product-grid group">
-					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items, :mode => "read" } %>
+					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items, :mode => "read", :filter_my_collection_item => nil } %>
 				</div>
 		<% end %>
 			</div>
@@ -113,19 +113,21 @@ function size(t) {
 		</div>
 		
 		<%#= render 'products/product_search' %>
-		<% if @user == current_user %>
+		<%# if @user == current_user %>
+		<!--
 		<div class="sidebar">
 			<div>
 				<div class="sidebar-content account-info">
 					<div class="sidebar-header">
 						Add a new collection
 					</div>
-					<div class="sidebar-inner">								
-						<%= render :partial => 'my_collections/form', :locals => { :user => @user } %>
+					<div class="sidebar-inner">
+						<%#= render :partial => 'my_collections/form', :locals => { :user => @user } %>
 					</div>
 				</div>
 			</div>			
 		</div>
-		<% end %>
+		-->
+		<%# end %>
 	</div>
 </body>

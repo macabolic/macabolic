@@ -21,6 +21,7 @@ class MyCollectionItem < ActiveRecord::Base
   WISH = 2
 
   searchable do
+    integer :id
     integer :my_collection_id
     integer :user_id
     integer :product_id

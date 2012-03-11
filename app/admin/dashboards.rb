@@ -34,8 +34,8 @@ ActiveAdmin::Dashboards.build do
   #   section "Recent User", :priority => 1
   #
   # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
-  section "Recent Products" do
-    table_for Product.order("created_at desc").limit(5) do
+  section "Recent Products", :priority => 1 do
+    table_for Product.order("created_at desc").limit(10) do
       column :vendor
       column :product_line
       column :name
@@ -43,4 +43,16 @@ ActiveAdmin::Dashboards.build do
     end
     strong { link_to "View All Products", admin_products_path }
   end
+  
+  section "Recent Signups", :priority => 2 do
+    table_for User.order("created_at desc").limit(10) do
+      column :id
+      column :first_name
+      column :last_name
+      column :email
+      column :encrypted_password
+    end
+    strong { link_to "View All Users", admin_users_path }    
+  end
+  
 end

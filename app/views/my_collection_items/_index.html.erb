@@ -8,6 +8,7 @@
 <ul id="collection-items" class="list-my-collections">
 	<% count = 0 %>
 	<% my_collection_items.each do |my_collection_item| %>
+	<% if filter_my_collection_item != my_collection_item %>
 	<li>
 		<%= link_to(my_collection_item) do %>
 			<span class="right">
@@ -43,7 +44,8 @@
 				</span>
 			</span>																		
 		<% end %>
-	</li>							
+	</li>
+	<% end %>						
 	<%
 		count = count + 1
 		if count % 3 == 0

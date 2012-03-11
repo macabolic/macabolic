@@ -1,0 +1,165 @@
+<style type="text/css">
+#backgroundLearnMore {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:1;
+}
+#popupLearnMore {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	//background:#f6f1de;
+	background: #DA5D18;
+	//border:2px solid #cecece;
+	z-index:2;
+	padding:12px;
+	font-size:13px;
+	width: 400px; 
+	//height: 300px; 	
+  	-webkit-border-radius:20px;
+  	-moz-border-radius:20px;
+  	border-radius:20px;		
+	font-color: #ffffff;
+	color: #ffffff;
+}
+
+#popupLearnMoreClose {
+	font-size:14px;
+	line-height:14px;
+	right:3px;
+	top:1px;
+	position:absolute;
+	color:#5c5c5c;
+	font-weight:700;
+	display:block;
+	
+	width: 25px;
+	line-height: 25px;
+	color: #595959;
+	text-align: center;
+	//text-decoration: underline;
+	cursor: pointer;
+	border: 3px solid black;
+  	-webkit-border-radius:20px;
+  	-moz-border-radius:20px;
+  	border-radius:20px;	
+	
+}
+
+#learn_more {
+	color: #595959;
+	cursor: pointer;
+	text-decoration: underline;
+}
+</style>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+<script type="text/javascript"> 
+//SETTING UP OUR POPUP
+//0 means disabled; 1 means enabled;
+var learnMoreStatus = 0;
+
+//loading popup with jQuery magic!
+function loadLearnMore(){
+	//loads popup only if it is disabled
+	if(learnMoreStatus==0){
+		$("#backgroundLearnMore").css( {"opacity": "0.7"} );
+		$("#backgroundLearnMore").fadeIn("slow");
+		$("#popupLearnMore").fadeIn("slow");
+		learnMoreStatus = 1;
+	}
+}
+
+//disabling popup with jQuery magic!
+function disableLearnMore(){
+	//disables popup only if it is enabled
+	if(learnMoreStatus==1){
+		$("#backgroundLearnMore").fadeOut("slow");
+		$("#popupLearnMore").fadeOut("slow");
+		learnMoreStatus = 0;
+	}
+}
+
+//centering popup
+function centerLearnMore(){
+
+	//request data for centering
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#popupLearnMore").height();
+	var popupWidth = $("#popupLearnMore").width();
+	//centering
+	$("#popupLearnMore").css({
+		"position": "absolute",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
+	//only need force for IE6
+
+	$("#backgroundLearnMore").css( {"height": windowHeight} );
+}
+
+
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+
+	//LOADING POPUP
+	//Click the button event!
+	$("#learn_more").click(function() {
+		centerLearnMore();
+		loadLearnMore();
+	});
+	
+	//CLOSING POPUP
+	//Click the x event!
+	$("#popupLearnMoreClose").click(function(){
+		disableLearnMore();
+	});
+	
+	//Click out event!
+	$("#backgroundLearnMore").click(function(){
+		disableLearnMore();
+	});
+	
+	//Press Escape event!
+	$(document).keypress(function(e){
+		if(e.keyCode==27 && learnMoreStatus==1) {
+			disableLearnMore();
+		}
+	});	
+	
+});
+</script>
+<div id="popupLearnMore">
+	<%= render :template => 'home/what_we_do' %>
+</div>
+<div id="backgroundLearnMore"></div>
+
+<% if !user_signed_in? %>
+<div>
+	<div class="pagination-wrapper" style="background: #e9e9e9;">
+		<p style="font-size:14px; color:#808080; padding-left: 23px; text-align: center">
+			<strong><span><%= link_to 'Sign up for Macabolic', new_registration_path(User.new) %> – Catalog this to your own collection now</span></strong>
+		</p>
+		<div style="margin-top: 5px; font-size: 14px;padding-top:0px; text-align: center">
+			<span class="home-signupbutton">
+		   		<a id="learn_more">Learn more now</a>
+			</span>
+		</div>									
+	</div><!-- .pagination-wrapper -->		
+	<div style="background: #e9e9e9;">
+	</div>
+</div>	
+<br/>
+<% end %>
+

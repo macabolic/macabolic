@@ -48,8 +48,11 @@ $(document).ready(function() {
 		<div class="maincol">
 	    	<div class="product-item sidebar-content">		
 		        <div class="product-image">		        
-					<%# image_tag @my_collection.thumbnail.url(:medium), :width => "200", :class => "preview-image" %>
+				<% if @vendor.logo.url(:small).present? %>
+					<%= image_tag @vendor.logo.url(:small), :width => "200", :class => "preview-image" %>
+				<% else %>
 					<img src="/images/product/no-image_medium.jpg" alt="Product Image" width="200" class="preview-image">
+				<% end %>
 			    </div>
 		        <div class="product-detail">
 			        <div>

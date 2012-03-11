@@ -17,4 +17,5 @@ module HomeHelper
   def product_line(product_line_id)
     product_line = ProductLine.find(product_line_id)
   end
+  
 end

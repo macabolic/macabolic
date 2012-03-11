@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
       end
     
       @product_comments = @product.comments.order("created_at DESC")
-      
+            
       my_collection_item_search = Sunspot.search(MyCollectionItem) do
         with(:product_id, params[:id])
       end
@@ -80,6 +80,7 @@ class ProductsController < ApplicationController
       same_store_search = Sunspot.search(Product) do
         with(:vendor_id, vendor_id)
         without(:id, params[:id])
+        paginate :page => 1, :per_page => 3
       end
       @same_store_items = same_store_search.results
 

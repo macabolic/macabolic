@@ -7,7 +7,8 @@ class Product < ActiveRecord::Base
   has_many                :questions,           :dependent => :destroy  
   has_many                :answers,             :dependent => :destroy
   has_many                :my_collection_items
-  has_many                :owners,              :source => :user, :through => :my_collection_items
+  has_many                :owners,              :source => :user, :through => :my_collection_items, :conditions => { :my_collection_items => {:interest_indicator => 1} }
+  has_many                :wanters,             :source => :user, :through => :my_collection_items, :conditions => { :my_collection_items => {:interest_indicator => 2} }  
   #has_many                :wishlist_items,      :dependent => :destroy
   has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"

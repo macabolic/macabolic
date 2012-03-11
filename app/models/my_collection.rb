@@ -23,6 +23,18 @@ class MyCollection < ActiveRecord::Base
   
   scope :featured_collections, limit(3)
 
+  searchable do
+    integer :id
+    integer :my_collection_item_ids, :multiple => true  
+    integer :product_id_ids, :multiple => true
+    integer :user_id
+    time    :updated_at
+  end
+
+  def product_id_ids
+    self.my_collection_items.map(&:product_id)
+  end
+
   def to_param
     "#{id}-#{name.parameterize}"
   end

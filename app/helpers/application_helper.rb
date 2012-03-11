@@ -165,4 +165,20 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end  
+  
+  def vendor_logo(vendor_id) 
+    default_url = "/images/product/no-image_thumb.jpg"
+    vendor = Vendor.find(vendor_id)
+    if vendor.present?      
+  		if vendor.logo.present?
+  			return vendor.logo.url(:thumb)
+  		else
+        return default_url
+      end
+    end
+  end
+  
+  def vendor(vendor_id)
+    vendor = Vendor.find(vendor_id)
+  end
 end

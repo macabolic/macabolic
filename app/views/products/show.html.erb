@@ -22,22 +22,38 @@
 	_position:absolute; /* hack for internet explorer 6*/
 //	width:808px;
 	background:#f6f1de;
-	border:2px solid #cecece;
+//	border:2px solid #cecece;
 	z-index:2;
 	padding:12px;
 	font-size:13px;
+  	-webkit-border-radius:20px;
+  	-moz-border-radius:20px;
+  	border-radius:20px;			
 }
 
 #popupMyCollectionClose {
 	font-size:14px;
 	line-height:14px;
-	right:6px;
-	top:4px;
+	right:3px;
+	top:1px;
 	position:absolute;
 	color:#5c5c5c;
 	font-weight:700;
 	display:block;
+	
+	width: 25px;
+	line-height: 25px;
+	color: #595959;
+	text-align: center;
+	//text-decoration: underline;
+	cursor: pointer;
+	border: 3px solid black;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;	
+	
 }
+
 </style>
 <!-- Piwik --> 
 <script type="text/javascript">
@@ -208,15 +224,22 @@ $(document).ready(function() {
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 <!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
-	
+
+<% if user_signed_in? %>	
 	<div id="grey-strip-signedin">
 		<div class="wrapper-top">
 			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "" } %>						
 		</div>
 	</div>
-
+<% end %>
 <div class="wrapper-mh">
-	<div class="maincol"> 
+	<% if !user_signed_in? %>
+	<div>
+		<%= render :partial => "home/learn_more" %>	
+	</div>
+	<% end %>
+	<div class="maincol"> 		
+		
     	<div class="product-item sidebar-content" style="overflow: visible;">	         
 			<div class="product-image">
 				<div id="product-gallery">				
@@ -241,7 +264,7 @@ $(document).ready(function() {
 				</div>
 				<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
 				<br/>
-				
+							
 			<% if @user.present? || current_user.present? %>
 				<% if @user == current_user %>				
 	            <p>
@@ -314,6 +337,11 @@ $(document).ready(function() {
 					</div>				
 			<% end %>
 <br/><br/>
+				<div style="float: center; width: 334px; margin-bottom: 20px;" class="product-stat-details">
+				<!--<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">-->
+					<%= render 'products/product_stat' %>
+				</div>
+
 				<br/>
 				<div style="width: 100%; height: 1px; border-bottom: 1px solid #d6d6d6;"></div>
 				<br/>
@@ -352,16 +380,18 @@ $(document).ready(function() {
 	    	<br class="clear" />
 	    </div>
 	
-		<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">
-			<%= render 'products/product_stat' %>
-		</div>
+		<!--div style="float: center; width: 334px; margin-bottom: 20px;" class="product-stat-details"-->
+		<!--<div style="float: center; width: 556px; margin-bottom: 20px;" class="product-stat-details">-->
+			<%#= render 'products/product_stat' %>
+		<!--/div-->
 
 		<% if @same_store_items.size > 0 %>
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
-				<div class="left">
-					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><%= pluralize(@same_store_items.size, 'product') %> also from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>
+				<div>
+					<p style="font-size:14px; color:#808080; padding-left: 23px; text-align: center">
+						<strong>Also from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>
+						<!--<strong><%#= pluralize(@same_store_items.size, 'product') %> also from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></strong>-->
 					</p>
 				</div>
 			</div><!-- .pagination-wrapper -->		
@@ -373,12 +403,29 @@ $(document).ready(function() {
 		<br/><br/>
 		<% end %>
 		
+		<div class="tabbed-content-area">
+			<div class="pagination-wrapper top">
+				<div>
+					<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:center">
+						<strong><span>You may be interested in having ...</span></strong>
+						<!--<strong><span style="text-decoration:underline;"><%#= pluralize(@more_like_this.size, 'products') %></span></strong> similar to <%#= @product.name %>-->
+					</p>
+				</div>
+			</div><!-- .pagination-wrapper -->		
+						
+			<div class="product-grid group">
+				<%= render :partial => 'products/index', :locals => { :products => @more_like_this } %>
+			</div>
+        </div>	
+		<br/><br/>
+
 		<% if @found_collection_items.size > 0 %>	
 		<div class="tabbed-content-area">
 			<div class="pagination-wrapper top">
-				<div class="left">
-					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><span style="text-decoration:underline;">Also in <%= pluralize(@found_collection_items.size, 'collection') %></span></strong>
+				<div>
+					<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:center">
+						<strong><span>It is also in the following Macabolics' collections ...</span></strong>
+						<!--<strong><span style="text-decoration:underline;"><%#= pluralize(@found_collection_items.size, 'collection') %></span></strong>-->
 					</p>
 				</div>
 			</div><!-- .pagination-wrapper -->		
@@ -390,36 +437,27 @@ $(document).ready(function() {
 		<br/><br/>
 		<% end %>
 
-		<div class="tabbed-content-area">
-			<div class="pagination-wrapper top">
-				<div class="left">
-					<p style="font-size:11px; color:#808080; padding-left: 23px;">
-						<strong><span style="text-decoration:underline;"><%= pluralize(@more_like_this.size, 'products') %></span></strong> similar to <%= @product.name %>
-					</p>
-				</div>
-			</div><!-- .pagination-wrapper -->		
-						
-			<div class="product-grid group">
-				<%= render :partial => 'products/index', :locals => { :products => @more_like_this } %>
-			</div>
-        </div>	
-		<br/><br/>
-
-		<% if user_signed_in? %>
+		<%# if user_signed_in? %>
+		<!--
 		<div>
-			<%= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "Product", :my_collection_item => nil } %>
+			<%#= render :partial => 'questions/ask_a_question', :locals => { :product => @product, :page_id => "Product", :my_collection_item => nil } %>
 		</div>
-		<% end %>
+		-->
+		<%# end %>
+		<!--
 		<div class="tabbed-content-area">			
 
 			<ul class="tabs"> 
 		    	<li><a href="#questions">Questions &amp; Answers</a></li> 
+		-->
 		    	<!--<li><a href="#reviews">Reviews</a></li>-->
+		<!--
 			</ul> 
 
     		<div id="questions" class="tab_content"> 
-				<%= render :partial => 'questions/product_questions', :locals => { :my_collection_item => nil, :product => @product } %>
+				<%#= render :partial => 'questions/product_questions', :locals => { :my_collection_item => nil, :product => @product } %>
 		    </div> 
+		-->
 		<!--
 		    <div id="reviews" class="tab_content"> 
 				<%#= render 'reviews/product_reviews' %>
@@ -432,42 +470,48 @@ $(document).ready(function() {
 		<!-- Recommend a friend -->
 		<%= render :partial => 'friendships/friend_search', :locals => { :product => @product } %>
 
-		<% if !@friends_who_owned.nil? && @friends_who_owned.size > 0 %>
+	<!--
+		<%# if !@friends_who_owned.nil? && @friends_who_owned.size > 0 %>
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@friends_who_owned.size, 'friend') %> owned
+				<%#= pluralize(@friends_who_owned.size, 'friend') %> owned
 			</div>	
 			<div class="user-grid">
 		    	<ul>
-				<% @friends_who_owned.each do |person| %>
+				<%# @friends_who_owned.each do |person| %>
 		  			<li>
-						<%= link_to profile_member_path(person) do %>
-							<%= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
-						<% end %>
+						<%#= link_to profile_member_path(person) do %>
+							<%#= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
+						<%# end %>
 					</li>
-				<% end %>
+				<%# end %>
 				</ul>
 			</div>
-		</div><!-- #see who has similar products in his network -->			
-		<% end %>
-		<% if !@friends_who_wished.nil? && @friends_who_wished.size > 0 %>
+		</div>
+	-->
+		<!-- #see who has similar products in his network -->			
+		<%# end %>
+		<%# if !@friends_who_wished.nil? && @friends_who_wished.size > 0 %>
+	<!--
 		<div class="sidebar-content">				
 			<div class="sidebar-header">
-				<%= pluralize(@friends_who_wished.size, 'friend') %> wanted
+				<%#= pluralize(@friends_who_wished.size, 'friend') %> wanted
 			</div>	
 			<div class="user-grid">
 		    	<ul>
-				<% @friends_who_wished.each do |person| %>
+				<%# @friends_who_wished.each do |person| %>
 		  			<li>
-						<%= link_to profile_member_path(person) do %>
-							<%= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
-						<% end %>
+						<%#= link_to profile_member_path(person) do %>
+							<%#= image_tag current_profile_image_thumbnail_url(person), :width => 50, :title => person.full_name %>
+						<%# end %>
 					</li>
-				<% end %>
+				<%# end %>
 				</ul>
 			</div>
-		</div><!-- #see who has similar products in his network -->			
-		<% end %>
+		</div>
+	-->
+		<!-- #see who has similar products in his network -->			
+		<%# end %>
 		<!--
         <div id="product-tips" class="sidebar-content">
             <div class="sidebar-header">

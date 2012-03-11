@@ -1,0 +1,67 @@
+<% if @vendor_search.present? %>
+<div class="sidebar">
+	<div class="sidebar-content">
+        <div class="sidebar-header" style="background: #dd6219;">Brands carrying <strong style="text-decoration: underline"><%= @query %></strong></div>
+		<div style="margin: 17px; border: 0px;">
+			<div>
+				<p style="font-size: 12px; font-family: Verdana;">
+		    	<ul id="search-list">
+					<div id="products">					
+						<% @vendor_search.facet(:vendor_id).rows.each do |facet| %>	
+				        <li>
+							<div>
+								<div class="left" style="margin-right: 10px;">
+									<%= image_tag vendor_logo(facet.value), :size => "60x60" %>									
+								</div>
+								<br/>
+								<p style="margin-bottom: 3px;"><%= link_to vendor(facet.value), find_product_searches_path(:query => @query, :vendor_id => facet.value, :scope => "store") %></p>
+								<div class="answers-meta">
+									<p class="left">
+										<span id="response-stat-product"><%= pluralize(facet.count, 'products') %></span>
+									</p>
+								</div>
+							</div>
+				        </li>				
+						<% end %>
+					</div>
+				</ul>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
+
+<% if @product_line_search.present? %>
+<div class="sidebar">
+	<div class="sidebar-content">
+        <div class="sidebar-header" style="background: #dd6219;">Categories carrying <strong style="text-decoration: underline"><%= @query %></strong></div>
+		<div style="margin: 17px; border: 0px;">
+			<div>
+				<p style="font-size: 12px; font-family: Verdana;">
+		    	<ul id="search-list">
+					<div id="products">					
+						<% @product_line_search.facet(:product_line_id).rows.each do |facet| %>	
+				        <li>
+							<div>
+								<div class="left" style="margin-right: 10px;">
+									<%= image_tag product_line_thumbnail(facet.value), :size => "60x60" %>									
+								</div>
+								<br/>
+								<p style="margin-bottom: 3px;"><%= link_to product_line(facet.value), find_product_searches_path(:query => @query, :product_line_id => facet.value, :scope => "product_line") %></p>
+								<div class="answers-meta">
+									<p class="left">
+										<span id="response-stat-product"><%= pluralize(facet.count, 'products') %></span>
+									</p>
+								</div>
+							</div>
+				        </li>				
+						<% end %>
+					</div>
+				</ul>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
