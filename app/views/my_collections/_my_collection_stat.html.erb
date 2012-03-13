@@ -1,5 +1,6 @@
 <ul>
-	<li>Collection Items<span><%= my_collection.my_collection_items.size %></span></li>
-	<li id="follower" class="alt">Followers<span id="follower-stat-my-collection-<%= my_collection.id %>"><%= my_collection.followers.size %></span></li>
-	<li id="response" class="noborder">Likes<span id="response-stat-my-collection-<%= my_collection.id %>"><%= my_collection.responses.size %></span></li>
+	<li class="mini">Own<span><%= my_collection.owned_collection_items.size %></span></li>
+	<li class="alt mini">Wish<span><%= my_collection.wished_collection_items.size %></span></li>
+	<li id="follower" class="mini">Followers<span id="follower-stat-my-collection-<%= my_collection.id %>"><%= my_collection.followers.size %></span></li>
+	<li id="response" class="noborder mini alt">Likes<span id="response-stat-my-collection-<%= my_collection.id %>"><%= my_collection.responses.size %></span></li>
 </ul>

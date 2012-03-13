@@ -7,7 +7,7 @@
 				<li><%= link_to 'Discover', discover_home_index_url(:category => "all") %></li>
 				<% if user_signed_in? %>	
 					<li><%= link_to 'Add', new_product_url %></li>
-					<li><%= link_to 'Home', home_index_url %></li>
+					<!--<li><%#= link_to 'Home', home_index_url %></li>-->
 				<% end %>
 				<li>
 					<% if user_signed_in? %>
@@ -26,7 +26,7 @@
 			</ul>
 			<% if user_signed_in? %>
 			<div class="user-loggedin">
-				Welcome, <%= link_to current_user.full_name, profile_member_path(current_user), :class => "user-name" %>
+				Welcome, <%= link_to current_user.full_name, collections_member_path(current_user), :class => "user-name" %>
                </div>
 			<% end %>
 		</div>

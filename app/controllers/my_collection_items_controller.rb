@@ -19,23 +19,24 @@ class MyCollectionItemsController < ApplicationController
     end
     @more_like_this = search_more_like_this.results
 
-    friends = @user.friend_ids
-    if !friends.nil? and friends.size > 0
-      @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
-        with(:product_id, params[:product_id])
-        with(:user_id, friends)
-        with(:interest_indicator, 1)        
-      end
-      @search_friends_who_wished = Sunspot.search(MyCollectionItem) do
-        with(:product_id, params[:product_id])
-        with(:user_id, friends)
-        with(:interest_indicator, 2)        
-      end
-    end
+    #if !friends.nil? and friends.size > 0
+    #  @search_friends_who_owned = Sunspot.search(MyCollectionItem) do
+    #    with(:product_id, params[:product_id])
+    #    with(:user_id, friends)
+    #    with(:interest_indicator, 1)        
+    #  end
+    #  @search_friends_who_wished = Sunspot.search(MyCollectionItem) do
+    #    with(:product_id, params[:product_id])
+    #    with(:user_id, friends)
+    #    with(:interest_indicator, 2)        
+    #  end
+    #end
     
-    @friends_who_owned = @search_friends_who_owned.results.map { |i| i.user } if !@search_friends_who_owned.nil? and @search_friends_who_owned.results.present?
-    @friends_who_wished = @search_friends_who_wished.results.map { |i| i.user } if !@search_friends_who_wished.nil? and @search_friends_who_wished.results.present?
-    
+    #@friends_who_owned = @search_friends_who_owned.results.map { |i| i.user } if !@search_friends_who_owned.nil? and @search_friends_who_owned.results.present?
+    #@friends_who_wished = @search_friends_who_wished.results.map { |i| i.user } if !@search_friends_who_wished.nil? and @search_friends_who_wished.results.present?
+    @friends_who_owned = @product.people_who_owned
+    @friends_who_wished = @product.people_who_wished
+
     @product_comments = @product.comments.order("created_at DESC")
     
     my_collection_item_search = Sunspot.search(MyCollectionItem) do

@@ -6,45 +6,7 @@ $(document).ready(function() {
 	//Default Action
 	$(".tab_content").hide(); //Hide all content
 	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content:first").show(); //Show first tab content
-	$(".tab1_paging").show();
-	
-	//Default Action
-	$(".tab_content2").hide(); //Hide all content
-	//$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
-	//$(".tab_content2:first").show(); //Show first tab content
-
-	$(".tab_content3").hide(); //Hide all content
-	//$("ul.tabs2 li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content3:first").show(); //Show first tab content
-
-	
-	//On Click Event
-	$("ul.tabs li").click(function() {
-		$("ul.tabs li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content").hide(); //Hide all tab content
-		$(".tab_content2").hide(); //Hide all tab content
-		$(".tab1_paging").show();
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
-	});
-	
-	//On Click Event
-	$("ul.tabs2 li").click(function() {
-		$("ul.tabs2 li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content").hide(); //Hide all tab content
-		$(".tab_content2").hide(); //Hide all tab content
-		$(".tab1_paging").hide();		
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
-	});
-
-
-	
+	$(".tab_content:first").show(); //Show first tab content	
 });
 </script>
 <script type="text/javascript">
@@ -69,15 +31,15 @@ function size(t) {
 	<div class="wrapper-mh">
 		<div class="maincol">
 			<%= render 'members/profile_stat' %>
+			
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
 			        <li><a href="#tab1">Collections</a></li> 
-			        <li><a href="#tab2">Collection Items</a></li> 
 				</ul> 		
 		<% if @my_collections.empty? %>			
 		        <div id="tab1" class="tab_content product-grid group"> 
 	            	<div id="search-result" class="no-result">
-		                <p>There is no collection yet. Create one now.</p>	
+		                <p>There is no collection yet. Go find something interesting to add to your list now.</p>	
 	            	</div>
 				</div>
 		<% else %>
@@ -85,20 +47,43 @@ function size(t) {
 					<%= render :partial => 'my_collections/index', :locals => { :my_collections => @my_collections, :preview_gallery => true } %>
 				</div>	
 		<% end %>
-		<% if @my_collection_items.empty? %>
-				<div id="tab2" class="tab_content2 product-grid group">
-					<div id="search-result" class="no-result">
-						<p>There is no collection yet. Create one now.</p>
-					</div>
-				</div>
-		<% else %>		
-		        <div id="tab2" class="tab_content2 product-grid group">
-					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @my_collection_items, :mode => "read", :filter_my_collection_item => nil } %>
-				</div>
-		<% end %>
 			</div>
-			
 			<br/>
+			
+			<% if !@owned_collection_items.empty? %>
+			<div class="tabbed-content-area">
+				<div class="pagination-wrapper top">
+					<div>
+						<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:center">
+							<strong><span>Own ...</span></strong>
+						</p>
+					</div>
+				</div><!-- .pagination-wrapper -->		
+
+				<div class="product-grid group">
+					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @owned_collection_items, :mode => "read", :filter_my_collection_item => nil } %>
+				</div>
+	        </div>	
+			<br/>
+			<% end %>
+						
+			<% if !@wished_collection_items.empty? %>
+			<div class="tabbed-content-area">
+				<div class="pagination-wrapper top">
+					<div>
+						<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:center">
+							<strong><span>Wish ...</span></strong>
+						</p>
+					</div>
+				</div><!-- .pagination-wrapper -->		
+		        <div class="product-grid group">
+					<%= render :partial => 'my_collection_items/index', :locals => { :my_collection_items => @wished_collection_items, :mode => "read", :filter_my_collection_item => nil } %>
+				</div>
+			</div>
+			<br/>
+			<% end %>
+			
+		</div>			
 			<!--
 			<div class="tabbed-content-area">    		
 				<ul class="tabs2"> 
@@ -110,7 +95,7 @@ function size(t) {
 				</div>
 			</div>	
 			-->
-		</div>
+
 		
 		<%#= render 'products/product_search' %>
 		<%# if @user == current_user %>

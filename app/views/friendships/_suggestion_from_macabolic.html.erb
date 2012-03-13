@@ -26,17 +26,9 @@
 }
 
 .friend img {
-	margin-left: 25px;
+//	margin-left: 25px;
 }
 
-#friend_name {
-	text-align: center;
-	font-size: 11px;
-	font-weight: bold;
-	color: #313131;
-	display: block;
-	padding-top: 8px;
-}
 </style>
 <script type="text/javascript"> 
     $(document).ready(function(){ 
@@ -54,13 +46,17 @@
 <% if !@suggested_from_macabolic.nil? %>
 	<% @suggested_from_macabolic.each do |friend| %>	
 		<li class="friend">
-			<div>
+			<div style="text-align: center">
 				<!-- Image -->	
 				<%= image_tag current_profile_image_thumbnail_url(friend), :width => 50, :height => 50 %>
-				<span id="friend_name"><%= link_to friend.full_name, member_path(friend) %></span>
-				<span class="invite_link" id="invite_link_<%= friend.id %>" style="text-align: center;">
-					<%= link_to 'add', add_as_friend_member_invitations_path(:member_id => friend.id), :method => :post, :remote => true %>
-				</span>
+				<span id="friend_name">
+					<%= link_to friend.full_name, member_path(friend) %><br/>
+					<div id="follow-user-link-<%= friend.id %>">
+				<% if @user == current_user %>
+					<%= link_to "follow", follow_member_friendship_path(current_user, friend), :class => "follow_link", :title => "follow", :remote => true %>
+				<% end %>
+					</div>				
+				</span>				
 			</div>
 		</li>
 	<% end %>

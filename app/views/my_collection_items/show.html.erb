@@ -248,17 +248,22 @@ $(document).ready(function() {
 	}(document, 'script', 'facebook-jssdk'));</script>
 <!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
 
+<% if user_signed_in? %>
 <div id="grey-strip-signedin">
 	<div class="wrapper-top">
-	<% if user_signed_in? %>
 		<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Collections" } %>
-	<% else %>
-		<%= render :partial => 'layouts/navigation', :locals => { :user => nil, :item => "" } %>
-	<% end %>
+	<%# else %>
+		<%#= render :partial => 'layouts/navigation', :locals => { :user => nil, :item => "" } %>
 	</div>
 </div>
+<% end %>
 
 <div class="wrapper-mh">
+	<% if !user_signed_in? %>
+	<div>
+		<%= render :partial => "home/learn_more" %>	
+	</div>
+	<% end %>
 	<div class="maincol"> 
     	<div class="product-item sidebar-content" style="overflow: visible">	         
 			<div class="product-image">
@@ -280,7 +285,7 @@ $(document).ready(function() {
 				<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
 				<div style="margin: 5px;">
 					<div style="overflow: visible;" class="fb-like social" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
-					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="I would love to recommend the <%= @product.name %>. Check it out now." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="This <%= @product.name %> is one of my favorite item. Do you like it too? Comment on @macabolic." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 				</div>
 				<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
 				
@@ -374,7 +379,8 @@ $(document).ready(function() {
 				<div id="suggest_now">
 					<a title="Suggest where to buy" class="suggest_where" id="suggest_where_to_buy">Suggest where to buy</a>
 					<div id="suggest_where_wrapper" style="display:none">
-						<% if @user.present? || current_user.present? %>
+						<% if user_signed_in? %>
+						<%# if @user.present? || current_user.present? %>
 							<%= render :partial => 'products/suggest_where_to_buy', :locals => { :product => @product } %>
 						<% else %>
 							<div style="margin-top: 5px">

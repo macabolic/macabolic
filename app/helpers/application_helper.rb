@@ -42,6 +42,24 @@ module ApplicationHelper
     return default_url
   end
 
+  def current_profile_image_small_url(user)
+    default_url = "/images/default_photo.png"
+    
+    if user.profile_image_set?
+      provider = user.current_profile_image.provider
+      if provider == ProfileImage::MACABOLIC
+        return user.avatar.url(:small)
+      elsif provider == ProfileImage::FACEBOOK
+        return "http://graph.facebook.com/#{user.current_profile_image.uid}/picture?type=normal"
+      elsif provider == ProfileImage::GRAVATAR
+        gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+        return "http://www.gravatar.com/avatar/#{gravatar_id}.png?s=80&d=mm"
+      end
+    end
+    
+    return default_url
+  end
+
   def macabolic_profile_image_url(user, provider, size) 
     default_url = "/images/default_photo_50.png"
     macabolic = user.profile_images.where(:provider => ProfileImage::MACABOLIC)

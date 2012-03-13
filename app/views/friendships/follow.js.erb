@@ -1,0 +1,3 @@
+//$("#followers-stat").html("<%= @number_of_following %>");
+try {$("#follow-user-<%= @user.id %>").html('<%= link_to "unfollow", unfollow_member_friendship_path(current_user, @user), :class => "button-green checked sidebar-button", :id => "own-this", :title => "Unfollow", :remote => true %>');} catch (e) {}
+try {$("#follow-user-link-<%= @user.id %>").html('<%= link_to "unfollow", unfollow_member_friendship_path(current_user, @user), :class => "follow_link", :title => "Unfollow", :remote => true %>');} catch (e) {}

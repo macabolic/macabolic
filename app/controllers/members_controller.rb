@@ -72,9 +72,44 @@ class MembersController < ApplicationController
   
   def profile
     @user = User.find(params[:id])
-    #@activities = @user.activities
-    @activities = @user.all_activities
+    @activities = @user.activities
+    #@activities = @user.all_activities
     @discovered_products = @user.discovered_products
+
+    @friends = @user.friends
+
+    me_and_my_friends = @friends.map(&:id)
+    me_and_my_friends << current_user.id
+
+    @suggested_from_macabolic_search = Sunspot.search(User) do
+      without(:id, me_and_my_friends)
+    end
+    
+    @suggested_from_macabolic = @suggested_from_macabolic_search.results
+    logger.debug "Number of suggestions: #{@suggested_from_macabolic.size}."
+        
+    ## Future TODO: restructure the following code and put it in a model to perform the logic.
+    # ---------- Get the friends from Facebook
+    # A dirty way of doing it.
+    # 1. Get a list of friends
+    # 2. Put a link for the profile page
+    # 3. Add an invite button
+    if @user == current_user
+      facebook_authentication = @user.authentications.where(:provider => 'facebook')
+      limit = '50'
+      if facebook_authentication.exists?
+        url = 'https://graph.facebook.com/' + facebook_authentication[0].uid + '/friends?access_token=' + facebook_authentication[0].token
+        url = url + '&limit=' + limit
+        logger.debug "Generated facebook url is #{url}."
+        # https://graph.facebook.com/me/friends?access_token=AAAAAAITEghMBAHAek9yKuw1WyEGUmB15ovKZBeTA2fVm395hTlYxxWWuIA8rTKEBvm5HYh9m59yDC3ZBARqTQFVJ7Y94NPoqf31Ar9FAZDZD
+        response = HTTParty.get(url)
+
+        ## The response['data'] is in the format of JSON
+        @facebook_friends = response['data']
+        @facebook_paging = response['paging']
+        logger.debug response['data']
+      end
+    end
     
     respond_to do |format|
       format.html # profile.html.erb
@@ -88,7 +123,11 @@ class MembersController < ApplicationController
     #.paginate	:page => params[:page], 
     #                                                        :per_page => 10,
     #                                                        :order => 'created_at DESC'
-    @my_collection_items = @user.my_collection_items
+    #@my_collection_items = @user.my_collection_items
+    
+    @owned_collection_items = @user.owned_collection_items
+    @wished_collection_items = @user.wished_collection_items
+    
     #.paginate	:page => params[:page], 
     #                                                          :per_page => 10,
     #                                                          :order => 'created_at DESC'

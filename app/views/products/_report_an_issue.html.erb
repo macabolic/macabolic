@@ -1,0 +1,72 @@
+<style type="text/css">
+#close_report_link {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.report-issue-form {
+	
+}
+
+.report-issue-form label {
+	font-weight: bold;
+	display: inline;
+	text-transform: none;
+	font-size: 12px;
+}
+.report-issue-form input[type="text"] {
+	margin-left: 10px;
+	width: 150px;
+	
+	height: 25px;
+	line-height: 20px;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	background-position: top;
+	font-size: 16px;
+	font-family: Arial;
+	padding: 0px 8px 0px 8px;
+}
+.report-issue-form input[type="submit"] {
+	background: #f6f1de;
+	cursor: pointer;
+	color: #65A40B !important;
+	text-shadow: 0px 0px 0px;	
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+	
+	$("#close_report_link").click(function() {
+		$("#report_an_issue").fadeOut();
+	});
+	
+	$("#loading").hide(); //Hide all tab content
+	$('#report-issue-now').submit(function() {
+		// Show the loading.gif
+		$("#loading").show();
+	});	
+});
+</script>
+<div style="background: #f6f1de; padding: 10px;">
+	<%= form_for (@product_issue, :url => report_issue_product_path, :remote => true, :html => { :id => "report-issue-now", :class => "report-issue-form" }) do |f| %>
+		<%= radio_button("product_issue", "option", "1") %> <%= f.label "Product not available" %><br/>
+		<%= radio_button("product_issue", "option", "2") %> <%= f.label "Inappropriate image" %><br/>
+		<%= radio_button("product_issue", "option", "3") %> <%= f.label "Not a product" %><br/>
+		<%= radio_button("product_issue", "option", "4") %> <%= f.label "Inappropriate content" %><br/>
+		<%= radio_button("product_issue", "option", "5") %> <%= f.label "Other" %><br/>
+		<div style="">
+			<%= f.text_field :remark, :size => 30, :length => 30 %><br/><br/>
+			<%= f.hidden_field :product_id %>
+			<%= f.hidden_field :reporter_id %>
+		</div>
+		<span id="loading">
+			<%= image_tag "loading.gif" %>
+			<br/>		
+		</span>
+		<input type="submit" value="Report now">
+		<a id="close_report_link">cancel</a>
+	<% end %>	
+</div>

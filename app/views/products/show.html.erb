@@ -260,7 +260,7 @@ $(document).ready(function() {
 				<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
 				<div style="margin: 5px;">
 					<div style="overflow: visible;" class="fb-like social" data-href="<%= product_url(@product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
-					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="I would love to recommend the <%= @product.name %>. Check it out now." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+					<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(@product) %>" data-text="I just discovered <%= @product.name %> and posted to @macabolic." data-counturl="<%= product_url(@product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 				</div>
 				<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
 				<br/>
@@ -366,7 +366,8 @@ $(document).ready(function() {
 					<a title="Suggest where to buy" class="suggest_where" id="suggest_where_to_buy">Suggest where to buy</a>
 					<%#= link_to 'Suggest where to buy', :class => "suggest_where", :id => "suggest_where_to_buy", :title => "Suggest where to buy" %>
 					<div id="suggest_where_wrapper" style="display:none">
-						<% if @user.present? || current_user.present? %>
+						<%# if @user.present? || current_user.present? %>
+						<% if user_signed_in? %>
 							<%= render :partial => 'products/suggest_where_to_buy', :locals => { :product => @product } %>
 						<% else %>
 							<div style="margin-top: 5px">

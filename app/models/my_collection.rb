@@ -4,6 +4,9 @@ class MyCollection < ActiveRecord::Base
   has_many    :responses,                 :dependent => :destroy, :class_name => "MyCollectionResponse"
   has_many    :comments,                  :dependent => :destroy, :class_name => "MyCollectionComment"
   has_many    :followers,                 :dependent => :destroy, :class_name => "MyCollectionFollower"
+
+  has_many    :owned_collection_items,    :class_name => 'MyCollectionItem', :conditions => { :my_collection_items => {:interest_indicator => 1} }   
+  has_many    :wished_collection_items,   :class_name => 'MyCollectionItem', :conditions => { :my_collection_items => {:interest_indicator => 2} }   
   
   accepts_nested_attributes_for :my_collection_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
   

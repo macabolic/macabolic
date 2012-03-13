@@ -1,0 +1,44 @@
+<% title 'Followers'%>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+
+<body class="subpage">
+
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Followers" } %>						
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">		
+	        <div class="tabbed-content-area"> 
+	        	<ul class="combined-list">
+					<li class="grid group">
+						<div>
+							<% if !@followers.nil? && @followers.size > 0 %>								
+							<!--<span style="padding-bottom: 15px;">The following </span>-->
+								<%= render :partial => 'friendships/followers', :locals => { :followers => @followers } %>
+							<% else %>
+							<div> 
+				                <p>
+				                	You are not following anyone yet.
+				                </p>	
+			            	</div>
+							<% end %>
+						</div>
+					</li>
+				</ul> 
+	        </div> 
+			<br/>			
+		</div>
+		
+		<div class="sidebar">
+			<%= render :partial => 'members/account_info' %>
+		</div>
+ 	</div>
+
+</body>

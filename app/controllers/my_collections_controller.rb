@@ -9,11 +9,17 @@ class MyCollectionsController < ApplicationController
   def show
     @my_collection = MyCollection.find(params[:id])
     #@my_collection = MyCollection.find_by_permalink(params[:id])
-    @user = @my_collection.user if user_signed_in?
+    @user = @my_collection.user #if user_signed_in?
     @my_collection_comments = @my_collection.comments.order("created_at DESC")
-		@my_collection_items = @my_collection.my_collection_items.page params[:collection_items_page]
     @followers = @my_collection.followers
     @responses = @my_collection.responses
+
+		#@my_collection_items = @my_collection.my_collection_items.page params[:collection_items_page]
+    @owned_collection_items = @my_collection.owned_collection_items.page params[:owned_collection_items_page]
+    @wished_collection_items = @my_collection.wished_collection_items.page params[:collection_items_page]
+    
+    @user_other_collection_items = @user.my_collection_items.order("updated_at DESC").limit(3)
+    
 #    ids = @user.friends.map { |i| i.id }
 #    ids.insert(0, @user.id)
     
@@ -35,10 +41,18 @@ class MyCollectionsController < ApplicationController
   def new
     # Step 3 on the registration.
     # Show only the production from Apple
+    
+    r = [ ]
+    while r.length < 31 
+      v = rand(Product.all.size)
+      r << v unless r.include? v
+    end
+    
     @search = Sunspot.search(Product) do
-      fulltext "Apple Inc.", :fields => [:vendor_name]
-      with(:product_line_id, [1, 3, 4, 5])
-      paginate :page => 1, :per_page => 100
+      #fulltext "Apple Inc.", :fields => [:vendor_name]
+      #with(:product_line_id, [1, 3, 4, 5])
+      with(:id, r)
+      #paginate :page => 1, :per_page => 100
     end
     @products = @search.results
 

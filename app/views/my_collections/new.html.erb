@@ -1,8 +1,8 @@
 <style>
 	.inactive { 
-		opacity: 0.2;
-		-moz-opacity: 0.2;
-		filter:alpha(opacity=20);
+		opacity: 0.4;
+		-moz-opacity: 0.4;
+		filter:alpha(opacity=40);
 	}
 
 	.spotlight {
@@ -83,11 +83,12 @@ $(window).load(function(){
 
 <div class="wrapper-mh">
 	<div id="step2" class="home-signup" style="margin-top: 35px; width: 978px; height: auto;">
-		<div class="home-signup-th" style="text-transform: none;">Do you own one of these? Pick those to build your collections now</div>	
+		<div class="home-signup-th" style="text-transform: none;">Do you like one of these? Pick some to build your collections now</div>	
         <div class="product-grid"> 	
 			<%= form_for @my_collection, :url => mass_create_my_collections_path, :html => { :id => "mass-new-collections-form", :class => "home-signupform" } do |f| %>
 			<div style="border: 0px solid black;">
 				<ul class="list-my-collections">
+					<% count = 0 %>				
 					<% @products.each do |product| %>
 					<li class="inactive">
 						<div class="center">
@@ -95,7 +96,14 @@ $(window).load(function(){
 							<span class="productimage shadow">								
 								<%= hidden_field_tag 'product['+product.name+']', product.id, :class => 'product_name' %>						
 								<%= builder.hidden_field :product_id, :class => 'product_id' %>
-								<%= image_tag product.thumbnail.url(:small), :width => "180", :height => "160" %>
+								<%#= image_tag product.thumbnail.url(:small), :width => "180", :height => "160" %>
+								<% if product.thumbnail.present? %>
+									<%= image_tag product.thumbnail.url(:small), :width => "180", :height => "160" %>
+								<% elsif product.image_url.present? %>
+									<%= image_tag product.image_url, :width => "180" %>
+								<% else %>
+									<%= image_tag "/images/product/no-image_medium.jpg", :width => "180" %>
+								<% end %>										
 							</span>
 							<span>
 								<%= product.name %>
@@ -104,10 +112,19 @@ $(window).load(function(){
 						</div>
 						<%# end %>				
 					</li>
+					<%
+						count = count + 1
+						if count % 4 == 0
+					%>
+						<hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/>
+					<% 
+						end 
+					%>					
 					<% end %>
 					<div class='clear'></div>  															
 				</ul>
 			</div>
+			<br/>
 			<div style="padding-left: 17px;">
 		    	<%= submit_tag "Submit", :class => "button-green", :id => "mass-create-collections" %> 
 			</div>

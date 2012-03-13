@@ -25,7 +25,7 @@ ActiveAdmin.register Product do
   
     
   #form :partial => "form"  
-  form do |f|
+  form :html => { :multipart => true } do |f|
       f.inputs "Product" do
         f.input :name
         f.input :vendor

@@ -87,6 +87,12 @@
 	color: #595959;
 	cursor: pointer;
 }
+
+#report_an_issue_link {
+	text-decoration: underline;
+	cursor: pointer;	
+}
+
 </style>
 <script type="text/javascript"> 
 //SETTING UP OUR POPUP
@@ -115,7 +121,7 @@ function disableZoomIn(){
 }
 
 //centering popup
-function centerZoomIn(){
+function centerZoomIn() {
 
 	//request data for centering
 	var windowWidth = document.documentElement.clientWidth;
@@ -132,7 +138,6 @@ function centerZoomIn(){
 
 	$("#backgroundZoomIn").css( {"height": windowHeight} );
 }
-
 
 $(document).ready(function() {
  	$(document).pngFix(); 
@@ -153,13 +158,17 @@ $(document).ready(function() {
 	
 	//CLOSING POPUP
 	//Click the x event!
-	$("#popupZoomInClose").click(function(){
+	$("#popupZoomInClose").click(function() {
 		disableZoomIn();
 	});
 	
 	//Click out event!
-	$("#backgroundZoomIn").click(function(){
+	$("#backgroundZoomIn").click(function() {
 		disableZoomIn();
+	});
+	
+	$("#report_an_issue_link").click(function() {
+		$("#report_an_issue").fadeIn();		
 	});
 	
 	//Press Escape event!
@@ -225,7 +234,16 @@ $(window).load(function() {
 	<% if @product.product_link.present? %>
 		<%= link_to 'More Info', buy_now_product_path(@product), :title => "More Info", :class => "external_link", :target => "_blank" %><br/>
 	<% end %>
-	<%= link_to 'Report Issue', :title => "Report Issue", :target => "_blank" %>
+		<a id="report_an_issue_link" title="Report an issue">Report Issue</a>
+		<div id="report_an_issue" style="margin-top: 15px; display:none;">
+	<% if user_signed_in? %>
+			<%= render :partial => 'products/report_an_issue' %>
+	<% else %>
+			<div style="background: #f6f1de; padding: 10px;">
+				<%= link_to 'log in', user_session_path %> or <%= link_to "sign up", new_registration_path(User.new) %>
+			</div>
+	<% end %>
+		</div>	
 	</div>									
 </div>
 

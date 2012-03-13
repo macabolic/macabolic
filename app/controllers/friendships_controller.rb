@@ -1,6 +1,8 @@
 require 'httparty'
 class FriendshipsController < ApplicationController
   before_filter :show_invitation_notice
+  before_filter :store_location
+  before_filter :authenticate_user!, :except => [:following, :followers]
 
   # GET /products
   # GET /products.xml
@@ -189,4 +191,58 @@ class FriendshipsController < ApplicationController
       end
     end
   end
+  
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers
+  end
+  
+  def following
+    @user = User.find(params[:id])
+    @following = @user.followings    
+    logger.debug "Number of following: #{@following.size}."
+    
+    if @user == current_user
+      me_and_my_friends = @following.map(&:id)
+      me_and_my_friends << current_user.id
+    
+      @suggested_from_macabolic_search = Sunspot.search(User) do
+        without(:id, me_and_my_friends)
+      end
+    
+      @suggested_from_macabolic = @suggested_from_macabolic_search.results
+      logger.debug "Number of suggestions: #{@suggested_from_macabolic.size}."
+    end        
+  end
+
+  def follow
+    following_user = User.find(params[:id])
+    member = User.find(params[:member_id])
+    
+    if member.present? && following_user.present?
+      following_user.friendships.build(:friend_id => member.id)
+      following_user.save
+    end
+    
+    logger.debug "Friendships.follow. Member #{member.id} is now following user #{following_user.id}"    
+    @user = following_user
+    @number_of_following = member.followings.size    
+  end
+  
+  def unfollow
+    unfollowing_user = User.find(params[:id])
+    member = User.find(params[:member_id])
+    
+    if member.present? && unfollowing_user.present?
+      friendships = Friendship.where("user_id = ? and friend_id = ?", unfollowing_user.id, member.id)
+      if friendships.exists?
+        friendships.first.destroy
+      end
+    end
+    
+    logger.debug "Friendships.follow. Member #{member.id} is now unfollowing user #{unfollowing_user.id}"        
+    @user = unfollowing_user
+    @number_of_following = member.followings.size
+  end
+  
 end

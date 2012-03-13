@@ -1,0 +1,67 @@
+<% title 'Following'%>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+
+<body class="subpage">
+
+	<div id="grey-strip-signedin">
+		<div class="wrapper-top">
+			<%= render :partial => 'layouts/navigation', :locals => { :user => @user, :item => "Following" } %>						
+		</div>
+	</div>
+	
+	<div class="wrapper-mh">
+		<div class="maincol">					
+	        <div class="tabbed-content-area"> 
+	        	<ul class="combined-list">
+					<li class="grid group">
+						<div>
+							<% if !@following.nil? && @following.size > 0 %>								
+							<!--<span style="padding-bottom: 15px;">You are now following</span>-->
+								<%= render :partial => 'friendships/following', :locals => { :followings => @following } %>
+							<% else %>
+							<div> 
+				                <p>
+				                	No one is following you yet.
+				                </p>	
+			            	</div>
+							<% end %>
+						</div>
+					</li>
+				</ul> 
+	        </div> 
+			<br/>
+			<% if @user == current_user %>	
+			<div class="tabbed-content-area">
+				<ul class="tabs"> 
+        			<li><a href="#tab1">Suggested from Macabolic</a></li> 
+    			</ul> 
+
+		        <div id="tab1" class="tab_content"> 
+		        	<ul class="combined-list">
+					<%# if @user == current_user %>	
+						<li class="grid group">
+							<div>
+								<span style="padding-bottom: 15px;">Members from macabolic:</span>
+								<ul class="friendships" id="suggested_from_macaboilc">
+									<%= render :partial => 'suggestion_from_macabolic' %>
+								</ul>
+							</div>
+						</li>
+					<%# end %>
+					</ul> 
+		        </div> 
+			</div>
+			<% end %>
+		</div>
+		
+		<div class="sidebar">
+			<%= render :partial => 'members/account_info' %>
+		</div>
+ 	</div>
+
+</body>
+

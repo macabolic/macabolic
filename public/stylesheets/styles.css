@@ -677,6 +677,10 @@ padding: 12px 0px 21px 0px;
 	padding: 12px 0px 21px 0px;
 }
 
+.product-stat-details li.mini {
+	width: 100px;
+}
+
 .add-product-methods ul {
 	background-color: #f3f3f3;
 	border: 1px solid #d9d9d9;
@@ -1499,4 +1503,22 @@ input:blur {
 #buy_now_wrapper a {
 	text-decoration: none;
 	color: #da5d18;
+}
+
+#friend_name {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	color: #313131;
+	display: block;
+	padding-top: 8px;
+}
+
+.follow_link {
+	font-weight: normal;
+}
+
+a.follow_link {
+	font-weight: bold;	
+	color: #DA5D18;	
 }

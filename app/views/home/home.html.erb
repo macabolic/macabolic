@@ -1,150 +1,3 @@
-<style type="text/css">
-#backgroundZoomIn {
-	display:none;
-	position:fixed;
-	_position:absolute; /* hack for internet explorer 6*/
-	height:100%;
-	width:100%;
-	top:0;
-	left:0;
-	background:#000000;
-	border:1px solid #cecece;
-	z-index:1;
-}
-#popupZoomIn {
-	display:none;
-	position:fixed;
-	_position:absolute; /* hack for internet explorer 6*/
-	//background:#f6f1de;
-	background: #DA5D18;
-	//border:2px solid #cecece;
-	z-index:2;
-	padding:12px;
-	font-size:13px;
-	width: 400px; 
-	//height: 300px; 	
-  	-webkit-border-radius:20px;
-  	-moz-border-radius:20px;
-  	border-radius:20px;		
-	font-color: #ffffff;
-	color: #ffffff;
-}
-
-#popupZoomInClose {
-	font-size:14px;
-	line-height:14px;
-	right:3px;
-	top:1px;
-	position:absolute;
-	color:#5c5c5c;
-	font-weight:700;
-	display:block;
-}
-
-#product_preview_gallery {
-	cursor: pointer;
-}
-
-#zoom_now {
-	color: #595959;
-	cursor: pointer;
-	text-decoration: underline;
-}
-</style>
-<script type="text/javascript"> 
-    $(document).ready(function(){ 
-        $(document).pngFix(); 
-//		$("ul.tabs li:first").addClass("active").show(); //Activate first tab
-    }); 
-</script>
-<script type="text/javascript"> 
-//SETTING UP OUR POPUP
-//0 means disabled; 1 means enabled;
-var zoomInStatus = 0;
-
-//loading popup with jQuery magic!
-function loadZoomIn(){
-	//loads popup only if it is disabled
-	if(zoomInStatus==0){
-		$("#backgroundZoomIn").css( {"opacity": "0.7"} );
-		$("#backgroundZoomIn").fadeIn("slow");
-		$("#popupZoomIn").fadeIn("slow");
-		zoomInStatus = 1;
-	}
-}
-
-//disabling popup with jQuery magic!
-function disableZoomIn(){
-	//disables popup only if it is enabled
-	if(zoomInStatus==1){
-		$("#backgroundZoomIn").fadeOut("slow");
-		$("#popupZoomIn").fadeOut("slow");
-		zoomInStatus = 0;
-	}
-}
-
-//centering popup
-function centerZoomIn(){
-
-	//request data for centering
-	var windowWidth = document.documentElement.clientWidth;
-	var windowHeight = document.documentElement.clientHeight;
-	var popupHeight = $("#popupZoomIn").height();
-	var popupWidth = $("#popupZoomIn").width();
-	//centering
-	$("#popupZoomIn").css({
-		"position": "absolute",
-		"top": windowHeight/2-popupHeight/2,
-		"left": windowWidth/2-popupWidth/2
-	});
-	//only need force for IE6
-
-	$("#backgroundZoomIn").css( {"height": windowHeight} );
-}
-
-
-$(document).ready(function() {
- 	$(document).pngFix(); 
-
-	//LOADING POPUP
-	//Click the button event!
-	$("#product_preview_gallery").click(function(){
-		//centering with css
-		centerZoomIn();
-		//load popup
-		loadZoomIn();
-	});
-
-	$("#zoom_now").click(function() {
-		centerZoomIn();
-		loadZoomIn();
-	});
-	
-	//CLOSING POPUP
-	//Click the x event!
-	$("#popupZoomInClose").click(function(){
-		disableZoomIn();
-	});
-	
-	//Click out event!
-	$("#backgroundZoomIn").click(function(){
-		disableZoomIn();
-	});
-	
-	//Press Escape event!
-	$(document).keypress(function(e){
-		if(e.keyCode==27 && zoomInStatus==1) {
-			disableZoomIn();
-		}
-	});	
-	
-});
-</script>
-<div id="popupZoomIn">
-	<%= render :template => 'home/what_we_do' %>
-</div>
-<div id="backgroundZoomIn"></div>
-
 <% title "Home" %>
 	<div id="grey-strip" style="height: 115px">
 		<div class="wrapper-top">
@@ -183,7 +36,7 @@ $(document).ready(function() {
 					<div>
 						<p style="font-size:14px; color:#808080; padding-left: 23px; text-align:left">
 							<%= image_tag current_profile_image_thumbnail_url(collection_items[0].user), :width => 50, :title => collection_items[0].user.full_name %>
-							<strong><span><%= collection_items[0].user.full_name %></span></strong>
+							<strong><span><%= link_to collection_items[0].user.full_name, collections_member_path(collection_items[0].user) %></span></strong>
 						</p>
 					</div>
 				</div><!-- .pagination-wrapper -->						
@@ -194,16 +47,17 @@ $(document).ready(function() {
 				<% end %>
 				<% end %>
 			</div>
-		<!--				
+			<br/>
+						
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
-			        <li><a href="#tab1">Featured Collections</a></li> 
+			        <li><a href="#tab1">Most Recent Collections</a></li> 
 				</ul> 		
 		        <div id="tab1" class="tab_content product-grid group"> 
-					<%#= render :partial => 'my_collections/index', :locals => { :my_collections => MyCollection.all(:limit => 6), :preview_gallery => false } %>
+					<%= render :partial => 'my_collections/index', :locals => { :my_collections => MyCollection.all(:limit => 6), :preview_gallery => false } %>
 				</div>	
 			</div>
-		-->
+		
 		</div>
 		
 		<% if @notice.present? %>		
@@ -218,7 +72,14 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<% end %>
-			
+<!--			
+		<div class="sidebar">
+			<div>
+				<script type="text/javascript" src="http://www.globalgiving.org/javascript/widget/widget.js">  { "projectids" : "6443", "ggtid" : "413C44A1FE63158BC1E4D1139F0EF95F"  }  </script>
+			</div>
+		</div>
+		<br/>
+-->			
 		<% if !user_signed_in? %>
 		<div class="sidebar">
 			<%= render :partial => 'users/sessions/mini_form' %>
@@ -245,7 +106,7 @@ $(document).ready(function() {
 		-->
 		
 		<% end %>		
-
+		
 		<%= render :template => 'home/heat_map' %>
 		
 	<!--	

@@ -1,5 +1,5 @@
 class MyCollectionItem < ActiveRecord::Base
-  belongs_to  :my_collection
+  belongs_to  :my_collection, :counter_cache => false
   belongs_to  :product
   belongs_to  :user
 

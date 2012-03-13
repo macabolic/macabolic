@@ -36,7 +36,7 @@ Macabolic::Application.routes.draw do
     collection do
         get 'show_more'
         get 'search'
-        get 'search_in_network'
+        get 'search_in_network'        
     end
   end
 
@@ -122,6 +122,7 @@ Macabolic::Application.routes.draw do
       get 'unlike'
       get 'recommend'
       get 'buy_now'
+      post 'report_issue'
     end
 
     collection do
@@ -139,6 +140,8 @@ Macabolic::Application.routes.draw do
       get 'collections'
       get 'profile'
       get 'friends' => 'friendships#show'
+      get 'followers' => 'friendships#followers'
+      get 'following' => 'friendships#following'
     end
     
     resources :my_collections
@@ -150,6 +153,14 @@ Macabolic::Application.routes.draw do
         post 'add_as_friend'
       end
     end
+    
+    resources :friendships do
+      member do
+        get 'follow'
+        get 'unfollow'
+      end
+    end
+    
   end
   
   resources :authentications
@@ -160,7 +171,7 @@ Macabolic::Application.routes.draw do
   #match '/auth/:provider/callback' => 'authentications#create'
   match 'my_collections/add_product/:id' => 'my_collections#add_product'
   match 'about' => 'home#about_us'
-  match 'features' => 'home#feature_tour'
+  #match 'features' => 'home#feature_tour'
   match 'contact' => 'home#contact_us'
   match 'faq' => 'home#faq'
   match 'discover' => 'home#discover'

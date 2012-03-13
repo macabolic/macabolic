@@ -1,12 +1,16 @@
 <%
 	if item == 'Collections'
-		if user != current_user 
-			collection = "nav-item-on"
-		else
+		#if user != current_user 
+		#	collection = "nav-item-on"
+		#else
 			collection = "home-on"
-		end
+		#end
 	elsif item == 'Friends'
 		friends = "nav-item-on"
+	elsif item == 'Followers'
+		followers = "nav-item-on"
+	elsif item == 'Following'
+		following = "nav-item-on"
 	elsif item == 'Profile'
 		profile = "nav-item-on"
 	elsif item == 'Home'
@@ -17,20 +21,29 @@
 %>
 <ul id="nav-signedin">
 	<% if user.present? %>
-		<% if user != current_user %>
-		<li class="homerounded" id="<%= home %>">
-			<%= link_to "#{user.full_name}'s Home", member_path(user) %>
+		<% if @user != current_user %>
+<!--		<li class="homerounded" id="<%= home %>">
+			<%#= link_to "#{user.full_name}'s Home", member_path(user) %>
 		</li>
-		<li id="<%= collection %>">
-			<%= link_to 'Collections', collections_member_path(user) %>
+-->
+		<li class="homerounded" id="<%= collection %>">
+			<%= link_to "#{user.full_name}'s Collections", collections_member_path(user) %>
 		</li>		
 		<% else %>
 	<li class="homerounded" id="<%= collection %>">
 		<%= link_to 'Collections', collections_member_path(user) %>
 	</li>
 		<% end %>
-	<li id="<%= friends %>">
-		<%= link_to 'Friends', friends_member_url(user) %>
+<!--		
+	<li id="<%#= friends %>">
+		<%#= link_to 'Friends', friends_member_url(user) %>
+	</li>	
+-->
+	<li id="<%= followers %>">
+		<%= link_to 'Followers', followers_member_url(user) %>
+	</li>	
+	<li id="<%= following %>">
+		<%= link_to 'Following', following_member_url(user) %>
 	</li>	
 	<li id="<%= profile %>">
 	<% if user == current_user %>

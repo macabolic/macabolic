@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
-  belongs_to              :product_line
-  belongs_to              :vendor
+  belongs_to              :product_line,        :counter_cache => false
+  belongs_to              :vendor,              :counter_cache => false
   belongs_to              :discoverer,          :class_name => "User",  :foreign_key => "uploader_id"
   belongs_to              :product_target_audience
   has_many                :reviews,             :dependent => :destroy
@@ -12,6 +12,7 @@ class Product < ActiveRecord::Base
   #has_many                :wishlist_items,      :dependent => :destroy
   has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
+  has_many                :issues,              :dependent => :destroy, :class_name => "ProductIssue"
   
   # Right now, we are assuming there is only 1 product_link and thus only 1 price range
   has_one                 :product_link,        :dependent => :destroy

@@ -48,8 +48,8 @@ $(document).ready(function() {
 		<div class="maincol">
 	    	<div class="product-item sidebar-content">		
 		        <div class="product-image">		        
-				<% if @vendor.logo.url(:small).present? %>
-					<%= image_tag @vendor.logo.url(:small), :width => "200", :class => "preview-image" %>
+				<% if @vendor.logo.url(:medium).present? %>
+					<%= image_tag @vendor.logo.url(:medium), :width => "200", :class => "preview-image" %>
 				<% else %>
 					<img src="/images/product/no-image_medium.jpg" alt="Product Image" width="200" class="preview-image">
 				<% end %>
@@ -91,7 +91,7 @@ $(document).ready(function() {
 					<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
 					<div style="margin: 5px;">
 						<div style="overflow: visible;" class="fb-like social" data-href="<%= store_url(@vendor) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="recommend" data-font="verdana"></div>
-						<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= store_url(@vendor) %>" data-text="I would love to recommend the <%= @vendor.name %>. Check it out now." data-counturl="<%= store_url(@vendor) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+						<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= store_url(@vendor) %>" data-text="Check out <%= @vendor.name %>' store @macabolic." data-counturl="<%= store_url(@vendor) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 					</div>
 					<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
 					

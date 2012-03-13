@@ -41,22 +41,24 @@ $(document).ready(function() {
 								<!--<div id="friends"><%#= render 'friends' %></div>-->
 							<% end %>
 						</li>
+					<!--
 						<li class="grid group">
 							<div>
 								<span style="padding-bottom: 15px;">Friends from macabolic:</span>
-								<% if !@friends.nil? && @friends.size > 0 %>								
+								<%# if !@friends.nil? && @friends.size > 0 %>								
 								<ul class="friendships" id="macabolic_friends">
-									<%= render :partial => 'macabolic_friends' %>
+									<%#= render :partial => 'macabolic_friends' %>
 								</ul>
-								<% else %>
+								<%# else %>
 								<div> 
 					                <p>
 					                	You do not have any friends yet.
 					                </p>	
 				            	</div>
-								<% end %>
+								<%# end %>
 							</div>
 						</li>
+					-->
 						<% if @user == current_user %>
 							<% if !@facebook_friends.nil? && @facebook_friends.size > 0 %>								
 							<li class="grid group">
@@ -71,7 +73,7 @@ $(document).ready(function() {
 						<% end %>
 						<li class="grid group">
 							<div>
-								<span style="padding-bottom: 15px;">Suggested from macabolic:</span>
+								<span style="padding-bottom: 15px;">Members from macabolic:</span>
 								<ul class="friendships" id="suggested_from_macaboilc">
 									<%= render :partial => 'suggestion_from_macabolic' %>
 								</ul>

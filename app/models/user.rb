@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many  :reviews
   has_many  :questions
   has_many  :answers
-  has_many  :activities, :dependent => :destroy
+  has_many  :activities, :dependent => :destroy, :order => 'updated_at desc'
   
   has_many  :sent_invitations,  :class_name => 'Invitation', :foreign_key => 'sender_id'
 
@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_many  :products, :through => :my_collection_items
 
 #  has_many  :wishlist_items
+  has_many  :owned_collection_items, :class_name => 'MyCollectionItem', :conditions => { :my_collection_items => {:interest_indicator => 1} }   
+  has_many  :wished_collection_items, :class_name => 'MyCollectionItem', :conditions => { :my_collection_items => {:interest_indicator => 2} }   
+
   has_many  :owned_products, :through => :my_collection_items, :source => :product, :conditions => { :my_collection_items => {:interest_indicator => 1} }  
   has_many  :wished_products, :through => :my_collection_items, :source => :product, :conditions => { :my_collection_items => {:interest_indicator => 2} }
   
@@ -26,6 +29,10 @@ class User < ActiveRecord::Base
   
   has_many  :friendships
   has_many  :friends, :through => :friendships
+    
+  has_many  :followers,  :through => :friendships, :source => :friend 
+  #has_many  :followings,  :through => :friendships, :source => :user, :foreign_key => 'friend_id' 
+  has_many  :following_friendships,  :class_name => 'Friendship', :foreign_key => 'friend_id'
   
   has_many  :profile_images, :dependent => :destroy
   
@@ -277,6 +284,26 @@ class User < ActiveRecord::Base
 #    end
 #  end  
 
+  def followings
+    self.following_friendships.collect { |a| a.user }
+  end
+  
+  def following?(user)
+    return User.following?(self, user)
+  end
+  
+  def self.following?(myself, following_user)
+    @search = Sunspot.search(Friendship) do
+      with  :user_id, following_user.id 
+      with  :friend_id, myself.id
+    end
+    
+    if @search.results.size > 0
+      return true
+    else
+      return false
+    end
+  end
   
   private
   
