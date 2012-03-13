@@ -235,7 +235,7 @@ $(window).load(function() {
 		<%= link_to 'More Info', buy_now_product_path(@product), :title => "More Info", :class => "external_link", :target => "_blank" %><br/>
 	<% end %>
 		<a id="report_an_issue_link" title="Report an issue">Report Issue</a>
-		<div id="report_an_issue" style="margin-top: 15px; display:none;">
+		<div id="report_an_issue" style="margin-top: 15px; display:none">
 	<% if user_signed_in? %>
 			<%= render :partial => 'products/report_an_issue' %>
 	<% else %>

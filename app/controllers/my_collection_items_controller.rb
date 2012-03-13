@@ -56,6 +56,7 @@ class MyCollectionItemsController < ApplicationController
     if user_signed_in?
       @product_link = ProductLink.new(:informer_id => current_user.id, :product_id => @product.id)
       @price_ranges = PriceRange.order("sort_order ASC")
+      @product_issue = ProductIssue.new(:product_id => @product.id, :reporter_id => @user.id)
     end
     
     @my_collections = @user.my_collections

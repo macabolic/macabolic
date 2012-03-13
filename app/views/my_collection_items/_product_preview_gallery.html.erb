@@ -84,6 +84,11 @@
 	color: #595959;
 	cursor: pointer;
 }
+#report_an_issue_link {
+	text-decoration: underline;
+	cursor: pointer;	
+}
+
 
 </style>
 <script type="text/javascript"> 
@@ -160,6 +165,10 @@ $(document).ready(function() {
 		disableZoomIn();
 	});
 	
+	$("#report_an_issue_link").click(function() {
+		$("#report_an_issue").fadeIn();		
+	});
+		
 	//Press Escape event!
 	$(document).keypress(function(e){
 		if(e.keyCode==27 && zoomInStatus==1) {
@@ -224,8 +233,19 @@ $(window).load(function() {
 	<%= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "edit_link", :title => "Edit Collection" %>
 <% end %>	
 	<div id="report_issue">
-<% if @product.product_link.present? %>
-		<%= link_to 'Report Issue', buy_now_product_path(@product), :class => "buy_now", :title => "Buy Now", :target => "_blank" %>
-<% end %>
-	</div>									
+	<% if @product.product_link.present? %>
+		<%= link_to 'More Info', buy_now_product_path(@product), :title => "More Info", :class => "external_link", :target => "_blank" %><br/>
+	<% end %>
+	</div>
+		<a id="report_an_issue_link" title="Report an issue">Report Issue</a>	
+		<div id="report_an_issue" style="margin-top: 15px; display:none">
+	<% if user_signed_in? %>
+			<%= render :partial => 'products/report_an_issue' %>
+	<% else %>
+			<div style="background: #f6f1de; padding: 10px;">
+				<%= link_to 'log in', user_session_path %> or <%= link_to "sign up", new_registration_path(User.new) %>
+			</div>
+	<% end %>
+		</div>	
+										
 </div>
