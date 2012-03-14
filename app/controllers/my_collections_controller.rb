@@ -18,7 +18,7 @@ class MyCollectionsController < ApplicationController
     @owned_collection_items = @my_collection.owned_collection_items.page params[:owned_collection_items_page]
     @wished_collection_items = @my_collection.wished_collection_items.page params[:collection_items_page]
     
-    @user_other_collection_items = @user.my_collection_items.order("updated_at DESC").limit(3)
+    @user_other_collection_items = @user.my_collection_items.order("updated_at ASC").limit(3)
     
 #    ids = @user.friends.map { |i| i.id }
 #    ids.insert(0, @user.id)
