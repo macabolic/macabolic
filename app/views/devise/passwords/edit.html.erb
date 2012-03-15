@@ -38,22 +38,19 @@
 	<div class="home-signup-with-error">
 	<% end %>
 		<div class="home-signup-th">Change your password</div>
-		<div class="form_contents">
-			<h4>Can't remember your password?</h4> 
-			<p>Enter your email address below and we will send you the instruction to reset your password.</p>
-		</div>
-		
-		<%= registration_error_messages! %>
-		
-		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "home-signupform" }) do |f| %>
+		<%#= registration_error_messages! %>
+		<div>		
+		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => "home-signupform" }) do |f| %>
 		  	<%= f.hidden_field :reset_password_token %>
+			<%= f.label 'Enter your new password' %>
 		  	<%= f.password_field :password %>
+			<%= f.label 'Re-enter your password' %>
 			<%= f.password_field :password_confirmation %>
-
 			<span class="home-signupbutton">
-				<%= submit_tag "Change my password", :class => "home-signupbutton" %>
+				<%= submit_tag "Change", :class => "home-signupbutton" %>
 			</span>   
 		<% end %>
+		</div>
 	</div>
 
 </div>

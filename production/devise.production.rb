@@ -140,6 +140,8 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
   # end
   
+  config.case_insensitive_keys = [:email]
+  
   # ==> Omniauth configuration
   require 'omniauth-twitter'
   config.omniauth :twitter, '8WU2gyHJDv65KxiAAMG5ZQ', 'StLrLfygftKgn4kdCEvNzFHZxonCAFhuAi93Apet9Y'

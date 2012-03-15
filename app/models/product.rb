@@ -41,6 +41,7 @@ class Product < ActiveRecord::Base
   
   accepts_nested_attributes_for :vendor, :reject_if => lambda { |a| a[:name].blank? }
   accepts_nested_attributes_for :product_link, :reject_if => lambda { |a| a[:link].blank? }
+  accepts_nested_attributes_for :responses, :reject_if => lambda { |a| a[:product_id].blank? }
   attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url, :product_link_attributes, :product_target_audience_id
   
   searchable do

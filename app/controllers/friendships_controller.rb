@@ -206,7 +206,14 @@ class FriendshipsController < ApplicationController
       me_and_my_friends = @following.map(&:id)
       me_and_my_friends << current_user.id
     
+      r = [ ]
+      while r.length < 31 
+        v = rand(User.all.size)
+        r << v unless r.include? v
+      end
+    
       @suggested_from_macabolic_search = Sunspot.search(User) do
+        with(:id, r)
         without(:id, me_and_my_friends)
       end
     

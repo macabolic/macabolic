@@ -137,7 +137,7 @@ class ProductsController < ApplicationController
     logger.debug "============================="
     
     if params[:my_collection_id].present?
-      my_collection_item = MyCollectionItem.new(:my_collection_id => params[:my_collection_id], :user_id => current_user.id)
+      my_collection_item = MyCollectionItem.new(:my_collection_id => params[:my_collection_id], :user_id => current_user.id, :interest_indicator => MyCollectionItem::WISH)
       logger.debug "building product now..."
 
       if params[:product_link].present?

@@ -21,6 +21,12 @@ select {
 	font-weight: bold;
 	color: #DA5D18;
 }
+
+.selected-audience {
+	font-weight: bold;
+	color: #DA5D18;
+}
+
 </style>
 <script type="text/javascript"> 
     $(document).ready(function(){ 
@@ -128,9 +134,9 @@ select {
 
 		$(".product_target_audience").click(function() {
 			// Selected
-			$(this).toggleClass('selected-price');
-			if ($(this).hasClass('selected-price')) {
-				$(this).siblings().removeClass('selected-price');
+			$(this).toggleClass('selected-audience');
+			if ($(this).hasClass('selected-audience')) {
+				$(this).siblings().removeClass('selected-audience');
 				$('#product_product_target_audience_id').attr('value', $(this).attr("id"));
 			} else {
 				$('#product_product_target_audience_id').attr('value', "");
@@ -220,6 +226,7 @@ select {
 
 				<%= f.hidden_field :product_target_audience_id %>
 				<%= hidden_field_tag :my_collection_id %>
+				<%= hidden_field_tag :interest_indicator, MyCollectionItem::WISH %>
 				<%= hidden_field_tag "product[uploader_id]", current_user.id %>
 				
 				<div>
