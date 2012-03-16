@@ -42,3 +42,41 @@
 	</div>
 </div>
 <% end %>
+
+<% if @user_heat_map_search.present? %>
+<div class="sidebar">
+	<div class="sidebar-content">
+        <div class="sidebar-header" style="background: #dd6219;">Trending members</div>
+		<div style="margin: 17px; border: 0px;">
+			<div>
+				<p style="font-size: 12px; font-family: Verdana;">					
+		    	<ul id="search-list">
+					<div id="products">
+						<% count = 1 %>					
+						<% @user_heat_map_search.facet(:user_id).rows.each do |facet| %>	
+						<% if count <= 10 %>
+				        <li>
+							<div>
+								<div class="left" style="margin-right: 10px;">
+									<%= image_tag user_thumbnail(facet.value), :size => "60x60" %>									
+								</div>
+								<br/>
+								<p style="margin-bottom: 3px;"><%= link_to user(facet.value), collections_member_path(:id => facet.value) %></p>
+								<div class="answers-meta">
+									<p class="left">
+										<span id="response-stat-product"><%= pluralize(facet.count, 'products') %></span>
+									</p>
+								</div>
+							</div>
+				        </li>
+						<% end %>
+						<% count = count + 1 %>
+						<% end %>
+					</div>
+				</ul>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>

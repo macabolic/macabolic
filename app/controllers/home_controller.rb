@@ -40,6 +40,10 @@ class HomeController < ApplicationController
       facet :product_line_id
     end
     
+    @user_heat_map_search = Sunspot.search(MyCollectionItem) do
+      facet :user_id
+    end
+    
     @featured_products = Product.limit(15).order("updated_at DESC")
     @feature_collection_items = Array.new
     most_active_users = User.where("sign_in_count > ?", 10).order("sign_in_count DESC").limit(3)

@@ -17,5 +17,15 @@ module HomeHelper
   def product_line(product_line_id)
     product_line = ProductLine.find(product_line_id)
   end
+
+  def user_thumbnail(user_id) 
+    user = User.find(user_id)
+    return current_profile_image_thumbnail_url(user)
+  end
+
+  def user(user_id)
+    user = User.find(user_id)
+  end
+
   
 end

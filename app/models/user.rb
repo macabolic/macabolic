@@ -80,6 +80,9 @@ class User < ActiveRecord::Base
     integer :id
   end
 
+  def to_s
+    full_name
+  end
 
   def full_name
     fn = first_name
