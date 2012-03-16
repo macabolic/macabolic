@@ -206,8 +206,15 @@ class FriendshipsController < ApplicationController
       me_and_my_friends = @following.map(&:id)
       me_and_my_friends << current_user.id
     
+      count = User.all.size
+      if count < 31
+        number_of_suggestions = count
+      else
+        number_of_suggestions = 31
+      end
+      
       r = [ ]
-      while r.length < 31 
+      while r.length < number_of_suggestions
         v = rand(User.all.size)
         r << v unless r.include? v
       end

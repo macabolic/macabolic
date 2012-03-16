@@ -37,7 +37,7 @@
 			<% if @user == current_user %>	
 			<div class="tabbed-content-area">
 				<ul class="tabs"> 
-        			<li><a href="#tab1">Suggested from Macabolic</a></li> 
+        			<li><a href="#tab1">Members in Macabolic</a></li> 
     			</ul> 
 
 		        <div id="tab1" class="tab_content"> 
@@ -45,7 +45,7 @@
 					<%# if @user == current_user %>	
 						<li class="grid group">
 							<div>
-								<span style="padding-bottom: 15px;">Members from macabolic:</span>
+								<span style="padding-bottom: 15px;">Pick someone to follow</span>
 								<ul class="friendships" id="suggested_from_macaboilc">
 									<%= render :partial => 'suggestion_from_macabolic' %>
 								</ul>
