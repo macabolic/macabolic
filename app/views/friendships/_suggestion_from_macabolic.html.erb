@@ -77,15 +77,11 @@
 				<%= image_tag current_profile_image_small_url(friend), :width => 80, :height => 80 %>
 				<span id="friend_name">
 					<%= link_to friend.full_name, member_path(friend) %><br/>
-					<div id="friend-user-link-<%= friend.id %>">
+					<div id="follow-user-link-<%= friend.id %>">
 					<% if user_signed_in? %>
 						<% if @user == current_user %>
-							<%= link_to "unfollow", unfollow_member_friendship_path(current_user, friend), :class => "follow_link", :title => "Unfollow", :remote => true %>
-						<% else %>
-							<%= link_to "follow", follow_member_friendship_path(current_user, @user), :class => "follow_link", :title => "Follow", :remote => true %>				
+							<%= link_to "follow", follow_member_friendship_path(current_user, friend), :class => "follow_link", :title => "follow", :remote => true %>
 						<% end %>
-					<% else %>
-						<%= link_to "follow", user_session_path(User.new), :class => "follow_link", :title => "Follow", :remote => true %>				
 					<% end %>
 					</div>
 				</span>
