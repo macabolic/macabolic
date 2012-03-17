@@ -1,3 +1,5 @@
+require "open-uri"
+
 class Product < ActiveRecord::Base
   belongs_to              :product_line,        :counter_cache => false
   belongs_to              :vendor,              :counter_cache => false
@@ -23,8 +25,10 @@ class Product < ActiveRecord::Base
                                         :small => ["160x160#", :png],
                                         :medium => ["300x300>", :png],
                                      },
-                          :url => "/assets/products/:attachment/:id/:style/:filename",
-                          :path => ":rails_root/public/assets/products/:attachment/:id/:style/:filename"
+                          #:url => "/assets/products/:attachment/:id/:style/:filename",
+                          :url => "/assets/products/:attachment/:id/:style/:basename.:extension",                          
+                          #:path => ":rails_root/public/assets/products/:attachment/:id/:style/:filename"
+                          :path => ":rails_root/public/assets/products/:attachment/:id/:style/:basename.:extension"
 
   validates               :name, 
                           :length => { :minimum => 3, :maximum => 100, :too_short => "must have at least %{count} characters", :too_long => "must have at most %{count} characters" },
@@ -43,6 +47,8 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_link, :reject_if => lambda { |a| a[:link].blank? }
   accepts_nested_attributes_for :responses, :reject_if => lambda { |a| a[:product_id].blank? }
   attr_accessible         :name, :thumbnail, :vendor_id, :product_line_id, :vendor_attributes, :uploader_id, :description, :image_url, :product_link_attributes, :product_target_audience_id
+  
+  before_save :load_image_from_url
   
   searchable do
     integer :id
@@ -102,6 +108,19 @@ class Product < ActiveRecord::Base
   # This is created for Activity.log_activity
   def user
     self.discoverer
+  end
+  
+  private
+  
+  def load_image_from_url
+    logger.debug "self.thumbnail.present? #{self.thumbnail.present?}"
+    logger.debug "!self.image_url.nil? #{!self.image_url.nil?}"
+    if !self.thumbnail.present? && !self.image_url.nil?
+      logger.debug "Loading image from url ..."
+      #self.thumbnail = open(self.image_url)
+      self.thumbnail = open(URI.parse(self.image_url))
+      logger.debug "Done loading ..."
+    end
   end
   
   #def self.search(search)
