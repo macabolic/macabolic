@@ -2,14 +2,14 @@ class Activity < ActiveRecord::Base
   belongs_to  :user
 
   scope :users_activities, scoped
-  scope :friends_activities, joins('INNER JOIN friendships ON friendships.friend_id = activities.user_id')
+  scope :following_activities, joins('INNER JOIN friendships ON friendships.user_id = activities.user_id')
   
   scope :user_activities, lambda { |user| 
     users_activities.where('activities.user_id = ? and activities.action = ?', user.id, "create") 
   }
 
-  scope :user_friends_activities, lambda { |user| 
-    friends_activities.where('friendships.user_id = ? and activities.action = ?', user.id, "create") 
+  scope :user_following_activities, lambda { |user| 
+    following_activities.where('friendships.friend_id = ? and activities.action = ? and (activities.name = ? or activities.name = ?)', user.id, "create", "Product", "MyCollectionItem") 
   }
 
   scope :questions, joins('INNER JOIN questions ON activities.type_id = questions.id').where('activities.name = ?', 'Question')

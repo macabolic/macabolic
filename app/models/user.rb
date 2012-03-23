@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   #has_many  :followings,  :through => :friendships, :source => :user, :foreign_key => 'friend_id' 
   has_many  :following_friendships,  :class_name => 'Friendship', :foreign_key => 'friend_id'
   
+  has_many  :vendor_followers, :foreign_key => 'follower_id'
+  has_many  :following_shops, :through => :vendor_followers, :source => :vendor
+  
   has_many  :profile_images, :dependent => :destroy
   
   # There is a problem with #{self.profile_image_id}.
@@ -74,6 +77,8 @@ class User < ActiveRecord::Base
   
   before_create :set_invitation_limit
   
+  scope :active_users, joins('INNER JOIN activities ON activities.user_id = users.id').order("performed_at DESC").group("users.id")
+  
   # TODO - Still deciding if I should create a default MyCollection. If I should, this should be the best place to do.
   # after_create :add_default_my_collection
   searchable do
@@ -101,14 +106,22 @@ class User < ActiveRecord::Base
   end
   
   def own_this_product?(product)    
-    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id, :interest_indicator => 1 }).any?
+    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id, :interest_indicator => MyCollectionItem::OWN }).any?
     #MyCollectionItem.where(:user_id => self.id, :product_id => product.id, :interest_indicator => 1).any?
   end
 
   def wish_this_product?(product)    
     #wished_products.where("product_id = ?", product.id)
-    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id, :interest_indicator => 2 }).any?
+    MyCollection.joins(:my_collection_items).where(:user_id => self.id, :my_collection_items => { :product_id => product.id, :interest_indicator => MyCollectionItem::WISH }).any?
     #Wishlist.joins(:wishlist_items).where(:user_id => self.id, :wishlist_items => { :product_id => product.id }).any?
+  end
+  
+  def own_my_collection_item(product)
+    MyCollectionItem.where(:user_id => self.id, :product_id => product.id, :interest_indicator => MyCollectionItem::OWN).first
+  end
+
+  def wish_my_collection_item(product)
+    MyCollectionItem.where(:user_id => self.id, :product_id => product.id, :interest_indicator => MyCollectionItem::WISH).first
   end
   
   def invitation_token
@@ -120,10 +133,15 @@ class User < ActiveRecord::Base
   end
 
   def all_activities
-    result = Activity.user_activities(self).concat(Activity.user_friends_activities(self))
+    result = Activity.user_activities(self).concat(Activity.user_following_activities(self))
     # to sort multiple fields, it can be done
     # result.sort! { |a, b| [b.performed_at, a.user_id] <=> [a.performed_at, b.user_id] }
     # the above will first order by performed_at desc and user_id asc
+    result.sort! { |a, b| b.performed_at <=> a.performed_at }
+  end
+  
+  def following_activities
+    result = Activity.user_following_activities(self).limit(10)
     result.sort! { |a, b| b.performed_at <=> a.performed_at }
   end
   
@@ -185,6 +203,19 @@ class User < ActiveRecord::Base
     profile_images.build(:provider => omniauth.provider, :uid => omniauth.uid)
     profile_images.build(:provider => ProfileImage::MACABOLIC, :uid => omniauth.info.email);
     profile_images.build(:provider => ProfileImage::GRAVATAR, :uid => omniauth.info.email);
+  end
+  
+  def facebook_authenticated?
+    facebook_authentication = authentications.find_by_provider(Authentication::FACEBOOK)
+    if facebook_authentication.present?
+      return true
+    end  
+    
+    return false
+  end
+  
+  def facebook
+    authentications.find_by_provider(Authentication::FACEBOOK)
   end
   
   def self.new_with_session(params, session)

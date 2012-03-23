@@ -74,9 +74,11 @@
 		<li class="friend">
 			<div style="text-align: center">
 				<!-- Image -->	
-				<%= image_tag current_profile_image_small_url(friend), :width => 80, :height => 80 %>
+				<%= image_tag current_profile_image_small_url(friend), :width => 50, :height => 50 %>
 				<span id="friend_name">
 					<%= link_to friend.full_name, member_path(friend) %><br/>
+					<%= friend.followers.size %> followers<br/>
+					<%= friend.my_collection_items.size %> products<br/>
 					<div id="follow-user-link-<%= friend.id %>">
 					<% if user_signed_in? %>
 						<% if @user == current_user %>
@@ -97,17 +99,13 @@
 				<%= link_to product_my_collection_item_path(my_collection_item.product, my_collection_item) do %>				
 			<% if my_collection_item.product.thumbnail.present? %>
 				<%= image_tag(my_collection_item.product.thumbnail.url(:small), :width => "80", :class => "preview-image") %>
-				<% thumbnail_image_path "http://#{HOST}#{my_collection_item.product.thumbnail.url(:small)}" %>
 			<% elsif my_collection_item.product.image_url.present? %>
 				<%= image_tag(my_collection_item.product.image_url, :width => "80", :class => "preview-image") %>
-				<% thumbnail_image_path my_collection_item.product.image_url %>
 			<% else %>
 				<%= image_tag "/images/product/no-image_medium.jpg", :width => "80", :class => "preview-image" %>
-				<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>
 			<% end %>
 			<% if my_collection_item.thumbnail.present? %>
 				<%= image_tag(my_collection_item.thumbnail.url(:small), :width => "80", :class => "preview-image") %>
-				<% thumbnail_image_path "http://#{HOST}#{my_collection_item.thumbnail.url(:small)}" %>
 			<% end %>
 				<% end %>
 			</div>

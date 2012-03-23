@@ -4,8 +4,8 @@ class FriendshipsController < ApplicationController
   before_filter :store_location
   before_filter :authenticate_user!, :except => [:following, :followers]
 
-  # GET /products
-  # GET /products.xml
+  # GET /friendships
+  # GET /friendships.xml
   def index
     if !params[:user_id].nil?
       if params[:search].length > 2
@@ -201,6 +201,8 @@ class FriendshipsController < ApplicationController
     @user = User.find(params[:id])
     @following = @user.followings    
     logger.debug "Number of following: #{@following.size}."
+    @shops = @user.following_shops
+    logger.debug "Number of shops following: #{@shops.size}."
     
     if @user == current_user
       me_and_my_friends = @following.map(&:id)

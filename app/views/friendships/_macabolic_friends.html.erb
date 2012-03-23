@@ -34,7 +34,7 @@
 							<%= link_to "follow", follow_member_friendship_path(current_user, @user), :class => "follow_link", :title => "Follow", :remote => true %>				
 						<% end %>
 					<% else %>
-						<%= link_to "follow", user_session_path(User.new), :class => "follow_link", :title => "Follow", :remote => true %>				
+						<%= link_to "follow", user_session_path, :class => "follow_link", :title => "Follow", :remote => false %>				
 					<% end %>
 					</div>
 				</span>

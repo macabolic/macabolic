@@ -1,3 +1,11 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <div class="sidebar-content account-info">
 	<div class="sidebar-header">
     	About <% if @user == current_user %><%= link_to 'Edit', edit_member_path(@user) %><% end %>
@@ -23,8 +31,29 @@
 			<% else %>
 			<%= "N/A" %>
 			<% end %>
-		</p>		
+		</p>	
     <% if user_signed_in? %>
+		<% if @user == current_user %>
+			<% 
+				@facebook_authentication = @user.authentications.find_by_provider('facebook')
+				if @facebook_authentication.present? 
+			%>
+			<p>
+				<strong>Facebook</strong>
+				<%= link_to "http://wwww.facebook.com/#{@facebook_authentication.uid}/" do %>
+					<%= image_tag facebook_profile_image_url(current_user, ProfileImage::FACEBOOK, 'square'), :size => "32x32" %>					
+					<%= @facebook_name %>
+				<% end %>
+			</p>
+			<% else %>
+			<p>
+				<strong>Facebook</strong>
+				<%= link_to user_omniauth_authorize_path(:facebook, :type => "connect"), :remote => false do %>			
+					<fb:login-button size="large" onlogin="Log.info('onlogin callback')">Connect</fb:login-button>
+				<% end %>
+			</p>	
+			<% end %>
+		<% end %>
 		<% if @user != current_user %>	
 		<p>
 			<div id="follow-user-<%= @user.id %>">
@@ -34,10 +63,11 @@
 				<%= link_to 'follow', follow_member_friendship_path(current_user, @user), :class => "button-green round-button sidebar-button", :id => "add-wishlist", :title => "follow", :remote => true %>
 			<% end %>
 			</div>
+			<br/>
 		</p>
 		<% end %>
 	<% else %>
-		<%= link_to 'follow', user_session_path(User.new), :class => "button-green round-button sidebar-button", :id => "add-wishlist", :title => "follow", :remote => true %>
+		<%= link_to 'follow', user_session_path, :class => "button-green round-button sidebar-button", :id => "add-wishlist", :title => "follow", :remote => false %>
 	<% end %>
 	</div>
 

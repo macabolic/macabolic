@@ -1,0 +1,40 @@
+<% if !followings.nil? %>
+<ul class="friendships" id="macabolic_friends">
+	<% followings.each do |shop| %>	
+		<li class="friend">
+			<div style="text-align: center">
+				<!-- Image -->	
+				<% if shop.logo.url(:small).present? %>
+					<%= image_tag shop.logo.url(:small), :width => "80" %>
+				<% end %>
+				<span id="friend_name">
+					<%= link_to shop, store_path(shop) %><br/>
+				</span>
+			</div>
+		</li>
+<% 
+	products = shop.products.order("updated_at DESC").limit(4)
+	if products.size > 0
+		products.each do |product| 
+%>
+		<li class="friend">
+			<div>
+				<%= link_to product_path(product) do %>				
+			<% if product.thumbnail.present? %>
+				<%= image_tag(product.thumbnail.url(:small), :width => "80", :class => "preview-image", :title => product.name) %>
+			<% elsif my_collection_item.product.image_url.present? %>
+				<%= image_tag(product.image_url, :width => "80", :class => "preview-image", :title => product.name) %>
+			<% else %>
+				<%= image_tag "/images/product/no-image_medium.jpg", :width => "80", :class => "preview-image", :title => product.name %>
+			<% end %>
+				<% end %>
+			</div>
+		</li>	
+<%		
+		end
+	end
+%>
+<hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/>
+<% end %>
+</ul>
+<% end %>

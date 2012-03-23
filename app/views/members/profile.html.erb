@@ -80,7 +80,7 @@ $(document).ready(function() {
 				<ul class="tabs">
 					<li><a href="#tab1">Updates</a></li> 
 					<li><a href="#tab2">Discovery</a></li>
-					<li><a href="#tab3">Friends</a></li>
+					<li><a href="#tab3">People</a></li>
 	    		</ul> 
     
         		<div id="tab1" class="tab_content"> 
@@ -91,35 +91,17 @@ $(document).ready(function() {
         		</div> 
 		        <div id="tab3" class="tab_content"> 
 		        	<ul class="combined-list">
-						<li id="friends-search-area">
-							<%= form_tag search_friendships_path, :method => 'get', :id => 'friends-search-form', :class => 'search_form', :remote => true do %>
-								<%= hidden_field_tag :user_id, params[:id] %>							
-								<p>
-									<%= text_field_tag :name, params[:name], :autocomplete => 'off', :placeholder => 'Search your friend' %>
-								</p>
-								<!--<div id="friends"><%#= render 'friends' %></div>-->
-							<% end %>
-						</li>
-					<!--
-						<li class="grid group">
-							<div>
-								<span style="padding-bottom: 15px;">Friends from macabolic:</span>
-								<%# if !@friends.nil? && @friends.size > 0 %>								
-								<ul class="friendships" id="macabolic_friends">
-									<%#= render :partial => 'friendships/macabolic_friends' %>
-								</ul>
-								<%# else %>
-								<div> 
-					                <p>
-					                	You do not have any friends yet.
-					                </p>	
-				            	</div>
-								<%# end %>
-							</div>
-						</li>
-					-->
 						<% if @user == current_user %>
 							<% if !@facebook_friends.nil? && @facebook_friends.size > 0 %>								
+							<li id="friends-search-area">
+								<%= form_tag search_friendships_path, :method => 'get', :id => 'friends-search-form', :class => 'search_form', :remote => true do %>
+									<%= hidden_field_tag :user_id, params[:id] %>							
+									<p>
+										<%= text_field_tag :name, params[:name], :autocomplete => 'off', :placeholder => 'Search your friend in Facebook' %>
+									</p>
+									<!--<div id="friends"><%#= render 'friends' %></div>-->
+								<% end %>
+							</li>
 							<li class="grid group">
 								<div>
 									<span style="padding-bottom: 15px;">Friends from facebook:</span>
@@ -130,14 +112,16 @@ $(document).ready(function() {
 							</li>										
 							<% end %>
 						<% end %>
+						<!--
 						<li class="grid group">
 							<div>
 								<span style="padding-bottom: 15px;">Members from macabolic:</span>
 								<ul class="friendships" id="suggested_from_macaboilc">
-									<%= render :partial => 'friendships/suggestion_from_macabolic' %>
+									<%#= render :partial => 'friendships/suggestion_from_macabolic' %>
 								</ul>
 							</div>
 						</li>
+						-->
 					</ul> 
 		        </div>
 			</div>		

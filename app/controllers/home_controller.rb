@@ -45,9 +45,11 @@ class HomeController < ApplicationController
     end
     
     @featured_products = Product.limit(15).order("updated_at DESC")
+    
     @feature_collection_items = Array.new
-    most_active_users = User.where("sign_in_count > ?", 10).order("sign_in_count DESC").limit(3)
-    most_active_users.each do |user|
+    recently_active_users = User.active_users.limit(3)
+    #most_active_users = User.where("sign_in_count > ?", 10).order("sign_in_count DESC").limit(3)
+    recently_active_users.each do |user|
       user_id = user.id
       featured_collection_items_search = Sunspot.search(MyCollectionItem) do
         with(:user_id, user_id)
@@ -58,6 +60,7 @@ class HomeController < ApplicationController
     end
     
     #@featured_collections_items = featured_collections_items_search.results
+    @most_recent_collections = MyCollection.where("my_collection_items_count > 0").order("updated_at DESC").limit(6)
   end
 
   def extra
@@ -100,6 +103,8 @@ class HomeController < ApplicationController
     end
     
     @category = category_name(params[:category])
+    
+    @stores = Vendor.order("products_count DESC").limit(10)
   end
   
   private

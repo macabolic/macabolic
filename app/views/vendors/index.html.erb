@@ -1,23 +1,88 @@
-<h1>Listing vendors</h1>
+<% title 'Brands / Stores' %>
+<style type="text/css">
+#action_link {
+	text-align: right;
+	border: 0px solid black;
+	display: none;
+}
+#like_comment {
+	color: #ABABAB;
+}
+#like_comment a {
+	text-decoration: none;
+	font-weight: normal;
+	color: #ABABAB;
+}
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+#store-content {
+	padding-left: 38px;
+	padding-top: 30px;
+}
+	
+</style>
+<div class="wrapper-mh">
+	<% if !user_signed_in? %>
+	<div>
+		<%= render :partial => "home/learn_more" %>	
+	</div>
+	<% end %>
 
-<% @vendors.each do |vendor| %>
-  <tr>
-    <td><%= vendor.name %></td>
-    <td><%= link_to 'Show', [:admin, vendor] %></td>
-    <td><%= link_to 'Edit', edit_admin_vendor_path(vendor) %></td>
-    <td><%= link_to 'Destroy', [:admin, vendor], :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+	<div id="store-content" class="tabbed-content-area">
+		<div style="font-size: 20px;text-align: center">
+		   	Brands / Stores
+		</div>									
+		<br/>						
+		
+		<div class="product-grid group">
+			<ul id="collection-items" class="list-my-collections">
+				<% count = 0 %>
+				<% @stores.each do |store| %>
+				<li id="store-<%= count %>">
+					<%= link_to store_path(store) do %>						
+					<span class="right">
+						<%= link_to '#', store_path(store), :method => 'show', :id => "action_link", :class => "edit_link" %>
+					</span>								
+					<div class="center">
+						<span class="productimage">
+							<%= link_to store_path(store) do %>
+								<% if store.logo.present? %>
+									<%= image_tag(store.logo.url(:small), :width => "150") %>
+								<% else %>
+									<%= image_tag store_product_image(store), :width => "150" %>
+								<% end %>					
+							<% end %>
+						</span>								
+					</div>
+					<div>
+						<span class="vendor">
+							<%= link_to simple_format(word_wrap(store.name, :line_width => 50)), store_path(store) %>
+						</span>
+					</div>
+					<div id="store-info-<%= count %>" class="overlay" style="height: 30px; display:inline;">
+						<p style="position: relative;">
+							<span id="like_comment" class="left">
+								<%= link_to pluralize(store.responses.size, "like"), store_path(store) %> |  
+								<%= link_to pluralize(store.followers.size, "follower"), store_path(store) %>
+							</span>
+							<span id="like_comment" style="text-align: right">
+								<%= link_to pluralize(store.products.size, "product"), store_path(store) %>
+							</span>							
+						</p>
+					</div>			
+					<% end %>
+				</li>							
+				<%
+					count = count + 1
+					if count % 4 == 0
+				%>
+					<hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/>
+				<% 
+					end 
+				%>
 
-<br />
-
-<%= link_to 'New Vendor', new_admin_vendor_path %>
+				<% end %>	
+			</ul>
+		</div>
+	</div>
+	<br/><br/>
+</div>

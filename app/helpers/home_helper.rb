@@ -18,6 +18,24 @@ module HomeHelper
     product_line = ProductLine.find(product_line_id)
   end
 
+  def product_thumbnail(product_id) 
+    default_url = "/images/product/no-image_thumb.jpg"
+    product = Product.find(product_id)
+    if product.present?      
+  		if product.thumbnail.present?
+  			return product.thumbnail.url(:thumb)
+  		elsif product.image_url.present?
+  		  return product.image_url
+  		else
+        return default_url
+      end
+    end
+  end
+
+  def product(product_id)
+    product = Product.find(product_id)
+  end
+
   def user_thumbnail(user_id) 
     user = User.find(user_id)
     return current_profile_image_thumbnail_url(user)

@@ -5,11 +5,11 @@ class VendorsController < ApplicationController
   # GET /vendors
   # GET /vendors.xml
   def index
-    @vendors = Vendor.all
+    @stores = Vendor.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @vendors }
+      format.xml  { render :xml => @stores }
     end
   end
 

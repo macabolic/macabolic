@@ -1,7 +1,7 @@
 class MyCollectionItem < ActiveRecord::Base
-  belongs_to  :my_collection, :counter_cache => false
+  belongs_to  :my_collection, :counter_cache => true
   belongs_to  :product
-  belongs_to  :user
+  belongs_to  :user,          :counter_cache => true
 
   has_attached_file       :thumbnail, 
                           :styles => { :thumb => ["50x50#", :png], :small => ["150x150#", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },

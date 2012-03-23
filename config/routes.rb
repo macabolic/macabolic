@@ -100,7 +100,11 @@ Macabolic::Application.routes.draw do
 #  resources :my_collection_items do
 #    resources :products
 #  end
-  resources :my_collection_items
+  resources :my_collection_items do
+    member do
+      get 'own'
+    end
+  end
 
   devise_for  :users, 
               :path_names => {  :sign_in => 'login', 
@@ -129,7 +133,11 @@ Macabolic::Application.routes.draw do
       get 'search'
       get 'bookmarklet'      
     end  
-    resources :my_collection_items
+    resources :my_collection_items do
+      member do
+        get 'own'
+      end
+    end
     resources :wishlist_items
     #get ':id/page/:page', :action => :show, :on => :collection    
   end
@@ -178,6 +186,7 @@ Macabolic::Application.routes.draw do
   match 'extra' => 'home#extra'
   match 'newsletter/:year/monthly/:month' => 'home#monthly'
   match 'fdfabbdcddfcfecfee/send' => 'notifications#send_reminder'
+  match 'people' => 'members#index'
   
 # TODO
 #  match '/auth/failure' => 'something to handle this error'

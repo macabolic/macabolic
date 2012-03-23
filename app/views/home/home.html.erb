@@ -1,4 +1,10 @@
 <% title "Home" %>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+
 	<div id="grey-strip" style="height: 115px">
 		<div class="wrapper-top">
 			<%= render 'layouts/tagline' %>
@@ -13,7 +19,7 @@
 		<% end %>
 		
 		<div class="maincol">
-	        <%= render :partial => 'searches/form' %>
+	        <%= render :partial => 'searches/form', :locals => { :is_remote => false } %>
 			<div class="tabbed-content-area">				
 				
 		        <div id="tab1" class="tab_content product-grid group"> 
@@ -54,7 +60,7 @@
 			        <li><a href="#tab1">Most Recent Collections</a></li> 
 				</ul> 		
 		        <div id="tab1" class="tab_content product-grid group"> 
-					<%= render :partial => 'my_collections/index', :locals => { :my_collections => MyCollection.all(:limit => 6), :preview_gallery => false } %>
+					<%= render :partial => 'my_collections/index', :locals => { :my_collections => @most_recent_collections, :preview_gallery => false } %>
 				</div>	
 			</div>
 		

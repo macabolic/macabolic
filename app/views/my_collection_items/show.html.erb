@@ -293,6 +293,7 @@ $(document).ready(function() {
 										
 					<% if (@user == current_user || @user != current_user) && user_signed_in? %>
 		            <p>
+						<!-- I like / unlike one -->
 						<div id="response-product-<%= @product.id %>">
 						<% if @product.like?(current_user) %>					
 							<%= link_to 'Unlike', unlike_product_path(@product, :user_id => current_user.id), :class => "button-green checked", :id => "own-this", :title => "Unlike", :remote => true %>
@@ -301,14 +302,26 @@ $(document).ready(function() {
 						<% end %>
 						</div>						
 		
+						<!-- I own / want one -->
 						<% if current_user.own_this_product?(@product) %>
+						<% 
+							if @user != current_user
+								@my_collection_item = current_user.own_my_collection_item(@product)
+							end
+						%>
 		                <div id="i_own_this-<%= @product.id %>">
 							<%= link_to "I have one", product_my_collection_item_path(@product, @my_collection_item), :method => "delete", :class => "button-green checked", :id => "own-this", :title => "I have one", :confirm => "Are you sure? \nThis will remove this product from your collection." %>
 						</div>
 						<% else %>
 							<% if current_user.wish_this_product?(@product) %>
-						<div id="i_own_this">
-							<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>
+							<% 
+								if @user != current_user
+									@my_collection_item = current_user.wish_my_collection_item(@product)
+								end
+							%>
+						<div id="i_own_this-<%= @product.id %>">
+							<!--<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>-->
+							<%= link_to "Have one?", own_product_my_collection_item_path(@product, @my_collection_item), :class => "button-green", :id => "own-this", :remote => true %>
 						</div>
 						<div id="wishlist_link">
 								<%= link_to 'Wanted', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "Wanted", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							

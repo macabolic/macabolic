@@ -5,7 +5,7 @@
 	if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 */
 $(document).ready(function() {
-	$("#friend_name").keydown(function(event) {
+	$("#product_friend_name").keydown(function(event) {
 		if (event.which == 13) {
 			event.preventDefault();
 			$.get($("#recommend-friends-form").attr("action"), $("#recommend-friends-form").serialize(), null, "script");
@@ -24,7 +24,7 @@ $(document).ready(function() {
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div class="sidebar-content" id="new-product" style="overflow: visible">				
-	<div class="sidebar-header">Recommend to Your Friends</div>	
+	<div class="sidebar-header">Recommend to Your Followers</div>	
 	<div class="sidebar-inner">
 	<% if user_signed_in? %>
     	<ul>
@@ -32,7 +32,7 @@ $(document).ready(function() {
 				<%= form_tag search_in_network_friendships_path, :method => 'get', :id => 'recommend-friends-form', :remote => true do %>
 					<%= hidden_field_tag 'user_id', current_user.id %>
 					<%= hidden_field_tag 'product_id', product.id %>
-					<%= text_field_tag :name, params[:name], :placeholder => 'Find your friends', :autocomplete => 'off', :class => 'product_text_search', :id => 'friend_name' %>
+					<%= text_field_tag :name, params[:name], :placeholder => 'Type a name and hit enter', :autocomplete => 'off', :class => 'product_text_search', :id => 'product_friend_name' %>
 				<% end %>
   			</li>
 		</ul>

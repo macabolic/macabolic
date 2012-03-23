@@ -5,11 +5,15 @@ class MyCollectionItemsController < ApplicationController
   # GET /my_collection_items/1
   # GET /my_collection_items/1.xml
   def show    
-    @my_collection_item = MyCollectionItem.find(params[:id]) if params[:id].present?
+    @my_collection_item = MyCollectionItem.find(params[:id]) #if params[:id].present?
     
     #@my_collection_item = MyCollectionItem.find_by_product_id(params[:id]) #if params[:my_collection_item_id].present?
-    @user = @my_collection_item.user if @my_collection_item
-    @user = current_user if !@user.present?
+    @user = @my_collection_item.user #if @my_collection_item
+
+    #if !@user.present?
+    #  @user = current_user 
+    #end
+        
     @product = Product.find(params[:product_id])
     #@reviews = Review.where(:product_id => @product.id).order("created_at DESC").paginate(:per_page => 10, :page => params[:review_page])
     @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:page]
@@ -162,9 +166,22 @@ class MyCollectionItemsController < ApplicationController
     @product = Product.find(params[:product_id])
     
     respond_to do |format|
-      #format.html { redirect_to(product_path(@product)) }
-      format.html { redirect_to(member_my_collection_path(current_user, @my_collection_item.my_collection_id)) }
+      format.html { redirect_to(product_path(@product)) }
+      #format.html { redirect_to(member_my_collection_path(current_user, @my_collection_item.my_collection_id)) }
       format.xml  { head :ok }
     end
   end
+  
+  def own    
+    @my_collection_item = MyCollectionItem.find(params[:id])
+    @my_collection_item.update_attributes(:interest_indicator => MyCollectionItem::OWN)
+    @product = Product.find(params[:product_id])
+    
+    @number_of_people_owned = @product.people_who_owned.size
+    logger.debug "People who owned: #{@number_of_people_owned}."
+
+    @number_of_people_wished = @product.people_who_wished.size
+    logger.debug "People who wished: #{@number_of_people_wished}."
+  end
+
 end

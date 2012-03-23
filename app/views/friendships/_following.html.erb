@@ -4,9 +4,11 @@
 		<li class="friend">
 			<div style="text-align: center">
 				<!-- Image -->	
-				<%= image_tag current_profile_image_small_url(following), :width => 80, :height => 80 %>
+				<%= image_tag current_profile_image_small_url(following), :width => 50, :height => 50 %>
 				<span id="friend_name">
 					<%= link_to following.full_name, member_path(following) %><br/>
+					<%= following.followers.size %> followers<br/>
+					<%= following.my_collection_items.size %> products<br/>					
 					<div id="follow-user-link-<%= following.id %>">
 					<% if user_signed_in? %>
 						<% if @user == current_user %>
@@ -15,7 +17,7 @@
 							<%= link_to "follow", follow_member_friendship_path(current_user, @user), :class => "follow_link", :title => "Follow", :remote => true %>				
 						<% end %>
 					<% else %>
-						<%= link_to "follow", user_session_path(User.new), :class => "follow_link", :title => "Follow", :remote => true %>				
+						<%= link_to "follow", user_session_path, :class => "follow_link", :title => "Follow", :remote => false %>				
 					<% end %>
 					</div>
 				</span>
@@ -30,18 +32,14 @@
 			<div>
 				<%= link_to product_my_collection_item_path(my_collection_item.product, my_collection_item) do %>				
 			<% if my_collection_item.product.thumbnail.present? %>
-				<%= image_tag(my_collection_item.product.thumbnail.url(:small), :width => "80", :class => "preview-image") %>
-				<% thumbnail_image_path "http://#{HOST}#{my_collection_item.product.thumbnail.url(:small)}" %>
+				<%= image_tag(my_collection_item.product.thumbnail.url(:small), :width => "80", :class => "preview-image", :title => my_collection_item.product.name) %>
 			<% elsif my_collection_item.product.image_url.present? %>
-				<%= image_tag(my_collection_item.product.image_url, :width => "80", :class => "preview-image") %>
-				<% thumbnail_image_path my_collection_item.product.image_url %>
+				<%= image_tag(my_collection_item.product.image_url, :width => "80", :class => "preview-image", :title => my_collection_item.product.name) %>
 			<% else %>
-				<%= image_tag "/images/product/no-image_medium.jpg", :width => "80", :class => "preview-image" %>
-				<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>
+				<%= image_tag "/images/product/no-image_medium.jpg", :width => "80", :class => "preview-image", :title => my_collection_item.product.name %>
 			<% end %>
 			<% if my_collection_item.thumbnail.present? %>
-				<%= image_tag(my_collection_item.thumbnail.url(:small), :width => "80", :class => "preview-image") %>
-				<% thumbnail_image_path "http://#{HOST}#{my_collection_item.thumbnail.url(:small)}" %>
+				<%= image_tag(my_collection_item.thumbnail.url(:small), :width => "80", :class => "preview-image", :title => my_collection_item.product.name) %>
 			<% end %>
 				<% end %>
 			</div>

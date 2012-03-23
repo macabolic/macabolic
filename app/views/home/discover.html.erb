@@ -42,7 +42,7 @@
 			    	<ul id="search-list">
 						<div id="products">
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<!--
 									<div class="left" style="margin-right: 10px;">
 										<%#= image_tag product_line_thumbnail(productline.id), :size => "60x60" %>									
@@ -60,59 +60,53 @@
 								</div>
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'For Mac', discover_home_index_path(:category => "mac") %>
 									</p>
 								</div>
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'For iPad', discover_home_index_path(:category => "ipad") %>
 									</p>
-								</div>
-								
+								</div>								
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'For iPhone', discover_home_index_path(:category => "iphone") %>
 									</p>
-								</div>
-								
+								</div>								
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'For iPod', discover_home_index_path(:category => "ipod") %>
 									</p>
-								</div>
-								
+								</div>								
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'For audiophile', discover_home_index_path(:category => "audiophile") %>
 									</p>
-								</div>
-								
+								</div>								
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'Others', discover_home_index_path(:category => "others") %>
 									</p>
-								</div>
-								
+								</div>								
 							</li>
 							<li>
-								<div>
+								<div style="margin-bottom: 10px;">
 									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
 										<%= link_to 'Popular Ones', discover_home_index_path(:category => "popular") %>
 									</p>
-								</div>
-								
+								</div>								
 							</li>
 						<!--	
 							<li><br/><hr/><br/></li>
@@ -154,5 +148,47 @@
 			</div>
 		</div>
 	</div>
-		
+	
+	<div class="sidebar">
+		<div class="sidebar-content">
+	        <div class="sidebar-header" style="background: #dd6219;">Brands / Stores</div>
+			<div style="margin: 17px; border: 0px;">
+				<div>
+					<p style="font-size: 12px; font-family: Verdana;">					
+			    	<ul id="search-list">
+						<div id="products">
+						<% @stores.each do |store| %>
+							<li>
+								<div style="margin-bottom:10px;">									
+									<div class="left" style="margin-right: 10px;">
+										<% if store.logo.present? %>
+											<%= image_tag(store.logo.url(:small), :size => "60x60") %>
+										<% else %>
+											<%= image_tag store_product_image(store), :size => "60x60" %>
+										<% end %>					
+									</div>
+									<br/>									
+									<p style="margin-bottom: 3px; font-size: 15px; font-weight: normal;">
+										<%= link_to store.name, store_path(store) %>
+									</p>
+									<div class="answers-meta">
+										<p class="left">
+											<span id="response-stat-product"><%= pluralize(store.products.size, 'product') %></span>
+										</p>
+									</div>
+								</div>
+								<br/>
+							</li>
+						<% end %>
+						</div>
+					</ul>
+					</p>
+					<p class="right">
+						<%= link_to 'view all', stores_path %>
+					</p>
+					<br/>
+				</div>
+			</div>
+		</div>
+	</div>		
 </div>

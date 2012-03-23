@@ -1,7 +1,7 @@
 <div style="padding: 5px 5px 5px 5px; margin-top: 23px; width: 150px; float: right;">			
 	<span style="font-size: 14px; color: #cccccc;">Login via</span>
 	<div style="margin-top: 5px; margin-bottom: 10px;">
-	<%= link_to user_omniauth_authorize_path(:facebook) do %>
+	<%= link_to user_omniauth_authorize_path(:facebook, :type => "login") do %>
 		<%= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook", :class => "social" %>
 	<% end %>
 	</div>

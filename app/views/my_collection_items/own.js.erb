@@ -1,0 +1,7 @@
+try {$("#own-stat-product-<%= @product.id %>").html("<%= @number_of_people_owned %>");} catch (e) {}
+try {$("#wish-stat-product-<%= @product.id %>").html("<%= @number_of_people_wished %>");} catch (e) {}
+try {$("#i_own_this-<%= @product.id %>").html("<%= escape_javascript(render("own_link")) %>");} catch (e) {}
+try {$("#wishlist_link").html("");} catch (e) {}
+
+	
+

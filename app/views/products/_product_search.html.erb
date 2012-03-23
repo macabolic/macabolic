@@ -1,3 +1,14 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#product_friend_name").keydown(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			$.get($("#products_search").attr("action"), $("#products_search").serialize(), null, "script");
+			return false;
+		}		
+	});	
+});
+</script>
 <div class="sidebar-content" id="new-product">				
 <%# if @user == current_user %>			
 	<div class="sidebar-header">Find Your Product</div>	
@@ -7,9 +18,9 @@
 	<div class="sidebar-inner">
     	<ul>
   			<li id="product-search-form">
-				<%= form_tag search_products_path, :method => 'get', :id => 'products_search' do %>
+				<%= form_tag search_products_path, :method => 'get', :id => 'products_search', :remote => true do %>
 					<%= hidden_field_tag :my_collection, my_collection.id %>
-					<%= text_field_tag :search, params[:search], :placeholder => 'Search', :autocomplete => 'off', :class => 'product_text_search' %>
+					<%= text_field_tag :search, params[:search], :placeholder => 'Type something and hit enter', :autocomplete => 'off', :class => 'product_text_search', :id => 'product_friend_name' %>
 					<%#= submit_tag "Search", :name => nil %>
 				<% end %>
   			</li>

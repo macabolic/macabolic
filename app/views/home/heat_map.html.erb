@@ -11,7 +11,7 @@
 						<% @heat_map_search.facet(:product_line_id).rows.each do |facet| %>	
 						<% if count <= 5 %>
 				        <li>
-							<div>
+							<div style="margin-bottom:10px;">
 								<%# if product.thumbnail.present? %>
 									<%#= image_tag(product.thumbnail.url(:thumb), :size => "45x45") %>
 								<%# elsif product.image_url.present? %>
@@ -30,6 +30,7 @@
 									</p>
 								</div>
 							</div>
+							<br/>
 				        </li>
 						<% end %>
 						<% count = count + 1 %>
@@ -55,19 +56,37 @@
 						<% count = 1 %>					
 						<% @user_heat_map_search.facet(:user_id).rows.each do |facet| %>	
 						<% if count <= 10 %>
+							<% user = user(facet.value) %>
 				        <li>
-							<div>
+							<div style="margin-bottom:10px;">
 								<div class="left" style="margin-right: 10px;">
 									<%= image_tag user_thumbnail(facet.value), :size => "60x60" %>									
 								</div>
 								<br/>
-								<p style="margin-bottom: 3px;"><%= link_to user(facet.value), collections_member_path(:id => facet.value) %></p>
+								<p style="margin-bottom: 3px;"><%= link_to user, collections_member_path(:id => facet.value) %></p>
 								<div class="answers-meta">
 									<p class="left">
 										<span id="response-stat-product"><%= pluralize(facet.count, 'products') %></span>
 									</p>
+									<% if user_signed_in? %>	
+									<div id="follow-user-link-<%= user.id %>">										
+										<p class="right">
+										<% if current_user.following?(user) %>
+											<%= link_to "unfollow", unfollow_member_friendship_path(current_user, user), :class => "follow_link", :title => "Unfollow", :remote => true %>
+										<% else %>
+											<%= link_to "follow", follow_member_friendship_path(current_user, user), :class => "follow_link", :title => "Follow", :remote => true %>				
+										<% end %>										
+										</p>
+									</div>
+									<% else %>
+									<p class="right">
+										<%= link_to "follow", user_session_path, :class => "follow_link", :title => "Follow", :remote => false %>				
+									</p>
+									<% end %>
+									</p>
 								</div>
 							</div>
+							<br/>
 				        </li>
 						<% end %>
 						<% count = count + 1 %>

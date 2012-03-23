@@ -1,3 +1,6 @@
+require 'net/https'
+require 'open-uri'
+
 class ProductsController < ApplicationController
   before_filter :show_invitation_notice
   before_filter :store_location
@@ -227,6 +230,8 @@ class ProductsController < ApplicationController
             
         respond_to do |format|
           if @product.save
+            post_to_facebook(@product)
+            
             format.html { redirect_to(product_path(@product), :notice => 'Product was successfully saved.') }
             format.xml  { render :xml => @product, :status => :created, :location => @product }          
           else
@@ -237,6 +242,7 @@ class ProductsController < ApplicationController
         
       end
     end
+      
   end
   
   def search
@@ -321,6 +327,45 @@ class ProductsController < ApplicationController
   
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
+  end
+  
+  def post_to_facebook(product)
+    if current_user.facebook_authenticated?
+      facebook = current_user.facebook
+      # Post the message to current_user's feed
+      post_url = "https://graph.facebook.com/#{facebook.uid}/feed"
+      
+      message = "I have just discovered #{product.name}."
+      link = product_url(product)
+    	if product.thumbnail.present?
+    		picture = "http://#{HOST}#{product.thumbnail.url(:medium)}"
+    	else product.image_url.present?
+    		picture = product.image_url
+    	end
+      name = product.name
+      description = product.description if product.description.present?
+      
+      logger.debug "Post URL: #{post_url}."
+      logger.debug "Message: #{message}."
+      logger.debug "Link: #{link}."
+      logger.debug "Name: #{name}."
+      logger.debug "Description: #{description}"
+      
+      data = {  'message' => message,
+                'link' => link,
+                'picture' => picture,
+                'name' => name,
+                'description' => description
+              }
+      
+      url = URI.parse(post_url)
+      req = Net::HTTP::Post.new(url.path)
+      req.form_data = data
+      #req.basic_auth url.user, url.password if url.user
+      con = Net::HTTP.new(url.host, url.port)
+      con.use_ssl = true
+      con.start {|http| http.request(req)}      
+    end
   end
     
 end

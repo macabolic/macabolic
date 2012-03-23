@@ -96,7 +96,7 @@
 						         d.getElementsByTagName('head')[0].appendChild(js);
 						       }(document));
 						    </script>
-							<%= link_to user_omniauth_authorize_path(:facebook) do %>
+							<%= link_to user_omniauth_authorize_path(:facebook, :type => "login") do %>
 						    <div class="fb-login-button">Login with Facebook</div>
 							<% end %>
 						</li>

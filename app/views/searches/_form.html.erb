@@ -1,5 +1,5 @@
 <div class="search-box sidebar-content">
-	<%= form_tag find_product_searches_path, :method => :get, :remote => true do %>
+	<%= form_tag find_product_searches_path, :method => :get, :remote => is_remote do %>
 		<%= text_field_tag 'query', nil, :placeholder => "Search for products. e.g. iPhone or MacBook Pro", :class => "ie-input" %>
 	    <%= submit_tag "Search" %>
 	<% end %>

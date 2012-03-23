@@ -31,6 +31,13 @@
 							<% end %>
 						</div>
 					</li>
+					<% if !@shops.nil? && @shops.size > 0 %>								
+					<li class="grid group">
+						<div>
+							<%= render :partial => 'friendships/shops_following', :locals => { :followings => @shops } %>
+						</div>						
+					</li>
+					<% end %>
 				</ul> 
 	        </div> 
 			<br/>

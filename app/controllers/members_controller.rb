@@ -1,7 +1,13 @@
 class MembersController < ApplicationController
   before_filter :show_invitation_notice
   before_filter :store_location
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [ :index ]
+
+  # GET /members
+  # GET /members.xml
+  def index
+    @members = User.scoped
+  end
 
   # GET /members/1
   # GET /members/1.xml
@@ -95,19 +101,23 @@ class MembersController < ApplicationController
     # 2. Put a link for the profile page
     # 3. Add an invite button
     if @user == current_user
-      facebook_authentication = @user.authentications.where(:provider => 'facebook')
+      @facebook_authentication = @user.authentications.find_by_provider('facebook')
       limit = '50'
-      if facebook_authentication.exists?
-        url = 'https://graph.facebook.com/' + facebook_authentication[0].uid + '/friends?access_token=' + facebook_authentication[0].token
+      if @facebook_authentication.present?
+        url = 'https://graph.facebook.com/' + @facebook_authentication.uid + '/friends?access_token=' + @facebook_authentication.token
         url = url + '&limit=' + limit
         logger.debug "Generated facebook url is #{url}."
-        # https://graph.facebook.com/me/friends?access_token=AAAAAAITEghMBAHAek9yKuw1WyEGUmB15ovKZBeTA2fVm395hTlYxxWWuIA8rTKEBvm5HYh9m59yDC3ZBARqTQFVJ7Y94NPoqf31Ar9FAZDZD
+        # https://graph.facebook.com/me/friends?access_token=AAADjFmJTOxABAHOZB5Ypy9YOkXT2RpZCSTcmMsnOthxlViqs9NpKPH2U2R9Ylt60PFpR3ZAEIHIrsF9mA1iZCSCAAkCvLhbqDQ3ZB28WZCmwZDZD
         response = HTTParty.get(url)
 
         ## The response['data'] is in the format of JSON
         @facebook_friends = response['data']
         @facebook_paging = response['paging']
         logger.debug response['data']
+        
+        url = 'https://graph.facebook.com/' + @facebook_authentication.uid + '/'
+        response = HTTParty.get(url)
+        @facebook_name = response['name']
       end
     end
     
@@ -133,7 +143,9 @@ class MembersController < ApplicationController
     #                                                          :order => 'created_at DESC'
     @my_collection = MyCollection.new
   	@my_collection.name = ''
-  	@my_collection.user = @user
+  	@my_collection.user = @user    
+    
+    @activities = @user.following_activities
     
     respond_to do |format|
       format.html # collections.html.erb

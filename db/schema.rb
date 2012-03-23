@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120313155141) do
+ActiveRecord::Schema.define(:version => 20120320163221) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(:version => 20120313155141) do
   end
 
   create_table "my_collections", :force => true do |t|
-    t.string   "name",                   :default => "My Collection"
+    t.string   "name",                      :default => "My Collection"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20120313155141) do
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
     t.string   "permalink"
+    t.integer  "my_collection_items_count", :default => 0
   end
 
   add_index "my_collections", ["permalink"], :name => "index_my_collections_on_permalink"
@@ -298,13 +299,13 @@ ActiveRecord::Schema.define(:version => 20120313155141) do
     t.string   "first_name"
     t.string   "last_name"
     t.date     "birthday"
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                                    :default => "", :null => false
+    t.string   "encrypted_password",        :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                            :default => "", :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                            :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -318,6 +319,7 @@ ActiveRecord::Schema.define(:version => 20120313155141) do
     t.integer  "avatar_file_size"
     t.string   "avatar_content_type"
     t.datetime "avatar_updated_at"
+    t.integer  "my_collection_items_count",                :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -346,6 +348,7 @@ ActiveRecord::Schema.define(:version => 20120313155141) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.integer  "products_count",    :default => 0
   end
 
   create_table "wishlist_items", :force => true do |t|

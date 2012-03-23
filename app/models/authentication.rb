@@ -4,6 +4,7 @@ class Authentication < ActiveRecord::Base
   MACABOLIC = "macabolic"
   FACEBOOK  = "facebook"
   GRAVATAR  = "gravatar"
+  TWITTER   = "twitter"
   
   def provider_name
     if provider == 'open_id'

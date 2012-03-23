@@ -2,7 +2,7 @@ require "open-uri"
 
 class Product < ActiveRecord::Base
   belongs_to              :product_line,        :counter_cache => false
-  belongs_to              :vendor,              :counter_cache => false
+  belongs_to              :vendor,              :counter_cache => true
   belongs_to              :discoverer,          :class_name => "User",  :foreign_key => "uploader_id"
   belongs_to              :product_target_audience
   has_many                :reviews,             :dependent => :destroy
@@ -55,6 +55,7 @@ class Product < ActiveRecord::Base
     integer :product_line_id
     integer :response_ids, :multiple => true
     integer :vendor_id
+    integer :uploader_id
     string :product_line_name do
       product_line.name
     end
@@ -109,7 +110,7 @@ class Product < ActiveRecord::Base
   def user
     self.discoverer
   end
-  
+    
   private
   
   def load_image_from_url
