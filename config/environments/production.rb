@@ -65,4 +65,13 @@ Macabolic::Application.configure do
   
   FACEBOOK_APP_ID = '255146254550038'
   HOST = 'www.macabolic.com'
+  
+  # Compress JavaScript and CSS
+  config.assets.compress = true
+
+  # Don't fallback to assets pipeline
+  config.assets.compile = false
+
+  # Generate digests for assets URLs
+  config.assets.digest = true  
 end

@@ -11,7 +11,7 @@ Macabolic::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_view.debug_rjs             = true
+  #config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
   # Print deprecation notices to the Rails logger
@@ -34,6 +34,12 @@ Macabolic::Application.configure do
     :password             => 'nichetec',
     :authentication       => 'plain',
     :enable_starttls_auto => true
-  }  
+  }
+  
+  # Do not compress assets
+  #config.assets.compress = false
+
+  # Expands the lines which load the assets
+  #config.assets.debug = true  
 end
 

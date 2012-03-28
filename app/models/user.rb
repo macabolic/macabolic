@@ -41,8 +41,8 @@ class User < ActiveRecord::Base
   
   # There is a problem with #{self.profile_image_id}.
   # The profile_image_id is null initially and running this associations will run into problem.
-  has_one   :current_profile_image, :class_name => 'ProfileImage', :foreign_key => 'user_id', :conditions => 'id = #{self.profile_image_id}'
-
+  #has_one   :current_profile_image, :class_name => 'ProfileImage', :foreign_key => 'user_id', :conditions => 'id = #{self.profile_image_id}'
+  #has_one   :current_profile_image, :class_name => 'ProfileImage', :foreign_key => 'user_id', :conditions => { :profile_image => {:id => "#{self.profile_image_id}"} }   
   belongs_to :invitation
 
   has_attached_file       :avatar, 
@@ -337,6 +337,10 @@ class User < ActiveRecord::Base
     else
       return false
     end
+  end
+  
+  def current_profile_image
+    ProfileImage.find(self.profile_image_id)
   end
   
   private
