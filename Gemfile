@@ -1,10 +1,17 @@
 source 'http://rubygems.org'
 
 #gem 'rails', '3.0.3'
-gem 'rails', '3.0.10'
+#gem 'rails', '3.0.10'
+gem 'rails', '3.1.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+group :assets do
+  gem 'sass-rails', " ~> 3.1.0"
+  gem 'coffee-rails', " ~> 3.1.0"
+  gem 'uglifier'
+end
 
 # Install Paperclip
 gem 'paperclip', '~> 2.4'
@@ -52,6 +59,8 @@ gem 'dynamic_form'
 
 # Admin console
 gem 'activeadmin'
+#gem 'sass-rails'
+gem 'meta_search',    '>= 1.1.0.pre'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
