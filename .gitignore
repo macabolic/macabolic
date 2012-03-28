@@ -6,6 +6,7 @@ tmp/**/*
 doc/api
 doc/app
 db/*.sqlite3
+.sass-cache/
 *.swp
 *~
 .DS_Store
