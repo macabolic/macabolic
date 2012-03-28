@@ -1,5 +1,6 @@
 public/assets
-solr/data/development
+solr/data/development/*
+solr/data/development/**/*
 log/*.log
 tmp/*
 tmp/**/*
