@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120320163221) do
+ActiveRecord::Schema.define(:version => 20120330164728) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -36,6 +37,10 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "activities", ["name", "type_id"], :name => "activities_name_type_id_index"
+  add_index "activities", ["user_id", "action"], :name => "activities_user_id_action_index"
+  add_index "activities", ["user_id"], :name => "activities_user_id_index"
 
   create_table "admin_users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false
@@ -81,6 +86,9 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.string   "token"
   end
 
+  add_index "authentications", ["user_id", "provider"], :name => "authentications_user_id_provider_index"
+  add_index "authentications", ["user_id"], :name => "authentications_user_id_index"
+
   create_table "email_preferences", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -93,6 +101,9 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "updated_at"
   end
 
+  add_index "friendships", ["friend_id"], :name => "friendships_friend_id_index"
+  add_index "friendships", ["user_id"], :name => "friendships_user_id_index"
+
   create_table "invitations", :force => true do |t|
     t.integer  "sender_id"
     t.string   "recipient_email"
@@ -102,6 +113,9 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "updated_at"
     t.datetime "accepted_at"
   end
+
+  add_index "invitations", ["sender_id", "recipient_email"], :name => "invitations_sender_id_recipient_email_index"
+  add_index "invitations", ["token"], :name => "invitations_token_index"
 
   create_table "members", :force => true do |t|
     t.string   "first_name"
@@ -121,12 +135,17 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "updated_at"
   end
 
+  add_index "my_collection_comments", ["my_collection_id", "user_id"], :name => "my_collection_comments_my_collection_id_user_id_index"
+  add_index "my_collection_comments", ["my_collection_id"], :name => "my_collection_comments_my_collection_id_index"
+
   create_table "my_collection_followers", :force => true do |t|
     t.integer  "my_collection_id"
     t.integer  "follower_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "my_collection_followers", ["my_collection_id"], :name => "my_collection_followers_my_collection_id_index"
 
   create_table "my_collection_items", :force => true do |t|
     t.integer  "my_collection_id"
@@ -141,6 +160,9 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.integer  "interest_indicator"
   end
 
+  add_index "my_collection_items", ["user_id", "my_collection_id", "interest_indicator"], :name => "my_collection_items_user_id_my_collection_id_interest_ind_index"
+  add_index "my_collection_items", ["user_id", "my_collection_id"], :name => "my_collection_items_user_id_my_collection_id_index"
+
   create_table "my_collection_responses", :force => true do |t|
     t.integer  "my_collection_id"
     t.integer  "user_id"
@@ -148,6 +170,8 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "my_collection_responses", ["user_id", "my_collection_id"], :name => "my_collection_responses_user_id_my_collection_id_index"
 
   create_table "my_collections", :force => true do |t|
     t.string   "name",                      :default => "My Collection"
@@ -181,6 +205,8 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "updated_at"
   end
 
+  add_index "product_comments", ["product_id"], :name => "product_comments_product_id_index"
+
   create_table "product_issues", :force => true do |t|
     t.integer  "product_id"
     t.integer  "reporter_id"
@@ -206,6 +232,9 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.integer  "price_range_id"
   end
 
+  add_index "product_links", ["product_id", "price_range_id"], :name => "product_links_product_id_price_range_id_index"
+  add_index "product_links", ["product_id"], :name => "product_links_product_id_index"
+
   create_table "product_responses", :force => true do |t|
     t.integer  "product_id"
     t.integer  "user_id"
@@ -213,6 +242,8 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "product_responses", ["product_id"], :name => "product_responses_product_id_index"
 
   create_table "product_target_audiences", :force => true do |t|
     t.string   "name"
@@ -238,6 +269,12 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.integer  "product_target_audience_id"
   end
 
+  add_index "products", ["product_line_id"], :name => "products_product_line_id_index"
+  add_index "products", ["product_target_audience_id"], :name => "products_product_target_audience_id_index"
+  add_index "products", ["uploader_id"], :name => "products_uploader_id_index"
+  add_index "products", ["vendor_id", "product_line_id"], :name => "products_vendor_id_product_line_id_index"
+  add_index "products", ["vendor_id"], :name => "products_vendor_id_index"
+
   create_table "profile_images", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -245,6 +282,8 @@ ActiveRecord::Schema.define(:version => 20120320163221) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "profile_images", ["user_id"], :name => "profile_images_user_id_index"
 
   create_table "questions", :force => true do |t|
     t.string   "title"
