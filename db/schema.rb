@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120330164728) do
+ActiveRecord::Schema.define(:version => 20120412052252) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -188,6 +188,26 @@ ActiveRecord::Schema.define(:version => 20120330164728) do
   end
 
   add_index "my_collections", ["permalink"], :name => "index_my_collections_on_permalink"
+
+  create_table "photo_contests", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "photo_entries_count", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photo_entries", :force => true do |t|
+    t.integer  "photo_contest_id"
+    t.integer  "poster_id"
+    t.text     "description"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "price_ranges", :force => true do |t|
     t.integer  "from_price"

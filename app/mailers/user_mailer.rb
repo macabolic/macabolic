@@ -14,12 +14,17 @@ class UserMailer < ActionMailer::Base
   end
   
   def beta_invitation(inviting_user, invitation)
-    @host = "www.macabolic.com"
+    @host = HOST
     @user = inviting_user
     @invitation = invitation
     @subject = "Your wait is over! Welcome to Macabolic"
     @to = invitation.recipient_email
     @domain = "www.macabolic.com"
+    
+    logger.debug "Invitation ID: #{@invitation.id}."
+    logger.debug "Invitation Token: #{@invitation.token}"
+    @accept_url = "http://#{@host}/invitations/#{@invitation.id}/accept/#{@invitation.token}?confirm=true&source=email"
+    #@accept_url = invitation_url(@invitation.id, @invitation.token, :confirm => "true", :source => "email")
     
     mail( :from => "The Macabolic Team <general.support@macabolic.com>", :to => @to, :subject => @subject) do |format|
       format.html { render 'beta_invitation' }

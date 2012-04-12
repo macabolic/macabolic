@@ -1,0 +1,139 @@
+<% title "Photo" %>
+<style type="text/css">
+.photo-items {
+	list-style: none;
+}
+.photo-items li {
+	background-position: 0 50%;
+	padding: 10px 5px 10px 5px!important;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	margin-bottom: auto;
+	color: #414141;	
+	//border: 1px solid black;
+}
+.photo-image {
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 5px 10px 5px!important;
+}
+.poster {
+	color: #9999AE;
+	font-size: 12px;
+	margin-right: 10px;
+}
+
+.caption {
+	font-size: 16px;
+	display: block;
+	margin-left: 10px;
+	margin-right: 10px;
+	line-height: 25px;
+}
+</style>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+<!-- FACEBOOK LIKE BUTTON INITIALIZER -->	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+<!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
+
+	<!-- ====================================================================================================== -->
+	<div class="wrapper-mh">
+		<div>
+			<%= render :partial => "home/learn_more" %>	
+		</div>
+		
+		<div class="maincol">
+			
+			<div class="product-item sidebar-content" style="overflow: visible;">	         
+				<div class="product-image" style="width: 90px; margin-left: 15px">
+					<%= image_tag "logo-icon-only.png" , :size => "87x106", :id => "photo-image" %>
+		    </div>		
+				<div class="product-detai1l">
+					<div>
+						<p class="left"><h3 style="text-align: left; line-height: 27px;"><%= @photo_contest.name %></h3></p>
+					</div>
+					<p>from <span class="vendor"><%= link_to "The Macabolic Team", profile_member_path(8) %></span></p>
+
+					<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+					<div style="margin: 5px;">
+						<div style="overflow: visible;" class="fb-like social" data-href="<%= contest_url(1) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="like" data-font="verdana"></div>
+						<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= contest_url(1) %>" data-text="I have joined the photo contest and posted to @macabolic. Send your photos too to win a prize!" data-counturl="<%= contest_url(1) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+					</div>
+					<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+					<br/>
+					<div style="height: 1px; border-bottom: 1px solid grey; margin: 15px 0px 15px"/></div>
+					<p class="caption">
+						<%=raw @photo_contest.description %>
+					</p>								
+				</div>
+			</div>
+			
+			<% count = 0 %>
+			<% @photo_entries.each do |entry| %>
+				<div class="tabbed-content-area" style="margin-bottom: 15px">				
+					<ul class="photo-items">
+						<li id="entry-<%= count %>">
+								<div class="center">
+									<span class="photo-image">
+											<%= image_tag entry.photo.url(:large), :width => "635", :id => "photo-image" %>
+									</span>								
+								</div>
+								
+								<div id="entry-info-<%= count %>" class="caption" style="height: 50px; display:block;">
+									<p style="position: relative;">
+										<span id="like_comment" class="left">
+											<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+											<div style="margin: 5px;">
+												<div class="fb-like social" data-href="<%= contest_entry_url(@photo_contest, entry) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="like" data-font="verdana"></div>
+												<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= contest_entry_url(@photo_contest, entry) %>" data-text="" data-counturl="<%= contest_entry_url(@photo_contest, entry) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+											</div>
+											<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+											<br/>
+										</span>
+									</p>
+								</div>		
+								<div class="caption">
+									<span class="poster right">
+										posted by <%= entry.poster %>
+									</span>
+									<br/>
+									<span>
+											<p style="margin-top: 10px">
+												<%= entry.description %>
+											</p>
+									</span>
+								</div>	
+						</li>							
+					</ul>	
+
+					<div class="pagination-wrapper bottom">				
+						<div class="right">
+							<div class="right">
+								<div id="pagination">
+									<%= paginate @photo_entries, :param_name => :page %>
+								</div>
+							</div>
+						</div>
+					</div><!-- .pagination-wrapper -->					
+									
+				</div>
+			<% end %>
+			<br/>
+		</div>
+		<div class="sidebar">
+				<%= render :partial => 'photo_contests/form' %>
+		</div>
+	</div>

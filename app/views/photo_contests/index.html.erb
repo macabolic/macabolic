@@ -1,0 +1,23 @@
+<h1>Listing photo_contests</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @photo_contests.each do |photo_contest| %>
+  <tr>
+    <td><%= photo_contest.name %></td>
+    <td><%= link_to 'Show', photo_contest %></td>
+    <td><%= link_to 'Edit', edit_photo_contest_path(photo_contest) %></td>
+    <td><%= link_to 'Destroy', photo_contest, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Photo contest', new_photo_contest_path %>

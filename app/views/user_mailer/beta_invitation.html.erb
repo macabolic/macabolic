@@ -336,7 +336,8 @@ ul.list-my-collections {
 			</ol>
 			<br/>
 			<div style="float:center">
-				<%= link_to "Accept Invitation", invitation_url(@invitation.id, @invitation.token, :confirm => "true", :source => "email"), :class => "button-green", :title => "Learn more"  %>
+				<%#= link_to "Accept Invitation", invitation_url(@invitation.id, @invitation.token, :confirm => "true", :source => "email"), :class => "button-green", :title => "Learn more"  %>
+				<%= link_to "Accept Invitation", @accept_url, :class => "button-green", :title => "Learn more"  %>
 			</div>								
 		</p>
 		<p id="message-body">

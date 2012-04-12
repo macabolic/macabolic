@@ -1,0 +1,86 @@
+<style type="text/css">
+ul#terms-list {
+	list-style: square inside none;
+}
+#terms-list li {
+	padding: 3px 5px 3px 5px!important;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	margin-bottom: auto;
+	color: #414141;	
+	font-size: 12px;
+}
+</style>
+<div>
+	<div class="sidebar-content account-info">
+		<div class="sidebar-header">Submit your photo</div>
+		<div class="sidebar-inner">					
+<% if user_signed_in? %>
+		<% if flash[:notice].present? %>
+			<span style="color:red"><%= flash[:notice] %></span>
+			<br/><br/>
+		<% end %>
+			<div id="product-info" style="display:block;">
+				<p style="position: relative;">
+					<strong>Step 1</strong>
+					<span id="like_comment" class="left">
+						<div style="margin: 0px;">
+							<a href="https://twitter.com/macabolic" class="twitter-follow-button social" data-show-count="true" data-size="small">Follow @macabolic</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						</div>
+						OR<br/>
+						<div class="fb-like social" data-href="http://www.macabolic.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-font="verdana"></div>				
+					</span>
+				</p>
+			</div>		
+
+			<%= form_for(@photo_entry, :url => photo_entries_path, :html => {:multipart => true}) do |f| %>
+			  <% if @photo_entry.errors.any? %>
+			    <div id="error_explanation">
+			      <h2><%= pluralize(@photo_entry.errors.count, "error") %> prohibited this photo_contest from being saved:</h2>
+
+			      <ul>
+			      <% @photo_entry.errors.full_messages.each do |msg| %>
+			        <li><%= msg %></li>
+			      <% end %>
+			      </ul>
+			    </div>
+			  <% end %>
+
+				<strong>Step 2</strong>
+				<div>
+			  		<%= f.label 'Upload a image' %>
+						<%= f.file_field :photo %>	
+						<span style="color: #999999; font-size: 11px;">(Maximum size of 700k. JPG, GIF, PNG.)</span>		
+				</div>	
+				<br/>
+
+				<strong>Step 3</strong>
+				<div>
+			  		<%= f.label 'Any story behind your picture?' %>
+						<%= f.text_area :description, :cols => 35, :rows => 5, :class=> "answer_area" %>
+				</div>
+				<br/><br/>
+			  <div class="actions">
+					<%= f.hidden_field :poster_id %>
+					<%= f.hidden_field :photo_contest_id %>
+			    <%= f.submit 'Submit' %>
+			  </div>
+			<% end %>
+			<div style="margin-top: 15px; border-top: 1px solid black">
+				<br/><strong>Terms:</strong>
+				<ul id="terms-list">
+					<li>1. Winners will be contacted by email.</li>
+					<li>2. It is open to everyone in the world! Only sky is the limit.</li>
+					<li>3. You must either follow <%= link_to '@macabolic', 'http://twitter.com/macabolic' %> or like us on <%= link_to 'facebook', 'http://www.facebook.com/macabolic' %> to be in the contest.</li>
+					<li>4. If we found fake Twitter or Facebook account, or the account is only for the contest, we will remove the entry.</li>
+					<li>5. Any questions, send us a mail general.support@macabolic.com</li>
+				</ul>
+			</div>
+<% else %>
+	Please <%= link_to 'log in', user_session_path %> or <%= link_to "sign up", new_registration_path(User.new) %> to submit your photo.
+<% end %>			
+		</div>
+	</div>
+</div>

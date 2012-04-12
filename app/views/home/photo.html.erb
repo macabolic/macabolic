@@ -1,0 +1,112 @@
+<% title "Photo" %>
+<style type="text/css">
+.photo-items {
+	list-style: none;
+}
+.photo-items li {
+	background-position: 0 50%;
+	padding: 10px 5px 10px 5px!important;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	margin-bottom: auto;
+	color: #414141;	
+	//border: 1px solid black;
+}
+.photo-image {
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 5px 10px 5px!important;
+}
+.poster {
+	color: #9999AE;
+	font-size: 12px;
+	margin-right: 10px;
+}
+
+.caption {
+	font-size: 14px;
+	display: block;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+</style>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+<!-- FACEBOOK LIKE BUTTON INITIALIZER -->	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+<!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
+
+	<!-- ====================================================================================================== -->
+	<div class="wrapper-mh">
+		<div>
+			<%= render :partial => "home/learn_more" %>	
+		</div>
+		
+		<div class="maincol">
+			<% count = 0 %>
+			<% @products.each do |product| %>
+				<div class="tabbed-content-area" style="margin-bottom: 15px">				
+					<ul class="photo-items">
+						<li id="product-<%= count %>">
+								<div class="center">
+									<span class="photo-image1">
+											<% if product.thumbnail.present? %>
+												<%#= image_tag(product.thumbnail.url(:medium), :size => "150x150") %>
+												<%= image_tag product.thumbnail.url(:medium), :width => "637", :id => "photo-image" %>
+											<% elsif product.image_url.present? %>
+												<%#= image_tag(product.image_url, :size => "150x150") %>
+												<%= image_tag product.image_url, :width => "637", :id => "photo-image" %>
+											<% end %>
+									</span>								
+								</div>
+								
+								<div id="product-info-<%= count %>" class="caption" style="height: 30px; display:block;">
+									<p style="position: relative;">
+										<span id="like_comment" class="left">
+											<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+											<div style="margin: 5px;">
+												<div class="fb-like social" data-href="<%= product_url(product) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="like" data-font="verdana"></div>
+												<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= product_url(product) %>" data-text="I just discovered <%= product.name %> and posted to @macabolic." data-counturl="<%= product_url(product) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+											</div>
+											<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+											<br/>
+										</span>
+									</p>
+								</div>		
+								<div class="caption">
+									<span class="poster right">
+										posted by <%= product.discoverer %>
+									</span>
+									<br/>
+									<span>
+											<p style="margin-top: 10px">
+												<%= product.description %>
+												<%#= simple_format(word_wrap(product.description, :line_width => 50)) %>
+											</p>
+									</span>
+								</div>									
+						</li>							
+					</ul>					
+					<!--hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/-->
+				</div>
+			<% end %>
+			<br/>
+		</div>
+		<% if !user_signed_in? %>
+		<div class="sidebar">
+			<%= render :partial => 'users/sessions/mini_form' %>
+		</div>
+		<% end %>		
+	</div>	

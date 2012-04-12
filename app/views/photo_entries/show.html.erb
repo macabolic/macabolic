@@ -1,0 +1,98 @@
+<% title "Photo" %>
+<style type="text/css">
+.photo-items {
+	list-style: none;
+}
+.photo-items li {
+	background-position: 0 50%;
+	padding: 10px 5px 10px 5px!important;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	margin-bottom: auto;
+	color: #414141;	
+	//border: 1px solid black;
+}
+.photo-image {
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 5px 10px 5px!important;
+}
+.poster {
+	color: #9999AE;
+	font-size: 12px;
+	margin-right: 10px;
+}
+
+.caption {
+	font-size: 16px;
+	display: block;
+	margin-left: 10px;
+	margin-right: 10px;
+	line-height: 25px;
+}
+</style>
+<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        $(document).pngFix(); 
+    }); 
+</script>
+<!-- FACEBOOK LIKE BUTTON INITIALIZER -->	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+<!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
+
+	<!-- ====================================================================================================== -->
+	<div class="wrapper-mh">
+		<div>
+			<%= render :partial => "home/learn_more" %>	
+		</div>
+		
+		<div class="maincol">
+			
+				<div class="tabbed-content-area" style="margin-bottom: 15px">				
+					<ul class="photo-items">
+						<li id="photo">
+								<div class="center">
+									<span class="photo-image">
+											<%= image_tag @photo_entry.photo.url(:medium), :width => "637", :id => "photo-image" %>
+									</span>								
+								</div>
+								
+								<div id="photo-info" class="caption" style="height: 30px; display:block;">
+									<p style="position: relative;">
+										<span id="like_comment" class="left">
+											<!-- FACEBOOK LIKE AND TWITTER BUTTONS -->
+											<div style="margin: 5px;">
+												<div class="fb-like social" data-href="<%= contest_entries_url(@photo_contest, @photo_entry) %>" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-action="like" data-font="verdana"></div>
+												<a href="https://twitter.com/share" class="twitter-share-button social" data-url="<%= contest_entries_url(@photo_contest, @photo_entry) %>" data-text="I just posted a picture to @macabolic. Come and check it out" data-counturl="<%= contest_entries_url(@photo_contest, @photo_entry) %>" data-via="macabolic" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+											</div>
+											<!-- END OF FACEBOOK LIKE AND TWITTER BUTTONS -->
+											<br/>
+										</span>
+									</p>
+								</div>		
+								<div class="caption">
+									<span class="poster right">
+										posted by <%= @photo_entry.poster %>
+									</span>
+									<br/>
+									<span>
+											<p style="margin-top: 10px">
+												<%= @photo_entry.description %>
+											</p>
+									</span>
+								</div>									
+						</li>							
+					</ul>					
+				</div>
+			<br/>
+		</div>
+	</div>

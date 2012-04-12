@@ -51,7 +51,8 @@ $(document).ready(function() {
 });
 </script>
 <div style="background: #f6f1de; padding: 10px;">
-	<%=form_for (@product_issue, :url => report_issue_product_path, :remote => true, :html => { :id => "report-issue-now", :class => "report-issue-form" }) do |f| %>
+	<%#= form_for @product_issue, :url => report_issue_product_path do |f| %>
+	<%=form_for @product_issue, :url => report_issue_product_path, :remote => true, :html => { :id => "report-issue-now", :class => "report-issue-form" } do |f| %>
 		<%= radio_button("product_issue", "option", "1") %> <%= f.label "Product not available" %><br/>
 		<%= radio_button("product_issue", "option", "2") %> <%= f.label "Inappropriate image" %><br/>
 		<%= radio_button("product_issue", "option", "3") %> <%= f.label "Not a product" %><br/>

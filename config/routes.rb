@@ -1,5 +1,10 @@
 Macabolic::Application.routes.draw do
 
+  resources :photo_entries
+  resources :contests, :controller => "photo_contests" do
+    resources :entries, :controller => "photo_entries"
+  end
+
   resources :notifications, :only => [:show, :beta_invitation] do
     collection do
       get 'beta_invitation'
@@ -44,6 +49,10 @@ Macabolic::Application.routes.draw do
 
   # Home
   resources :home do
+    member do
+      get 'home'
+    end
+    
     collection do
       get 'discover'
     end
@@ -187,6 +196,7 @@ Macabolic::Application.routes.draw do
   match 'newsletter/:year/monthly/:month' => 'home#monthly'
   match 'fdfabbdcddfcfecfee/send' => 'notifications#send_reminder'
   match 'people' => 'members#index'
+  match 'index' => 'home#home'
   
 # TODO
 #  match '/auth/failure' => 'something to handle this error'
