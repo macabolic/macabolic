@@ -22,10 +22,21 @@
 	        <%= render :partial => 'searches/form', :locals => { :is_remote => false } %>
 			<div class="tabbed-content-area">				
 				
-		        <div id="tab1" class="tab_content product-grid group"> 
+		    <div id="tab1" class="tab_content product-grid group"> 
 					<% @user = User.new %>
 					<%= render :partial => 'products/index', :locals => { :products => @featured_products } %>
 				</div>	
+
+				<div class="pagination-wrapper bottom">				
+					<div class="right">
+						<div class="right">
+							<div id="pagination">
+								<%= link_to 'Discover more >>', discover_url %>
+							</div>
+						</div>
+					</div>
+				</div><!-- .pagination-wrapper -->					
+				
 			</div>
 			<br/>
 					

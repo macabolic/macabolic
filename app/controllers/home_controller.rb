@@ -44,7 +44,7 @@ class HomeController < ApplicationController
       facet :user_id
     end
     
-    @featured_products = Product.limit(30).order("updated_at DESC")
+    @featured_products = Product.limit(27).order("updated_at DESC")
     
     @feature_collection_items = Array.new
     recently_active_users = User.active_users.limit(3)

@@ -46,7 +46,7 @@
 						<span class="productimage">
 							<%= link_to store_path(store) do %>
 								<% if store.logo.present? %>
-									<%= image_tag(store.logo.url(:small), :width => "150") %>
+									<%= image_tag(store.logo.url(:medium), :width => "150") %>
 								<% else %>
 									<%= image_tag store_product_image(store), :width => "150" %>
 								<% end %>					

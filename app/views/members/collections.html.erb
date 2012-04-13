@@ -98,8 +98,8 @@ function size(t) {
 		
 		<%= render :partial => 'activities/mini_activities', :locals => {:activities => @activities} %>
 		<%#= render 'products/product_search' %>
-		<%# if @user == current_user %>
-		<!--
+		<% if @user == current_user %>
+		
 		<div class="sidebar">
 			<div>
 				<div class="sidebar-content account-info">
@@ -107,12 +107,12 @@ function size(t) {
 						Add a new collection
 					</div>
 					<div class="sidebar-inner">
-						<%#= render :partial => 'my_collections/form', :locals => { :user => @user } %>
+						<%= render :partial => 'my_collections/form', :locals => { :user => @user } %>
 					</div>
 				</div>
 			</div>			
 		</div>
-		-->
-		<%# end %>
+
+		<% end %>
 	</div>
 </body>
