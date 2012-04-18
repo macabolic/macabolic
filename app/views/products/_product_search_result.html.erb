@@ -56,4 +56,6 @@
 			</span>			
 		</li>
 	-->
+<% else %>
+	Can't find yours? <%= link_to 'Add your own now!', new_product_path(:user => current_user, :my_collection_id => @my_collection.id) %>
 <% end %>

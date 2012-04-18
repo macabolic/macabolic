@@ -183,16 +183,16 @@ $(document).ready(function() {
     <div id="product_preview_gallery">
     	<%#= image_tag(@product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
     	<%#= image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image") %>
-		<% if product.thumbnail.present? %>
-			<%= image_tag(product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
-			<% thumbnail_image_path "http://#{HOST}#{product.thumbnail.url(:medium)}" %>			
-		<% elsif product.image_url.present? %>
-			<%= image_tag(product.image_url, :width => "180", :class => "preview-image") %>
-			<% thumbnail_image_path product.image_url %>			
-		<% else %>
-			<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
-			<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
-		<% end %>
+		<%# if product.thumbnail.present? %>
+			<%#= image_tag(product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+			<%# thumbnail_image_path "http://#{HOST}#{product.thumbnail.url(:medium)}" %>			
+		<%# elsif product.image_url.present? %>
+			<%#= image_tag(product.image_url, :width => "180", :class => "preview-image") %>
+			<%# thumbnail_image_path product.image_url %>			
+		<%# else %>
+			<%#= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+			<%# thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
+		<%# end %>
 
     </div>
     <div class="clearfix"></div>
@@ -213,14 +213,15 @@ $(window).load(function() {
 	});
 });
 </script>
+<!--
 <div id="popupZoomIn">
-	<% if product.thumbnail.present? %>
-		<%= image_tag(product.thumbnail.url(:original)) %>
-	<% elsif product.image_url.present? %>
-		<%= image_tag(product.image_url) %>
-	<% else %>
-		<%= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
-	<% end %>		
+	<%# if product.thumbnail.present? %>
+		<%#= image_tag(product.thumbnail.url(:original)) %>
+	<%# elsif product.image_url.present? %>
+		<%#= image_tag(product.image_url) %>
+	<%# else %>
+		<%#= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
+	<%# end %>		
 </div>
 <div id="backgroundZoomIn"></div>
 <div style="padding-top:5px; text-align: center">
@@ -229,6 +230,7 @@ $(window).load(function() {
 	</span>
 </div>									
 <br/>
+-->
 <div id="product-action-list" style="text-align: left; margin-bottom: 10px;">
 	<div id="report_issue">
 	<% if @product.product_link.present? %>

@@ -1,0 +1,190 @@
+<% title 'Brands / Stores' %>
+<style type="text/css">
+#action_link {
+	text-align: right;
+	border: 0px solid black;
+	display: none;
+}
+#like_comment {
+	color: #ABABAB;
+}
+#like_comment a {
+	text-decoration: none;
+	font-weight: normal;
+	color: #ABABAB;
+}
+
+#store-content {
+	padding-left: 38px;
+	padding-top: 30px;
+}
+#backgroundPopup {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:1;
+}
+#popupMyCollection {
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+//	width:808px;
+	background:#f6f1de;
+//	border:2px solid #cecece;
+	z-index:2;
+	padding:12px;
+	font-size:13px;
+  	-webkit-border-radius:20px;
+  	-moz-border-radius:20px;
+  	border-radius:20px;			
+}
+
+#popupMyCollectionClose {
+	font-size:14px;
+	line-height:14px;
+	right:3px;
+	top:1px;
+	position:absolute;
+	color:#5c5c5c;
+	font-weight:700;
+	display:block;
+	
+	width: 25px;
+	line-height: 25px;
+	color: #595959;
+	text-align: center;
+	//text-decoration: underline;
+	cursor: pointer;
+	border: 3px solid black;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;	
+	
+}	
+</style>
+<script type="text/javascript"> 
+//SETTING UP OUR POPUP
+//0 means disabled; 1 means enabled;
+var popupStatus = 0;
+
+//loading popup with jQuery magic!
+function loadPopup(){
+	//loads popup only if it is disabled
+	if(popupStatus==0){
+		$("#backgroundPopup").css( {"opacity": "0.7"} );
+		$("#backgroundPopup").fadeIn("slow");
+		$("#popupMyCollection").fadeIn("slow");
+		popupStatus = 1;
+	}
+}
+
+//disabling popup with jQuery magic!
+function disablePopup(){
+	//disables popup only if it is enabled
+	if(popupStatus==1){
+		$("#backgroundPopup").fadeOut("slow");
+		$("#popupMyCollection").fadeOut("slow");
+		popupStatus = 0;
+	}
+}
+
+//centering popup
+function centerPopup(){
+
+	//request data for centering
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#popupMyCollection").height();
+	var popupWidth = $("#popupMyCollection").width();
+	//centering
+	$("#popupMyCollection").css({
+		"position": "absolute",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
+	//only need force for IE6
+
+	$("#backgroundPopup").css( {"height": windowHeight} );
+}
+
+
+$(document).ready(function() {
+ 	$(document).pngFix(); 
+	//LOADING POPUP
+	//Click the button event!
+	$(".do_you_wish_one").click(function(){
+		$("#interest_indicator").attr('value', 2);
+		//centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+	});
+	
+	//CLOSING POPUP
+	//Click the x event!
+	$("#popupMyCollectionClose").click(function(){
+		disablePopup();
+	});
+	
+	//Click out event!
+	$("#backgroundPopup").click(function(){
+		disablePopup();
+	});
+	
+	//Press Escape event!
+	$(document).keypress(function(e){
+		if(e.keyCode==27 && popupStatus==1) {
+			disablePopup();
+		}
+	});	
+	
+	$("#buy_now").click(function() {
+		piwikTracker.trackGoal(1);
+	});
+	
+});
+</script>
+<div class="wrapper-mh">
+	<div>
+		<%= render :partial => "deals/tag_line" %>	
+	</div>
+
+	<div class="deals1-maincol"> 
+
+		<div id="store-content" class="tabbed-content-area">
+			<div style="font-size: 20px;text-align: left; font-weight: bold">
+			   	Popular Deals
+			</div>									
+			<br/>							
+			<%= render :partial => "deals/deals", :locals => { :deals => @popular_deals } %>
+			<div style="height: 20px; clear: both; text-align: right; margin-top: 10px; padding-right: 10px; padding-top: 15px; padding-bottom: 5px;">
+				<%= link_to "Show more popular deals", popular_deals_path %>
+			</div>																
+		</div>
+		<div id="store-content" class="tabbed-content-area">
+			<div style="font-size: 20px;text-align: left; font-weight: bold">
+			   	Ending soon
+			</div>									
+			<br/>							
+			<%= render :partial => "deals/deals", :locals => { :deals => @ending_soon_deals } %>
+			<div style="height: 20px; clear: both; text-align: right; margin-top: 10px; padding-right: 10px; padding-top: 15px; padding-bottom: 5px;">
+				<%= link_to "Show more deals ending soon", ending_deals_path %>
+			</div>																		
+		</div>
+		<br/><br/>	
+
+	</div>
+</div>
+
+<% if user_signed_in? %>
+<div id="popupMyCollection">
+	<%= render :partial => "my_collections/thumbnail_view", :locals => { :product_id => "" } %>
+</div>
+<div id="backgroundPopup"></div>
+<% end %>

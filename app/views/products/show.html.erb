@@ -53,7 +53,6 @@
 	border-radius:20px;	
 	
 }
-
 </style>
 <!-- Piwik --> 
 <script type="text/javascript">
@@ -245,9 +244,42 @@ $(document).ready(function() {
 				<div id="product-gallery">				
 					<%= render :partial => 'products/product_preview_gallery', :locals => { :product => @product } %>
 				</div>
-	        </div>		
-	        <div class="product-detail">
-	            <div>
+	   	</div>		
+	    <div class="product-detail">
+				<div id="product-gallery">	
+					<% if @product.product_link.present? %>
+						<%= link_to buy_now_product_path(@product) do %>
+								
+							<% if @product.thumbnail.present? %>
+								<%= image_tag(@product.thumbnail.url(:original), :width => "400", :class => "preview-image") %>
+								<% thumbnail_image_path "http://#{HOST}#{@product.thumbnail.url(:medium)}" %>			
+							<% elsif @product.image_url.present? %>
+								<%= image_tag(@product.image_url, :width => "180", :class => "preview-image") %>
+								<% thumbnail_image_path @product.image_url %>			
+							<% else %>
+								<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+								<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
+							<% end %>
+
+						<% end %>
+					<% else %>
+
+						<% if @product.thumbnail.present? %>
+							<%= image_tag(@product.thumbnail.url(:original), :width => "400", :class => "preview-image") %>
+							<% thumbnail_image_path "http://#{HOST}#{@product.thumbnail.url(:medium)}" %>			
+						<% elsif @product.image_url.present? %>
+							<%= image_tag(@product.image_url, :width => "180", :class => "preview-image") %>
+							<% thumbnail_image_path @product.image_url %>			
+						<% else %>
+							<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+							<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
+						<% end %>
+
+					<% end %>
+					
+				</div>
+		
+	      <div>
 					<p class="left"><h3 style="text-align: left; line-height: 27px;"><%= @product.name %></h3></p>
 				</div>
 				<p>from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></p>
@@ -289,7 +321,7 @@ $(document).ready(function() {
 						<a href="#" id="own-this" class="button-green do_you_have_one">Have one?</a>
 					</div>
 					<div id="wishlist_link">
-						<%= link_to 'Wanted', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => true, :class => "button-green checked", :id => "own-this", :title => "Wanted" %>
+						<%= link_to 'Wanted', { :controller => "wishlist_items", :action => "destroy", :product => @product.id }, :method => "delete", :remote => false, :class => "button-green checked", :id => "own-this", :title => "Wanted", :confirm => "Are you sure? \nThis will remove this product from your collection." %>							
 					</div>
 						<% else %>
 						<!-- Not own or want yet -->						
@@ -352,13 +384,24 @@ $(document).ready(function() {
 				<% end %>
 					<span id="price_range_wrapper" class="left" style="color: black">
 					<% if @product.price_range.present? %>					
-						<%= @product.price_range.display %>
+						<% if @product.deals.exists? %>
+							<span id="original_price"><%= @product.price_range.display %></span>
+						<% else %>
+							<%= @product.price_range.display %>
+						<% end %>
 					<% else %>
 						<!-- Not showing the price -->
 					<% end %>
 					</span>
 					<span class="right">						
+					<% if !@product.deals.exists? %>
 						<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
+					<% else %>
+						<span class="hot_deal">
+							You just find yourself a deal!<br/>
+							<%#= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
+						</span>
+					<% end %>
 					</span>
 				</div>
 				<% if !@product.product_link.present? %>
@@ -541,6 +584,13 @@ $(document).ready(function() {
 		-->		
 		
 	</div>
+	
+	<% if @deals.size > 0 %>
+	<div class="sidebar">
+		<%= render :partial => 'deals/offered_by', :locals => { :deals => @deals } %>
+	</div>
+	<% end %>
+	
 	<div class="sidebar" id="comment-display">			
 		<%= render :partial => 'product_comments/show', :locals => { :product => @product } %>
 	</div>

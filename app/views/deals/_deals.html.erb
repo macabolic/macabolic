@@ -1,0 +1,91 @@
+<div class="product-grid group">
+	<ul id="collection-items" class="list-my-collections">
+		<div id="products">					
+			<% count = 0 %>
+			<% deals.each do |deal| %>
+	    <li>
+				<div>
+					<div class="left logo-wrapper" style="margin-right: 10px;">
+						<% product = deal.product %>
+						<%= link_to product_path(deal.product) do %>
+						<% if product.thumbnail.present? %>
+							<%= image_tag(product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+							<% thumbnail_image_path "http://#{HOST}#{product.thumbnail.url(:medium)}" %>			
+						<% elsif product.image_url.present? %>
+							<%= image_tag(product.image_url, :width => "180", :class => "preview-image") %>
+							<% thumbnail_image_path product.image_url %>			
+						<% else %>
+							<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+							<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
+						<% end %>
+						<% end %>
+					</div>
+
+					<div>
+						<span class="vendor">
+							<%= link_to simple_format(word_wrap(deal.vendor.name, :line_width => 50)), store_path(deal.vendor) %>
+						</span>
+						<span>
+							<%= link_to product_path(deal.product) do %>
+								<p>
+									<%= simple_format(word_wrap(deal.product.name, :line_width => 50)) %>
+								</p>
+							<% end %>
+						</span>
+					</div>
+				<% if user_signed_in? %>
+					<div id="deal-info-<%= count %>" class="overlay" style="height: 30px; display:inline;">
+						<p style="position: relative;">
+							<span id="like_comment" class="left">
+						<!--
+							<%# if deal.offered_price.nil? %>	
+								<span id="offered_price"><%#= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+							<%# else %>
+								<span id="original_price"><%#= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+								<span id="offered_price"><%#= number_to_currency(deal.offered_price, :separator => ".", :delimiter => ",") %></span>
+							<%# end %>
+						-->
+							</span>
+						<!--	
+							<%# if current_user.wish_this_product?(deal.product) %>
+							<span id="like_comment" style="text-align: right">
+								Unlocked! <%#=raw deal.offer %>
+							</span>
+						-->								
+							<%# else %>
+							<span id="like_comment" style="text-align: right">
+								<%= link_to 'Get your deal', product_path(deal.product) %>
+							<!--	<a href="#" class="do_you_wish_one-<%= deal.product.id %>" obj-id="<%= deal.product.id %>">I want one! Unlock it now.</a> -->
+								<script type="text/javascript"> 
+								$(".do_you_wish_one-<%= deal.product.id %>").click(function(){
+									$("#interest_indicator").attr('value', 2);
+									$("#product_id").attr('value', $(this).attr('obj-id'));
+									//centering with css
+									centerPopup();
+									//load popup
+									loadPopup();
+								});				
+								</script>
+							</span>
+							<%# end %>
+							<% if !deal.days_left.nil? %>
+								<%= deal.days_left %> days left to pick up the offer.
+							<% end %>
+							
+						</p>
+					</div>
+				<% end %>
+				</div>
+	    </li>
+			<%
+				count = count + 1
+				if count % 4 == 0
+			%>
+				<hr style="width: 100%; height: 1px; border: 1px solid white; margin: 0px 5px 0px 0px;"/>
+			<% 
+				end 
+			%>						
+			<% end %>
+		</div>
+	</ul>
+</div>

@@ -69,7 +69,7 @@
 				<p style="position: relative;">
 					<span id="like_comment" class="left">
 						<%= link_to pluralize(product.responses.size, "like"), product_path(product) %> |  
-						<%= link_to pluralize(product.comments.size, "comment"), product_path(product) %>
+						<%= link_to pluralize(product.wanters.size, "want"), product_path(product) %>
 					</span>
 					<span id="like_comment" style="text-align: right">
 					<% if product.price_range.present? %>					

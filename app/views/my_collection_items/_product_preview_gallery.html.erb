@@ -179,20 +179,20 @@ $(document).ready(function() {
 </script>
 <div class="html_carousel">
     <div id="product_preview_gallery">
-		<% if my_collection_item.product.thumbnail.present? %>
-			<%= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
-			<% thumbnail_image_path "http://#{HOST}#{my_collection_item.product.thumbnail.url(:medium)}" %>
-		<% elsif my_collection_item.product.image_url.present? %>
-			<%= image_tag(my_collection_item.product.image_url, :width => "180", :class => "preview-image") %>
-			<% thumbnail_image_path my_collection_item.product.image_url %>
-		<% else %>
-			<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
-			<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>
-		<% end %>
-		<% if my_collection_item.thumbnail.present? %>
-			<%= image_tag(my_collection_item.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
-			<% thumbnail_image_path "http://#{HOST}#{my_collection_item.thumbnail.url(:medium)}" %>
-		<% end %>
+		<%# if my_collection_item.product.thumbnail.present? %>
+			<%#= image_tag(my_collection_item.product.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+			<%# thumbnail_image_path "http://#{HOST}#{my_collection_item.product.thumbnail.url(:medium)}" %>
+		<%# elsif my_collection_item.product.image_url.present? %>
+			<%#= image_tag(my_collection_item.product.image_url, :width => "180", :class => "preview-image") %>
+			<%# thumbnail_image_path my_collection_item.product.image_url %>
+		<%# else %>
+			<%#= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+			<%# thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>
+		<%# end %>
+		<%# if my_collection_item.thumbnail.present? %>
+			<%#= image_tag(my_collection_item.thumbnail.url(:medium), :width => "180", :class => "preview-image") %>
+			<%# thumbnail_image_path "http://#{HOST}#{my_collection_item.thumbnail.url(:medium)}" %>
+		<%# end %>
     </div>
     <div class="clearfix"></div>
 	<div class="pagination1" id="product_preview_gallery_pag"></div>
@@ -212,14 +212,15 @@ $(window).load(function() {
 	});
 });
 </script>
+<!--
 <div id="popupZoomIn">
-	<% if my_collection_item.product.thumbnail.present? %>
-		<%= image_tag(my_collection_item.product.thumbnail.url(:original)) %>
-	<% elsif my_collection_item.product.image_url.present? %>
-		<%= image_tag(my_collection_item.product.image_url) %>
-	<% else %>
-		<%= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
-	<% end %>		
+	<%# if my_collection_item.product.thumbnail.present? %>
+		<%#= image_tag(my_collection_item.product.thumbnail.url(:original)) %>
+	<%# elsif my_collection_item.product.image_url.present? %>
+		<%#= image_tag(my_collection_item.product.image_url) %>
+	<%# else %>
+		<%#= image_tag "/images/product/no-image_medium.jpg", :width => "200", :class => "preview-image" %>
+	<%# end %>		
 </div>
 <div id="backgroundZoomIn"></div>
 <div style="padding-top:5px; text-align: center">
@@ -228,6 +229,7 @@ $(window).load(function() {
 	</span>
 </div>			
 <br/>
+-->
 <div id="add_wishlist" style="text-align: left; margin-bottom: 10px;">
 <% if @user == current_user %>
 	<%= link_to 'Edit my item', edit_product_my_collection_item_path(@product, @my_collection_item), :class => "edit_link", :title => "Edit Collection" %>

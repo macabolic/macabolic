@@ -1368,6 +1368,7 @@ input:blur {
 	font-weight: bold;
 	font-style: italic;
 	font-color: #565656;
+	text-align: center;
 }
 
 .vendor a {
@@ -1521,4 +1522,21 @@ input:blur {
 a.follow_link {
 	font-weight: bold;	
 	color: #DA5D18;	
+}
+
+.logo-wrapper {
+	background-color: #f3f3f3;
+}
+
+#original_price {
+	text-decoration: line-through;
+}
+
+#offered_price {
+	color: red;
+}
+
+.hot_deal {
+	color: red;
+	font-color: red;
 }

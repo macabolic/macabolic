@@ -64,6 +64,7 @@ class MyCollectionItemsController < ApplicationController
     end
     
     @my_collections = @user.my_collections
+    @deals = Deal.product_deals(@product)   
     
     respond_to do |format|
       format.html # show.html.erb
@@ -114,7 +115,8 @@ class MyCollectionItemsController < ApplicationController
         # do an update instead on my_collection_id and interest_indicator      
         search_item.first.update_attributes(:my_collection_id => params[:my_collection_id], :interest_indicator => params[:interest_indicator])
       end
-      redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+      #redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+      redirect_to(product_my_collection_item_path(@product, search_item.first), :notice => 'My collection item was successfully saved.')      
     else        
       logger.debug "Going to save now..."
       if params[:create_new].present? && params[:create_new] == "yes"
@@ -124,7 +126,8 @@ class MyCollectionItemsController < ApplicationController
       else
         if @my_collection_item.save
           logger.debug "Done saving. Now redirecting to member_my_collection page."
-          redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+          #redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')
+          redirect_to(product_my_collection_item_path(@product, @my_collection_item), :notice => 'My collection item was successfully saved.')
         else
           logger.debug "Something is wrong."
           redirect_to(member_my_collection_path(current_user, @my_collection), :notice => 'My collection item was successfully saved.')

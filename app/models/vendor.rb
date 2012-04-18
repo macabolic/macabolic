@@ -1,8 +1,9 @@
 class Vendor < ActiveRecord::Base
   has_many    :products
-  has_many    :responses,                 :dependent => :destroy, :class_name => "VendorResponse"
-  has_many    :followers,                 :dependent => :destroy, :class_name => "VendorFollower"
-  
+  has_many    :offerings,           :source => :product,    :through => :deals 
+  has_many    :responses,           :dependent => :destroy, :class_name => "VendorResponse"
+  has_many    :followers,           :dependent => :destroy, :class_name => "VendorFollower"
+  has_many    :deals,               :dependent => :destroy
   has_attached_file       :logo, 
                           :styles => { :thumb => ["50x50#", :png], :small => ["180x180#", :png], :medium => ["300x300>", :png], :large => ["600x600>", :png] },
                           :url => "/assets/vendors/:attachment/:id/:style/vendor-:id-:filename",
@@ -29,6 +30,10 @@ class Vendor < ActiveRecord::Base
  
   def following?(user)
     return Vendor.following?(self, user)
+  end
+  
+  def related_offerings
+    return Deal.vendor_related_offerings(self)
   end
   
   def self.like?(vendor, user)

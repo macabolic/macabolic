@@ -18,6 +18,8 @@ class VendorsController < ApplicationController
   def show
     @vendor = Vendor.find(params[:id])
     @user = current_user
+    @deals = @vendor.deals
+    @related_deals = @vendor.related_offerings
     #@products = Product.where(:vendor_id => @vendor.id)
     
     respond_to do |format|

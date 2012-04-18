@@ -12,6 +12,8 @@ class MyCollectionsController < ApplicationController
     @user = @my_collection.user #if user_signed_in?
     @my_collection_comments = @my_collection.comments.order("created_at DESC")
     @followers = @my_collection.followers
+    @followers = @followers.map(&:follower)
+    
     @responses = @my_collection.responses
 
 		#@my_collection_items = @my_collection.my_collection_items.page params[:collection_items_page]
@@ -154,16 +156,19 @@ class MyCollectionsController < ApplicationController
     # 4. my_collection.name = 'My #{my_collection_item.product.name} Collection'
     # 5. my_collection.my_collection_items.add my_collection_item
     # 6. my_collection.save
+    @my_collection.name = 'My Untitled Collection'
+    @my_collection.user_id = current_user.id
     @my_collection_items = @my_collection.my_collection_items
-    @my_collection_items.each do |my_collection_item|
-      @new_my_collection = MyCollection.new
-      @new_my_collection.name = 'My ' + my_collection_item.product.name + ' Collection'
-      @new_my_collection.user_id = current_user.id
-      @new_my_collection.my_collection_items.build(:product_id => my_collection_item.product.id, :user_id => current_user.id, :interest_indicator => 1)
-      logger.debug "#{@new_my_collection.to_yaml}"
-      @new_my_collection.save
-    end    
-
+    #@my_collection_items.each do |my_collection_item|
+      #@new_my_collection = MyCollection.new
+      #@new_my_collection.name = 'My ' + my_collection_item.product.name + ' Collection'
+      #@new_my_collection.user_id = current_user.id
+      #@new_my_collection.my_collection_items.build(:product_id => my_collection_item.product.id, :user_id => current_user.id, :interest_indicator => 1)
+      #logger.debug "#{@new_my_collection.to_yaml}"
+      #@new_my_collection.save
+    #end    
+    logger.debug "#{@my_collection.to_yaml}"
+    @my_collection.save
     UserMailer.welcome(current_user).deliver
     
     respond_to do |format|

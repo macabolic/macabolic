@@ -270,9 +270,42 @@ $(document).ready(function() {
 				<div id="product-gallery">
 					<%= render :partial => 'my_collection_items/product_preview_gallery', :locals => { :my_collection_item => @my_collection_item } %>
 				</div>
-	        </div>			
-	        <div class="product-detail">
-	            <div>
+			</div>			
+      <div class="product-detail">
+				<div id="product-gallery">	
+					<% if @my_collection_item.product.product_link.present? %>
+						<%= link_to buy_now_product_path(@product) do %>
+								
+							<% if @my_collection_item.product.thumbnail.present? %>
+								<%= image_tag(@my_collection_item.product.thumbnail.url(:original), :width => "400", :class => "preview-image") %>
+								<% thumbnail_image_path "http://#{HOST}#{@my_collection_item.product.thumbnail.url(:medium)}" %>			
+							<% elsif @my_collection_item.product.image_url.present? %>
+								<%= image_tag(@my_collection_item.product.image_url, :width => "180", :class => "preview-image") %>
+								<% thumbnail_image_path @my_collection_item.product.image_url %>			
+							<% else %>
+								<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+								<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
+							<% end %>
+
+						<% end %>
+					<% else %>
+
+						<% if @my_collection_item.product.thumbnail.present? %>
+							<%= image_tag(@my_collection_item.product.thumbnail.url(:original), :width => "400", :class => "preview-image") %>
+							<% thumbnail_image_path "http://#{HOST}#{@my_collection_item.product.thumbnail.url(:medium)}" %>			
+						<% elsif @my_collection_item.product.image_url.present? %>
+							<%= image_tag(@my_collection_item.product.image_url, :width => "180", :class => "preview-image") %>
+							<% thumbnail_image_path @my_collection_item.product.image_url %>			
+						<% else %>
+							<%= image_tag "/images/product/no-image_medium.jpg", :width => "180", :class => "preview-image" %>
+							<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
+						<% end %>
+
+					<% end %>
+					
+				</div>
+	
+				<div>
 					<p class="left"><h3 style="text-align: left; line-height: 27px;"><%= @product.name %></h3></p>
 				</div>
 				<p>from <span class="vendor"><%= link_to @product.vendor.name, store_path(@product.vendor) %></span></p>
@@ -378,14 +411,25 @@ $(document).ready(function() {
 				<div id="buy_now_wrapper" style="display:none;">
 				<% end %>
 					<span id="price_range_wrapper" class="left" style="color: black">
-					<% if @product.price_range.present? %>					
-						<%= @product.price_range.display %>
+					<% if @product.price_range.present? %>	
+						<% if @product.deals.exists? %>
+							<span id="original_price"><%= @product.price_range.display %></span>
+						<% else %>									
+							<%= @product.price_range.display %>
+						<% end %>
 					<% else %>
 						<!-- Not showing the price -->
 					<% end %>
 					</span>
 					<span class="right">						
-						<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
+						<% if !@product.deals.exists? %>
+							<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
+						<% else %>
+							<span class="hot_deal">
+								You just find yourself a deal!<br/>
+								<%#= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
+							</span>
+						<% end %>
 					</span>
 				</div>
 				<% if !@product.product_link.present? %>
@@ -567,6 +611,13 @@ $(document).ready(function() {
 		-->		
 		
 	</div>
+	
+	<% if @deals.size > 0 %>
+	<div class="sidebar">
+		<%= render :partial => 'deals/offered_by', :locals => { :deals => @deals } %>
+	</div>
+	<% end %>
+	
 	<div class="sidebar" id="comment-display">			
 		<%= render :partial => 'product_comments/show', :locals => { :product => @product } %>
 	</div>	

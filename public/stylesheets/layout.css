@@ -616,6 +616,12 @@ float: left;
 margin-bottom: 32px;
 }
 
+.deals-maincol {
+width: 800px;
+float: left;
+margin-bottom: 32px;
+}
+
 .sidebar {
 	width: 276px;
 	float: left;

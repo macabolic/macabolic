@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
   has_many                :responses,           :dependent => :destroy, :class_name => "ProductResponse"
   has_many                :comments,            :dependent => :destroy, :class_name => "ProductComment"
   has_many                :issues,              :dependent => :destroy, :class_name => "ProductIssue"
+  has_many                :deals,               :dependent => :destroy
   
   # Right now, we are assuming there is only 1 product_link and thus only 1 price range
   has_one                 :product_link,        :dependent => :destroy

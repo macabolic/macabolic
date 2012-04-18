@@ -43,7 +43,7 @@
 						<%= link_to '#', store_path(store), :method => 'show', :id => "action_link", :class => "edit_link" %>
 					</span>								
 					<div class="center">
-						<span class="productimage">
+						<span class="productimage logo-wrapper1">
 							<%= link_to store_path(store) do %>
 								<% if store.logo.present? %>
 									<%= image_tag(store.logo.url(:medium), :width => "150") %>
@@ -60,10 +60,12 @@
 					</div>
 					<div id="store-info-<%= count %>" class="overlay" style="height: 30px; display:inline;">
 						<p style="position: relative;">
+						<!--
 							<span id="like_comment" class="left">
-								<%= link_to pluralize(store.responses.size, "like"), store_path(store) %> |  
-								<%= link_to pluralize(store.followers.size, "follower"), store_path(store) %>
+								<%#= link_to pluralize(store.responses.size, "like"), store_path(store) %> |  
+								<%#= link_to pluralize(store.followers.size, "follower"), store_path(store) %>
 							</span>
+						-->
 							<span id="like_comment" style="text-align: right">
 								<%= link_to pluralize(store.products.size, "product"), store_path(store) %>
 							</span>							

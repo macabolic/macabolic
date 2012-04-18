@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412052252) do
+ActiveRecord::Schema.define(:version => 20120417102954) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -88,6 +88,24 @@ ActiveRecord::Schema.define(:version => 20120412052252) do
 
   add_index "authentications", ["user_id", "provider"], :name => "authentications_user_id_provider_index"
   add_index "authentications", ["user_id"], :name => "authentications_user_id_index"
+
+  create_table "deals", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "vendor_id"
+    t.datetime "offered_from_date"
+    t.datetime "offered_to_date"
+    t.decimal  "original_price"
+    t.decimal  "offered_price"
+    t.text     "offer"
+    t.text     "description"
+    t.text     "remark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deals", ["product_id"], :name => "deals_product_id_index"
+  add_index "deals", ["vendor_id", "product_id"], :name => "deals_vendor_id_product_id_index"
+  add_index "deals", ["vendor_id"], :name => "deals_vendor_id_index"
 
   create_table "email_preferences", :force => true do |t|
     t.datetime "created_at"
@@ -408,6 +426,7 @@ ActiveRecord::Schema.define(:version => 20120412052252) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.integer  "products_count",    :default => 0
+    t.string   "url"
   end
 
   create_table "wishlist_items", :force => true do |t|

@@ -43,6 +43,9 @@ class ProductsController < ApplicationController
     if @user.present? && @user.own_this_product?(@product)
       @my_collection_item = MyCollectionItem.where("user_id = ? and product_id = ?", @user.id, @product.id).first
       redirect_to product_my_collection_item_path(@product.id, @my_collection_item.id), :status => 301
+    elsif @user.present? && @user.wish_this_product?(@product)
+      @my_collection_item = MyCollectionItem.where("user_id = ? and product_id = ?", @user.id, @product.id).first
+      redirect_to product_my_collection_item_path(@product.id, @my_collection_item.id), :status => 301  
     else 
       # Allow public access.
       @questions = Question.where(:product_id => @product.id).order("created_at DESC").page params[:question_page]
@@ -95,7 +98,9 @@ class ProductsController < ApplicationController
       
       # Put a comment here when found out the purpose of it.
       #@my_collections = current_user.my_collections
-    
+      
+      @deals = Deal.product_deals(@product)
+      
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @product }

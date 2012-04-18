@@ -1,5 +1,12 @@
 Macabolic::Application.routes.draw do
 
+  resources :deals do
+    collection do
+      get 'popular' => "deals#popular"
+      get 'ending' => "deals#ending_soon"
+    end    
+  end
+
   resources :photo_entries
   resources :contests, :controller => "photo_contests" do
     resources :entries, :controller => "photo_entries"

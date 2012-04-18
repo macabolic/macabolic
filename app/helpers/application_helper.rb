@@ -189,7 +189,7 @@ module ApplicationHelper
     vendor = Vendor.find(vendor_id)
     if vendor.present?      
   		if vendor.logo.present?
-  			return vendor.logo.url(:thumb)
+  			return vendor.logo.url(:medium)
   		else
         return default_url
       end

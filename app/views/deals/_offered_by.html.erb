@@ -1,0 +1,76 @@
+<div class="sidebar-content">
+	<% if !user_signed_in? %>
+		<div class="sidebar-header" style="background: #dd6219;">Found a deal!</div>
+	<% else %>
+		<div class="sidebar-header" style="background: #dd6219;">Unlocked Deals</div>
+	<% end %>
+	<div style="margin: 17px; border: 0px;">
+		<div>
+			<p style="font-size: 12px; font-family: Verdana;">
+	    	<ul id="search-list">
+				<div id="products">					
+					<% deals.each do |deal| %>
+			    <li>
+						<div>
+							<div class="left logo-wrapper" style="margin-right: 10px;">
+								<%= image_tag vendor_logo(deal.vendor.id), :width => "240" %>									
+							</div>
+							<p style="margin-bottom: 3px;"><span class="vendor"><%= link_to deal.vendor.name, store_path(deal.vendor) %></span></p>
+							<p style="margin-bottom: 3px;"><%= deal.product.name %></p>
+						<% if user_signed_in? %>
+							<div class="answers-meta">
+								<p class="left">
+								<% if deal.offered_price.nil? %>
+									<span style="color: red; font-weight: bold">
+										<span id="offered_price"><%= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+									</span>
+								<% else %>
+									<span style="color: black; font-weight: bold">
+										<span id="original_price"><%= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+									</span>
+									<span style="color: red; font-weight: bold">
+										<span id="offered_price"><%= number_to_currency(deal.offered_price, :separator => ".", :delimiter => ",") %></span>
+									</span>
+								<% end %>
+									<br/>
+									<% if !deal.days_left.nil? %>
+										<%= deal.days_left %> days left to pick up the offer.
+									<% end %>
+								</p>
+								<p class="right">
+								<% if current_user.wish_this_product?(@product) %>
+									<%=raw deal.offer %>
+								<% else %>
+									<a href="#" class="do_you_wish_one">I want one!</a>
+								<% end %>
+								</p>
+							</div><br/>
+							<% if current_user.wish_this_product?(@product) %>
+							<div>
+								<span><%= deal.description %></span>
+							</div>
+							<% end %>
+						<% else %>
+							<div class="answers-meta">
+								<p class="left">
+									<span style="color: red; font-weight: bold">
+										<span id="response-stat-product"></span>
+									</span>
+									<% if !deal.days_left.nil? %>
+										<%= deal.days_left %> days left to pick up the offer.
+									<% end %>									
+								</p>
+								<p class="right">
+									<%= link_to 'I want one!', user_session_path %>
+								</p>
+							</div>						
+						<% end %>
+						</div>
+			    </li>				
+					<% end %>
+				</div>
+			</ul>
+			</p>
+		</div>
+	</div>
+</div>

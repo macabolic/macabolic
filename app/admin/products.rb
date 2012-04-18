@@ -6,22 +6,25 @@ ActiveAdmin.register Product do
   filter  :vendor
   
   index :as => :grid do |product|
-    link_to image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image"), products_path(product)
+    link_to admin_product_path(product) do
+      image_tag(product.thumbnail.url(:medium), :width => "200", :class => "preview-image", :title => product.name)
+    end
+    
   end  
 
-  index do
-    column  "Id" do |product|
-      link_to product.id, admin_product_path(product)
-    end
-    column  :vendor
-    column  :product_line
-    column  :name
-    column  :description
-    column  :thumbnail_file_name
-    column  :thumbnail_file_size
-    column  :thumbnail_content_type
-    default_actions
-  end
+  #index do
+  #  column  "Id" do |product|
+  #    link_to product.id, admin_product_path(product)
+  #  end
+  #  column  :vendor
+  #  column  :product_line
+  #  column  :name
+  #  column  :description
+  #  column  :thumbnail_file_name
+  #  column  :thumbnail_file_size
+  #  column  :thumbnail_content_type
+  #  default_actions
+  #end
   
     
   #form :partial => "form"  
