@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120417102954) do
+ActiveRecord::Schema.define(:version => 20120419085350) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(:version => 20120417102954) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "price_range_id"
+    t.text     "promote_url"
   end
 
   add_index "product_links", ["product_id", "price_range_id"], :name => "product_links_product_id_price_range_id_index"

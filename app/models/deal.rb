@@ -9,6 +9,7 @@ class Deal < ActiveRecord::Base
   scope :expire_this_week, where('offered_to_date > ? and offered_to_date < ?', Time.now, 1.week.from_now)
   scope :expire_this_month, where('offered_to_date > ? and offered_to_date < ?', Time.now, 1.month.from_now)
   scope :no_expiry_date, where('offered_to_date is null')  
+  scope :popular_deals, where('offered_to_date is null or offered_to_date >= ?', 1.month.from_now)
   scope :store_deals, lambda { |store|
     where('vendor_id = ?', store.id)
   }
@@ -18,7 +19,7 @@ class Deal < ActiveRecord::Base
   }
 
   scope :vendor_related_offerings, lambda { |vendor|
-    joins('INNER JOIN products ON deals.product_id = products.id').where('products.vendor_id = ?', vendor.id)
+    joins('INNER JOIN products ON deals.product_id = products.id').where('products.vendor_id = ? and products.vendor_id <> deals.vendor_id', vendor.id)
   }
 
   def days_left

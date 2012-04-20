@@ -44,7 +44,8 @@
 </div>
 <% end %>
 
-<% if @user_heat_map_search.present? %>
+<!--
+<%# if @user_heat_map_search.present? %>
 <div class="sidebar">
 	<div class="sidebar-content">
         <div class="sidebar-header" style="background: #dd6219;">Trending members</div>
@@ -53,44 +54,44 @@
 				<p style="font-size: 12px; font-family: Verdana;">					
 		    	<ul id="search-list">
 					<div id="products">
-						<% count = 1 %>					
-						<% @user_heat_map_search.facet(:user_id).rows.each do |facet| %>	
-						<% if count <= 10 %>
-							<% user = user(facet.value) %>
+						<%# count = 1 %>					
+						<%# @user_heat_map_search.facet(:user_id).rows.each do |facet| %>	
+						<%# if count <= 10 %>
+							<%# user = user(facet.value) %>
 				        <li>
 							<div style="margin-bottom:10px;">
 								<div class="left" style="margin-right: 10px;">
-									<%= image_tag user_thumbnail(facet.value), :size => "60x60" %>									
+									<%#= image_tag user_thumbnail(facet.value), :size => "60x60" %>									
 								</div>
 								<br/>
-								<p style="margin-bottom: 3px;"><%= link_to user, collections_member_path(:id => facet.value) %></p>
+								<p style="margin-bottom: 3px;"><%#= link_to user, collections_member_path(:id => facet.value) %></p>
 								<div class="answers-meta">
 									<p class="left">
-										<span id="response-stat-product"><%= pluralize(facet.count, 'products') %></span>
+										<span id="response-stat-product"><%#= pluralize(facet.count, 'products') %></span>
 									</p>
-									<% if user_signed_in? %>	
-									<div id="follow-user-link-<%= user.id %>">										
+									<%# if user_signed_in? %>	
+									<div id="follow-user-link-<%#= user.id %>">										
 										<p class="right">
-										<% if current_user.following?(user) %>
-											<%= link_to "unfollow", unfollow_member_friendship_path(current_user, user), :class => "follow_link", :title => "Unfollow", :remote => true %>
-										<% else %>
-											<%= link_to "follow", follow_member_friendship_path(current_user, user), :class => "follow_link", :title => "Follow", :remote => true %>				
-										<% end %>										
+										<%# if current_user.following?(user) %>
+											<%#= link_to "unfollow", unfollow_member_friendship_path(current_user, user), :class => "follow_link", :title => "Unfollow", :remote => true %>
+										<%# else %>
+											<%#= link_to "follow", follow_member_friendship_path(current_user, user), :class => "follow_link", :title => "Follow", :remote => true %>				
+										<%# end %>										
 										</p>
 									</div>
-									<% else %>
+									<%# else %>
 									<p class="right">
-										<%= link_to "follow", user_session_path, :class => "follow_link", :title => "Follow", :remote => false %>				
+										<%#= link_to "follow", user_session_path, :class => "follow_link", :title => "Follow", :remote => false %>				
 									</p>
-									<% end %>
+									<%# end %>
 									</p>
 								</div>
 							</div>
 							<br/>
 				        </li>
-						<% end %>
-						<% count = count + 1 %>
-						<% end %>
+						<%# end %>
+						<%# count = count + 1 %>
+						<%# end %>
 					</div>
 				</ul>
 				</p>
@@ -98,4 +99,5 @@
 		</div>
 	</div>
 </div>
-<% end %>
+<%# end %>
+-->
