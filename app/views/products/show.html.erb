@@ -395,11 +395,13 @@ $(document).ready(function() {
 					</span>
 					<span class="right">						
 					<% if !@product.deals.exists? %>
-						<% if !@product.product_link.promote_url.present? %>
-							<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
-						<% else %>
-							<%=raw @product.product_link.promote_url %>
-						<% end %>
+						<% if @product.product_link.present? %>
+							<% if !@product.product_link.promote_url.present? %>
+								<%= link_to 'Buy Now', buy_now_product_path(@product), :class => "buy_now external_link", :title => "Buy Now", :target => "_blank" %>
+							<% else %>
+								<%=raw @product.product_link.promote_url %>
+							<% end %>
+						<% end %>						
 					<% else %>
 						<span class="hot_deal">
 							You just find yourself a deal!<br/>
@@ -512,6 +514,10 @@ $(document).ready(function() {
 		    </div>    
 		-->
 		</div>
+	</div>
+	
+	<div class="sidebar">
+		<%= render :partial => 'photo_contests/ads', :locals => { :originate => 'products' } %>
 	</div>
 	
 	<div class="sidebar">

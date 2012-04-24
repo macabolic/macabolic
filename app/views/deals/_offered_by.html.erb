@@ -53,12 +53,22 @@
 						<% else %>
 							<div class="answers-meta">
 								<p class="left">
+								<% if deal.offered_price.nil? %>
 									<span style="color: red; font-weight: bold">
-										<span id="response-stat-product"></span>
+										<span id="offered_price"><%= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
 									</span>
+								<% else %>
+									<span style="color: black; font-weight: bold">
+										<span id="original_price"><%= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+									</span>
+									<span style="color: red; font-weight: bold">
+										<span id="offered_price"><%= number_to_currency(deal.offered_price, :separator => ".", :delimiter => ",") %></span>
+									</span>
+								<% end %>
+									<br/>
 									<% if !deal.days_left.nil? %>
 										<%= deal.days_left %> days left to pick up the offer.
-									<% end %>									
+									<% end %>
 								</p>
 								<p class="right">
 									<%= link_to 'I want one!', user_session_path %>

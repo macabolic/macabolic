@@ -96,7 +96,11 @@
 			</div>
 		</div>
 		<br/>
--->			
+-->	
+		<div class="sidebar">
+			<%= render :partial => 'photo_contests/ads', :locals => { :originate => 'home' } %>
+		</div>
+		
 		<% if !user_signed_in? %>
 		<div class="sidebar">
 			<%= render :partial => 'users/sessions/mini_form' %>

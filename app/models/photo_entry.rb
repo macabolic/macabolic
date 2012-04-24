@@ -1,6 +1,7 @@
 class PhotoEntry < ActiveRecord::Base
-  belongs_to              :contest,               :class_name => "PhotoContest",  :counter_cache => false
-  belongs_to              :poster,                :class_name => "User",  :foreign_key => "poster_id"
+  belongs_to              :contest,               :class_name => "PhotoContest",      :counter_cache => false
+  belongs_to              :poster,                :class_name => "User",              :foreign_key => "poster_id"
+  has_many                :comments,              :class_name => "PhotoEntryComment"
 
   has_attached_file       :photo, 
                           :styles => {  :thumb => ["100x100#", :png],
@@ -18,5 +19,5 @@ class PhotoEntry < ActiveRecord::Base
   validates_attachment_size         :photo, :less_than => 700000,  :message => "should be less than 700KB."
   validates_attachment_content_type :photo, :content_type => ["image/jpeg", "image/pjpeg", "image/gif", "image/png"], :message => "should be JPG, PNG or GIF."
 
-  paginates_per 1
+  paginates_per 10
 end

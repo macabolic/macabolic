@@ -1,4 +1,4 @@
-<% title "Photo" %>
+<% title @photo_contest.name %>
 <style type="text/css">
 .photo-items {
 	list-style: none;
@@ -92,7 +92,31 @@
 								</div>									
 						</li>							
 					</ul>					
-				</div>
+					
+					<div class="pagination-wrapper bottom">				
+						<div class="right">
+							<div class="right">
+								<div id="pagination">
+									<%= link_to "<< Back to Photo Contest", "/contests/free-apple-tv-2/join?originate=photo-entries-#{@photo_entry.id}" %>
+								</div>
+							</div>
+						</div>
+					</div><!-- .pagination-wrapper -->					
+					
+				</div>				
 			<br/>
 		</div>
+		
+		<div class="sidebar">
+				<%= render :partial => 'photo_contests/ads', :locals => { :originate => "photo_entries-#{@photo_entry.id}" } %>
+		</div>
+<!--		
+		<div class="sidebar">
+				<%#= render :partial => 'photo_contests/form' %>
+		</div>		
+-->
+		<div class="sidebar" id="comment-display">			
+				<%= render :partial => 'photo_entry_comments/show' %>
+		</div>		
+
 	</div>

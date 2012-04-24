@@ -22,7 +22,7 @@
 				<%= link_to product_path(product) do %>				
 			<% if product.thumbnail.present? %>
 				<%= image_tag(product.thumbnail.url(:small), :width => "80", :class => "preview-image", :title => product.name) %>
-			<% elsif my_collection_item.product.image_url.present? %>
+			<% elsif product.image_url.present? %>
 				<%= image_tag(product.image_url, :width => "80", :class => "preview-image", :title => product.name) %>
 			<% else %>
 				<%= image_tag "/images/product/no-image_medium.jpg", :width => "80", :class => "preview-image", :title => product.name %>

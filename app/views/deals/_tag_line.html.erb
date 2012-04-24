@@ -1,7 +1,7 @@
 <div>
 	<div class="pagination-wrapper" style="background: #e9e9e9;">
 		<p style="font-size:14px; color:#808080; padding-left: 23px; text-align: center">
-			<strong><span>Unlock your deals before they expire</span></strong>
+			<strong><span><%= link_to 'Log in', user_session_path %> or <%= link_to 'Sign up for Macabolic', new_registration_path(User.new) %> – Unlock your deals before they expire</span></strong>
 		</p>
 	</div><!-- .pagination-wrapper -->		
 	<div style="background: #e9e9e9;">

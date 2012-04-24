@@ -1,14 +1,16 @@
 <div id="black-strip">
 	<div class="wrapper-top">
 		<div class="logo-holder">
-			<a href="<%= root_url %>"><h1>Macabolic</h1></div>				
+			<a href="<%= root_url %>"><h1>Macabolic</h1></a>
+		</div>				
 		<div class="nav-holder">							
 			<ul id="nav">				
+				<li><%= link_to 'Win a prize', "/contests/free-apple-tv-2/join?originate=nav" %></li>
 				<li><%= link_to 'Discover', discover_home_index_url(:category => "all") %></li>
-				<li><%= link_to 'People', people_url %></li>
-<!--				<li><%= link_to 'Deals', deals_url %></li> -->
+				<li><%= link_to 'Deals', deals_url %></li>
+				<!--<li><%= link_to 'People', people_url %></li>-->
 				<% if user_signed_in? %>	
-					<li><%= link_to 'Add', new_product_url %></li>
+					<li><%= link_to 'Share', new_product_url %></li>
 					<!--<li><%#= link_to 'Home', home_index_url %></li>-->
 				<% end %>
 				<li>
@@ -27,9 +29,9 @@
 				</li>
 			</ul>
 			<% if user_signed_in? %>
-			<div class="user-loggedin">
-				Welcome, <%= link_to current_user.full_name, collections_member_path(current_user), :class => "user-name" %>
-               </div>
+				<div class="user-loggedin">
+					Welcome, <%= link_to current_user.full_name, collections_member_path(current_user), :class => "user-name" %>
+	      </div>
 			<% end %>
 		</div>
 	</div>

@@ -33,27 +33,17 @@
 							<% end %>
 						</span>
 					</div>
-				<% if user_signed_in? %>
-					<div id="deal-info-<%= count %>" class="overlay" style="height: 30px; display:inline;">
-						<p style="position: relative;">
-							<span id="like_comment" class="left">
-						<!--
-							<%# if deal.offered_price.nil? %>	
-								<span id="offered_price"><%#= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
-							<%# else %>
-								<span id="original_price"><%#= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
-								<span id="offered_price"><%#= number_to_currency(deal.offered_price, :separator => ".", :delimiter => ",") %></span>
-							<%# end %>
-						-->
-							</span>
-						<!--	
-							<%# if current_user.wish_this_product?(deal.product) %>
-							<span id="like_comment" style="text-align: right">
-								Unlocked! <%#=raw deal.offer %>
-							</span>
-						-->								
-							<%# else %>
-							<span id="like_comment" style="text-align: right">
+					<div id="deal-info-<%= count %>" class="answers-meta" style="height: 30px; display:inline;">
+						<p class="left">
+						<% if deal.offered_price.nil? %>
+								<span id="offered_price"><%= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+						<% else %>							
+								<span id="original_price"><%= number_to_currency(deal.original_price, :separator => ".", :delimiter => ",") %></span>
+								<span id="offered_price"><%= number_to_currency(deal.offered_price, :separator => ".", :delimiter => ",") %></span>							
+						<% end %>
+						</p>
+						<% if user_signed_in? %>
+							<span class="right">
 								<%= link_to 'Get your deal', product_path(deal.product) %>
 							<!--	<a href="#" class="do_you_wish_one-<%= deal.product.id %>" obj-id="<%= deal.product.id %>">I want one! Unlock it now.</a> -->
 								<script type="text/javascript"> 
@@ -67,14 +57,19 @@
 								});				
 								</script>
 							</span>
-							<%# end %>
+						<% else %>
+							<span class="right">
+								<%= link_to 'I want one!', user_session_path %>
+							</span>
+						<% end %>
+					</div>				
+					<div class="answers-meta">							
+						<p class="right">
 							<% if !deal.days_left.nil? %>
 								<%= deal.days_left %> days left to pick up the offer.
 							<% end %>
-							
 						</p>
 					</div>
-				<% end %>
 				</div>
 	    </li>
 			<%

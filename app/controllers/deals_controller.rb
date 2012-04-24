@@ -4,20 +4,20 @@ class DealsController < ApplicationController
   # GET /deals.xml
   def index
     @ending_soon_deals = Deal.expire_this_month.limit(4)
-    @popular_deals = Deal.no_expiry_date.limit(4)
+    @popular_deals = Deal.popular_deals.limit(4)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @deals }
+      #format.xml  { render :xml => @deals }
     end
   end
   
   def popular
-    @popular_deals = Deal.no_expiry_date
+    @popular_deals = Deal.popular_deals
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @deals }
+      #format.xml  { render :xml => @deals }
     end    
   end
 

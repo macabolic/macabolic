@@ -60,9 +60,9 @@
 			
 			var user_id = $(this).attr("id");			
 			FB.ui({	method: 'send',
-					name: 'Welcome to join Macabolic.com',
+					name: 'Here is my profile in Macabolic and I want you to join me as well.',
 					link: '<%= member_my_collections_url(current_user) %>',
-					description: 'Discover new stuffs everyday and share with your friends. I have joined and I recommend you join too!',
+					description: 'I have been discovering new stuffs everyday here and I am sure you will find it interesting too.',
 					to: user_id,
 					picture: 'http://www.macabolic.com/images/logo-icon-only.png'	
 					});

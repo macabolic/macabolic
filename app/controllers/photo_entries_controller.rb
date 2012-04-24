@@ -18,6 +18,7 @@ class PhotoEntriesController < ApplicationController
   def show
     @photo_entry = PhotoEntry.find(params[:id])
     @photo_contest = PhotoContest.find(params[:contest_id])
+    @photo_entry_comments = @photo_entry.comments.order("created_at DESC")
     
     respond_to do |format|
       format.html # show.html.erb

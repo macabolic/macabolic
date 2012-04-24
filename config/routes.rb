@@ -7,8 +7,12 @@ Macabolic::Application.routes.draw do
     end    
   end
 
+  resources :photo_entry_comments
   resources :photo_entries
   resources :contests, :controller => "photo_contests" do
+    collection do
+      get ':code/join' => "photo_contests#show"
+    end    
     resources :entries, :controller => "photo_entries"
   end
 

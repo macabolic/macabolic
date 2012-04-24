@@ -1,0 +1,41 @@
+<div class="sidebar-content" id="comment-list">
+	<div class="sidebar-header">
+	<% if !@photo_entry_comments.nil? %>	
+		<%= pluralize(@photo_entry_comments.size, "Comment") %>
+	<% else %>
+		Comment
+	<% end %>
+	</div>	
+	
+	<div class="sidebar-inner">
+    	<ul id="search-list">
+			<div id="products">
+			<% if !@photo_entry_comments.nil? %>
+				<% @photo_entry_comments.each do |comment| %>
+		        <li>
+					<div>
+						<div class="left">
+					  	<%= image_tag(current_profile_image_thumbnail_url(comment.user), :size => "45x45") %>
+							<%= link_to comment.user.full_name, member_path(comment.user) %>
+							<p><%= comment.lapsed_time %></p>
+						</div>
+					</div>
+					<div>
+						<div class="left">										
+							<p><%= simple_format h(comment.content) %></p>
+						</div>
+					</div>
+		        </li>
+				<% end %>
+			<% end %>
+			</div>
+    	</ul>	
+		<div style="margin-top: 10px;">
+		<% if user_signed_in? %>		
+			<%= render :partial => 'photo_entry_comments/form', :local => { :contest => @photo_contest, :entry => @photo_entry } %>
+		<% else %>
+			Please <%= link_to 'log in', user_session_path %> or <%= link_to "sign up", new_registration_path(User.new) %> to leave a comment.
+		<% end %>
+		</div>
+	</div>
+</div>

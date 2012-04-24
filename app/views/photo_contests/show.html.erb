@@ -1,4 +1,4 @@
-<% title "Photo" %>
+<% title @photo_contest.name %>
 <style type="text/css">
 .photo-items {
 	list-style: none;
@@ -88,7 +88,9 @@
 						<li id="entry-<%= count %>">
 								<div class="center">
 									<span class="photo-image">
+										<%= link_to contest_entry_path(@photo_contest, entry) do %>
 											<%= image_tag entry.photo.url(:large), :width => "635", :id => "photo-image" %>
+										<% end %>
 									</span>								
 								</div>
 								
@@ -107,7 +109,9 @@
 								</div>		
 								<div class="caption">
 									<span class="poster right">
-										posted by <%= entry.poster %>
+									<%= link_to contest_entry_path(@photo_contest, entry) do %>	
+										<%= pluralize(entry.comments.size, "comment") %>
+									<% end %>&nbsp;| posted by&nbsp;<%= entry.poster %>
 									</span>
 									<br/>
 									<span>
