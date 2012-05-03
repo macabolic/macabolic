@@ -44,23 +44,23 @@ class HomeController < ApplicationController
       facet :user_id
     end
     
-    @featured_products = Product.limit(27).order("updated_at DESC")
+    @featured_products = Product.limit(36).order("updated_at DESC")
     
-    @feature_collection_items = Array.new
-    recently_active_users = User.active_users.limit(3)
+    #@feature_collection_items = Array.new
+    #recently_active_users = User.active_users.limit(3)
     #most_active_users = User.where("sign_in_count > ?", 10).order("sign_in_count DESC").limit(3)
-    recently_active_users.each do |user|
-      user_id = user.id
-      featured_collection_items_search = Sunspot.search(MyCollectionItem) do
-        with(:user_id, user_id)
-        order_by(:updated_at, :desc)
-        paginate  :page => 1, :per_page => 6
-      end
-      @feature_collection_items << featured_collection_items_search.results
-    end
+    #recently_active_users.each do |user|
+    #  user_id = user.id
+    #  featured_collection_items_search = Sunspot.search(MyCollectionItem) do
+    #    with(:user_id, user_id)
+    #    order_by(:updated_at, :desc)
+    #    paginate  :page => 1, :per_page => 6
+    #  end
+    #  @feature_collection_items << featured_collection_items_search.results
+    #end
     
     #@featured_collections_items = featured_collections_items_search.results
-    @most_recent_collections = MyCollection.where("my_collection_items_count > 0").order("updated_at DESC").limit(6)
+    @most_recent_collections = MyCollection.where("my_collection_items_count > 0").order("updated_at DESC").limit(9)
   end
 
   def extra

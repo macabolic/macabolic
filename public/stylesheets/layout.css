@@ -476,7 +476,8 @@ background: url(../images/backgrounds/mh-greybg.jpg) repeat-x;
 .user-loggedin {
     float:left;
     color:#fff;
-    margin:-17px 0 0 170px
+//    margin:-17px 0 0 170px;
+    margin:-17px 0 0 100px
 }
 .user-loggedin a {
 	color:#CB5202 !important
