@@ -1,3 +1,14 @@
+<!-- FACEBOOK LIKE BUTTON INITIALIZER -->	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%= FACEBOOK_APP_ID %>";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+<!-- END OF FACEBOOK LIKE BUTTON INITIALIZER-->	
+
 <div id="black-strip">
 	<div class="wrapper-top">
 		<div class="logo-holder">
@@ -33,6 +44,12 @@
 					Welcome, <%= link_to current_user.full_name, collections_member_path(current_user), :class => "user-name" %>
 	      </div>
 			<% end %>
+			<br/>
+			<div>
+				<div class="fb-like social" data-href="http://www.macabolic.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-font="verdana"></div>
+				<a href="https://twitter.com/macabolic" class="twitter-follow-button social" data-show-count="false">Follow @macabolic</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>			
+			</div>
 		</div>
 	</div>
 </div>

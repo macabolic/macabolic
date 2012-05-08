@@ -13,8 +13,8 @@ ActiveAdmin.register Deal do
   scope :expire_this_month do |deals|
     deals.where('offered_to_date > ? and offered_to_date < ?', Time.now, 1.month.from_now)
   end
-  
-  filter  :product
+    
+  filter  :product_name, :as => :string
   filter  :vendor
   filter  :offered_from_date, :as => :date_range
   filter  :offered_to_date, :as => :date_range

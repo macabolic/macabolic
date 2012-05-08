@@ -1,7 +1,7 @@
 ActiveAdmin.register ProductLink do
   menu    :parent => "Product Maintenance", :priority => 4
   
-  filter  :product
+  filter  :product_name, :as => :string
   filter  :price_range  
 
   index do

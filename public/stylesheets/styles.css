@@ -1532,6 +1532,10 @@ a.follow_link {
 	text-decoration: line-through;
 }
 
+.original_price {
+	text-decoration: line-through;
+}
+
 #offered_price {
 	color: red;
 }

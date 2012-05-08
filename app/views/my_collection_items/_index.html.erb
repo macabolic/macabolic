@@ -54,6 +54,35 @@
 			<div id="product-info-<%= count %>" class="overlay" style="height: 30px; display:inline;">
 				<p style="position: relative;">
 					<span id="like_comment" class="left">
+						<% if my_collection_item.product.price_range.present? %>											
+							<% if my_collection_item.product.deals.exists? %>
+								<%= link_to product_path(my_collection_item.product) do %>
+									<span id="original_price"><%= my_collection_item.product.price_range.display %></span>
+								<% end %>
+							<% else %>
+							<% end %>
+						<% else %>
+							<!-- Not showing the price -->
+						<% end %>
+					</span>
+					<span id="like_comment" style="text-align: right">
+						<% if my_collection_item.product.price_range.present? %>
+							<% if my_collection_item.product.deals.exists? %>
+								<%= link_to product_path(my_collection_item.product) do %> 
+									<span style="text-align: right; color: red; font-weight: bold">Macabolic it!</span>
+								<% end %>
+							<% else %>
+								<%= my_collection_item.product.price_range.display %>
+							<% end %>
+						<% else %>
+							<!-- Not showing the price -->
+						<% end %>
+					</span>
+				</p>
+			</div>			
+			<div id="product-info-<%= count %>" class="overlay" style="height: 30px; display:none;">
+				<p style="position: relative;">
+					<span id="like_comment" class="left">
 						<%= link_to pluralize(my_collection_item.product.responses.size, "like"), product_path(my_collection_item.product) %> |  
 						<%= link_to pluralize(my_collection_item.product.comments.size, "comment"), product_path(my_collection_item.product) %>
 					</span>
