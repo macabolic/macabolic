@@ -43,7 +43,7 @@ $(document).ready(function() {
 							<% thumbnail_image_path "http://#{HOST}#{@my_collection.my_collection_items[0].product.thumbnail.url(:medium)}" %>			
 						<% elsif  @my_collection.my_collection_items[0].product.image_url.present? %>
 							<%= image_tag( @my_collection.my_collection_items[0].product.image_url, :width => "200", :class => "preview-image", :id => @my_collection.id, :title => @my_collection.name) %>
-							<%= image_tag(@my_collection.my_collection_items[0].product.image_url, :width => "180", :class => "preview-image") %>
+							<% thumbnail_image_path @my_collection.my_collection_items[0].product.image_url %>
 						<% else %>
 							<%= image_tag "/images/product/no-image_medium.jpg", :size => "200x200", :class => "preview-image", :id => @my_collection.id, :title => @my_collection.name %>
 							<% thumbnail_image_path "http://#{HOST}/images/product/no-image_medium.jpg" %>			
