@@ -1,5 +1,5 @@
 class BookmarkletsController < ApplicationController
-  before_filter :show_invitation_notice
+  #before_filter :show_invitation_notice
   before_filter :store_location
   before_filter :authenticate_user!, :except =>  [:index, :search, :show]
 

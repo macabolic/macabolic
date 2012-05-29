@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :show_invitation_notice, :except => [ :about_us, :faq, :home, :contact_us, :extra ]
+  #before_filter :show_invitation_notice, :except => [ :about_us, :faq, :home, :contact_us, :extra ]
   
   def index
     if user_signed_in?

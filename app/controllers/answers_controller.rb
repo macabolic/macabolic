@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_filter :show_invitation_notice
+  #before_filter :show_invitation_notice
 
   # POST /answers
   # POST /answers.xml

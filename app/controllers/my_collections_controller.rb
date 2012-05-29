@@ -1,5 +1,5 @@
 class MyCollectionsController < ApplicationController
-  before_filter :show_invitation_notice
+  #before_filter :show_invitation_notice
   before_filter :require_invitation, :only => [ :new ]
   before_filter :store_location
   before_filter :authenticate_user!, :except => [:show]

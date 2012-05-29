@@ -2,7 +2,7 @@ require 'net/https'
 require 'open-uri'
 
 class ProductsController < ApplicationController
-  before_filter :show_invitation_notice
+  #before_filter :show_invitation_notice
   before_filter :store_location
   before_filter :authenticate_user!, :except =>  [:index, :search, :show, :buy_now, :bookmarklet]
   helper_method :sort_column, :sort_direction
